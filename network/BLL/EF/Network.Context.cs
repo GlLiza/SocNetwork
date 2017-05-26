@@ -18,7 +18,7 @@ namespace network.BLL.EF
     public partial class NetworkEntities : DbContext
     {
         public NetworkEntities()
-            : base("name=NetworkEntities")
+            : base("NetworkEntities")
         {
         }
     
