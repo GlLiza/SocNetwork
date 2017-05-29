@@ -12,20 +12,20 @@ using System.ComponentModel.DataAnnotations;
 namespace network.BLL.EF
 {
     using System;
-    using System.Collections.Generic;
-    
+
     public partial class Users
     {
+        [Key]
         public int Id { get; set; }
         public string Name { get; set; }
         public string Firstname { get; set; }
 
-        [System.ComponentModel.DataAnnotations.DataType(DataType.Date)]
-        public Nullable<System.DateTime> DateOfBirthday { get; set; }
-        public Nullable<int> FamilyStatusId { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? DateOfBirthday { get; set; }
+        public int? FamilyStatusId { get; set; }
         public string Country { get; set; }
         public string City { get; set; }
-        public Nullable<int> ImagesId { get; set; }
+        public int? ImagesId { get; set; }
     
         public virtual FamilyStatus FamilyStatus { get; set; }
         public virtual Images Images { get; set; }
