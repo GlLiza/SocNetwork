@@ -13,8 +13,7 @@ namespace network.BLL.EF
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
-    using System.Linq;
-    
+
     public partial class NetworkEntities : DbContext
     {
         public NetworkEntities()
@@ -24,7 +23,7 @@ namespace network.BLL.EF
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            throw new UnintentionalCodeFirstException();
+            //throw new UnintentionalCodeFirstException();
         }
     
         public virtual DbSet<FamilyStatus> FamilyStatus { get; set; }
