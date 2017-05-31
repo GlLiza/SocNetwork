@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using network.BLL;
@@ -25,7 +26,7 @@ namespace network.Controllers
         // GET: Users
         public ActionResult Index()
         {
-            var users = userService.GetUser();
+            var users = userService.GetUser().ToList();
             return View(users);
         }
 
