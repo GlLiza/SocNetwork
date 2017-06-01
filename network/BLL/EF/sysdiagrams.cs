@@ -16,11 +16,12 @@ namespace network.BLL.EF
     
     public partial class sysdiagrams
     {
-        [Key]
-        public int diagram_id { get; set; }
         public string name { get; set; }
         public int principal_id { get; set; }
-        public int? version { get; set; }
+
+        [Key]
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
         public byte[] definition { get; set; }
     }
 }

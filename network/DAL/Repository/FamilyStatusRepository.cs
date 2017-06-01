@@ -8,9 +8,9 @@ namespace network.DAL.Repository
 {
     public class FamilyStatusRepository : IFamilyStatusRepository
     {
-        private NetworkEntities context;
+        private NetworkEntities1 context;
 
-        public FamilyStatusRepository(NetworkEntities con)
+        public FamilyStatusRepository(NetworkEntities1 con)
         {
             context = con;
         }

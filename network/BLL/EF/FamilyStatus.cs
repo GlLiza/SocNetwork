@@ -17,13 +17,13 @@ namespace network.BLL.EF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public FamilyStatus()
         {
-            this.Users = new HashSet<Users>();
+            this.UserDetails = new HashSet<UserDetails>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Users> Users { get; set; }
+        public virtual ICollection<UserDetails> UserDetails { get; set; }
     }
 }

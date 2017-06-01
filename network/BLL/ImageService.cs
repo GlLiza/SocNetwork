@@ -8,7 +8,7 @@ namespace network.BLL
 {
     public class ImageService
     {
-        NetworkEntities db = new NetworkEntities();
+        NetworkEntities1 db = new NetworkEntities1();
 
         private IImagesRepository imagesRepository;
  

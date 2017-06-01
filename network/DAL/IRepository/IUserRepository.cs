@@ -6,12 +6,12 @@ namespace network.DAL.IRepository
 {
     interface IUserRepository:IDisposable
     {
-        IEnumerable<Users> GetUserList();
-        void AddUser (Users user);
+        IEnumerable<UserDetails> GetUserList();
+        void AddUser (UserDetails user);
         void DeleteUser (int userId);
-        void Update(Users user);
+        void Update(UserDetails user);
         void Save();
 
-        Users GetUserById(int id);
+        UserDetails GetUserById(int id);
     }
 }

@@ -197,6 +197,21 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="BLL\EF\AspNetRoles.cs">
+      <DependentUpon>Network.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BLL\EF\AspNetUserClaims.cs">
+      <DependentUpon>Network.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BLL\EF\AspNetUserLogins.cs">
+      <DependentUpon>Network.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BLL\EF\AspNetUsers.cs">
+      <DependentUpon>Network.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BLL\EF\C__MigrationHistory.cs">
+      <DependentUpon>Network.tt</DependentUpon>
+    </Compile>
     <Compile Include="BLL\EF\FamilyStatus.cs">
       <DependentUpon>Network.tt</DependentUpon>
     </Compile>
@@ -227,7 +242,7 @@
     <Compile Include="BLL\EF\sysdiagrams.cs">
       <DependentUpon>Network.tt</DependentUpon>
     </Compile>
-    <Compile Include="BLL\EF\Users.cs">
+    <Compile Include="BLL\EF\UserDetails.cs">
       <DependentUpon>Network.tt</DependentUpon>
     </Compile>
     <Compile Include="BLL\FamilyStatusService.cs" />
@@ -293,7 +308,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

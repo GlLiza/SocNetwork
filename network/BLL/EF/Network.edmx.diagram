@@ -4,13 +4,23 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1a42db16430e4d13bd90b81db69fc71a" Name="Diagram1">
-        <EntityTypeShape EntityType="NetworkModel.FamilyStatus" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="NetworkModel.Images" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="NetworkModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NetworkModel.Users" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <AssociationConnector Association="NetworkModel.FK_Users_FamilyStatus" ManuallyRouted="false" />
-        <AssociationConnector Association="NetworkModel.FK_Users_Images" ManuallyRouted="false" />
+      <Diagram DiagramId="a5f8f781f1674b92b15f8123c77f0834" Name="Diagram1">
+        <EntityTypeShape EntityType="NetworkModel.C__MigrationHistory" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NetworkModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="NetworkModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="NetworkModel.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="NetworkModel.AspNetUsers" Width="1.5" PointX="3" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="NetworkModel.FamilyStatus" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NetworkModel.Images" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NetworkModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
+        <AssociationConnector Association="NetworkModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="NetworkModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="NetworkModel.FK_AspNetUsers_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="NetworkModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="NetworkModel.UserDetails" Width="1.5" PointX="7.6572813371463129" PointY="31.771430954230684" />
+        <AssociationConnector Association="NetworkModel.FK_UserDetails_AspNetUsers" />
+        <AssociationConnector Association="NetworkModel.FK_UserDetails_FamilyStatus" />
+        <AssociationConnector Association="NetworkModel.FK_UserDetails_Images" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

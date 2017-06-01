@@ -10,22 +10,22 @@ namespace network.DAL.Repository
 {
     public class UserRepository : IUserRepository
     {
-        private NetworkEntities context;
+        private NetworkEntities1 context;
 
-        public UserRepository(NetworkEntities cont)
+        public UserRepository(NetworkEntities1 cont)
         {
             context = cont;
         }
 
-        public void AddUser(Users user)
+        public void AddUser(UserDetails user)
         {
-           context.Users.Add(user);
+           context.UserDetails.Add(user);
         }
 
         public void DeleteUser(int userId)
         {
-            Users user = context.Users.Find(userId);
-            context.Users.Remove(user);
+            UserDetails user = context.UserDetails.Find(userId);
+            context.UserDetails.Remove(user);
         }
 
         private bool disposed = false;
@@ -48,9 +48,9 @@ namespace network.DAL.Repository
             GC.SuppressFinalize(this);
         }
 
-        public IEnumerable<Users> GetUserList()
+        public IEnumerable<UserDetails> GetUserList()
         {
-            return context.Users;
+            return context.UserDetails;
         }
 
         public void Save()
@@ -58,18 +58,18 @@ namespace network.DAL.Repository
             context.SaveChanges();
         }
 
-        public void Update(Users user)
+        public void Update(UserDetails user)
         {
             context.Entry(user).State = EntityState.Modified;
         }
 
-        public Users GetUserById(int id)
+        public UserDetails GetUserById(int id)
         {
-            var item = context.Users.Find(id);
+            var item = context.UserDetails.Find(id);
             return item;
         }
 
-        IEnumerable<Users> Users()
+        IEnumerable<UserDetails> Users()
         {
             foreach (var a in GetUserList())
             {

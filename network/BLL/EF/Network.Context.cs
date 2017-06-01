@@ -13,11 +13,12 @@ namespace network.BLL.EF
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
-
-    public partial class NetworkEntities : DbContext
+    using System.Linq;
+    
+    public partial class NetworkEntities1 : DbContext
     {
-        public NetworkEntities()
-            : base("NetworkEntities")
+        public NetworkEntities1()
+            : base("name=NetworkEntities1")
         {
         }
     
@@ -26,10 +27,15 @@ namespace network.BLL.EF
             //throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
+        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
+        public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
+        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<FamilyStatus> FamilyStatus { get; set; }
         public virtual DbSet<Images> Images { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
-        public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<UserDetails> UserDetails { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

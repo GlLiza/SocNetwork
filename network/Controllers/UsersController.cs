@@ -12,7 +12,7 @@ namespace network.Controllers
 {
     public class UsersController : Controller
     {
-       public NetworkEntities db = new NetworkEntities();
+       public NetworkEntities1 db = new NetworkEntities1();
         public UserService userService;
         public ImageService imgServ;
         private IImagesRepository imgRepository;
@@ -46,7 +46,7 @@ namespace network.Controllers
 
         // POST: Users/Create
         [HttpPost]
-        public ActionResult Create(HttpPostedFileBase  img, Users user)
+        public ActionResult Create(HttpPostedFileBase  img, UserDetails user)
         {
             try
             {
@@ -69,12 +69,13 @@ namespace network.Controllers
                     imgRepository.AddImage(headerImage);
 
                     imgRepository.Save();
-                    Users item = userService.SearchUser(user.Id);
+                    UserDetails item = userService.SearchUser(user.Id);
                     item.ImagesId = headerImage.Id;
                     userService.EditUser(user);
 
 
                 }
+
 
 
 
@@ -117,7 +118,7 @@ namespace network.Controllers
 
         // POST: Users/Delete/5
         [HttpPost]
-        public ActionResult Delete(Users u)
+        public ActionResult Delete(UserDetails u)
         {
             try
             {

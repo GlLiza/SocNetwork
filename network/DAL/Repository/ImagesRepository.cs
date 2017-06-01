@@ -8,9 +8,9 @@ namespace network.DAL.Repository
 {
     public class ImagesRepository : IImagesRepository
     {
-        private NetworkEntities context;
+        private NetworkEntities1 context;
 
-        public ImagesRepository(NetworkEntities cont)
+        public ImagesRepository(NetworkEntities1 cont)
         {
             context = cont;
         }

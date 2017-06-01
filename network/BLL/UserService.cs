@@ -7,7 +7,7 @@ namespace network.BLL
 {
     public class UserService
     {
-        NetworkEntities db=new NetworkEntities();
+        NetworkEntities1 db=new NetworkEntities1();
 
         private IUserRepository userRepository;
         private IImagesRepository imagesRepository;
@@ -20,35 +20,35 @@ namespace network.BLL
             familyStatusRepository=new FamilyStatusRepository(db);
         }
 
-        public IQueryable<Users> GetUser()
+        public IQueryable<UserDetails> GetUser()
         {
-            var users = db.Users;
+            var users = db.UserDetails;
             return users;
         }
 
-        public void InsertUser(Users user)
+        public void InsertUser(UserDetails user)
         {
             userRepository.AddUser(user);
             userRepository.Save();
         }
 
-        public void EditUser(Users user)
+        public void EditUser(UserDetails user)
         {
             userRepository.Update(user);
             userRepository.Save();
 
         }
 
-        public void DeleteUser(Users user)
+        public void DeleteUser(UserDetails user)
         {
-            Users us = userRepository.GetUserById(user.Id);
+            UserDetails us = userRepository.GetUserById(user.Id);
             userRepository.DeleteUser(us.Id);
             userRepository.Save();
         }
 
-        public Users SearchUser(int id)
+        public UserDetails SearchUser(int id)
         {
-            Users user = userRepository.GetUserById(id);
+            UserDetails user = userRepository.GetUserById(id);
             return user;
         }
 
