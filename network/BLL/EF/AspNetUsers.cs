@@ -7,8 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.ComponentModel.DataAnnotations;
-
 namespace network.BLL.EF
 {
     using System;
@@ -24,8 +22,6 @@ namespace network.BLL.EF
             this.AspNetRoles = new HashSet<AspNetRoles>();
             this.UserDetails = new HashSet<UserDetails>();
         }
-
-        [Key]
     
         public string Id { get; set; }
         public string Email { get; set; }

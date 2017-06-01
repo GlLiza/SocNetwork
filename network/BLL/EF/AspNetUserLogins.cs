@@ -7,8 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.ComponentModel.DataAnnotations;
-
 namespace network.BLL.EF
 {
     using System;
@@ -18,8 +16,6 @@ namespace network.BLL.EF
     {
         public string LoginProvider { get; set; }
         public string ProviderKey { get; set; }
-
-        [Key]
         public string UserId { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }

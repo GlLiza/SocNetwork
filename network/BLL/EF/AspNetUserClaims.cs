@@ -7,8 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.ComponentModel.DataAnnotations;
-
 namespace network.BLL.EF
 {
     using System;
@@ -16,7 +14,6 @@ namespace network.BLL.EF
     
     public partial class AspNetUserClaims
     {
-        [Key]
         public int Id { get; set; }
         public string UserId { get; set; }
         public string ClaimType { get; set; }

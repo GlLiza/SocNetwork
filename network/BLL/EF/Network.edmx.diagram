@@ -17,7 +17,7 @@
         <AssociationConnector Association="NetworkModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="NetworkModel.FK_AspNetUsers_AspNetUsers" ManuallyRouted="false" />
         <AssociationConnector Association="NetworkModel.AspNetUserRoles" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="NetworkModel.UserDetails" Width="1.5" PointX="7.6572813371463129" PointY="31.771430954230684" />
+        <!--<EntityTypeShape EntityType="NetworkModel.UserDetails" Width="1.5" PointX="4.25" PointY="12.25" />-->
         <AssociationConnector Association="NetworkModel.FK_UserDetails_AspNetUsers" />
         <AssociationConnector Association="NetworkModel.FK_UserDetails_FamilyStatus" />
         <AssociationConnector Association="NetworkModel.FK_UserDetails_Images" />
