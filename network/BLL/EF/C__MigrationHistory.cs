@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace network.BLL.EF
 {
     using System;
@@ -14,6 +16,7 @@ namespace network.BLL.EF
     
     public partial class C__MigrationHistory
     {
+        [Key]
         public string MigrationId { get; set; }
         public string ContextKey { get; set; }
         public byte[] Model { get; set; }
