@@ -10,7 +10,7 @@
         <EntityTypeShape EntityType="NetworkModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="NetworkModel.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="NetworkModel.AspNetUsers" Width="1.5" PointX="3" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="NetworkModel.FamilyStatus" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NetworkModel.FamilyStatus" Width="1.5" PointX="9.875" PointY="1.75" IsExpanded="true" />
         <EntityTypeShape EntityType="NetworkModel.Images" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="NetworkModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
         <AssociationConnector Association="NetworkModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />

@@ -96,7 +96,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="nvarchar" MaxLength="300" />
           <Property Name="Firstname" Type="nvarchar" MaxLength="300" />
           <Property Name="DateOfBirthday" Type="date" />
