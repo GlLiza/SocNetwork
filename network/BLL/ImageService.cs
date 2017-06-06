@@ -8,7 +8,7 @@ namespace network.BLL
 {
     public class ImageService
     {
-        NetworkEntities1 db = new NetworkEntities1();
+        NetworkContext db = new NetworkContext();
 
         private IImagesRepository imagesRepository;
  
@@ -44,7 +44,7 @@ namespace network.BLL
             imagesRepository.Save();
         }
 
-        public Images SearchImg(int? id)
+        public Images SearchImg(string id)
         {
             Images img = imagesRepository.GetImageById(id);
             return img;

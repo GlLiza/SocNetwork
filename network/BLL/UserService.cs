@@ -7,7 +7,7 @@ namespace network.BLL
 {
     public class UserService
     {
-        NetworkEntities1 db=new NetworkEntities1();
+        private NetworkContext db = new NetworkContext();
 
         private IUserRepository userRepository;
         private IImagesRepository imagesRepository;
@@ -46,13 +46,13 @@ namespace network.BLL
             userRepository.Save();
         }
 
-        public UserDetails SearchUser(int id)
+        public UserDetails SearchUser(string id)
         {
             UserDetails user = userRepository.GetUserById(id);
             return user;
         }
 
-        public byte[] ReturnImage(int id)
+        public byte[] ReturnImage(string id)
         {
             byte[] imageData = imagesRepository.GetImageById(id).Data;
             return imageData;

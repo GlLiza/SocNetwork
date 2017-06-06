@@ -8,9 +8,9 @@ namespace network.DAL.Repository
 {
     public class ImagesRepository : IImagesRepository
     {
-        private NetworkEntities1 context;
+        private NetworkContext context;
 
-        public ImagesRepository(NetworkEntities1 cont)
+        public ImagesRepository(NetworkContext cont)
         {
             context = cont;
         }
@@ -21,7 +21,7 @@ namespace network.DAL.Repository
             context.Images.Add(images);
         }
 
-        public void DeleteImage(int id)
+        public void DeleteImage(string id)
         {
             Images img = context.Images.Find(id);
                
@@ -66,13 +66,13 @@ namespace network.DAL.Repository
             context.Entry(images).State=EntityState.Modified;
         }
 
-        public Images GetImageById(int? id)
+        public Images GetImageById(string id)
         {
             var item = context.Images.Find(id);
             return item;
         }
 
-        public byte[] ReturnImage(int id)
+        public byte[] ReturnImage(string id)
         {
             var img = context.Images.Find(id);
             return img.Data;

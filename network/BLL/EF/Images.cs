@@ -20,7 +20,7 @@ namespace network.BLL.EF
             this.UserDetails = new HashSet<UserDetails>();
         }
     
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public byte[] Data { get; set; }
         public string ContentType { get; set; }

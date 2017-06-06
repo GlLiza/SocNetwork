@@ -8,9 +8,9 @@ namespace network.DAL.Repository
 {
     public class UserRepository : IUserRepository
     {
-        private NetworkEntities1 context;
+        private NetworkContext context;
 
-        public UserRepository(NetworkEntities1 cont)
+        public UserRepository(NetworkContext cont)
         {
             context = cont;
         }
@@ -20,7 +20,7 @@ namespace network.DAL.Repository
            context.UserDetails.Add(user);
         }
 
-        public void DeleteUser(int userId)
+        public void DeleteUser(string userId)
         {
             UserDetails user = context.UserDetails.Find(userId);
             context.UserDetails.Remove(user);
@@ -61,7 +61,7 @@ namespace network.DAL.Repository
             context.Entry(user).State = EntityState.Modified;
         }
 
-        public UserDetails GetUserById(int id)
+        public UserDetails GetUserById(string id)
         {
             var item = context.UserDetails.Find(id);
             return item;

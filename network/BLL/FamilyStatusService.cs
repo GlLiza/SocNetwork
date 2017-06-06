@@ -7,7 +7,7 @@ namespace network.BLL
 {
     public class FamilyStatusService
     {
-        NetworkEntities1 db = new NetworkEntities1();
+        NetworkContext db = new NetworkContext();
 
         private IFamilyStatusRepository familyStatusRepository;
 

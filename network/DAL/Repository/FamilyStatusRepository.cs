@@ -8,9 +8,9 @@ namespace network.DAL.Repository
 {
     public class FamilyStatusRepository : IFamilyStatusRepository
     {
-        private NetworkEntities1 context;
+        private NetworkContext context;
 
-        public FamilyStatusRepository(NetworkEntities1 con)
+        public FamilyStatusRepository(NetworkContext con)
         {
             context = con;
         }
@@ -20,7 +20,7 @@ namespace network.DAL.Repository
             context.FamilyStatus.Add(famStat);
         }
 
-        public void DeleteFamStatus(int id)
+        public void DeleteFamStatus(string id)
         {
             FamilyStatus famStat = context.FamilyStatus.Find(id);
             context.FamilyStatus.Remove(famStat);
@@ -53,7 +53,7 @@ namespace network.DAL.Repository
            return context.FamilyStatus;
         }
 
-        public FamilyStatus GetStatById(int id)
+        public FamilyStatus GetStatById(string id)
         {
             return context.FamilyStatus.Find(id);
         }
