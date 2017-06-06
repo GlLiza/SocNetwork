@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -32,6 +33,23 @@ namespace network.Controllers
             
         }
 
+        //////////////////////
+        /// 
+        /// 
+
+        public static void RegisterRoutes(RouteCollection routes)
+        {
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            routes.MapRoute(
+                name: "Default",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            );
+        }
+        ///////////////////
+        /// 
+        /// 
         public ApplicationSignInManager SignInManager
         {
             get
@@ -158,17 +176,15 @@ namespace network.Controllers
                 if (ModelState.IsValid)
                 {
                     var user = new ApplicationUser {UserName = model.Email, Email = model.Email};
-                    userService = new UserService();
-                    var a = new UserDetails();
-                   
                     
                     var result = await UserManager.CreateAsync(user, model.Password);
-                    a.UserId = user.Id;
-
-                    userService.InsertUser(a);
                     if (result.Succeeded)
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                        //userService = new UserService();
+                        //var a = new UserDetails { UserId = user.Id };
+                        //userService.InsertUser(a);
 
                         // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                         // Send an email with this link

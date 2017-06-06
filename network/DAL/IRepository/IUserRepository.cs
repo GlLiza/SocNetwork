@@ -8,10 +8,10 @@ namespace network.DAL.IRepository
     {
         IEnumerable<UserDetails> GetUserList();
         void AddUser (UserDetails user);
-        void DeleteUser (int userId);
+        void DeleteUser (string userId);
         void Update(UserDetails user);
         void Save();
 
-        UserDetails GetUserById(int id);
+        UserDetails GetUserById(string id);
     }
 }

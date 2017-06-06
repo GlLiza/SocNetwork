@@ -9,13 +9,13 @@ namespace network.DAL.IRepository
     {
         IQueryable<Images> GetImages ();
         void AddImage (Images images);
-        void DeleteImage (int id);
+        void DeleteImage (string id);
         void UpdateImage (Images images);
         void Save ();
 
   
-        Images GetImageById(int? id);
+        Images GetImageById(string id);
 
-        byte[] ReturnImage(int id);
+        byte[] ReturnImage(string id);
     }
 }

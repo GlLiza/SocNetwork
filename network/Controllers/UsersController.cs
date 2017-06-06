@@ -12,7 +12,7 @@ namespace network.Controllers
 {
     public class UsersController : Controller
     {
-       public NetworkEntities1 db = new NetworkEntities1();
+        public NetworkContext db = new NetworkContext();
         public UserService userService;
         public ImageService imgServ;
         private IImagesRepository imgRepository;
@@ -31,7 +31,7 @@ namespace network.Controllers
         }
 
         // GET: Users/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(string id)
         {
             var user = userService.SearchUser(id);
             return View(user);
@@ -110,7 +110,7 @@ namespace network.Controllers
         }
 
         // GET: Users/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
             var user = userService.SearchUser(id);
             return View("Delete",user);

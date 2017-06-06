@@ -8,10 +8,10 @@ namespace network.DAL.IRepository
     {
         IQueryable <FamilyStatus> GetListFamStatus ();
         void AddFamStatus(FamilyStatus famStat);
-        void DeleteFamStatus(int id);
+        void DeleteFamStatus(string id);
         void UpdateFamStatus(FamilyStatus famStat);
         void Save();
-        FamilyStatus GetStatById(int id);
+        FamilyStatus GetStatById(string id);
 
     }
 }
