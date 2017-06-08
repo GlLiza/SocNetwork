@@ -20,7 +20,7 @@ namespace network.DAL.Repository
            context.UserDetails.Add(user);
         }
 
-        public void DeleteUser(string userId)
+        public void DeleteUser(int userId)
         {
             UserDetails user = context.UserDetails.Find(userId);
             context.UserDetails.Remove(user);
@@ -61,7 +61,7 @@ namespace network.DAL.Repository
             context.Entry(user).State = EntityState.Modified;
         }
 
-        public UserDetails GetUserById(string id)
+        public UserDetails GetUserById(int id)
         {
             var item = context.UserDetails.Find(id);
             return item;

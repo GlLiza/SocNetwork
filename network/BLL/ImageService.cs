@@ -44,7 +44,7 @@ namespace network.BLL
             imagesRepository.Save();
         }
 
-        public Images SearchImg(string id)
+        public Images SearchImg(int? id)
         {
             Images img = imagesRepository.GetImageById(id);
             return img;

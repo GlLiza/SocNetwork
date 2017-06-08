@@ -20,7 +20,7 @@ namespace network.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("NetworkContext", throwIfV1Schema: false)
+            : base("IdentityConnection", throwIfV1Schema: false)
         {
         }
 

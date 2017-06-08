@@ -13,7 +13,24 @@ namespace network
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
+
             // Configure the db context, user manager and signin manager to use a single instance per request
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+                LoginPath = new PathString("/Account/Login"),
+                LogoutPath = new PathString("/Account/LogOff"),
+                ExpireTimeSpan = TimeSpan.FromMinutes(5.0)
+            });
+
+
+
+
+
+
+
+
+
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
@@ -62,6 +79,8 @@ namespace network
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+
+           
         }
     }
 }

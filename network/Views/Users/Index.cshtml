@@ -38,8 +38,8 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @if (item.ImagesId!=" ")
+        @*<td>
+            @if (item.ImagesId)
                 
                     {
                 <div class="col-lg-3">
@@ -50,7 +50,7 @@
                          class="img-circle" />
                 </div>
             }
-        </td>
+        </td>*@
        <td>
         @Html.DisplayFor(modelItem => item.Name)
     </td>

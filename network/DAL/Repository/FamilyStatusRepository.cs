@@ -20,7 +20,7 @@ namespace network.DAL.Repository
             context.FamilyStatus.Add(famStat);
         }
 
-        public void DeleteFamStatus(string id)
+        public void DeleteFamStatus(int id)
         {
             FamilyStatus famStat = context.FamilyStatus.Find(id);
             context.FamilyStatus.Remove(famStat);
@@ -53,11 +53,7 @@ namespace network.DAL.Repository
            return context.FamilyStatus;
         }
 
-        public FamilyStatus GetStatById(string id)
-        {
-            return context.FamilyStatus.Find(id);
-        }
-
+      
         public void Save()
         {
             context.SaveChanges();
@@ -66,6 +62,11 @@ namespace network.DAL.Repository
         public void UpdateFamStatus(FamilyStatus famStat)
         {
             context.Entry(famStat).State = EntityState.Modified;
+        }
+
+        public FamilyStatus GetStatusById(int id)
+        {
+            return context.FamilyStatus.Find(id);
         }
     }
 }

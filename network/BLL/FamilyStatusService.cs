@@ -38,7 +38,7 @@ namespace network.BLL
 
         public void DeleteFamStat (FamilyStatus famStatus)
         {
-            FamilyStatus famStat = familyStatusRepository.GetStatById(famStatus.Id);
+            FamilyStatus famStat = familyStatusRepository.GetStatusById(famStatus.Id);
             familyStatusRepository.DeleteFamStatus(famStatus.Id);
             familyStatusRepository.Save();
         }

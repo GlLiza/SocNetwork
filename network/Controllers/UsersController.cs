@@ -31,7 +31,7 @@ namespace network.Controllers
         }
 
         // GET: Users/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(int id)
         {
             var user = userService.SearchUser(id);
             return View(user);
@@ -110,7 +110,7 @@ namespace network.Controllers
         }
 
         // GET: Users/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int id)
         {
             var user = userService.SearchUser(id);
             return View("Delete",user);

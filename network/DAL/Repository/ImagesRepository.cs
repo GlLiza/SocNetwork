@@ -21,7 +21,7 @@ namespace network.DAL.Repository
             context.Images.Add(images);
         }
 
-        public void DeleteImage(string id)
+        public void DeleteImage(int id)
         {
             Images img = context.Images.Find(id);
                
@@ -66,7 +66,7 @@ namespace network.DAL.Repository
             context.Entry(images).State=EntityState.Modified;
         }
 
-        public Images GetImageById(string id)
+        public Images GetImageById(int? id)
         {
             var item = context.Images.Find(id);
             return item;
