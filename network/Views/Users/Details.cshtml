@@ -1,7 +1,13 @@
 ﻿@model network.BLL.EF.UserDetails
 
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
 <div>
-    <h4>User</h4>
+    <h4>UserDetails</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -58,6 +64,14 @@
 
         <dd>
             @Html.DisplayFor(model => model.ImagesId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserId)
         </dd>
 
     </dl>

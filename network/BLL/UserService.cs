@@ -1,5 +1,4 @@
-﻿using System.Data.Entity;
-using System.Linq;
+﻿using System.Linq;
 using network.DAL.IRepository;
 using network.DAL.Repository;
 using network.BLL.EF;
@@ -59,17 +58,12 @@ namespace network.BLL
             return imageData;
         }
 
-        public IQueryable< UserDetails> SearchByUserId(string i)
+        public UserDetails SearchByUserId(string i)
         {
-            var item = from m in db.UserDetails
-                    .Where(s => s.UserId == i)
-                select m;
+            var item = db.UserDetails
+                .SingleOrDefault(s => s.UserId == i);
             return item;
         }
-
-
-
-
 
     }
 }

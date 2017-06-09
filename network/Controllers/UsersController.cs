@@ -90,17 +90,18 @@ namespace network.Controllers
         // GET: Users/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            UserDetails user = userService.SearchUser(id);
+            return View(user);
         }
 
         // POST: Users/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(UserDetails user)
         {
             try
             {
-                // TODO: Add update logic here
 
+                userService.EditUser(user);
                 return RedirectToAction("Index");
             }
             catch

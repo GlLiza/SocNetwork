@@ -58,8 +58,11 @@ namespace network.DAL.Repository
 
         public void Update(UserDetails user)
         {
-            context.Entry(user).State = EntityState.Modified;
+            var us = context.UserDetails.Find(user.Id);
+            context.Entry(us).CurrentValues.SetValues(user);
         }
+
+
 
         public UserDetails GetUserById(int id)
         {

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using network.BLL;
@@ -19,10 +20,14 @@ namespace network.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public UserService userService;
+        private ApplicationDbContext db = new ApplicationDbContext();
+
+
+
+
 
         public AccountController()
-        {
+        { 
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -61,8 +66,9 @@ namespace network.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            
-                if (!ModelState.IsValid)
+    
+
+            if (!ModelState.IsValid)
                 {
                     return View(model);
                 }
@@ -76,14 +82,20 @@ namespace network.Controllers
                     case SignInStatus.Success:
 
 
-                    userService = new UserService();
-                    UserDetails us=new UserDetails();
-                    //us = userService.SearchUser();
-                   // userService.SearchUser(model)
+                    UserService userService = new UserService();
 
+                    var manager=new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+                  
 
+                    var currentUser = manager.FindByEmail(model.Email);
+                
 
-                    return RedirectToAction("Edit", "Users");
+                   
+                    //ApplicationUser aspUser = db.Users.FirstOrDefault(x=>x.Id== currentUserId);
+
+                    var us = userService.SearchByUserId(currentUser.Id);
+
+                    return RedirectToAction("Details", "Users",us);
                      
                     case SignInStatus.LockedOut:
                         return View("Lockout");
@@ -97,10 +109,13 @@ namespace network.Controllers
         
 
         }
-    
 
 
-    //
+
+
+
+
+        //
         // GET: /Account/VerifyCode
         [AllowAnonymous]
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
@@ -169,9 +184,9 @@ namespace network.Controllers
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                        userService = new UserService();
-                        var a = new UserDetails { UserId = user.Id };
-                        userService.InsertUser(a);
+                        UserService userService = new UserService();
+                        var us = new UserDetails { UserId = user.Id };
+                        userService.InsertUser(us);
 
                         // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                         // Send an email with this link
@@ -179,7 +194,7 @@ namespace network.Controllers
                         // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                         // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                        return RedirectToAction("Edit", "Users");
+                        return RedirectToAction("Edit", "Users", us);
                     }
                     AddErrors(result);
                 }
