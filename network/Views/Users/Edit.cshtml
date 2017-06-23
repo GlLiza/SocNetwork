@@ -1,15 +1,29 @@
-﻿@model network.BLL.EF.UserDetails
+﻿@model network.Views.ViewModels.CreateUserViewModel
 
-@using (Html.BeginForm())
-{
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@*@using (Html.BeginForm())*@
+
+    @using (Html.BeginForm(Html.BeginForm("Edit", "Users", FormMethod.Post,
+            new
+            {
+                @id = "id",
+                @role = "form",
+                @enctype = "multipart/form-data"
+            })))
+
+
+    { 
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>UserDetails</h4>
+
+        <div class="form-horizontal"/>
+        <h4>CreateUserViewModel</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
-
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -35,14 +49,6 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.FamilyStatusId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FamilyStatusId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FamilyStatusId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control" } })
@@ -58,30 +64,53 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ImagesId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ImagesId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ImagesId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
             </div>
+        </div>*@
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.FamilyStatus, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.SelectedStatus, new SelectList(Model.FamilyStatus, "Id", "Name"), "Status")
+                @Html.ValidationMessageFor(model => model.FamStat.Id, "", new { @class = "text-danger" })
+            </div>
         </div>
 
         <div class="form-group">
+
+            @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="col-lg-3">
+                    <img id="user_img"
+                         height="80"
+                         width="80"
+                         style="border: solid" src="data:image/png;base64, @Convert.ToBase64String(Model.Image.Data)"
+                         class="img-circle" />
+                </div>
+            </div>
+
+            @*@Html.LabelFor(model => model.Image.Data, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <label>
+                Browse <input type="file" style="display: none" name="img" value="@Model.Image" />
+            </label>
+        </div>
+
+
+
+            <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />
+
             </div>
         </div>
-    </div>
+    
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+

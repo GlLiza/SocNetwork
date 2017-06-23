@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace network.BLL.EF
 {
     using System;
@@ -21,6 +23,8 @@ namespace network.BLL.EF
         }
     
         public int Id { get; set; }
+
+        [Display(Name = "Family status")]
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

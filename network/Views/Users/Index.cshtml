@@ -6,14 +6,19 @@
 
 <h2>Index</h2>
 
-<p>
+@*<p>
     @Html.ActionLink("Create New", "Create")
-</p>
+</p>*@
+
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ImagesId)
+            @Html.DisplayNameFor(model => model.Images)
         </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.UserId)
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
@@ -38,8 +43,8 @@
 
 @foreach (var item in Model) {
     <tr>
-        @*<td>
-            @if (item.ImagesId)
+        <td>
+            @if (item.ImagesId!=null)
                 
                     {
                 <div class="col-lg-3">
@@ -50,8 +55,13 @@
                          class="img-circle" />
                 </div>
             }
+        </td>
+        
+        @*<td>
+            @Html.DisplayFor(modelItem => item.UserId)
         </td>*@
-       <td>
+
+        <td>
         @Html.DisplayFor(modelItem => item.Name)
     </td>
     <td>
@@ -80,6 +90,7 @@
                     <li><a href="#">Show friends</a></li>
                     <li class="divider"></li>
                     <li>@Html.ActionLink("Remove", "Delete", new { id = item.Id })</li>
+                    <li>@Html.ActionLink("Edit profile", "Edit", new { id = item.Id })
                 </ul>
             </div>
         </td>

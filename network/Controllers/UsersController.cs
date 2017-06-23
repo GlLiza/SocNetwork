@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -7,6 +8,7 @@ using network.BLL;
 using network.BLL.EF;
 using network.DAL.IRepository;
 using network.DAL.Repository;
+using network.Views.ViewModels;
 
 namespace network.Controllers
 {
@@ -23,12 +25,13 @@ namespace network.Controllers
             imgRepository=new ImagesRepository(db);
         }
 
-        // GET: Users
+        [HttpGet]
         public ActionResult Index()
         {
-            var users = userService.GetUser().ToList();
-            return View(users);
+            //var users = userService.GetUser().ToList();
+            return View(db.UserDetails.ToList());
         }
+
 
         // GET: Users/Details/5
         public ActionResult Details(int id)
@@ -91,20 +94,66 @@ namespace network.Controllers
         public ActionResult Edit(int id)
         {
             UserDetails user = userService.SearchUser(id);
-            return View(user);
+
+            var model = new CreateUserViewModel
+            {
+                Id=user.Id,
+                UserId = user.UserId,
+                SelectedStatus = user.FamilyStatusId,
+                FamStat = user.FamilyStatus,
+                FamilyStatus = db.FamilyStatus.ToList(),
+                Name = user.Name,
+                Firstname = user.Firstname,
+                DateOfBirthday = user.DateOfBirthday,
+                Country = user.Country,
+                City=user.City,
+                Image =user.Images
+
+            };
+            return View("Edit",model);
         }
 
         // POST: Users/Edit/5
         [HttpPost]
-        public ActionResult Edit(UserDetails user)
+        public ActionResult Edit(HttpPostedFileBase img,CreateUserViewModel model)
         {
             try
             {
+                Images headerImage = new Images();
+                UserDetails user = userService.SearchUser(model.Id);
+
+                if (img != null)
+                    {
+                        byte[] imageData = null;
+                        using (var binaryReader = new BinaryReader(img.InputStream))
+                        {
+                            imageData = binaryReader.ReadBytes(img.ContentLength);
+                        }
+                        headerImage.Name = img.FileName;
+                        headerImage.Data = imageData;
+                        headerImage.ContentType = img.ContentType;
+                        
+                        imgRepository.AddImage(headerImage);
+
+                        imgRepository.Save();
+
+                        user.ImagesId = headerImage.Id;
+                        userService.EditUser(user);
+                    }
+              
+                user.Name = model.Name;
+                user.Firstname = model.Firstname;
+                user.City = model.City;
+                user.Country = model.Country;
+                user.DateOfBirthday = model.DateOfBirthday;
+                user.FamilyStatusId = model.SelectedStatus;
 
                 userService.EditUser(user);
+
+
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception e)
             {
                 return View();
             }
@@ -124,18 +173,26 @@ namespace network.Controllers
             try
             {
                 var user = userService.SearchUser(u.Id);
+                var USER = db.AspNetUsers.Find(user.UserId);
+
+
+                //if (u.ImagesId != null)
+                //{
+                //    var photo = imgServ.SearchImg(u.ImagesId);
+                //    imgServ.DeleteImage(photo);
+                //}
+
                 userService.DeleteUser(user);
 
-                if (u.ImagesId != null)
-                {
-                    var photo = imgServ.SearchImg(u.ImagesId);
-                    imgServ.DeleteImage(photo);
-                }
-              
 
-                return RedirectToAction("Index");
+                if (USER.Id!=null)
+                db.AspNetUsers.Remove(USER);
+                
+                db.SaveChanges();
+
+                return RedirectToAction("LogOff", "Account");
             }
-            catch
+            catch (Exception e)
             {
                 return View();
             }

@@ -267,6 +267,8 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Views\ViewModels\CreateUserViewModel.cs" />
+    <Compile Include="Views\ViewModels\ShowUserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="BLL\EF\Network.Context.tt">
@@ -346,7 +348,6 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Users\AddImage.cshtml" />
-    <Content Include="Views\Users\Create.cshtml" />
     <Content Include="Views\Users\Delete.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Users\Details.cshtml" />

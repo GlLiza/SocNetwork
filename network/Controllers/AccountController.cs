@@ -96,6 +96,8 @@ namespace network.Controllers
                     var us = userService.SearchByUserId(currentUser.Id);
 
                     return RedirectToAction("Details", "Users",us);
+
+
                      
                     case SignInStatus.LockedOut:
                         return View("Lockout");
@@ -439,8 +441,6 @@ namespace network.Controllers
 
         //
         // POST: /Account/LogOff
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
             var ctx = Request.GetOwinContext();
