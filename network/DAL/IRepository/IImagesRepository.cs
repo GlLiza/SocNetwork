@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
-using network.BLL.EF;
-using WebGrease.Css.ImageAssemblyAnalysis;
+using network.BLL;
 
 namespace network.DAL.IRepository
 {

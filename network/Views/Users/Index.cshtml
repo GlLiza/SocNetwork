@@ -16,9 +16,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Images)
         </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.UserId)
-        </th>*@
+       
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
@@ -37,6 +35,11 @@
         <th>
             @Html.DisplayNameFor(model => model.City)
         </th>
+        <th>
+           Photoalbum
+        </th>
+        
+
 
         <th></th>
     </tr>
@@ -78,7 +81,11 @@
     </td>
     <td>
         @Html.DisplayFor(modelItem => item.City)
-    </td> 
+        </td> 
+        
+        <td>
+            @*@Html.ActionLink("PhotoalbumList",)*@
+        </td> 
 
         <td>
 
