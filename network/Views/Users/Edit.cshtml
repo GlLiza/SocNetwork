@@ -83,15 +83,19 @@
         <div class="form-group">
 
             @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="col-lg-3">
-                    <img id="user_img"
-                         height="80"
-                         width="80"
-                         style="border: solid" src="data:image/png;base64, @Convert.ToBase64String(Model.Image.Data)"
-                         class="img-circle" />
+            
+            @if (Model.ImageId != 0)
+            {
+                <div class="col-md-10">
+                    <div class="col-lg-3">
+                        <img id="user_img"
+                             height="80"
+                             width="80"
+                             style="border: solid" src="data:image/png;base64, @Convert.ToBase64String(Model.Image.Data)"
+                             class="img-circle" /
+                    </div>
                 </div>
-            </div>
+            }
 
             @*@Html.LabelFor(model => model.Image.Data, htmlAttributes: new { @class = "control-label col-md-2" })*@
             <label>

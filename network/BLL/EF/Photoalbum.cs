@@ -10,13 +10,16 @@
 namespace network.BLL.EF
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class sp_helpdiagrams_Result
+    public partial class Photoalbum
     {
-        public string Database { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
-        public int ID { get; set; }
-        public string Owner { get; set; }
-        public int OwnerID { get; set; }
+        public int UserId { get; set; }
+        public Nullable<int> ImageId { get; set; }
+    
+        public virtual Images Images { get; set; }
+        public virtual UserDetails UserDetails { get; set; }
     }
 }

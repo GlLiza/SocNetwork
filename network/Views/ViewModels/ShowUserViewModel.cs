@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-using Microsoft.Owin.Security.DataHandler.Encoder;
+using network.BLL;
 using network.BLL.EF;
 
 namespace network.Views.ViewModels

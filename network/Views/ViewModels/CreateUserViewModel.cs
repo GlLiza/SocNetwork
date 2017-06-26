@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using network.BLL;
 using network.BLL.EF;
 
 namespace network.Views.ViewModels
@@ -24,7 +25,7 @@ namespace network.Views.ViewModels
         //public IEnumerable<FamilyStatus> FamStatusList { get; set; }
 
 
-        public int SelectedStatus { get; set; }
+        public int? SelectedStatus { get; set; }
 
         [Display(Name = "Family status")]
         public virtual FamilyStatus FamStat { get; set; }

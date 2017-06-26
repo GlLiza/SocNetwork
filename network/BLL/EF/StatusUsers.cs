@@ -12,28 +12,19 @@ namespace network.BLL.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class UserDetails
+    public partial class StatusUsers
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public UserDetails()
+        public StatusUsers()
         {
-            this.Photoalbum = new HashSet<Photoalbum>();
+            this.Friendship = new HashSet<Friendship>();
         }
     
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Firstname { get; set; }
-        public Nullable<System.DateTime> DateOfBirthday { get; set; }
-        public Nullable<int> FamilyStatusId { get; set; }
-        public string Country { get; set; }
-        public string City { get; set; }
-        public Nullable<int> ImagesId { get; set; }
-        public string UserId { get; set; }
+        public Nullable<bool> Status { get; set; }
+        public string Description { get; set; }
     
-        public virtual AspNetUsers AspNetUsers { get; set; }
-        public virtual FamilyStatus FamilyStatus { get; set; }
-        public virtual Images Images { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Photoalbum> Photoalbum { get; set; }
+        public virtual ICollection<Friendship> Friendship { get; set; }
     }
 }

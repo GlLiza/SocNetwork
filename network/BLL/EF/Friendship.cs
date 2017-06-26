@@ -10,10 +10,16 @@
 namespace network.BLL.EF
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class sp_helpdiagramdefinition_Result
+    public partial class Friendship
     {
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int Id { get; set; }
+        public string User1_id { get; set; }
+        public string User2_id { get; set; }
+        public int StatusUsers { get; set; }
+    
+        public virtual AspNetUsers AspNetUsers { get; set; }
+        public virtual StatusUsers StatusUsers1 { get; set; }
     }
 }

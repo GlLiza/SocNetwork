@@ -17,6 +17,7 @@ namespace network.BLL.EF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Images()
         {
+            this.Photoalbum = new HashSet<Photoalbum>();
             this.UserDetails = new HashSet<UserDetails>();
         }
     
@@ -25,6 +26,8 @@ namespace network.BLL.EF
         public byte[] Data { get; set; }
         public string ContentType { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Photoalbum> Photoalbum { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserDetails> UserDetails { get; set; }
     }

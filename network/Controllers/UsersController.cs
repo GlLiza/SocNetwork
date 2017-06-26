@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -241,7 +240,7 @@ namespace network.Controllers
 
             //    }
 
-            //    return RedirectToAction("Index");
+               return RedirectToAction("Index");
             }
             catch (Exception c)
             {

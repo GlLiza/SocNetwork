@@ -1,8 +1,7 @@
 ﻿using System.Linq;
+using network.BLL.EF;
 using network.DAL.IRepository;
 using network.DAL.Repository;
-using network.BLL.EF;
-using network.Views.ViewModels;
 
 namespace network.BLL
 {

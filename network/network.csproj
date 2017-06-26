@@ -197,59 +197,59 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="BLL\AspNetRoles.cs">
+    <Compile Include="BLL\EF\AspNetRoles.cs">
       <DependentUpon>EF.tt</DependentUpon>
     </Compile>
-    <Compile Include="BLL\AspNetUserClaims.cs">
+    <Compile Include="BLL\EF\AspNetUserClaims.cs">
       <DependentUpon>EF.tt</DependentUpon>
     </Compile>
-    <Compile Include="BLL\AspNetUserLogins.cs">
+    <Compile Include="BLL\EF\AspNetUserLogins.cs">
       <DependentUpon>EF.tt</DependentUpon>
     </Compile>
-    <Compile Include="BLL\AspNetUsers.cs">
+    <Compile Include="BLL\EF\AspNetUsers.cs">
       <DependentUpon>EF.tt</DependentUpon>
     </Compile>
-    <Compile Include="BLL\C__MigrationHistory.cs">
+    <Compile Include="BLL\EF\C__MigrationHistory.cs">
       <DependentUpon>EF.tt</DependentUpon>
     </Compile>
-    <Compile Include="BLL\EF.Context.cs">
+    <Compile Include="BLL\EF\EF.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EF.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="BLL\EF.cs">
+    <Compile Include="BLL\EF\EF.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EF.tt</DependentUpon>
     </Compile>
-    <Compile Include="BLL\EF.Designer.cs">
+    <Compile Include="BLL\EF\EF.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EF.edmx</DependentUpon>
     </Compile>
-    <Compile Include="BLL\FamilyStatus.cs">
+    <Compile Include="BLL\EF\FamilyStatus.cs">
+      <DependentUpon>EF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BLL\EF\Friendship.cs">
+      <DependentUpon>EF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BLL\EF\Images.cs">
+      <DependentUpon>EF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BLL\EF\Photoalbum.cs">
+      <DependentUpon>EF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BLL\EF\StatusUsers.cs">
+      <DependentUpon>EF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BLL\EF\sysdiagrams.cs">
+      <DependentUpon>EF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BLL\EF\UserDetails.cs">
       <DependentUpon>EF.tt</DependentUpon>
     </Compile>
     <Compile Include="BLL\FamilyStatusService.cs" />
-    <Compile Include="BLL\Friendship.cs">
-      <DependentUpon>EF.tt</DependentUpon>
-    </Compile>
-    <Compile Include="BLL\Images.cs">
-      <DependentUpon>EF.tt</DependentUpon>
-    </Compile>
     <Compile Include="BLL\ImageService.cs" />
-    <Compile Include="BLL\Photoalbum.cs">
-      <DependentUpon>EF.tt</DependentUpon>
-    </Compile>
-    <Compile Include="BLL\StatusUsers.cs">
-      <DependentUpon>EF.tt</DependentUpon>
-    </Compile>
-    <Compile Include="BLL\sysdiagrams.cs">
-      <DependentUpon>EF.tt</DependentUpon>
-    </Compile>
-    <Compile Include="BLL\UserDetails.cs">
-      <DependentUpon>EF.tt</DependentUpon>
-    </Compile>
     <Compile Include="BLL\UserService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -274,12 +274,12 @@
     <Compile Include="Views\ViewModels\ShowUserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BLL\EF.Context.tt">
+    <Content Include="BLL\EF\EF.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>EF.edmx</DependentUpon>
       <LastGenOutput>EF.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="BLL\EF.tt">
+    <Content Include="BLL\EF\EF.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>EF.edmx</DependentUpon>
       <LastGenOutput>EF.cs</LastGenOutput>
@@ -295,11 +295,11 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="BLL\EF.edmx">
+    <EntityDeploy Include="BLL\EF\EF.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>EF.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="BLL\EF.edmx.diagram">
+    <Content Include="BLL\EF\EF.edmx.diagram">
       <DependentUpon>EF.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
