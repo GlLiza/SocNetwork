@@ -6,10 +6,6 @@
 
 <h2>Index</h2>
 
-@*<p>
-    @Html.ActionLink("Create New", "Create")
-</p>*@
-
 
 <table class="table">
     <tr>
@@ -50,7 +46,7 @@
             @if (item.ImagesId!=null)
                 
                     {
-                <div class="col-lg-3">
+                <div class="col-lg-9">
                     <img id="user_img"
                          height="80"
                          width="80"
@@ -84,8 +80,16 @@
         </td> 
         
         <td>
-            @*@Html.ActionLink("PhotoalbumList",)*@
+            @Html.ActionLink("Album", "Create", "Album", new { id = item.Id }, null)
         </td> 
+        <td>
+       @*@if (item.PhotAlbColl.Count!=0)
+       {*@
+           @Html.ActionLink("Browse albums", "BrowseAlbums", "Album", new { id = item.Id }, null);
+               @*}*@
+
+            </td>
+      
 
         <td>
 

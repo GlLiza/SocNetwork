@@ -855,7 +855,7 @@ pre code {
 .col-lg-9,
 .col-lg-10,
 .col-lg-11,
-.col-lg-12 {
+.col-lg-8 {
   position: relative;
   min-height: 1px;
   padding-right: 15px;
@@ -1291,7 +1291,7 @@ pre code {
   .col-lg-11 {
     width: 91.66666666666666%;
   }
-  .col-lg-12 {
+  .col-lg-8 {
     width: 100%;
   }
   .col-lg-push-0 {

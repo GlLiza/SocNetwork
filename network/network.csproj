@@ -250,14 +250,18 @@
     </Compile>
     <Compile Include="BLL\FamilyStatusService.cs" />
     <Compile Include="BLL\ImageService.cs" />
+    <Compile Include="BLL\PhotoalbumService.cs" />
     <Compile Include="BLL\UserService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AlbumController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="DAL\IRepository\IAlbumRepository.cs" />
     <Compile Include="DAL\IRepository\IFamilyStatusRepository.cs" />
     <Compile Include="DAL\IRepository\IImagesRepository.cs" />
     <Compile Include="DAL\IRepository\IUserRepository.cs" />
+    <Compile Include="DAL\Repository\AlbumRepository.cs" />
     <Compile Include="DAL\Repository\FamilyStatusRepository.cs" />
     <Compile Include="DAL\Repository\ImagesRepository.cs" />
     <Compile Include="DAL\Repository\UserRepository.cs" />
@@ -356,6 +360,11 @@
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Home\Registration.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Views\Users\BrowsePhotoAlbum.cshtml" />
+    <Content Include="Views\Album\Create.cshtml" />
+    <Content Include="Views\Album\BrowseAlbums.cshtml" />
+    <Content Include="Views\Album\Delete.cshtml" />
+    <Content Include="Views\Album\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

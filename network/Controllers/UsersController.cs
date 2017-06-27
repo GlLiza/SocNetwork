@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -38,6 +39,15 @@ namespace network.Controllers
             var user = userService.SearchUser(id);
             return View(user);
         }
+
+      
+
+
+
+
+
+
+
 
         //// GET: Users/Create
         //public ActionResult Create()
