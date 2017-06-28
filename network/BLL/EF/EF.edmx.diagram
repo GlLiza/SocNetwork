@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="91cbb8bea42442718a79572cc20e62f5" Name="Diagram1">
+      <Diagram DiagramId="91cbb8bea42442718a79572cc20e62f5" Name="Diagram1" ZoomLevel="64">
         <EntityTypeShape EntityType="NetworkModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="NetworkModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
         <EntityTypeShape EntityType="NetworkModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
@@ -12,8 +12,7 @@
         <EntityTypeShape EntityType="NetworkModel.AspNetUsers" Width="1.5" PointX="2.875" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="NetworkModel.FamilyStatus" Width="1.5" PointX="6" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="NetworkModel.Friendship" Width="1.5" PointX="8.625" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="NetworkModel.Images" Width="1.5" PointX="11" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NetworkModel.Photoalbum" Width="1.5" PointX="12" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="NetworkModel.Images" Width="1.5" PointX="12.375" PointY="5.375" IsExpanded="true" />
         <EntityTypeShape EntityType="NetworkModel.StatusUsers" Width="1.5" PointX="8.75" PointY="9.75" IsExpanded="true" />
         <EntityTypeShape EntityType="NetworkModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="NetworkModel.UserDetails" Width="1.5" PointX="8.25" PointY="0.5" IsExpanded="true" />
@@ -23,10 +22,13 @@
         <AssociationConnector Association="NetworkModel.FK_UserDetails_AspNetUsers" ManuallyRouted="false" />
         <AssociationConnector Association="NetworkModel.FK_UserDetails_FamilyStatus" ManuallyRouted="false" />
         <AssociationConnector Association="NetworkModel.FK_Friendship_StatusUsers" ManuallyRouted="false" />
-        <AssociationConnector Association="NetworkModel.FK_Photoalbum_Images" ManuallyRouted="false" />
         <AssociationConnector Association="NetworkModel.FK_UserDetails_Images" ManuallyRouted="false" />
-        <AssociationConnector Association="NetworkModel.FK_Photoalbum_UserDetails" ManuallyRouted="false" />
         <AssociationConnector Association="NetworkModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="NetworkModel.AlbAndPhot" Width="1.5" PointX="18.375" PointY="4.875" />
+        <AssociationConnector Association="NetworkModel.FK_AlbAndPhot_Images" />
+        <EntityTypeShape EntityType="NetworkModel.Photoalbum" Width="1.5" PointX="10.5" PointY="1.25" />
+        <AssociationConnector Association="NetworkModel.FK_AlbAndPhot_Photoalbum1" />
+        <AssociationConnector Association="NetworkModel.FK_Photoalbum_UserDetails" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

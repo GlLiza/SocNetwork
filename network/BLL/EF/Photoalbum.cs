@@ -14,12 +14,18 @@ namespace network.BLL.EF
     
     public partial class Photoalbum
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Photoalbum()
+        {
+            this.AlbAndPhot = new HashSet<AlbAndPhot>();
+        }
+    
         public int Id { get; set; }
         public string Name { get; set; }
         public int UserId { get; set; }
-        public Nullable<int> ImageId { get; set; }
     
-        public virtual Images Images { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlbAndPhot> AlbAndPhot { get; set; }
         public virtual UserDetails UserDetails { get; set; }
     }
 }

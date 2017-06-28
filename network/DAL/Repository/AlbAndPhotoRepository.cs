@@ -1,29 +1,27 @@
-﻿using network.DAL.IRepository;
-using System;
-using System.Linq;
+﻿using System;
 using network.BLL.EF;
-using System.Data.Entity;
+using network.DAL.IRepository;
 
 namespace network.DAL.Repository
 {
-    public class AlbumRepository : IAlbumRepository
+    public class AlbAndPhotoRepository : IAlbAndPhotoRepository
     {
         private NetworkContext context;
 
-        public AlbumRepository(NetworkContext con)
+        public AlbAndPhotoRepository(NetworkContext con)
         {
             context = con;
         }
 
-        public void AddNewAlbum(Photoalbum album)
+        public void AddNewEntry(AlbAndPhot alb)
         {
-            context.Photoalbum.Add(album);
+            context.AlbAndPhot.Add(alb); 
         }
 
-        public void DeleteAlbum(Photoalbum alb)
+        public void DeleteEntry(AlbAndPhot alb)
         {
-            Photoalbum album = context.Photoalbum.Find(alb.Id);
-            context.Photoalbum.Remove(album);
+            AlbAndPhot album = context.AlbAndPhot.Find(alb.Id);
+            context.AlbAndPhot.Remove(album);
         }
 
         private bool disposed = false;
@@ -46,26 +44,20 @@ namespace network.DAL.Repository
             GC.SuppressFinalize(this);
         }
 
-        
+        public AlbAndPhot GetEntryById(int id)
+        {
+            return context.AlbAndPhot.Find(id);
+        }
 
         public void Save()
         {
             context.SaveChanges();
         }
 
-        public void UpdateAlbum(Photoalbum album)
+        public void UpdateEntry(AlbAndPhot album)
         {
-
-            //context.Entry(album).State = EntityState.Unchanged;
-
-            Photoalbum alb = context.Photoalbum.Find(album.Id);
+            AlbAndPhot alb = context.AlbAndPhot.Find(album.Id);
             context.Entry(alb).CurrentValues.SetValues(album);
-        }
-
-
-        public Photoalbum GetAlbumById(int id)
-        {
-            return context.Photoalbum.Find(id);
         }
     }
 }

@@ -13,10 +13,13 @@ namespace network.BLL
         private NetworkContext db = new NetworkContext();
 
         private IAlbumRepository albumRepository;
+        private IAlbAndPhotoRepository AlbAndPhRepository;
+
 
         public PhotoalbumService()
         {
             albumRepository = new AlbumRepository(db);
+            AlbAndPhRepository=new AlbAndPhotoRepository(db);
         }
 
         public IQueryable<Photoalbum> GetListAlbums(int id)
@@ -52,5 +55,28 @@ namespace network.BLL
            var album=albumRepository.GetAlbumById(id);
             return album;
         }
+
+        public void AddNewEntry(AlbAndPhot entr)
+        {
+           AlbAndPhRepository.AddNewEntry(entr);
+          AlbAndPhRepository.Save();
+
+        }
+
+
+
+
+        public IEnumerable<Images> OpenAlbum(int id)
+        {
+            var album = albumRepository.GetAlbumById(id);
+            var item = db.AlbAndPhot
+                .Where(q => q.PhotoalbumId == album.Id);
+
+
+            var photos = from s in db.Images
+                where s.Id == item.
+                select s;
+            return photos;
+        } 
     }
 }

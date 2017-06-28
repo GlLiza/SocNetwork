@@ -197,6 +197,9 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="BLL\EF\AlbAndPhot.cs">
+      <DependentUpon>EF.tt</DependentUpon>
+    </Compile>
     <Compile Include="BLL\EF\AspNetRoles.cs">
       <DependentUpon>EF.tt</DependentUpon>
     </Compile>
@@ -257,10 +260,12 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="DAL\IRepository\IAlbAndPhotoRepository.cs" />
     <Compile Include="DAL\IRepository\IAlbumRepository.cs" />
     <Compile Include="DAL\IRepository\IFamilyStatusRepository.cs" />
     <Compile Include="DAL\IRepository\IImagesRepository.cs" />
     <Compile Include="DAL\IRepository\IUserRepository.cs" />
+    <Compile Include="DAL\Repository\AlbAndPhotoRepository.cs" />
     <Compile Include="DAL\Repository\AlbumRepository.cs" />
     <Compile Include="DAL\Repository\FamilyStatusRepository.cs" />
     <Compile Include="DAL\Repository\ImagesRepository.cs" />
@@ -362,9 +367,11 @@
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\BrowsePhotoAlbum.cshtml" />
     <Content Include="Views\Album\Create.cshtml" />
-    <Content Include="Views\Album\BrowseAlbums.cshtml" />
     <Content Include="Views\Album\Delete.cshtml" />
     <Content Include="Views\Album\Edit.cshtml" />
+    <Content Include="Views\Album\OpenAlbum.cshtml" />
+    <Content Include="Views\Album\BrowseAlbums.cshtml" />
+    <Content Include="Views\Album\AddPhoto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

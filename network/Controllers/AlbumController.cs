@@ -1,6 +1,8 @@
 ﻿using network.BLL;
 using network.BLL.EF;
 using System;
+using System.IO;
+using System.Web;
 using System.Web.Mvc;
 
 namespace network.Controllers
@@ -11,11 +13,14 @@ namespace network.Controllers
         public NetworkContext db = new NetworkContext();
         public PhotoalbumService albumServ;
         public UserService userServ;
+        public ImageService imgServ;
 
+        
         public AlbumController()
         {
             albumServ = new PhotoalbumService();
             userServ = new UserService();
+            imgServ = new ImageService();
         }
 
         // GET: Album
@@ -39,11 +44,12 @@ namespace network.Controllers
 
         // POST: Album/Create
         [HttpPost]
-        public ActionResult Create(int id,Photoalbum alb)
+        public ActionResult Create(int id, Photoalbum alb)
         {
             try
             {
                 alb.UserId = id;
+                //alb. = rnd.Next();
                 albumServ.AddNewAlbum(alb);
 
                 return RedirectToAction("Index","Users");
@@ -106,6 +112,58 @@ namespace network.Controllers
             var photalbum = albumServ.GetListAlbums(user.Id);
 
             return View(photalbum);
+        }
+
+
+
+        public ActionResult AddPhoto(int id)
+        {
+            //var al = albumServ.SearchAlbum(id);
+            return View("AddPhoto");
+        }
+
+        [HttpPost]
+        public ActionResult AddPhoto(int id, HttpPostedFileBase img)
+        {
+            try
+            {
+                Photoalbum album = albumServ.SearchAlbum(id);
+                Images headerImage = new Images();
+                AlbAndPhot entry=new AlbAndPhot();
+                entry.PhotoalbumId = album.Id;
+
+
+
+                if (img != null)
+                {
+                    byte[] imageData = null;
+                    using (var binaryReader = new BinaryReader(img.InputStream))
+                    {
+                        imageData = binaryReader.ReadBytes(img.ContentLength);
+                    }
+                    headerImage.Name = img.FileName;
+                    headerImage.Data = imageData;
+                    headerImage.ContentType = img.ContentType;
+
+                    imgServ.InsertImage(headerImage);
+                    entry.ImageId = headerImage.Id;
+                    
+                    albumServ.AddNewEntry(entry);
+                }
+
+                return RedirectToAction("Index","Users");
+            }
+
+            catch (Exception ex)
+            {
+                return View();
+            }
+        }
+
+        public PartialViewResult OpenAlbum(int id)
+        {
+            var photos = albumServ.OpenAlbum(id);
+            return PartialView("OpenAlbum",photos);
         }
     }
 }

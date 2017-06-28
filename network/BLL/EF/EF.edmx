@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="NetworkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="NetworkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -14,6 +14,14 @@
           <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
           <Property Name="Model" Type="varbinary(max)" Nullable="false" />
           <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AlbAndPhot">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PhotoalbumId" Type="int" Nullable="false" />
+          <Property Name="ImageId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
@@ -96,9 +104,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="200" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" />
           <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="ImageId" Type="int" />
         </EntityType>
         <EntityType Name="StatusUsers">
           <Key>
@@ -132,6 +139,30 @@
           <Property Name="ImagesId" Type="int" />
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
+        <Association Name="FK_AlbAndPhot_Images">
+          <End Role="Images" Type="Self.Images" Multiplicity="1" />
+          <End Role="AlbAndPhot" Type="Self.AlbAndPhot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Images">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AlbAndPhot">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlbAndPhot_Photoalbum1">
+          <End Role="Photoalbum" Type="Self.Photoalbum" Multiplicity="1" />
+          <End Role="AlbAndPhot" Type="Self.AlbAndPhot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Photoalbum">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AlbAndPhot">
+              <PropertyRef Name="PhotoalbumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -212,18 +243,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Photoalbum_Images">
-          <End Role="Images" Type="Self.Images" Multiplicity="0..1" />
-          <End Role="Photoalbum" Type="Self.Photoalbum" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Images">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Photoalbum">
-              <PropertyRef Name="ImageId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Photoalbum_UserDetails">
           <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
           <End Role="Photoalbum" Type="Self.Photoalbum" Multiplicity="*" />
@@ -274,6 +293,7 @@
         </Association>
         <EntityContainer Name="NetworkModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AlbAndPhot" EntityType="Self.AlbAndPhot" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
@@ -286,6 +306,14 @@
           <EntitySet Name="StatusUsers" EntityType="Self.StatusUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AlbAndPhot_Images" Association="Self.FK_AlbAndPhot_Images">
+            <End Role="Images" EntitySet="Images" />
+            <End Role="AlbAndPhot" EntitySet="AlbAndPhot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlbAndPhot_Photoalbum1" Association="Self.FK_AlbAndPhot_Photoalbum1">
+            <End Role="Photoalbum" EntitySet="Photoalbum" />
+            <End Role="AlbAndPhot" EntitySet="AlbAndPhot" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -310,10 +338,6 @@
             <End Role="StatusUsers" EntitySet="StatusUsers" />
             <End Role="Friendship" EntitySet="Friendship" />
           </AssociationSet>
-          <AssociationSet Name="FK_Photoalbum_Images" Association="Self.FK_Photoalbum_Images">
-            <End Role="Images" EntitySet="Images" />
-            <End Role="Photoalbum" EntitySet="Photoalbum" />
-          </AssociationSet>
           <AssociationSet Name="FK_Photoalbum_UserDetails" Association="Self.FK_Photoalbum_UserDetails">
             <End Role="UserDetails" EntitySet="UserDetails" />
             <End Role="Photoalbum" EntitySet="Photoalbum" />
@@ -331,8 +355,7 @@
             <End Role="UserDetails" EntitySet="UserDetails" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="NetworkModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -424,19 +447,8 @@
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Data" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="ContentType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Photoalbum" Relationship="Self.FK_Photoalbum_Images" FromRole="Images" ToRole="Photoalbum" />
           <NavigationProperty Name="UserDetails" Relationship="Self.FK_UserDetails_Images" FromRole="Images" ToRole="UserDetails" />
-        </EntityType>
-        <EntityType Name="Photoalbum">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="ImageId" Type="Int32" />
-          <NavigationProperty Name="Images" Relationship="Self.FK_Photoalbum_Images" FromRole="Photoalbum" ToRole="Images" />
-          <NavigationProperty Name="UserDetails" Relationship="Self.FK_Photoalbum_UserDetails" FromRole="Photoalbum" ToRole="UserDetails" />
+          <NavigationProperty Name="AlbAndPhot" Relationship="NetworkModel.FK_AlbAndPhot_Images" FromRole="Images" ToRole="AlbAndPhot" />
         </EntityType>
         <EntityType Name="StatusUsers">
           <Key>
@@ -473,7 +485,7 @@
           <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_UserDetails_AspNetUsers" FromRole="UserDetails" ToRole="AspNetUsers" />
           <NavigationProperty Name="FamilyStatus" Relationship="Self.FK_UserDetails_FamilyStatus" FromRole="UserDetails" ToRole="FamilyStatus" />
           <NavigationProperty Name="Images" Relationship="Self.FK_UserDetails_Images" FromRole="UserDetails" ToRole="Images" />
-          <NavigationProperty Name="Photoalbum" Relationship="Self.FK_Photoalbum_UserDetails" FromRole="UserDetails" ToRole="Photoalbum" />
+          <NavigationProperty Name="Photoalbum" Relationship="NetworkModel.FK_Photoalbum_UserDetails" FromRole="UserDetails" ToRole="Photoalbum" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -551,18 +563,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Photoalbum_Images">
-          <End Role="Images" Type="Self.Images" Multiplicity="0..1" />
-          <End Role="Photoalbum" Type="Self.Photoalbum" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Images">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Photoalbum">
-              <PropertyRef Name="ImageId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_UserDetails_Images">
           <End Role="Images" Type="Self.Images" Multiplicity="0..1" />
           <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
@@ -572,18 +572,6 @@
             </Principal>
             <Dependent Role="UserDetails">
               <PropertyRef Name="ImagesId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Photoalbum_UserDetails">
-          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
-          <End Role="Photoalbum" Type="Self.Photoalbum" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserDetails">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Photoalbum">
-              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -600,7 +588,6 @@
           <EntitySet Name="FamilyStatus" EntityType="Self.FamilyStatus" />
           <EntitySet Name="Friendship" EntityType="Self.Friendship" />
           <EntitySet Name="Images" EntityType="Self.Images" />
-          <EntitySet Name="Photoalbum" EntityType="Self.Photoalbum" />
           <EntitySet Name="StatusUsers" EntityType="Self.StatusUsers" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="UserDetails" EntityType="Self.UserDetails" />
@@ -628,23 +615,85 @@
             <End Role="StatusUsers" EntitySet="StatusUsers" />
             <End Role="Friendship" EntitySet="Friendship" />
           </AssociationSet>
-          <AssociationSet Name="FK_Photoalbum_Images" Association="Self.FK_Photoalbum_Images">
-            <End Role="Images" EntitySet="Images" />
-            <End Role="Photoalbum" EntitySet="Photoalbum" />
-          </AssociationSet>
           <AssociationSet Name="FK_UserDetails_Images" Association="Self.FK_UserDetails_Images">
             <End Role="Images" EntitySet="Images" />
             <End Role="UserDetails" EntitySet="UserDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Photoalbum_UserDetails" Association="Self.FK_Photoalbum_UserDetails">
-            <End Role="UserDetails" EntitySet="UserDetails" />
-            <End Role="Photoalbum" EntitySet="Photoalbum" />
           </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="AlbAndPhot" EntityType="NetworkModel.AlbAndPhot" />
+          <AssociationSet Name="FK_AlbAndPhot_Images" Association="NetworkModel.FK_AlbAndPhot_Images">
+            <End Role="Images" EntitySet="Images" />
+            <End Role="AlbAndPhot" EntitySet="AlbAndPhot" />
+          </AssociationSet>
+          <EntitySet Name="Photoalbum" EntityType="NetworkModel.Photoalbum" />
+          <AssociationSet Name="FK_AlbAndPhot_Photoalbum1" Association="NetworkModel.FK_AlbAndPhot_Photoalbum1">
+            <End Role="Photoalbum" EntitySet="Photoalbum" />
+            <End Role="AlbAndPhot" EntitySet="AlbAndPhot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Photoalbum_UserDetails" Association="NetworkModel.FK_Photoalbum_UserDetails">
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="Photoalbum" EntitySet="Photoalbum" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="AlbAndPhot">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PhotoalbumId" Type="Int32" Nullable="false" />
+          <Property Name="ImageId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Images" Relationship="NetworkModel.FK_AlbAndPhot_Images" FromRole="AlbAndPhot" ToRole="Images" />
+          <NavigationProperty Name="Photoalbum" Relationship="NetworkModel.FK_AlbAndPhot_Photoalbum1" FromRole="AlbAndPhot" ToRole="Photoalbum" />
+        </EntityType>
+        <Association Name="FK_AlbAndPhot_Images">
+          <End Type="NetworkModel.Images" Role="Images" Multiplicity="1" />
+          <End Type="NetworkModel.AlbAndPhot" Role="AlbAndPhot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Images">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AlbAndPhot">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Photoalbum">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AlbAndPhot" Relationship="NetworkModel.FK_AlbAndPhot_Photoalbum1" FromRole="Photoalbum" ToRole="AlbAndPhot" />
+          <NavigationProperty Name="UserDetails" Relationship="NetworkModel.FK_Photoalbum_UserDetails" FromRole="Photoalbum" ToRole="UserDetails" />
+        </EntityType>
+        <Association Name="FK_AlbAndPhot_Photoalbum1">
+          <End Type="NetworkModel.Photoalbum" Role="Photoalbum" Multiplicity="1" />
+          <End Type="NetworkModel.AlbAndPhot" Role="AlbAndPhot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Photoalbum">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AlbAndPhot">
+              <PropertyRef Name="PhotoalbumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Photoalbum_UserDetails">
+          <End Type="NetworkModel.UserDetails" Role="UserDetails" Multiplicity="1" />
+          <End Type="NetworkModel.Photoalbum" Role="Photoalbum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Photoalbum">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -734,16 +783,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Photoalbum">
-            <EntityTypeMapping TypeName="NetworkModel.Photoalbum">
-              <MappingFragment StoreEntitySet="Photoalbum">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="StatusUsers">
             <EntityTypeMapping TypeName="NetworkModel.StatusUsers">
               <MappingFragment StoreEntitySet="StatusUsers">
@@ -787,6 +826,24 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="AlbAndPhot">
+            <EntityTypeMapping TypeName="NetworkModel.AlbAndPhot">
+              <MappingFragment StoreEntitySet="AlbAndPhot">
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+                <ScalarProperty Name="PhotoalbumId" ColumnName="PhotoalbumId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Photoalbum">
+            <EntityTypeMapping TypeName="NetworkModel.Photoalbum">
+              <MappingFragment StoreEntitySet="Photoalbum">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
