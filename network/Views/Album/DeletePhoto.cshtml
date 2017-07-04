@@ -1,8 +1,8 @@
-﻿@model network.BLL.EF.Photoalbum
+﻿@model network.BLL.EF.Images
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Photoalbum</h4>
+    <h4>Images</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -14,11 +14,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.UserId)
+            @Html.DisplayNameFor(model => model.ContentType)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.UserId)
+            @Html.DisplayFor(model => model.ContentType)
         </dd>
 
     </dl>

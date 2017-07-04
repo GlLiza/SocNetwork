@@ -367,11 +367,12 @@
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\BrowsePhotoAlbum.cshtml" />
     <Content Include="Views\Album\Create.cshtml" />
-    <Content Include="Views\Album\Delete.cshtml" />
     <Content Include="Views\Album\Edit.cshtml" />
     <Content Include="Views\Album\OpenAlbum.cshtml" />
     <Content Include="Views\Album\BrowseAlbums.cshtml" />
     <Content Include="Views\Album\AddPhoto.cshtml" />
+    <Content Include="Views\Album\Delete.cshtml" />
+    <Content Include="Views\Album\DeletePhoto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

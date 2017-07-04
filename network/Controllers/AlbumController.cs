@@ -10,17 +10,17 @@ namespace network.Controllers
     public class AlbumController : Controller
     {
 
-        public NetworkContext db = new NetworkContext();
-        public PhotoalbumService albumServ;
-        public UserService userServ;
-        public ImageService imgServ;
+        public NetworkContext Db = new NetworkContext();
+        public PhotoalbumService AlbumServ;
+        public UserService UserServ;
+        public ImageService ImgServ;
 
         
         public AlbumController()
         {
-            albumServ = new PhotoalbumService();
-            userServ = new UserService();
-            imgServ = new ImageService();
+            AlbumServ = new PhotoalbumService();
+            UserServ = new UserService();
+            ImgServ = new ImageService();
         }
 
         // GET: Album
@@ -50,7 +50,7 @@ namespace network.Controllers
             {
                 alb.UserId = id;
                 //alb. = rnd.Next();
-                albumServ.AddNewAlbum(alb);
+                AlbumServ.AddNewAlbum(alb);
 
                 return RedirectToAction("Index","Users");
             }
@@ -63,7 +63,7 @@ namespace network.Controllers
         // GET: Album/Edit/5
         public ActionResult Edit(int id)
         {
-            var album = albumServ.SearchAlbum(id);
+            var album = AlbumServ.SearchAlbum(id);
 
             return View("Edit",album);
         }
@@ -74,7 +74,7 @@ namespace network.Controllers
         {
             try
             {
-                albumServ.EditAlbum(album);
+                AlbumServ.EditAlbum(album);
                 return RedirectToAction("Index","Users");
             }
             catch (Exception ex)
@@ -86,8 +86,8 @@ namespace network.Controllers
         // GET: Album/Delete/5
         public ActionResult Delete(int id)
         {
-            var album = albumServ.SearchAlbum(id);
-            return View("Delete",album);
+            var alb = AlbumServ.SearchAlbum(id);
+            return View("Delete", alb);
         }
 
         // POST: Album/Delete/5
@@ -96,11 +96,12 @@ namespace network.Controllers
         {
             try
             {
-                albumServ.DeleteAlbum(alb);
+               
+                AlbumServ.DeleteAlbum(alb);
 
                 return RedirectToAction("Index","Users");
             }
-            catch
+            catch (Exception e)
             {
                 return View();
             }
@@ -108,8 +109,8 @@ namespace network.Controllers
 
         public ActionResult BrowseAlbums(int id)
         {
-            var user = userServ.SearchUser(id);
-            var photalbum = albumServ.GetListAlbums(user.Id);
+            var user = UserServ.SearchUser(id);
+            var photalbum = AlbumServ.GetListAlbums(user.Id);
 
             return View(photalbum);
         }
@@ -127,7 +128,7 @@ namespace network.Controllers
         {
             try
             {
-                Photoalbum album = albumServ.SearchAlbum(id);
+                Photoalbum album = AlbumServ.SearchAlbum(id);
                 Images headerImage = new Images();
                 AlbAndPhot entry=new AlbAndPhot();
                 entry.PhotoalbumId = album.Id;
@@ -145,10 +146,10 @@ namespace network.Controllers
                     headerImage.Data = imageData;
                     headerImage.ContentType = img.ContentType;
 
-                    imgServ.InsertImage(headerImage);
+                    ImgServ.InsertImage(headerImage);
                     entry.ImageId = headerImage.Id;
                     
-                    albumServ.AddNewEntry(entry);
+                    AlbumServ.AddNewEntry(entry);
                 }
 
                 return RedirectToAction("Index","Users");
@@ -160,9 +161,23 @@ namespace network.Controllers
             }
         }
 
+        public ActionResult DeletePhoto(int id)
+        {
+            Images img = ImgServ.SearchImg(id);
+            return View("Deletephoto", img);
+        }
+
+        [HttpPost]
+
+        public ActionResult DeletePhoto(Images img)
+        {
+            AlbumServ.DeletePhoto(img);
+            return RedirectToAction("Index", "Users");
+        }
+
         public PartialViewResult OpenAlbum(int id)
         {
-            var photos = albumServ.OpenAlbum(id);
+            var photos = AlbumServ.OpenAlbum(id);
             return PartialView("OpenAlbum",photos);
         }
     }

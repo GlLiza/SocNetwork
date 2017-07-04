@@ -10,6 +10,7 @@ namespace network.DAL.IRepository
         void UpdateEntry(AlbAndPhot album);
         void Save();
         AlbAndPhot GetEntryById(int id);
+        AlbAndPhot GetEntryByPhotoId(int id);
 
     }
 }
