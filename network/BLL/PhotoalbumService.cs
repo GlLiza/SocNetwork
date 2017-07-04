@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using WebGrease.Css.Extensions;
 
 namespace network.BLL
 {
@@ -68,15 +69,22 @@ namespace network.BLL
 
         public IEnumerable<Images> OpenAlbum(int id)
         {
+            List<Images> arrayImg = new List<Images>();
             var album = albumRepository.GetAlbumById(id);
+
+
+
             var item = db.AlbAndPhot
                 .Where(q => q.PhotoalbumId == album.Id);
+            foreach (var a in item)
+            {
+                var ph = db.Images
+                    .FirstOrDefault(r => r.Id == a.ImageId);
 
+                arrayImg.Add(ph);
+            }
 
-            var photos = from s in db.Images
-                where s.Id == item.
-                select s;
-            return photos;
-        } 
+           return arrayImg;
+        }
     }
 }

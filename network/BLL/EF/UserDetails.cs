@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace network.BLL.EF
 {
     using System;
@@ -23,11 +25,13 @@ namespace network.BLL.EF
         public int Id { get; set; }
         public string Name { get; set; }
         public string Firstname { get; set; }
-        public Nullable<System.DateTime> DateOfBirthday { get; set; }
-        public Nullable<int> FamilyStatusId { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime? DateOfBirthday { get; set; }
+        public int? FamilyStatusId { get; set; }
         public string Country { get; set; }
         public string City { get; set; }
-        public Nullable<int> ImagesId { get; set; }
+        public int? ImagesId { get; set; }
         public string UserId { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }
