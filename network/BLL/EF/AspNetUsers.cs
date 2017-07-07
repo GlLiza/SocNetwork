@@ -22,6 +22,7 @@ namespace network.BLL.EF
             this.Friendship = new HashSet<Friendship>();
             this.UserDetails = new HashSet<UserDetails>();
             this.AspNetRoles = new HashSet<AspNetRoles>();
+            this.Friendship1 = new HashSet<Friendship>();
         }
     
         public string Id { get; set; }
@@ -47,5 +48,7 @@ namespace network.BLL.EF
         public virtual ICollection<UserDetails> UserDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetRoles> AspNetRoles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Friendship> Friendship1 { get; set; }
     }
 }

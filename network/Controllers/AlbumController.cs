@@ -49,7 +49,6 @@ namespace network.Controllers
             try
             {
                 alb.UserId = id;
-                //alb. = rnd.Next();
                 AlbumServ.AddNewAlbum(alb);
 
                 return RedirectToAction("Index","Users");

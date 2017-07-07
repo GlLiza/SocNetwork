@@ -77,6 +77,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -242,9 +243,6 @@
     <Compile Include="BLL\EF\Photoalbum.cs">
       <DependentUpon>EF.tt</DependentUpon>
     </Compile>
-    <Compile Include="BLL\EF\StatusUsers.cs">
-      <DependentUpon>EF.tt</DependentUpon>
-    </Compile>
     <Compile Include="BLL\EF\sysdiagrams.cs">
       <DependentUpon>EF.tt</DependentUpon>
     </Compile>
@@ -252,22 +250,26 @@
       <DependentUpon>EF.tt</DependentUpon>
     </Compile>
     <Compile Include="BLL\FamilyStatusService.cs" />
+    <Compile Include="BLL\FriendshipService.cs" />
     <Compile Include="BLL\ImageService.cs" />
     <Compile Include="BLL\PhotoalbumService.cs" />
     <Compile Include="BLL\UserService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlbumController.cs" />
+    <Compile Include="Controllers\FriendshipController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="DAL\IRepository\IAlbAndPhotoRepository.cs" />
     <Compile Include="DAL\IRepository\IAlbumRepository.cs" />
     <Compile Include="DAL\IRepository\IFamilyStatusRepository.cs" />
+    <Compile Include="DAL\IRepository\IFriendshipRepository.cs" />
     <Compile Include="DAL\IRepository\IImagesRepository.cs" />
     <Compile Include="DAL\IRepository\IUserRepository.cs" />
     <Compile Include="DAL\Repository\AlbAndPhotoRepository.cs" />
     <Compile Include="DAL\Repository\AlbumRepository.cs" />
     <Compile Include="DAL\Repository\FamilyStatusRepository.cs" />
+    <Compile Include="DAL\Repository\FriendshipRepository.cs" />
     <Compile Include="DAL\Repository\ImagesRepository.cs" />
     <Compile Include="DAL\Repository\UserRepository.cs" />
     <Compile Include="Global.asax.cs">
@@ -361,7 +363,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Users\AddImage.cshtml" />
     <Content Include="Views\Users\Delete.cshtml" />
-    <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Home\Registration.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
@@ -373,6 +374,10 @@
     <Content Include="Views\Album\AddPhoto.cshtml" />
     <Content Include="Views\Album\Delete.cshtml" />
     <Content Include="Views\Album\DeletePhoto.cshtml" />
+    <Content Include="Views\Friendship\View.cshtml" />
+    <Content Include="Views\Friendship\AddFriend.cshtml" />
+    <Content Include="Views\Friendship\Delete.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -33,7 +33,6 @@ namespace network.BLL.EF
         public virtual DbSet<FamilyStatus> FamilyStatus { get; set; }
         public virtual DbSet<Friendship> Friendship { get; set; }
         public virtual DbSet<Images> Images { get; set; }
-        public virtual DbSet<StatusUsers> StatusUsers { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<UserDetails> UserDetails { get; set; }
         public virtual DbSet<AlbAndPhot> AlbAndPhot { get; set; }

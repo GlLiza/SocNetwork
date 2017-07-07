@@ -1,4 +1,4 @@
-﻿@model IEnumerable<network.BLL.EF.UserDetails>
+﻿@model IEnumerable<network.Views.ViewModels.ShowUserViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -7,105 +7,100 @@
 <h2>Index</h2>
 
 
+
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Images)
-        </th>
-       
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Firstname)
         </th>
+       
+        
         <th>
-            @Html.DisplayNameFor(model => model.DateOfBirthday)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FamilyStatus.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Country)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.City)
-        </th>
-        <th>
-           Photoalbum
+            @Html.DisplayNameFor(model => model.Image)
         </th>
         
+
+        <th>
+            Photoalbum
+        </th>
+        <th>
+            Friend
+        </th>
+        <th>
+           Friends
+        </th>
+
 
 
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @if (item.ImagesId!=null)
-                
-                    {
-                <div class="col-lg-9">
-                    <img id="user_img"
-                         height="80"
-                         width="80"
-                         style="border: solid" src="data:image/png;base64, @Convert.ToBase64String(item.Images.Data)"
-                         class="img-circle" />
-                </div>
-            }
-        </td>
-        
-        @*<td>
-            @Html.DisplayFor(modelItem => item.UserId)
-        </td>*@
-
-        <td>
-        @Html.DisplayFor(modelItem => item.Name)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Firstname)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.DateOfBirthday)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.FamilyStatus.Name)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Country)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.City)
-        </td> 
-        
-        <td>
-            @Html.ActionLink("Album", "Create", "Album", new { id = item.Id }, null)
-        </td> 
-        <td>
-       @*@if (item.PhotAlbColl.Count!=0)
-       {*@
-           @Html.ActionLink("Browse albums", "BrowseAlbums", "Album", new { id = item.Id }, null);
-               @*}*@
-
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
             </td>
-      
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Firstname)
+            </td>
+           
+            <td>
+                @if (item.Image != null)
 
-        <td>
+                {
+                    <div class="col-lg-9">
+                        <img id="user_img"
+                             height="80"
+                             width="80"
+                             style="border: solid" src="data:image/png;base64, @Convert.ToBase64String(item.Image)"
+                             class="img-circle"/>
+                    </div>
+                }
+            </td>
 
-        <td>
-            <div class="btn-group">
-                <button class="btn">...</button>
-                <button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                    <li><a href="#">Show friends</a></li>
-                    <li class="divider"></li>
-                    <li>@Html.ActionLink("Remove", "Delete", new { id = item.Id })</li>
-                    <li>@Html.ActionLink("Edit profile", "Edit", new { id = item.Id })
-                </ul>
-            </div>
-        </td>
-    </tr>
-}
+                   <td>
+                @Html.ActionLink("Album", "Create", "Album", new {id = item.Id}, null) | 
+                @Html.ActionLink("Browse albums", "BrowseAlbums", "Album", new { id = item.Id }, null);
+            </td>
+        
+            <td>
+                @Html.ActionLink("Friends", "Index", "Friendship", new {id = item.User.Id}, null)
+            </td>
+            
+            <td>
+                @if (item.Status!=null)
+                {
+                    @Html.DisplayFor(modelItem => item.Status)
+                }
+                
+            </td>
+
+
+
+
+            <td>
+
+            <td>
+                <div class="btn-group">
+                    <button class="btn">...</button>
+                    <button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Show friends</a></li>
+                        <li class="divider"></li>
+                        <li>@Html.ActionLink("Remove", "Delete", new {id = item.Id})</li>
+                        <li>@Html.ActionLink("Edit profile", "Edit", new {id = item.Id})</li>
+                        <li>@Html.ActionLink("Add to friends", "AddFriend", "Friendship", new {id = item.User.Id}, null)</li>
+                        <li>@Html.ActionLink("Remove from friends", "Delete", "Friendship", new {id = item.User.Id}, null)</li>
+
+                    </ul>
+                </div>
+            </td>
+        </tr>
+    }
 
 </table>

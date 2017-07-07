@@ -1,7 +1,9 @@
 ﻿using System.Linq;
+using Microsoft.VisualBasic.ApplicationServices;
 using network.BLL.EF;
 using network.DAL.IRepository;
 using network.DAL.Repository;
+using Microsoft.AspNet.Identity;
 
 namespace network.BLL
 {
@@ -20,9 +22,10 @@ namespace network.BLL
             familyStatusRepository=new FamilyStatusRepository(db);
         }
 
-        public IQueryable<UserDetails> GetUser()
+        public  IQueryable<UserDetails> GetUser(string id)
         {
-            var users = db.UserDetails;
+            var users = db.UserDetails
+                .Where(s => s.AspNetUsers.Id != id);
             return users;
         }
 

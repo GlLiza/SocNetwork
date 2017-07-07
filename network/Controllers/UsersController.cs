@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity;
 using network.BLL;
 using network.BLL.EF;
 using network.DAL.IRepository;
@@ -16,20 +18,43 @@ namespace network.Controllers
     {
         public NetworkContext db = new NetworkContext();
         public UserService userService;
+        public FriendshipService friendServ;
         public ImageService imgServ;
         private IImagesRepository imgRepository;
 
         public UsersController()
         {
             userService = new UserService();
-            imgRepository=new ImagesRepository(db);
+            friendServ=new FriendshipService();
+            imgRepository =new ImagesRepository(db);
+
         }
 
         [HttpGet]
         public ActionResult Index()
         {
-            //var users = userService.GetUser().ToList();
-            return View(db.UserDetails.ToList());
+            string id = User.Identity.GetUserId();
+            var users = userService.GetUser(id).ToList();
+
+            List<ShowUserViewModel> model=new List<ShowUserViewModel>();
+
+            foreach (var b in users)
+            {
+                ShowUserViewModel user=new ShowUserViewModel();
+
+                user.Id = b.Id;
+                user.Firstname = b.Firstname;
+                user.Image = b.Images.Data;
+                user.User = b.AspNetUsers;
+
+                var friend = friendServ.SearchByFriend(b.UserId);
+
+                if (friend != null)
+                    user.User = b.AspNetUsers;
+                model.Add(user);
+
+            }
+            return View(model);
         }
 
 
@@ -122,7 +147,7 @@ namespace network.Controllers
         // POST: Users/Edit/5
         [HttpPost]
         public ActionResult Edit(HttpPostedFileBase img,CreateUserViewModel model)
-        {
+      {
             try
             {
                 Images headerImage = new Images();

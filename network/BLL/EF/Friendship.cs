@@ -17,9 +17,10 @@ namespace network.BLL.EF
         public int Id { get; set; }
         public string User1_id { get; set; }
         public string User2_id { get; set; }
-        public int StatusUsers { get; set; }
+        public DateTime? Date { get; set; }
+        public bool Status { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }
-        public virtual StatusUsers StatusUsers1 { get; set; }
+        public virtual AspNetUsers AspNetUsers1 { get; set; }
     }
 }
