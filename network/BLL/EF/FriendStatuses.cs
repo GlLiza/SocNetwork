@@ -12,23 +12,18 @@ namespace network.BLL.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Images
+    public partial class FriendStatuses
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Images()
+        public FriendStatuses()
         {
-            this.AlbAndPhot = new HashSet<AlbAndPhot>();
-            this.UserDetails = new HashSet<UserDetails>();
+            this.Requests = new HashSet<Requests>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
-        public byte[] Data { get; set; }
-        public string ContentType { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AlbAndPhot> AlbAndPhot { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserDetails> UserDetails { get; set; }
+        public virtual ICollection<Requests> Requests { get; set; }
     }
 }

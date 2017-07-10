@@ -10,15 +10,13 @@
 namespace network.BLL.EF
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Friendship
+    public partial class sp_helpdiagrams_Result
     {
-        public int Id { get; set; }
-        public string User_id { get; set; }
-        public string Friend_id { get; set; }
-    
-        public virtual AspNetUsers AspNetUsers { get; set; }
-        public virtual AspNetUsers AspNetUsers1 { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }

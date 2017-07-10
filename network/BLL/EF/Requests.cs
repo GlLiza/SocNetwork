@@ -12,13 +12,16 @@ namespace network.BLL.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Friendship
+    public partial class Requests
     {
         public int Id { get; set; }
-        public string User_id { get; set; }
-        public string Friend_id { get; set; }
+        public string Requesting_user_id { get; set; }
+        public string Requested_user_id { get; set; }
+        public DateTime? Date_requsted { get; set; }
+        public int Status_id { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }
         public virtual AspNetUsers AspNetUsers1 { get; set; }
+        public virtual FriendStatuses FriendStatuses { get; set; }
     }
 }

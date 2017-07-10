@@ -86,10 +86,15 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="User1_id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="User2_id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Date" Type="datetime" />
-          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="User_id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Friend_id" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FriendStatuses">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Images">
           <Key>
@@ -107,6 +112,16 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="150" />
           <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Requests">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Requesting_user_id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Requested_user_id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Date_requsted" Type="datetime" />
+          <Property Name="Status_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -220,7 +235,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Friendship">
-              <PropertyRef Name="User1_id" />
+              <PropertyRef Name="User_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -232,7 +247,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Friendship">
-              <PropertyRef Name="User2_id" />
+              <PropertyRef Name="Friend_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -245,6 +260,42 @@
             </Principal>
             <Dependent Role="Photoalbum">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Requests_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Requests">
+              <PropertyRef Name="Requested_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Requests_AspNetUsers1">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Requests">
+              <PropertyRef Name="Requesting_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Requests_FriendStatuses">
+          <End Role="FriendStatuses" Type="Self.FriendStatuses" Multiplicity="1" />
+          <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FriendStatuses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Requests">
+              <PropertyRef Name="Status_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -284,6 +335,37 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="NetworkModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlbAndPhot" EntityType="Self.AlbAndPhot" Schema="dbo" store:Type="Tables" />
@@ -294,8 +376,10 @@
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FamilyStatus" EntityType="Self.FamilyStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Friendship" EntityType="Self.Friendship" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FriendStatuses" EntityType="Self.FriendStatuses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Images" EntityType="Self.Images" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Photoalbum" EntityType="Self.Photoalbum" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Requests" EntityType="Self.Requests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_AlbAndPhot_Images" Association="Self.FK_AlbAndPhot_Images">
@@ -334,6 +418,18 @@
             <End Role="UserDetails" EntitySet="UserDetails" />
             <End Role="Photoalbum" EntitySet="Photoalbum" />
           </AssociationSet>
+          <AssociationSet Name="FK_Requests_AspNetUsers" Association="Self.FK_Requests_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Requests" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Requests_AspNetUsers1" Association="Self.FK_Requests_AspNetUsers1">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Requests" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Requests_FriendStatuses" Association="Self.FK_Requests_FriendStatuses">
+            <End Role="FriendStatuses" EntitySet="FriendStatuses" />
+            <End Role="Requests" EntitySet="Requests" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserDetails_AspNetUsers" Association="Self.FK_UserDetails_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="UserDetails" EntitySet="UserDetails" />
@@ -360,6 +456,16 @@
           <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AlbAndPhot">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PhotoalbumId" Type="Int32" Nullable="false" />
+          <Property Name="ImageId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Images" Relationship="Self.FK_AlbAndPhot_Images" FromRole="AlbAndPhot" ToRole="Images" />
+          <NavigationProperty Name="Photoalbum" Relationship="Self.FK_AlbAndPhot_Photoalbum1" FromRole="AlbAndPhot" ToRole="Photoalbum" />
         </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
@@ -408,10 +514,12 @@
           <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
-          <NavigationProperty Name="Friendship" Relationship="Self.FK_Friendship_AspNetUsers" FromRole="AspNetUsers" ToRole="Friendship" />
+          <NavigationProperty Name="Friendship" Relationship="Self.FK_Frienship_AspNetUsers" FromRole="AspNetUsers" ToRole="Friendship" />
+          <NavigationProperty Name="Friendship1" Relationship="Self.FK_Frienship_AspNetUsers1" FromRole="AspNetUsers" ToRole="Friendship" />
+          <NavigationProperty Name="Requests" Relationship="Self.FK_Requests_AspNetUsers" FromRole="AspNetUsers" ToRole="Requests" />
+          <NavigationProperty Name="Requests1" Relationship="Self.FK_Requests_AspNetUsers1" FromRole="AspNetUsers" ToRole="Requests" />
           <NavigationProperty Name="UserDetails" Relationship="Self.FK_UserDetails_AspNetUsers" FromRole="AspNetUsers" ToRole="UserDetails" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
-          <NavigationProperty Name="Friendship1" Relationship="NetworkModel.FK_Friendship_AspNetUsers1" FromRole="AspNetUsers" ToRole="Friendship" />
         </EntityType>
         <EntityType Name="FamilyStatus">
           <Key>
@@ -426,12 +534,18 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="User1_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="User2_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_Friendship_AspNetUsers" FromRole="Friendship" ToRole="AspNetUsers" />
-          <NavigationProperty Name="AspNetUsers1" Relationship="NetworkModel.FK_Friendship_AspNetUsers1" FromRole="Friendship" ToRole="AspNetUsers" />
-          <Property Name="Date" Type="DateTime" Precision="3" />
-          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="User_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Friend_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_Frienship_AspNetUsers" FromRole="Friendship" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUsers1" Relationship="Self.FK_Frienship_AspNetUsers1" FromRole="Friendship" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="FriendStatuses">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Requests" Relationship="Self.FK_Requests_FriendStatuses" FromRole="FriendStatuses" ToRole="Requests" />
         </EntityType>
         <EntityType Name="Images">
           <Key>
@@ -441,8 +555,31 @@
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Data" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="ContentType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AlbAndPhot" Relationship="Self.FK_AlbAndPhot_Images" FromRole="Images" ToRole="AlbAndPhot" />
           <NavigationProperty Name="UserDetails" Relationship="Self.FK_UserDetails_Images" FromRole="Images" ToRole="UserDetails" />
-          <NavigationProperty Name="AlbAndPhot" Relationship="NetworkModel.FK_AlbAndPhot_Images" FromRole="Images" ToRole="AlbAndPhot" />
+        </EntityType>
+        <EntityType Name="Photoalbum">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AlbAndPhot" Relationship="Self.FK_AlbAndPhot_Photoalbum1" FromRole="Photoalbum" ToRole="AlbAndPhot" />
+          <NavigationProperty Name="UserDetails" Relationship="Self.FK_Photoalbum_UserDetails" FromRole="Photoalbum" ToRole="UserDetails" />
+        </EntityType>
+        <EntityType Name="Requests">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Requesting_user_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Requested_user_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date_requsted" Type="DateTime" Precision="3" />
+          <Property Name="Status_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_Requests_AspNetUsers" FromRole="Requests" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUsers1" Relationship="Self.FK_Requests_AspNetUsers1" FromRole="Requests" ToRole="AspNetUsers" />
+          <NavigationProperty Name="FriendStatuses" Relationship="Self.FK_Requests_FriendStatuses" FromRole="Requests" ToRole="FriendStatuses" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -470,8 +607,32 @@
           <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_UserDetails_AspNetUsers" FromRole="UserDetails" ToRole="AspNetUsers" />
           <NavigationProperty Name="FamilyStatus" Relationship="Self.FK_UserDetails_FamilyStatus" FromRole="UserDetails" ToRole="FamilyStatus" />
           <NavigationProperty Name="Images" Relationship="Self.FK_UserDetails_Images" FromRole="UserDetails" ToRole="Images" />
-          <NavigationProperty Name="Photoalbum" Relationship="NetworkModel.FK_Photoalbum_UserDetails" FromRole="UserDetails" ToRole="Photoalbum" />
+          <NavigationProperty Name="Photoalbum" Relationship="Self.FK_Photoalbum_UserDetails" FromRole="UserDetails" ToRole="Photoalbum" />
         </EntityType>
+        <Association Name="FK_AlbAndPhot_Images">
+          <End Role="Images" Type="Self.Images" Multiplicity="1" />
+          <End Role="AlbAndPhot" Type="Self.AlbAndPhot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Images">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AlbAndPhot">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlbAndPhot_Photoalbum1">
+          <End Role="Photoalbum" Type="Self.Photoalbum" Multiplicity="1" />
+          <End Role="AlbAndPhot" Type="Self.AlbAndPhot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Photoalbum">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AlbAndPhot">
+              <PropertyRef Name="PhotoalbumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -500,7 +661,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Friendship_AspNetUsers">
+        <Association Name="FK_Frienship_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
           <End Role="Friendship" Type="Self.Friendship" Multiplicity="*" />
           <ReferentialConstraint>
@@ -508,7 +669,43 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Friendship">
-              <PropertyRef Name="User1_id" />
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Frienship_AspNetUsers1">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Friendship" Type="Self.Friendship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Friendship">
+              <PropertyRef Name="Friend_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Requests_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Requests">
+              <PropertyRef Name="Requested_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Requests_AspNetUsers1">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Requests">
+              <PropertyRef Name="Requesting_user_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -536,6 +733,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Requests_FriendStatuses">
+          <End Role="FriendStatuses" Type="Self.FriendStatuses" Multiplicity="1" />
+          <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FriendStatuses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Requests">
+              <PropertyRef Name="Status_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserDetails_Images">
           <End Role="Images" Type="Self.Images" Multiplicity="0..1" />
           <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
@@ -548,115 +757,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="AspNetUserRoles">
-          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="*" />
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
-        </Association>
-        <EntityContainer Name="NetworkContext" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
-          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
-          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
-          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
-          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
-          <EntitySet Name="FamilyStatus" EntityType="Self.FamilyStatus" />
-          <EntitySet Name="Friendship" EntityType="Self.Friendship" />
-          <EntitySet Name="Images" EntityType="Self.Images" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-          <EntitySet Name="UserDetails" EntityType="Self.UserDetails" />
-          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Friendship_AspNetUsers" Association="Self.FK_Friendship_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Friendship" EntitySet="Friendship" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserDetails_AspNetUsers" Association="Self.FK_UserDetails_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="UserDetails" EntitySet="UserDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserDetails_FamilyStatus" Association="Self.FK_UserDetails_FamilyStatus">
-            <End Role="FamilyStatus" EntitySet="FamilyStatus" />
-            <End Role="UserDetails" EntitySet="UserDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserDetails_Images" Association="Self.FK_UserDetails_Images">
-            <End Role="Images" EntitySet="Images" />
-            <End Role="UserDetails" EntitySet="UserDetails" />
-          </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-          </AssociationSet>
-          <EntitySet Name="AlbAndPhot" EntityType="NetworkModel.AlbAndPhot" />
-          <AssociationSet Name="FK_AlbAndPhot_Images" Association="NetworkModel.FK_AlbAndPhot_Images">
-            <End Role="Images" EntitySet="Images" />
-            <End Role="AlbAndPhot" EntitySet="AlbAndPhot" />
-          </AssociationSet>
-          <EntitySet Name="Photoalbum" EntityType="NetworkModel.Photoalbum" />
-          <AssociationSet Name="FK_AlbAndPhot_Photoalbum1" Association="NetworkModel.FK_AlbAndPhot_Photoalbum1">
-            <End Role="Photoalbum" EntitySet="Photoalbum" />
-            <End Role="AlbAndPhot" EntitySet="AlbAndPhot" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Photoalbum_UserDetails" Association="NetworkModel.FK_Photoalbum_UserDetails">
-            <End Role="UserDetails" EntitySet="UserDetails" />
-            <End Role="Photoalbum" EntitySet="Photoalbum" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Friendship_AspNetUsers1" Association="NetworkModel.FK_Friendship_AspNetUsers1">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Friendship" EntitySet="Friendship" />
-          </AssociationSet>
-        </EntityContainer>
-        <EntityType Name="AlbAndPhot">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PhotoalbumId" Type="Int32" Nullable="false" />
-          <Property Name="ImageId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Images" Relationship="NetworkModel.FK_AlbAndPhot_Images" FromRole="AlbAndPhot" ToRole="Images" />
-          <NavigationProperty Name="Photoalbum" Relationship="NetworkModel.FK_AlbAndPhot_Photoalbum1" FromRole="AlbAndPhot" ToRole="Photoalbum" />
-        </EntityType>
-        <Association Name="FK_AlbAndPhot_Images">
-          <End Type="NetworkModel.Images" Role="Images" Multiplicity="1" />
-          <End Type="NetworkModel.AlbAndPhot" Role="AlbAndPhot" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Images">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AlbAndPhot">
-              <PropertyRef Name="ImageId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Photoalbum">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="AlbAndPhot" Relationship="NetworkModel.FK_AlbAndPhot_Photoalbum1" FromRole="Photoalbum" ToRole="AlbAndPhot" />
-          <NavigationProperty Name="UserDetails" Relationship="NetworkModel.FK_Photoalbum_UserDetails" FromRole="Photoalbum" ToRole="UserDetails" />
-        </EntityType>
-        <Association Name="FK_AlbAndPhot_Photoalbum1">
-          <End Type="NetworkModel.Photoalbum" Role="Photoalbum" Multiplicity="1" />
-          <End Type="NetworkModel.AlbAndPhot" Role="AlbAndPhot" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Photoalbum">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AlbAndPhot">
-              <PropertyRef Name="PhotoalbumId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Photoalbum_UserDetails">
-          <End Type="NetworkModel.UserDetails" Role="UserDetails" Multiplicity="1" />
-          <End Type="NetworkModel.Photoalbum" Role="Photoalbum" Multiplicity="*" />
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
+          <End Role="Photoalbum" Type="Self.Photoalbum" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UserDetails">
               <PropertyRef Name="Id" />
@@ -666,24 +769,129 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Friendship_AspNetUsers1">
-          <End Type="NetworkModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
-          <End Type="NetworkModel.Friendship" Role="Friendship" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Friendship">
-              <PropertyRef Name="User2_id" />
-            </Dependent>
-          </ReferentialConstraint>
+        <Association Name="AspNetUserRoles">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
         </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="AlbAndPhot" EntityType="Self.AlbAndPhot" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
+          <EntitySet Name="FamilyStatus" EntityType="Self.FamilyStatus" />
+          <EntitySet Name="Friendship" EntityType="Self.Friendship" />
+          <EntitySet Name="FriendStatuses" EntityType="Self.FriendStatuses" />
+          <EntitySet Name="Images" EntityType="Self.Images" />
+          <EntitySet Name="Photoalbum" EntityType="Self.Photoalbum" />
+          <EntitySet Name="Requests" EntityType="Self.Requests" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="UserDetails" EntityType="Self.UserDetails" />
+          <AssociationSet Name="FK_AlbAndPhot_Images" Association="Self.FK_AlbAndPhot_Images">
+            <End Role="Images" EntitySet="Images" />
+            <End Role="AlbAndPhot" EntitySet="AlbAndPhot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlbAndPhot_Photoalbum1" Association="Self.FK_AlbAndPhot_Photoalbum1">
+            <End Role="Photoalbum" EntitySet="Photoalbum" />
+            <End Role="AlbAndPhot" EntitySet="AlbAndPhot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Frienship_AspNetUsers" Association="Self.FK_Frienship_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Friendship" EntitySet="Friendship" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Frienship_AspNetUsers1" Association="Self.FK_Frienship_AspNetUsers1">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Friendship" EntitySet="Friendship" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Requests_AspNetUsers" Association="Self.FK_Requests_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Requests" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Requests_AspNetUsers1" Association="Self.FK_Requests_AspNetUsers1">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Requests" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDetails_AspNetUsers" Association="Self.FK_UserDetails_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDetails_FamilyStatus" Association="Self.FK_UserDetails_FamilyStatus">
+            <End Role="FamilyStatus" EntitySet="FamilyStatus" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Requests_FriendStatuses" Association="Self.FK_Requests_FriendStatuses">
+            <End Role="FriendStatuses" EntitySet="FriendStatuses" />
+            <End Role="Requests" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDetails_Images" Association="Self.FK_UserDetails_Images">
+            <End Role="Images" EntitySet="Images" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Photoalbum_UserDetails" Association="Self.FK_Photoalbum_UserDetails">
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="Photoalbum" EntitySet="Photoalbum" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(NetworkModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(NetworkModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="NetworkModelStoreContainer" CdmEntityContainer="NetworkContext">
+        <EntityContainerMapping StorageEntityContainer="NetworkModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="C__MigrationHistory">
             <EntityTypeMapping TypeName="NetworkModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
@@ -691,6 +899,15 @@
                 <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
                 <ScalarProperty Name="Model" ColumnName="Model" />
                 <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlbAndPhot">
+            <EntityTypeMapping TypeName="NetworkModel.AlbAndPhot">
+              <MappingFragment StoreEntitySet="AlbAndPhot">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PhotoalbumId" ColumnName="PhotoalbumId" />
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -750,11 +967,17 @@
           <EntitySetMapping Name="Friendship">
             <EntityTypeMapping TypeName="NetworkModel.Friendship">
               <MappingFragment StoreEntitySet="Friendship">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="User1_id" ColumnName="User1_id" />
-                <ScalarProperty Name="User2_id" ColumnName="User2_id" />
+                <ScalarProperty Name="User_id" ColumnName="User_id" />
+                <ScalarProperty Name="Friend_id" ColumnName="Friend_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FriendStatuses">
+            <EntityTypeMapping TypeName="NetworkModel.FriendStatuses">
+              <MappingFragment StoreEntitySet="FriendStatuses">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -765,6 +988,26 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Data" ColumnName="Data" />
                 <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Photoalbum">
+            <EntityTypeMapping TypeName="NetworkModel.Photoalbum">
+              <MappingFragment StoreEntitySet="Photoalbum">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Requests">
+            <EntityTypeMapping TypeName="NetworkModel.Requests">
+              <MappingFragment StoreEntitySet="Requests">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Requesting_user_id" ColumnName="Requesting_user_id" />
+                <ScalarProperty Name="Requested_user_id" ColumnName="Requested_user_id" />
+                <ScalarProperty Name="Date_requsted" ColumnName="Date_requsted" />
+                <ScalarProperty Name="Status_id" ColumnName="Status_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -802,24 +1045,30 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="AlbAndPhot">
-            <EntityTypeMapping TypeName="NetworkModel.AlbAndPhot">
-              <MappingFragment StoreEntitySet="AlbAndPhot">
-                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
-                <ScalarProperty Name="PhotoalbumId" ColumnName="PhotoalbumId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Photoalbum">
-            <EntityTypeMapping TypeName="NetworkModel.Photoalbum">
-              <MappingFragment StoreEntitySet="Photoalbum">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="NetworkModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="NetworkModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="NetworkModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="NetworkModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="NetworkModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="NetworkModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="NetworkModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="NetworkModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="NetworkModel.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

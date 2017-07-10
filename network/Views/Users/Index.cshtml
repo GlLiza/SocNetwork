@@ -94,7 +94,7 @@
                         <li class="divider"></li>
                         <li>@Html.ActionLink("Remove", "Delete", new {id = item.Id})</li>
                         <li>@Html.ActionLink("Edit profile", "Edit", new {id = item.Id})</li>
-                        <li>@Html.ActionLink("Add to friends", "AddFriend", "Friendship", new {id = item.User.Id}, null)</li>
+                        <li>@Html.ActionLink("Add to friends", "SendRequest", "Friendship", new {id = item.User.Id},null)</li>
                         <li>@Html.ActionLink("Remove from friends", "Delete", "Friendship", new {id = item.User.Id}, null)</li>
 
                     </ul>

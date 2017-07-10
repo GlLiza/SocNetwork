@@ -55,19 +55,19 @@ namespace network.DAL.Repository
         public Friendship SearchByCurrentUserId(string id)
         {
             return context.Friendship
-                .SingleOrDefault(s => s.User1_id == id);
+                .SingleOrDefault(s => s.User_id == id);
         }
 
         public Friendship SearchBySecondUserId(string id)
         {
             return context.Friendship
-                .FirstOrDefault(s => s.User1_id == id);
+                .FirstOrDefault(s => s.User_id == id);
         }
 
         public IQueryable<Friendship> GetListFriends(string id)
         {
             var list = context.Friendship
-                .Where(s => s.User1_id == id);
+                .Where(s => s.User_id == id);
             return list;
         }
 

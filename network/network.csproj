@@ -237,10 +237,22 @@
     <Compile Include="BLL\EF\Friendship.cs">
       <DependentUpon>EF.tt</DependentUpon>
     </Compile>
+    <Compile Include="BLL\EF\FriendStatuses.cs">
+      <DependentUpon>EF.tt</DependentUpon>
+    </Compile>
     <Compile Include="BLL\EF\Images.cs">
       <DependentUpon>EF.tt</DependentUpon>
     </Compile>
     <Compile Include="BLL\EF\Photoalbum.cs">
+      <DependentUpon>EF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BLL\EF\Requests.cs">
+      <DependentUpon>EF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BLL\EF\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>EF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BLL\EF\sp_helpdiagrams_Result.cs">
       <DependentUpon>EF.tt</DependentUpon>
     </Compile>
     <Compile Include="BLL\EF\sysdiagrams.cs">
@@ -265,12 +277,14 @@
     <Compile Include="DAL\IRepository\IFamilyStatusRepository.cs" />
     <Compile Include="DAL\IRepository\IFriendshipRepository.cs" />
     <Compile Include="DAL\IRepository\IImagesRepository.cs" />
+    <Compile Include="DAL\IRepository\IRequestRepository.cs" />
     <Compile Include="DAL\IRepository\IUserRepository.cs" />
     <Compile Include="DAL\Repository\AlbAndPhotoRepository.cs" />
     <Compile Include="DAL\Repository\AlbumRepository.cs" />
     <Compile Include="DAL\Repository\FamilyStatusRepository.cs" />
     <Compile Include="DAL\Repository\FriendshipRepository.cs" />
     <Compile Include="DAL\Repository\ImagesRepository.cs" />
+    <Compile Include="DAL\Repository\RequestRepository.cs" />
     <Compile Include="DAL\Repository\UserRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -282,6 +296,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Views\ViewModels\CreateUserViewModel.cs" />
+    <Compile Include="Views\ViewModels\SendRequestViewModel.cs" />
     <Compile Include="Views\ViewModels\ShowUserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -378,6 +393,7 @@
     <Content Include="Views\Friendship\AddFriend.cshtml" />
     <Content Include="Views\Friendship\Delete.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Friendship\SendRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
