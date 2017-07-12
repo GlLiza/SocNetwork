@@ -7,12 +7,13 @@ namespace network.DAL.IRepository
 {
     interface IRequestRepository:IDisposable
     {
-        void NewRequest(Requests friend);
-        void CancelRequests(Requests friend);
+        void NewRequest(Requests requests);
+        void CancelRequests(Requests requests);
+        void Update(Requests requests);
         void Save();
 
         Requests SearchById(int id);
-        List<Requests> SearchRequests(string id);
+        IEnumerable<Requests> SearchRequests(string id);
 
         
 

@@ -44,7 +44,7 @@ namespace network.BLL
         {
             
             Photoalbum album = albumRepository.GetAlbumById(alb.Id);
-            //AlbAndPhot entry = AlbAndPhRepository.GetEntryById(album.UserId);
+            
 
             var item = GetListEntry(album);
 

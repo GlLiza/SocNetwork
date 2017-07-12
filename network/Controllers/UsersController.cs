@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using network.BLL;
 using network.BLL.EF;
@@ -59,10 +58,17 @@ namespace network.Controllers
 
 
         // GET: Users/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(UsersDetailsViewModel model)
         {
-            var user = userService.SearchUser(id);
-            return View(user);
+            var user = userService.SearchByUserId(model.Id);
+
+            IEnumerable<Requests> listfriends = friendServ.CurrentRequestses(model.Id);
+
+            model.Requests = listfriends;
+            model.UserDetails = user;
+            int a = model.Requests.Count();
+           
+            return View(a);
         }
 
       
@@ -72,54 +78,6 @@ namespace network.Controllers
 
 
 
-
-
-        //// GET: Users/Create
-        //public ActionResult Create()
-        //{
-           
-        //    return View("Create");
-        //}
-
-        //// POST: Users/Create
-        //[HttpPost]
-        //public ActionResult Create(HttpPostedFileBase  img, UserDetails user)
-        //{
-        //    try
-        //    {
-        //        userService.InsertUser(user);
-
-        //        if (img!=null)
-        //        {
-        //                byte[] imageData = null;
-        //                using (var binaryReader = new BinaryReader(img.InputStream))
-        //                {
-        //                    imageData = binaryReader.ReadBytes(img.ContentLength);
-        //                }
-        //            Images headerImage = new Images()
-        //                {
-                          
-        //                    Name = img.FileName,
-        //                    Data = imageData,
-        //                    ContentType = img.ContentType
-        //                };
-        //            imgRepository.AddImage(headerImage);
-
-        //            imgRepository.Save();
-        //            UserDetails item = userService.SearchUser(user.Id);
-        //            item.ImagesId = headerImage.Id;
-        //            userService.EditUser(user);
-
-
-        //        }
-
-        //            return RedirectToAction("Index");
-        //    }
-        //    catch (Exception c)
-        //    {
-        //        return View();
-        //    }
-        //}
 
         // GET: Users/Edit/5
         public ActionResult Edit(int id)
@@ -231,66 +189,6 @@ namespace network.Controllers
 
 
 
-        // GET: Users/Create
-        public ActionResult CreatePhotoalbum(int id)
-        {
-            UserDetails user = userService.SearchUser(id);
-
-
-            return View("Create");
-        }
-
-        // POST: Users/Create
-        [HttpPost]
-        public ActionResult CreatePhotoalbum(HttpPostedFileBase img, UserDetails user)
-        {
-            try
-            { 
-
-
-            //{
-            //    userService.InsertUser(user);
-
-            //    if (img != null)
-            //    {
-            //        byte[] imageData = null;
-            //        using (var binaryReader = new BinaryReader(img.InputStream))
-            //        {
-            //            imageData = binaryReader.ReadBytes(img.ContentLength);
-            //        }
-            //        Images headerImage = new Images()
-            //        {
-
-            //            Name = img.FileName,
-            //            Data = imageData,
-            //            ContentType = img.ContentType
-            //        };
-            //        imgRepository.AddImage(headerImage);
-
-            //        imgRepository.Save();
-            //        UserDetails item = userService.SearchUser(user.Id);
-            //        item.ImagesId = headerImage.Id;
-            //        userService.EditUser(user);
-
-
-            //    }
-
-               return RedirectToAction("Index");
-            }
-            catch (Exception c)
-            {
-                return View();
-            }
-        }
-
-        //public ActionResult GetImage(int id)
-        //{
-
-        //    byte[] imageData = userService.ReturnImage(id);
-        //    var img = new FileStreamResult(new System.IO.MemoryStream(imageData), "image/jpeg");
-        //    return img;
-        //}
-
 
         /// <summary>
         /// 
@@ -320,6 +218,22 @@ namespace network.Controllers
 
             return View();
         }
+
+
+
+
+
+
+
+        // GET: Users/Create
+        //public ActionResult CreatePhotoalbum(int id)
+        //{
+        //    UserDetails user = userService.SearchUser(id);
+
+
+        //    return View("Create");
+        //}
+
 
         //public ActionResult Add(HttpPostedFileBase img)
         //{
@@ -355,6 +269,110 @@ namespace network.Controllers
         //        }
         //    }
         //}
+
+
+
+        // POST: Users/Create
+        //[HttpPost]
+        //public ActionResult CreatePhotoalbum(HttpPostedFileBase img, UserDetails user)
+        //{
+        //    try
+        //    { 
+
+
+        //{
+        //    userService.InsertUser(user);
+
+        //    if (img != null)
+        //    {
+        //        byte[] imageData = null;
+        //        using (var binaryReader = new BinaryReader(img.InputStream))
+        //        {
+        //            imageData = binaryReader.ReadBytes(img.ContentLength);
+        //        }
+        //        Images headerImage = new Images()
+        //        {
+
+        //            Name = img.FileName,
+        //            Data = imageData,
+        //            ContentType = img.ContentType
+        //        };
+        //        imgRepository.AddImage(headerImage);
+
+        //        imgRepository.Save();
+        //        UserDetails item = userService.SearchUser(user.Id);
+        //        item.ImagesId = headerImage.Id;
+        //        userService.EditUser(user);
+
+
+        //    }
+
+        //       return RedirectToAction("Index");
+        //    }
+        //    catch (Exception c)
+        //    {
+        //        return View();
+        //    }
+        //}
+
+        //public ActionResult GetImage(int id)
+        //{
+
+        //    byte[] imageData = userService.ReturnImage(id);
+        //    var img = new FileStreamResult(new System.IO.MemoryStream(imageData), "image/jpeg");
+        //    return img;
+        //}
+
+
+
+        //// GET: Users/Create
+        //public ActionResult Create()
+        //{
+
+        //    return View("Create");
+        //}
+
+        //// POST: Users/Create
+        //[HttpPost]
+        //public ActionResult Create(HttpPostedFileBase  img, UserDetails user)
+        //{
+        //    try
+        //    {
+        //        userService.InsertUser(user);
+
+        //        if (img!=null)
+        //        {
+        //                byte[] imageData = null;
+        //                using (var binaryReader = new BinaryReader(img.InputStream))
+        //                {
+        //                    imageData = binaryReader.ReadBytes(img.ContentLength);
+        //                }
+        //            Images headerImage = new Images()
+        //                {
+
+        //                    Name = img.FileName,
+        //                    Data = imageData,
+        //                    ContentType = img.ContentType
+        //                };
+        //            imgRepository.AddImage(headerImage);
+
+        //            imgRepository.Save();
+        //            UserDetails item = userService.SearchUser(user.Id);
+        //            item.ImagesId = headerImage.Id;
+        //            userService.EditUser(user);
+
+
+        //        }
+
+        //            return RedirectToAction("Index");
+        //    }
+        //    catch (Exception c)
+        //    {
+        //        return View();
+        //    }
+        //}
+
+
 
     }
 }

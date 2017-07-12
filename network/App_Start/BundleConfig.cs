@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace network
 {
@@ -26,6 +25,10 @@ namespace network
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/registr").Include(
+                "~/Scripts/RegistrScript.js",
+                "~/Content/RegistrCSS.css"));
         }
     }
 }

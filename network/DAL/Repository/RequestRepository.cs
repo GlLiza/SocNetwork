@@ -52,13 +52,13 @@ namespace network.DAL.Repository
             return context.Requests.Find(id);
         }
 
-        public List<Requests> SearchRequests(string id)
+        public IEnumerable<Requests> SearchRequests(string id)
         {
             var item = context.Requests.ToList();
 
-            var request = (from req in item.AsEnumerable()
+            var request = from req in item.AsEnumerable()
                           where (req.Requesting_user_id == id) && (req.FriendStatuses.Name == "Active")
-                                       select req).ToList(); 
+                                       select req; 
 
             return request;
         }
@@ -70,6 +70,13 @@ namespace network.DAL.Repository
             req.FriendStatuses.Name = "Active";
             context.Entry(req).State=EntityState.Modified;
 
+        }
+
+
+        public void Update(Requests requests)
+        {
+            Requests req = context.Requests.Find(requests.Id);
+            context.Entry(req).CurrentValues.SetValues(requests);
         }
 
     }

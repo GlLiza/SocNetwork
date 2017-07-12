@@ -72,9 +72,15 @@ namespace network.BLL
         }
 
 
-        public List<Requests> CurrentRequestses(string id)
+        public IEnumerable<Requests> CurrentRequestses(string id)
         {
             return  requestRepository.SearchRequests(id);
+        }
+
+        public void UpdateRequest(Requests requests)
+        {
+            requestRepository.Update(requests);
+            requestRepository.Save();
         }
 
 

@@ -61,58 +61,57 @@ namespace network.Controllers
 
 
 
-     
 
-        [HttpGet]
-        public ActionResult AddFriend()
-        {
-            return View("AddFriend");
-        }
+        // send request to friend
 
-        [HttpPost]
-        public ActionResult AddFriend(AspNetUsers user2)
-        {
-            Friendship friend1 = new Friendship();
-            Friendship friend2 = new Friendship();
-
-            //friend1.User2_id = user2.Id;
-            //friend1.User1_id = User.Identity.GetUserId();
-            //friend1.Status = true;
-
-
-
-            //friend2.User1_id = user2.Id;
-            //friend2.User2_id = User.Identity.GetUserId();
-            //friend2.Status = true;
-
-
-
-            friendServ.AddFriendship(friend1);
-            friendServ.AddFriendship(friend2);
-            return RedirectToAction("Index", "Users");
-        }
-
-        [HttpGet]
-        public ActionResult SendRequest(string Id)
-        {
-            //string a = Id;
-            //var item = userService.SearchByUserId(Id);
-            ////Requests req =new Requests();
-            ////req.Requesting_user_id = Id;
-            SendRequestViewModel model =new SendRequestViewModel();
-            model.Id = Id;
-            return View(model);
-        }
-
-        [HttpPost]
-        public ActionResult SendRequest(SendRequestViewModel model)
+        public ActionResult SendRequest( string id)
         {
             Requests request=new Requests();
-            request.Requesting_user_id =model.Id;
+            request.Requesting_user_id =id;
             request.Requested_user_id = User.Identity.GetUserId();
             request.Status_id = 1;
             request.Date_requsted=DateTime.Now;
             friendServ.AddRequest(request);
+            return RedirectToAction("Index", "Users");
+        }
+
+
+        public ActionResult AcceptRequest (Requests requests)       
+        {
+            Requests req = friendServ.SearchRequest(requests.Id);
+            req.Status_id = 3;
+            friendServ.UpdateRequest(req);
+
+            Friendship friendship1=new Friendship();
+            friendship1.User_id = req.Requesting_user_id;
+            friendship1.Friend_id = req.Requested_user_id;
+
+            Friendship friendship2 = new Friendship();
+            friendship2.User_id = req.Requested_user_id; 
+            friendship2.Friend_id = req.Requesting_user_id;
+
+            friendServ.AddFriendship(friendship1);
+            friendServ.AddFriendship(friendship2);
+            
+
+            return RedirectToAction("Index","Users");
+        }
+
+        public ActionResult RejectrRequest(Requests requests)
+        {
+            Requests req = friendServ.SearchRequest(requests.Id);
+            req.Status_id = 2;
+            friendServ.UpdateRequest(req);
+
+            return RedirectToAction("Index", "Users");
+        }
+
+        public ActionResult IgnoreRequest(Requests requests)
+        {
+            Requests req = friendServ.SearchRequest(requests.Id);
+            req.Status_id = 4;
+            friendServ.UpdateRequest(req);
+
             return RedirectToAction("Index", "Users");
         }
     }
@@ -123,60 +122,36 @@ namespace network.Controllers
 
 
 
-
-
-
-
-
-
-// GET: Friendship/Details/5
-//public ActionResult Details(int id)
+//[HttpGet]
+//public ActionResult AddFriend()
 //{
-//    return View();
+//    return View("AddFriend");
 //}
 
-// GET: Friendship/Create
-//public ActionResult Create()
-//{
-//    return View();
-//}
-
-// POST: Friendship/Create
 //[HttpPost]
-//public ActionResult Create(FormCollection collection)
+//public ActionResult AddFriend(AspNetUsers user2)
 //{
-//    try
-//    {
-//        // TODO: Add insert logic here
+//    Friendship friend1 = new Friendship();
+//    Friendship friend2 = new Friendship();
 
-//        return RedirectToAction("Index");
-//    }
-//    catch
-//    {
-//        return View();
-//    }
+//    //friend1.User2_id = user2.Id;
+//    //friend1.User1_id = User.Identity.GetUserId();
+//    //friend1.Status = true;
+
+
+
+//    //friend2.User1_id = user2.Id;
+//    //friend2.User2_id = User.Identity.GetUserId();
+//    //friend2.Status = true;
+
+
+
+//    friendServ.AddFriendship(friend1);
+//    friendServ.AddFriendship(friend2);
+//    return RedirectToAction("Index", "Users");
 //}
 
-// GET: Friendship/Edit/5
-//public ActionResult Edit(int id)
-//{
-//    return View();
-//}
 
-// POST: Friendship/Edit/5
-//[HttpPost]
-//public ActionResult Edit(int id, FormCollection collection)
-//{
-//    try
-//    {
-//        // TODO: Add update logic here
 
-//        return RedirectToAction("Index");
-//    }
-//    catch
-//    {
-//        return View();
-//    }
-//}
 
 

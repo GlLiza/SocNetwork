@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace network.Controllers
 {
     public class HomeController : Controller
     {
-        [Authorize]
+        [Authorize]       //аттрибут указывает, что метод вызывается только если пользователь аутенцифицирован
         public ActionResult Index()
         {
             return View();
@@ -16,25 +12,5 @@ namespace network.Controllers
 
 
 
-
-
-
-
-
-
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
 }

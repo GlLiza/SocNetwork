@@ -1,4 +1,6 @@
-﻿using System;
+﻿//весь процесс авторизации выполняется данным контроллером
+
+using System;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +13,7 @@ using Microsoft.Owin.Security;
 using network.BLL;
 using network.BLL.EF;
 using network.Models;
+using network.Views.ViewModels;
 
 namespace network.Controllers
 {
@@ -52,8 +55,8 @@ namespace network.Controllers
 
         //
         // GET: /Account/Login
-        [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        [AllowAnonymous]        // атрибут открывает публичный доступ к методу контроллера
+        public ActionResult Login(string returnUrl)     //действие для АУТЕНТИФИКАЦИИ  
         {
             ViewBag.ReturnUrl = returnUrl;
             return View();
@@ -68,34 +71,42 @@ namespace network.Controllers
         {
     
 
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid)            //валидация полученной модели
                 {
                     return View(model);
                 }
 
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, change to shouldLockout: true
-                var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,
-                    shouldLockout: false);
+                var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,         //данный метод получает логин  и пароль и сравнивает их с теми, которые имеются 
+                    shouldLockout: false);                          
                 switch (result)
                 {
                     case SignInStatus.Success:
 
 
                     UserService userService = new UserService();
+                    FriendshipService friendshipService=new FriendshipService();
 
                     var manager=new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
                   
 
                     var currentUser = manager.FindByEmail(model.Email);
-                
 
-                   
-                    //ApplicationUser aspUser = db.Users.FirstOrDefault(x=>x.Id== currentUserId);
 
                     var us = userService.SearchByUserId(currentUser.Id);
 
-                    return RedirectToAction("Details", "Users",us);
+                    var friendlist = friendshipService.CurrentRequestses(us.UserId);
+
+                    UsersDetailsViewModel userModel=new UsersDetailsViewModel();
+                        userModel.Id = us.UserId;
+                    
+                        userModel.UserDetails = us;
+                       userModel.Requests = friendlist;
+
+
+
+                    return RedirectToAction("Details", "Users", userModel);
 
 
                      
