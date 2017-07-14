@@ -240,7 +240,13 @@
     <Compile Include="BLL\EF\FriendStatuses.cs">
       <DependentUpon>EF.tt</DependentUpon>
     </Compile>
+    <Compile Include="BLL\EF\Gender.cs">
+      <DependentUpon>EF.tt</DependentUpon>
+    </Compile>
     <Compile Include="BLL\EF\Images.cs">
+      <DependentUpon>EF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BLL\EF\Location.cs">
       <DependentUpon>EF.tt</DependentUpon>
     </Compile>
     <Compile Include="BLL\EF\Photoalbum.cs">
@@ -249,10 +255,7 @@
     <Compile Include="BLL\EF\Requests.cs">
       <DependentUpon>EF.tt</DependentUpon>
     </Compile>
-    <Compile Include="BLL\EF\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>EF.tt</DependentUpon>
-    </Compile>
-    <Compile Include="BLL\EF\sp_helpdiagrams_Result.cs">
+    <Compile Include="BLL\EF\School.cs">
       <DependentUpon>EF.tt</DependentUpon>
     </Compile>
     <Compile Include="BLL\EF\sysdiagrams.cs">
@@ -261,6 +264,12 @@
     <Compile Include="BLL\EF\UserDetails.cs">
       <DependentUpon>EF.tt</DependentUpon>
     </Compile>
+    <Compile Include="BLL\EF\WorkPlace.cs">
+      <DependentUpon>EF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BLL\LocationService.cs" />
+    <Compile Include="BLL\SchoolService.cs" />
+    <Compile Include="BLL\WorkPlaceService.cs" />
     <Compile Include="BLL\FamilyStatusService.cs" />
     <Compile Include="BLL\FriendshipService.cs" />
     <Compile Include="BLL\ImageService.cs" />
@@ -277,15 +286,21 @@
     <Compile Include="DAL\IRepository\IFamilyStatusRepository.cs" />
     <Compile Include="DAL\IRepository\IFriendshipRepository.cs" />
     <Compile Include="DAL\IRepository\IImagesRepository.cs" />
+    <Compile Include="DAL\IRepository\ILocationRepository.cs" />
     <Compile Include="DAL\IRepository\IRequestRepository.cs" />
+    <Compile Include="DAL\IRepository\ISchoolRepository.cs" />
     <Compile Include="DAL\IRepository\IUserRepository.cs" />
+    <Compile Include="DAL\IRepository\IWorkPlaceRepository.cs" />
     <Compile Include="DAL\Repository\AlbAndPhotoRepository.cs" />
     <Compile Include="DAL\Repository\AlbumRepository.cs" />
     <Compile Include="DAL\Repository\FamilyStatusRepository.cs" />
     <Compile Include="DAL\Repository\FriendshipRepository.cs" />
     <Compile Include="DAL\Repository\ImagesRepository.cs" />
+    <Compile Include="DAL\Repository\LocationRepository.cs" />
     <Compile Include="DAL\Repository\RequestRepository.cs" />
+    <Compile Include="DAL\Repository\SchoolRepository.cs" />
     <Compile Include="DAL\Repository\UserRepository.cs" />
+    <Compile Include="DAL\Repository\WorkPlaceRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -315,6 +330,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\createUs.css" />
     <Content Include="Content\RegistrCSS.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -325,13 +341,6 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="BLL\EF\EF.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>EF.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="BLL\EF\EF.edmx.diagram">
-      <DependentUpon>EF.edmx</DependentUpon>
-    </Content>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -340,7 +349,15 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <EntityDeploy Include="BLL\EF\EF.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>EF.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="BLL\EF\EF.edmx.diagram">
+      <DependentUpon>EF.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\createUs.js" />
     <Content Include="Scripts\RegistrScript.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -389,7 +406,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Users\AddImage.cshtml" />
     <Content Include="Views\Users\Delete.cshtml" />
-    <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\BrowsePhotoAlbum.cshtml" />
     <Content Include="Views\Album\Create.cshtml" />
     <Content Include="Views\Album\Edit.cshtml" />
@@ -404,6 +420,10 @@
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Friendship\SendRequest.cshtml" />
     <Content Include="Views\Users\Details.cshtml" />
+    <Content Include="Views\Shared\Menu.cshtml" />
+    <Content Include="Views\Shared\_LayoutLog.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
+    <Content Include="Views\Users\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -57,6 +57,7 @@ namespace network.Controllers
         // GET: /Account/Login
         [AllowAnonymous]        // атрибут открывает публичный доступ к методу контроллера
         public ActionResult Login(string returnUrl)     //действие для АУТЕНТИФИКАЦИИ  
+
         {
             ViewBag.ReturnUrl = returnUrl;
             return View();
@@ -106,7 +107,7 @@ namespace network.Controllers
 
 
 
-                    return RedirectToAction("Details", "Users", userModel);
+                    return RedirectToAction("Index", "Home", userModel);
 
 
                      

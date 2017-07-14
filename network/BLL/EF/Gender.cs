@@ -12,19 +12,18 @@ namespace network.BLL.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Photoalbum
+    public partial class Gender
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Photoalbum()
+        public Gender()
         {
-            this.AlbAndPhot = new HashSet<AlbAndPhot>();
+            this.UserDetails = new HashSet<UserDetails>();
         }
     
         public int Id { get; set; }
-        public string Name { get; set; }
-        public int UserId { get; set; }
+        public string Gender1 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AlbAndPhot> AlbAndPhot { get; set; }
+        public virtual ICollection<UserDetails> UserDetails { get; set; }
     }
 }

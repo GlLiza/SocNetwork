@@ -14,26 +14,26 @@ namespace network.BLL.EF
     
     public partial class UserDetails
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public UserDetails()
-        {
-            this.Photoalbum = new HashSet<Photoalbum>();
-        }
-    
         public int Id { get; set; }
+        public string UserId { get; set; }
         public string Name { get; set; }
         public string Firstname { get; set; }
-        public DateTime? DateOfBirthday { get; set; }
-        public int? FamilyStatusId { get; set; }
-        public string Country { get; set; }
-        public string City { get; set; }
-        public int? ImagesId { get; set; }
-        public string UserId { get; set; }
+        public Nullable<System.DateTime> DateOfBirthday { get; set; }
+        public Nullable<int> FamilyStatusId { get; set; }
+        public Nullable<int> ImagesId { get; set; }
+        public Nullable<int> GenderId { get; set; }
+        public Nullable<int> WorkPlaceId { get; set; }
+        public Nullable<int> SchoolId { get; set; }
+        public Nullable<int> HomeTownLocationId { get; set; }
+        public Nullable<int> CurrentLocationId { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }
         public virtual FamilyStatus FamilyStatus { get; set; }
+        public virtual Gender Gender { get; set; }
         public virtual Images Images { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Photoalbum> Photoalbum { get; set; }
+        public virtual Location Location { get; set; }
+        public virtual Location Location1 { get; set; }
+        public virtual School School { get; set; }
+        public virtual WorkPlace WorkPlace { get; set; }
     }
 }

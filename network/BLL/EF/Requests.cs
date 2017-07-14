@@ -17,7 +17,7 @@ namespace network.BLL.EF
         public int Id { get; set; }
         public string Requesting_user_id { get; set; }
         public string Requested_user_id { get; set; }
-        public DateTime? Date_requsted { get; set; }
+        public Nullable<System.DateTime> Date_requsted { get; set; }
         public int Status_id { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }

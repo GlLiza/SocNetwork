@@ -16,16 +16,29 @@ namespace network.Controllers
     public class UsersController : Controller
     {
         public NetworkContext db = new NetworkContext();
+
+
         public UserService userService;
+        public WorkPlaceService workPlaceService;
+        public SchoolService schoolService;
+        public LocationService locService;
         public FriendshipService friendServ;
-        public ImageService imgServ;
+        public ImageService imgService;
+
+
+
+
         private IImagesRepository imgRepository;
 
         public UsersController()
         {
             userService = new UserService();
-            friendServ=new FriendshipService();
-            imgRepository =new ImagesRepository(db);
+            locService=new LocationService();
+            workPlaceService=new WorkPlaceService();
+            friendServ =new FriendshipService();
+            schoolService=new SchoolService();
+            imgService=new ImageService();
+
 
         }
 
@@ -43,13 +56,13 @@ namespace network.Controllers
 
                 user.Id = b.Id;
                 user.Firstname = b.Firstname;
-                user.Image = b.Images.Data;
-                user.User = b.AspNetUsers;
+                //user.Image = b.Images.Data;
+                //user.User = b.AspNetUsers;
 
                 var friend = friendServ.SearchByFriend(b.UserId);
 
                 if (friend != null)
-                    user.User = b.AspNetUsers;
+                    //user.User = b.AspNetUsers;
                 model.Add(user);
 
             }
@@ -68,14 +81,8 @@ namespace network.Controllers
             model.UserDetails = user;
             int a = model.Requests.Count();
            
-            return View(a);
+            return PartialView(a);
         }
-
-      
-
-
-
-
 
 
 
@@ -83,33 +90,34 @@ namespace network.Controllers
         public ActionResult Edit(int id)
         {
             UserDetails user = userService.SearchUser(id);
-
+            
             var model = new CreateUserViewModel
             {
                 Id=user.Id,
                 UserId = user.UserId,
-                SelectedStatus = user.FamilyStatusId,
-                FamStat = user.FamilyStatus,
-                FamilyStatus = db.FamilyStatus.ToList(),
-                Name = user.Name,
-                Firstname = user.Firstname,
-                DateOfBirthday = user.DateOfBirthday,
-                Country = user.Country,
-                City=user.City,
-                Image =user.Images
 
             };
-            return View("Edit",model);
+            return PartialView("Edit",model);
         }
+
+
+
 
         // POST: Users/Edit/5
         [HttpPost]
-        public ActionResult Edit(HttpPostedFileBase img,CreateUserViewModel model)
+        public ActionResult Edit(HttpPostedFileBase img, CreateUserViewModel model)
       {
             try
             {
+                Location currentLoc=new Location();
+                Location homeLocation=new Location();
+                WorkPlace work=new WorkPlace();
+                School school=new School();
                 Images headerImage = new Images();
+
                 UserDetails user = userService.SearchUser(model.Id);
+
+
 
                 if (img != null)
                     {
@@ -121,21 +129,64 @@ namespace network.Controllers
                         headerImage.Name = img.FileName;
                         headerImage.Data = imageData;
                         headerImage.ContentType = img.ContentType;
-                        
-                        imgRepository.AddImage(headerImage);
 
-                        imgRepository.Save();
+                        imgService.InsertImage(headerImage);
 
                         user.ImagesId = headerImage.Id;
                         userService.EditUser(user);
                     }
-              
+
+
+                currentLoc.City = model.City;
+                currentLoc.State = model.State;
+                currentLoc.Street = model.Street;
+                currentLoc.Country = model.Country;
+
+                locService.AddLocation(currentLoc);
+
+                user.CurrentLocationId = currentLoc.Id;
+
+
+
+
+                homeLocation.Country = model.HomeCountry;
+                homeLocation.City = model.HomeCity;
+                homeLocation.State = model.HomeState;
+                homeLocation.Street = model.HomeStreet;
+
+                locService.AddLocation(homeLocation);
+                user.HomeTownLocationId = homeLocation.Id;
+
+
+
+
+                school.Name = model.SchoolName;
+                school.GraduationYear = model.GraduationYear;
+
+                schoolService.AddSchool(school);
+                user.SchoolId = school.Id;
+
+
+
+                work.CompanyName = model.CompanyName;
+                work.Position = model.Position;
+                work.Description = model.Description;
+                work.StartDate = model.StartDate;
+                work.EndDate = model.EndDate;
+
+                workPlaceService.AddWorkPlace(work);
+                user.WorkPlaceId = work.Id;
+
+
+
+
+
                 user.Name = model.Name;
                 user.Firstname = model.Firstname;
-                user.City = model.City;
-                user.Country = model.Country;
+               
                 user.DateOfBirthday = model.DateOfBirthday;
                 user.FamilyStatusId = model.SelectedStatus;
+                user.GenderId = model.SelectedGender;
 
                 userService.EditUser(user);
 
@@ -212,7 +263,7 @@ namespace network.Controllers
                     Data= imageData,
                     ContentType = img.ContentType
                 };
-                imgServ.InsertImage(headerImage);
+                imgService.InsertImage(headerImage);
 
             }
 

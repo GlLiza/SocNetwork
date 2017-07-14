@@ -51,9 +51,8 @@ namespace network.BLL
 
         public UserDetails SearchUser(int id)
         {
-            UserDetails user = userRepository.GetUserById(id);
-            return user;
-        }
+            return userRepository.GetUserById(id);
+           }
 
         public byte[] ReturnImage(int id)
         {

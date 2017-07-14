@@ -1,35 +1,38 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity
+@using network.BLL.EF
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <div class="navbar @*navbar-inverse*@ ">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <div class="row">
-                <div class="col-md-2">
-                    <div class="navbar-collapse collapse">
-                        <ul class="nav nav-pills nav-stacked">
-                            <li>@Html.ActionLink("User", "Index", "Users")</li>
-                            <li>@Html.ActionLink("My page", "Index", "Users")</li>
-                            <li>@Html.ActionLink("My mus", "Index", "Users")</li>
-                            <li>@Html.ActionLink("My video", "Index", "Users")</li>
-                            <li>@Html.ActionLink("My photo", "Index", "Users")</li>
-                        </ul>
+    <div id="fullscreen_bg" class="fullscreen_bg">
+       @*<div id="regContainer" class="container">*@
+            <div class="navbar @*navbar-inverse*@ ">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
                     </div>
                 </div>
             </div>
-            
-          
-        </div>
+
+
+            @{Html.RenderAction("Details", "Users");
+            }
+
+
+
+            @*<div id="friendsrequest">
+                @Ajax.ActionLink("Friends","Details","Users",
+                        new AjaxOptions {UpdateTargetId = "friendsrequest" })
+                        </div>*@
+
+        @*</div>*@
     </div>
 </body>
 </html>
