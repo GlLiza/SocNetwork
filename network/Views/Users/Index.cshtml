@@ -1,54 +1,25 @@
 ﻿@model IEnumerable<network.Views.ViewModels.ShowUserViewModel>
 
-@{
+@*@{
     ViewBag.Title = "Index";
-}
+}*@
 
-<h2>Index</h2>
+@*<h2>Index</h2>*@
 
 
 
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Firstname)
-        </th>
-       
-        
-        <th>
-            @Html.DisplayNameFor(model => model.Image)
-        </th>
-        
-
-        <th>
-            Photoalbum
-        </th>
-        <th>
-            Friend
-        </th>
-        <th>
-           Friends
-        </th>
-
-
-
-        <th></th>
-    </tr>
 
     @foreach (var item in Model)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @if (item.Status!=null)
+                {
+                    @Html.DisplayFor(modelItem => item.Status)
+                }
             </td>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.Firstname)
-            </td>
-           
+
             <td>
                 @if (item.Image != null)
 
@@ -63,26 +34,25 @@
                 }
             </td>
 
-                   <td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => item.Firstname)
+            </td>
+
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Firstname)
+            </td>*@
+
+
+
+            @*<td>
                 @Html.ActionLink("Album", "Create", "Album", new {id = item.Id}, null) | 
                 @Html.ActionLink("Browse albums", "BrowseAlbums", "Album", new { id = item.Id }, null);
-            </td>
-        
-            <td>
+            </td>*@
+
+            @*<td>
                 @Html.ActionLink("Friends", "Index", "Friendship", new {id = item.User.Id}, null)
-            </td>
-            
-            <td>
-                @if (item.Status!=null)
-                {
-                    @Html.DisplayFor(modelItem => item.Status)
-                }
-                
-            </td>
-
-
-
-
+            </td>*@
             <td>
 
             <td>
@@ -94,8 +64,8 @@
                         <li class="divider"></li>
                         <li>@Html.ActionLink("Remove", "Delete", new {id = item.Id})</li>
                         <li>@Html.ActionLink("Edit profile", "Edit", new {id = item.Id})</li>
-                        <li>@Html.ActionLink("Add to friends", "SendRequest", "Friendship", new {id = item.User.Id},null)</li>
-                        <li>@Html.ActionLink("Remove from friends", "Delete", "Friendship", new {id = item.User.Id}, null)</li>
+                        @*<li>@Html.ActionLink("Add to friends", "SendRequest", "Friendship", new {id = item.User.Id},null)</li>*@
+                        @*<li>@Html.ActionLink("Remove from friends", "Delete", "Friendship", new {id = item.User.Id}, null)</li>*@
 
                     </ul>
                 </div>

@@ -8,7 +8,6 @@ using Microsoft.AspNet.Identity;
 using network.BLL;
 using network.BLL.EF;
 using network.DAL.IRepository;
-using network.DAL.Repository;
 using network.Views.ViewModels;
 
 namespace network.Controllers
@@ -52,22 +51,58 @@ namespace network.Controllers
 
             foreach (var b in users)
             {
-                ShowUserViewModel user=new ShowUserViewModel();
+                ShowUserViewModel userr=new ShowUserViewModel();
 
-                user.Id = b.Id;
-                user.Firstname = b.Firstname;
-                //user.Image = b.Images.Data;
-                //user.User = b.AspNetUsers;
+                userr.Id = b.Id;
+                var user = userService.SearchUser(userr.Id);
 
-                var friend = friendServ.SearchByFriend(b.UserId);
+                userr.Firstname = user.Firstname;
+                userr.Name = user.Name;
+                userr.Image = user.Images.Data;
+                userr.User = user.AspNetUsers;
+                
+                user.AspNetUsers = b.AspNetUsers;
+                //var friend = friendServ.SearchByFriend(b.UserId);
+                //if (friend != null)
+                //    //user.User = b.AspNetUsers;
 
-                if (friend != null)
-                    //user.User = b.AspNetUsers;
-                model.Add(user);
+
+                model.Add(userr);
 
             }
             return View(model);
         }
+
+        //[HttpGet]
+        //public ActionResult ShowUsers()
+        //{
+        //    string id = User.Identity.GetUserId();
+        //    var users = userService.GetUser(id).ToList();
+
+        //    List<ShowUserViewModel> model = new List<ShowUserViewModel>();
+
+        //    foreach (var b in users)
+        //    {
+        //        ShowUserViewModel userr = new ShowUserViewModel();
+
+        //        userr.Id = b.Id;
+        //        var user = userService.SearchUser(userr.Id);
+
+        //        userr.Firstname = user.Firstname;
+        //        userr.Name = user.Name;
+        //        //user.Image = b.Images.Data;
+        //        //user.User = b.AspNetUsers;
+
+        //        //var friend = friendServ.SearchByFriend(b.UserId);
+
+        //        //if (friend != null)
+        //        //    //user.User = b.AspNetUsers;
+        //        model.Add(userr);
+        //    }
+
+        //    return View(model);
+
+        //    }
 
 
         // GET: Users/Details/5
@@ -90,14 +125,18 @@ namespace network.Controllers
         public ActionResult Edit(int id)
         {
             UserDetails user = userService.SearchUser(id);
+
+
             
             var model = new CreateUserViewModel
             {
                 Id=user.Id,
-                UserId = user.UserId,
+                //UserId = user.UserId,
+                FamilyStatus =userService.GetAllFamStatuses(),
+               // GenderStatus = userService.GetAllGenders()
 
             };
-            return PartialView("Edit",model);
+            return View("Edit",model);
         }
 
 
@@ -105,7 +144,7 @@ namespace network.Controllers
 
         // POST: Users/Edit/5
         [HttpPost]
-        public ActionResult Edit(HttpPostedFileBase img, CreateUserViewModel model)
+        public ActionResult Edit(CreateUserViewModel model)
       {
             try
             {
@@ -119,22 +158,22 @@ namespace network.Controllers
 
 
 
-                if (img != null)
+                if (model.Image != null)
+                {
+                    byte[] imageData = null;
+                    using (var binaryReader = new BinaryReader(model.Image.InputStream))
                     {
-                        byte[] imageData = null;
-                        using (var binaryReader = new BinaryReader(img.InputStream))
-                        {
-                            imageData = binaryReader.ReadBytes(img.ContentLength);
-                        }
-                        headerImage.Name = img.FileName;
-                        headerImage.Data = imageData;
-                        headerImage.ContentType = img.ContentType;
-
-                        imgService.InsertImage(headerImage);
-
-                        user.ImagesId = headerImage.Id;
-                        userService.EditUser(user);
+                        imageData = binaryReader.ReadBytes(model.Image.ContentLength);
                     }
+                    headerImage.Name = model.Image.FileName;
+                    headerImage.Data = imageData;
+                    headerImage.ContentType = model.Image.ContentType;
+
+                    imgService.InsertImage(headerImage);
+
+                    user.ImagesId = headerImage.Id;
+                    userService.EditUser(user);
+                }
 
 
                 currentLoc.City = model.City;
@@ -186,18 +225,98 @@ namespace network.Controllers
                
                 user.DateOfBirthday = model.DateOfBirthday;
                 user.FamilyStatusId = model.SelectedStatus;
-                user.GenderId = model.SelectedGender;
+                user.Gender = model.Gender;
 
                 userService.EditUser(user);
+              
+                return RedirectToAction("Page");
 
-
-                return RedirectToAction("Index");
             }
             catch (Exception e)
             {
                 return View();
             }
         }
+
+
+
+
+        public ActionResult Page()
+        {
+            PageViewModel model = new PageViewModel();
+
+            var user = userService.SearchUser(GetId());
+            // var User = userService.SearchByUserId(user.UserId);             //from table AspNetUsers
+            var companys = workPlaceService.GetListWorks(user.Id);
+            var schools = schoolService.GetListSchools(user.Id);
+            //var homeLocation=locService.ListHomeLoc(user.HomeTownLocationId);
+            //var curLocation = locService.ListCurrentLoc(user.CurrentLocationId);
+
+
+
+
+            model.Id = user.Id;
+            model.Name = user.Name;
+            model.Firstname = user.Firstname;
+            model.Image = user.Images.Data;
+
+
+            //if (homeLocation.Count() > 1)
+            //    model.ListHomLoc = homeLocation;
+            //else
+            //{
+            //    foreach (var a in homeLocation)
+            //    {
+            //        model.HomeLocation = a;
+
+            //    }
+
+            //}
+
+
+            //if (curLocation.Count() > 1)
+            //    model.ListCurLoc = curLocation;
+            //else
+            //{
+            //    foreach (var a in curLocation)
+            //    {
+            //        model.CurrentLocation = a;
+            //    }
+            //}
+
+
+
+            //if (schools.Count() > 1)
+            //    model.ListSchools = schools;
+            //else
+            //{
+            //    foreach (var a in schools)
+            //    {
+            //        model.School = a;
+            //    }
+            //}
+
+
+
+            //if (companys.Count() > 1)
+            //    model.ListPlace = companys;
+            //else
+            //{
+            //    foreach (var a in companys)
+            //    {
+            //        model.Company = a;
+            //    }
+            //}
+
+
+            return View(model);
+        }
+
+
+
+
+
+
 
         // GET: Users/Delete/5
         public ActionResult Delete(int id)
@@ -270,6 +389,14 @@ namespace network.Controllers
             return View();
         }
 
+        public int GetId()
+        {
+            var user = userService.SearchByUserId(User.Identity.GetUserId());
+            return user.Id;
+        }
+
+
+       
 
 
 

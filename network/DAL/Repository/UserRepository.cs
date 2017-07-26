@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using network.BLL.EF;
 using network.DAL.IRepository;
 
@@ -76,6 +77,13 @@ namespace network.DAL.Repository
                 yield return a;
             }
         }
+
+       
+
+        //IQueryable<Gender> IUserRepository.ListGenders()
+        //{
+        //    return context.Gender;
+        //}
     }
 }
 

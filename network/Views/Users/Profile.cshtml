@@ -1,0 +1,94 @@
+﻿@model IEnumerable<network.BLL.EF.UserDetails>
+
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Profile</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Firstname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfBirthday)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FamilyStatusId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ImagesId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WorkPlaceId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SchoolId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HomeTownLocationId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CurrentLocationId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gender1)
+        </th>
+        <th></th>
+    </tr>
+
+@*foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Firstname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateOfBirthday)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FamilyStatusId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ImagesId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WorkPlaceId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SchoolId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HomeTownLocationId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CurrentLocationId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gender1)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>*@
+}
+
+</table>

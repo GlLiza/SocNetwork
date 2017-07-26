@@ -1,4 +1,5 @@
-﻿using network.BLL.EF;
+﻿using System.Collections.Generic;
+using network.BLL.EF;
 using network.DAL.IRepository;
 using network.DAL.Repository;
 
@@ -39,6 +40,12 @@ namespace network.BLL
             schoolRepository.UpdateSchool(school);
             schoolRepository.Save();
         }
+
+        public IEnumerable<School> GetListSchools(int useId)
+        {
+            return schoolRepository.GetListSchool(useId);
+        }
+
 
     }
 }

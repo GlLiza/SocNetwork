@@ -1,9 +1,7 @@
 ﻿using System.Linq;
-using Microsoft.VisualBasic.ApplicationServices;
 using network.BLL.EF;
 using network.DAL.IRepository;
 using network.DAL.Repository;
-using Microsoft.AspNet.Identity;
 
 namespace network.BLL
 {
@@ -66,6 +64,12 @@ namespace network.BLL
                 .SingleOrDefault(s => s.UserId == i);
             return item;
         }
+
+        public IQueryable<FamilyStatus> GetAllFamStatuses()
+        {
+            return familyStatusRepository.GetListFamStatus();
+        }
+
 
     }
 }

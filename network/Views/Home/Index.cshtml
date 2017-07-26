@@ -7,9 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <div id="fullscreen_bg" class="fullscreen_bg">
-       @*<div id="regContainer" class="container">*@
-            <div class="navbar @*navbar-inverse*@ ">
+  <div class="navbar @*navbar-inverse*@ ">
                 <div class="container">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -22,7 +20,8 @@
             </div>
 
 
-            @{Html.RenderAction("Details", "Users");
+@{
+    Html.RenderAction("Details", "Users");
             }
 
 
@@ -31,8 +30,5 @@
                 @Ajax.ActionLink("Friends","Details","Users",
                         new AjaxOptions {UpdateTargetId = "friendsrequest" })
                         </div>*@
-
-        @*</div>*@
-    </div>
 </body>
 </html>

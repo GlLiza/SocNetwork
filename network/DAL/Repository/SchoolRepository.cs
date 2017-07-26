@@ -63,5 +63,17 @@ namespace network.DAL.Repository
             School sch = context.School.Find(school.Id);
             context.Entry(sch).CurrentValues.SetValues(school);
         }
+
+        public IEnumerable<School> GetListSchool(int? id)
+        {
+            UserDetails user = context.UserDetails.Find(id);
+
+            var schoolList = context.School
+                .Where(s => s.Id == user.SchoolId);
+
+            return schoolList;
+        }
+
+
     }
 }

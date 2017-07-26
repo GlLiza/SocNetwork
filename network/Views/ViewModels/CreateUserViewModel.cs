@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
 using network.BLL.EF;
 
 namespace network.Views.ViewModels
@@ -12,10 +13,7 @@ namespace network.Views.ViewModels
         public string UserId { get; set; }
 
 
-        public int? SelectedGender { get; set; }
-        [Display(Name = "Gender")]
-        public virtual Gender GenderStat { get; set; }
-        public virtual ICollection<Gender> GenderStatus { get; set; }
+        public string Gender { get; set; }
 
 
         public string Name { get; set; }
@@ -24,8 +22,8 @@ namespace network.Views.ViewModels
         public string Firstname { get; set; }
 
 
-        public int ImageId { get; set; }
-        public Images Image { get; set; }
+        //public int ImageId { get; set; }
+        public HttpPostedFileBase Image { get; set; }
 
 
         [Display(Name = "Date of birth")]
@@ -37,7 +35,7 @@ namespace network.Views.ViewModels
         public int? SelectedStatus { get; set; }
         [Display(Name = "Family status")]
         public virtual FamilyStatus FamStat { get; set; }
-        public virtual ICollection<FamilyStatus> FamilyStatus { get; set; }
+        public virtual IQueryable<FamilyStatus> FamilyStatus { get; set; }
 
 
 
@@ -45,11 +43,22 @@ namespace network.Views.ViewModels
         public string CompanyName { get; set; }
         public string Position { get; set; }
         public string Description { get; set; }
+
+
+        [DataType(DataType.Date)]
         public DateTime? StartDate { get; set; }
+
+
+        [DataType(DataType.Date)]
         public DateTime? EndDate { get; set; }
 
         [Display(Name="School name")]
         public string SchoolName { get; set; }
+
+
+        //[DataType(DataType.Date)]
+
+        [DisplayFormat(DataFormatString = "{yyyy/MM}",ApplyFormatInEditMode = true)]
         public DateTime? GraduationYear { get; set; }
 
 

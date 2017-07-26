@@ -6,20 +6,20 @@
 </head>
 
 <body>
-<div class="row">
-<div class="col-md-2">
+@*<div class="row">*@
+<div class="col-md-7">
     <div class="navbar-collapse collapse">
         <ul class="nav nav-pills nav-stacked">
-            <li>@Html.ActionLink("My page", "Index", "Users")</li>
-            <li>@Html.ActionLink("My friends", "Index", "Users")</li>
-            <li>@Html.ActionLink("My music", "Index", "Users")</li>
-            <li>@Html.ActionLink("My photos", "Index", "Users")</li>
-            <li>@Html.ActionLink("My message", "Index", "Users")</li>
-            <li>@Html.ActionLink("My settings", "Index", "Users")</li>
+            <li>@Html.ActionLink("My page", "Page", "Users")</li>
+            <li>@Html.ActionLink("My friends", "ShowUsers", "Users")</li>
+            <li>@Html.ActionLink("My music", "ShowUsers", "Users")</li>
+            <li>@Html.ActionLink("My photos", "ShowUsers", "Users")</li>
+            <li>@Html.ActionLink("My message", "ShowUsers", "Users")</li>
+            <li>@Html.ActionLink("My settings", "ShowUsers", "Users")</li>
             <li>@Html.ActionLink("Others users", "Index", "Users")</li>
         </ul>
     </div>
 </div>
-    </div>
+    @*</div>*@
 </body>
 </html>

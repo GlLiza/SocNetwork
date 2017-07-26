@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="NetworkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="NetworkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -96,13 +96,6 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="Gender">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Gender" Type="nvarchar" MaxLength="50" />
-        </EntityType>
         <EntityType Name="Images">
           <Key>
             <PropertyRef Name="Id" />
@@ -170,7 +163,7 @@
           <Property Name="DateOfBirthday" Type="date" />
           <Property Name="FamilyStatusId" Type="int" />
           <Property Name="ImagesId" Type="int" />
-          <Property Name="GenderId" Type="int" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="50" />
           <Property Name="WorkPlaceId" Type="int" />
           <Property Name="SchoolId" Type="int" />
           <Property Name="HomeTownLocationId" Type="int" />
@@ -351,18 +344,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserDetails_Gender">
-          <End Role="Gender" Type="Self.Gender" Multiplicity="0..1" />
-          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Gender">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserDetails">
-              <PropertyRef Name="GenderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_UserDetails_Images">
           <End Role="Images" Type="Self.Images" Multiplicity="0..1" />
           <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
@@ -434,7 +415,6 @@
           <EntitySet Name="FamilyStatus" EntityType="Self.FamilyStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Friendship" EntityType="Self.Friendship" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FriendStatuses" EntityType="Self.FriendStatuses" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Gender" EntityType="Self.Gender" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Images" EntityType="Self.Images" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Photoalbum" EntityType="Self.Photoalbum" Schema="dbo" store:Type="Tables" />
@@ -495,10 +475,6 @@
             <End Role="FamilyStatus" EntitySet="FamilyStatus" />
             <End Role="UserDetails" EntitySet="UserDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserDetails_Gender" Association="Self.FK_UserDetails_Gender">
-            <End Role="Gender" EntitySet="Gender" />
-            <End Role="UserDetails" EntitySet="UserDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_UserDetails_Images" Association="Self.FK_UserDetails_Images">
             <End Role="Images" EntitySet="Images" />
             <End Role="UserDetails" EntitySet="UserDetails" />
@@ -520,8 +496,7 @@
             <End Role="UserDetails" EntitySet="UserDetails" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="NetworkModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -625,14 +600,6 @@
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Requests" Relationship="Self.FK_Requests_FriendStatuses" FromRole="FriendStatuses" ToRole="Requests" />
         </EntityType>
-        <EntityType Name="Gender">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Gender1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="UserDetails" Relationship="Self.FK_UserDetails_Gender" FromRole="Gender" ToRole="UserDetails" />
-        </EntityType>
         <EntityType Name="Images">
           <Key>
             <PropertyRef Name="Id" />
@@ -709,19 +676,18 @@
           <Property Name="DateOfBirthday" Type="DateTime" Precision="0" />
           <Property Name="FamilyStatusId" Type="Int32" />
           <Property Name="ImagesId" Type="Int32" />
-          <Property Name="GenderId" Type="Int32" />
           <Property Name="WorkPlaceId" Type="Int32" />
           <Property Name="SchoolId" Type="Int32" />
           <Property Name="HomeTownLocationId" Type="Int32" />
           <Property Name="CurrentLocationId" Type="Int32" />
           <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_UserDetails_AspNetUsers" FromRole="UserDetails" ToRole="AspNetUsers" />
           <NavigationProperty Name="FamilyStatus" Relationship="Self.FK_UserDetails_FamilyStatus" FromRole="UserDetails" ToRole="FamilyStatus" />
-          <NavigationProperty Name="Gender" Relationship="Self.FK_UserDetails_Gender" FromRole="UserDetails" ToRole="Gender" />
           <NavigationProperty Name="Images" Relationship="Self.FK_UserDetails_Images" FromRole="UserDetails" ToRole="Images" />
           <NavigationProperty Name="Location" Relationship="Self.FK_UserDetails_Location" FromRole="UserDetails" ToRole="Location" />
           <NavigationProperty Name="Location1" Relationship="Self.FK_UserDetails_Location1" FromRole="UserDetails" ToRole="Location" />
           <NavigationProperty Name="School" Relationship="Self.FK_UserDetails_School" FromRole="UserDetails" ToRole="School" />
           <NavigationProperty Name="WorkPlace" Relationship="Self.FK_UserDetails_WorkPlace" FromRole="UserDetails" ToRole="WorkPlace" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="WorkPlace">
           <Key>
@@ -871,18 +837,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserDetails_Gender">
-          <End Role="Gender" Type="Self.Gender" Multiplicity="0..1" />
-          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Gender">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserDetails">
-              <PropertyRef Name="GenderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_UserDetails_Images">
           <End Role="Images" Type="Self.Images" Multiplicity="0..1" />
           <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
@@ -947,7 +901,7 @@
           <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="NetworkContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
           <EntitySet Name="AlbAndPhot" EntityType="Self.AlbAndPhot" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
@@ -957,7 +911,6 @@
           <EntitySet Name="FamilyStatus" EntityType="Self.FamilyStatus" />
           <EntitySet Name="Friendship" EntityType="Self.Friendship" />
           <EntitySet Name="FriendStatuses" EntityType="Self.FriendStatuses" />
-          <EntitySet Name="Gender" EntityType="Self.Gender" />
           <EntitySet Name="Images" EntityType="Self.Images" />
           <EntitySet Name="Location" EntityType="Self.Location" />
           <EntitySet Name="Photoalbum" EntityType="Self.Photoalbum" />
@@ -1010,10 +963,6 @@
             <End Role="FriendStatuses" EntitySet="FriendStatuses" />
             <End Role="Requests" EntitySet="Requests" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserDetails_Gender" Association="Self.FK_UserDetails_Gender">
-            <End Role="Gender" EntitySet="Gender" />
-            <End Role="UserDetails" EntitySet="UserDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_UserDetails_Images" Association="Self.FK_UserDetails_Images">
             <End Role="Images" EntitySet="Images" />
             <End Role="UserDetails" EntitySet="UserDetails" />
@@ -1044,7 +993,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="NetworkModelStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="NetworkModelStoreContainer" CdmEntityContainer="NetworkContext">
           <EntitySetMapping Name="C__MigrationHistory">
             <EntityTypeMapping TypeName="NetworkModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
@@ -1134,14 +1083,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Gender">
-            <EntityTypeMapping TypeName="NetworkModel.Gender">
-              <MappingFragment StoreEntitySet="Gender">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Gender1" ColumnName="Gender" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Images">
             <EntityTypeMapping TypeName="NetworkModel.Images">
               <MappingFragment StoreEntitySet="Images">
@@ -1207,6 +1148,7 @@
           <EntitySetMapping Name="UserDetails">
             <EntityTypeMapping TypeName="NetworkModel.UserDetails">
               <MappingFragment StoreEntitySet="UserDetails">
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1214,7 +1156,6 @@
                 <ScalarProperty Name="DateOfBirthday" ColumnName="DateOfBirthday" />
                 <ScalarProperty Name="FamilyStatusId" ColumnName="FamilyStatusId" />
                 <ScalarProperty Name="ImagesId" ColumnName="ImagesId" />
-                <ScalarProperty Name="GenderId" ColumnName="GenderId" />
                 <ScalarProperty Name="WorkPlaceId" ColumnName="WorkPlaceId" />
                 <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
                 <ScalarProperty Name="HomeTownLocationId" ColumnName="HomeTownLocationId" />

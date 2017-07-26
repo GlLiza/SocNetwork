@@ -21,15 +21,14 @@ namespace network.BLL.EF
         public Nullable<System.DateTime> DateOfBirthday { get; set; }
         public Nullable<int> FamilyStatusId { get; set; }
         public Nullable<int> ImagesId { get; set; }
-        public Nullable<int> GenderId { get; set; }
         public Nullable<int> WorkPlaceId { get; set; }
         public Nullable<int> SchoolId { get; set; }
         public Nullable<int> HomeTownLocationId { get; set; }
         public Nullable<int> CurrentLocationId { get; set; }
+        public string Gender { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }
         public virtual FamilyStatus FamilyStatus { get; set; }
-        public virtual Gender Gender { get; set; }
         public virtual Images Images { get; set; }
         public virtual Location Location { get; set; }
         public virtual Location Location1 { get; set; }

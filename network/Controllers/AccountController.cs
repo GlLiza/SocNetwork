@@ -30,8 +30,10 @@ namespace network.Controllers
 
 
         public AccountController()
-        { 
-        }
+        {}
+
+
+
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
@@ -97,13 +99,13 @@ namespace network.Controllers
 
                     var us = userService.SearchByUserId(currentUser.Id);
 
-                    var friendlist = friendshipService.CurrentRequestses(us.UserId);
+                    //var friendlist = friendshipService.CurrentRequestses(us.UserId);
 
                     UsersDetailsViewModel userModel=new UsersDetailsViewModel();
                         userModel.Id = us.UserId;
                     
                         userModel.UserDetails = us;
-                       userModel.Requests = friendlist;
+                       //userModel.Requests = friendlist;
 
 
 

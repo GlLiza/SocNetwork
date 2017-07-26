@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using network.BLL.EF;
 
 namespace network.DAL.IRepository
@@ -9,6 +10,8 @@ namespace network.DAL.IRepository
         void DeleteLocation(Location location);
         void UpdateLocation(Location location);
         void Save();
-        Location GetLocationById(int id);
+        Location GetLocationById(int? id);
+        IEnumerable<Location> GetListCurLoc(int? id);
+        IEnumerable<Location> GetListHomeLoc(int? id);
     }
 }

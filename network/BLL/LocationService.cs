@@ -1,4 +1,6 @@
-﻿using network.BLL.EF;
+﻿using System;
+using System.Collections.Generic;
+using network.BLL.EF;
 using network.DAL.IRepository;
 using network.DAL.Repository;
 
@@ -27,7 +29,7 @@ namespace network.BLL
             locationRepository.DeleteLocation(loc);
         }
 
-        public Location GetLocation(int id)
+        public Location GetLocation(int? id)
         {
             return locationRepository.GetLocationById(id);
         }
@@ -35,6 +37,16 @@ namespace network.BLL
         public void UpdateLocation(Location location)
         {
             locationRepository.UpdateLocation(location);
+        }
+
+        public IEnumerable<Location> ListCurrentLoc(int? useId)
+        {
+            return locationRepository.GetListCurLoc(useId);
+        }
+
+        public IEnumerable<Location> ListHomeLoc(int? useId)
+        {
+            return locationRepository.GetListHomeLoc(useId);
         }
 
 
