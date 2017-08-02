@@ -7,27 +7,18 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using network.BLL;
 using network.BLL.EF;
-using network.DAL.IRepository;
 using network.Views.ViewModels;
 
 namespace network.Controllers
 {
     public class UsersController : Controller
-    {
-        public NetworkContext db = new NetworkContext();
-
-
+    {   public NetworkContext db = new NetworkContext();
         public UserService userService;
         public WorkPlaceService workPlaceService;
         public SchoolService schoolService;
         public LocationService locService;
         public FriendshipService friendServ;
         public ImageService imgService;
-
-
-
-
-        private IImagesRepository imgRepository;
 
         public UsersController()
         {
@@ -37,8 +28,6 @@ namespace network.Controllers
             friendServ =new FriendshipService();
             schoolService=new SchoolService();
             imgService=new ImageService();
-
-
         }
 
         [HttpGet]
@@ -73,36 +62,7 @@ namespace network.Controllers
             return View(model);
         }
 
-        //[HttpGet]
-        //public ActionResult ShowUsers()
-        //{
-        //    string id = User.Identity.GetUserId();
-        //    var users = userService.GetUser(id).ToList();
-
-        //    List<ShowUserViewModel> model = new List<ShowUserViewModel>();
-
-        //    foreach (var b in users)
-        //    {
-        //        ShowUserViewModel userr = new ShowUserViewModel();
-
-        //        userr.Id = b.Id;
-        //        var user = userService.SearchUser(userr.Id);
-
-        //        userr.Firstname = user.Firstname;
-        //        userr.Name = user.Name;
-        //        //user.Image = b.Images.Data;
-        //        //user.User = b.AspNetUsers;
-
-        //        //var friend = friendServ.SearchByFriend(b.UserId);
-
-        //        //if (friend != null)
-        //        //    //user.User = b.AspNetUsers;
-        //        model.Add(userr);
-        //    }
-
-        //    return View(model);
-
-        //    }
+      
 
 
         // GET: Users/Details/5
@@ -229,7 +189,7 @@ namespace network.Controllers
 
                 userService.EditUser(user);
               
-                return RedirectToAction("Page");
+                return RedirectToAction("Index","Home");
 
             }
             catch (Exception e)
@@ -258,7 +218,23 @@ namespace network.Controllers
             model.Id = user.Id;
             model.Name = user.Name;
             model.Firstname = user.Firstname;
-            model.Image = user.Images.Data;
+            model.DateOfBirthday = user.DateOfBirthday;
+            model.FamStat = user.FamilyStatus;
+
+
+            if (user.Images != null)
+            {
+                model.Image = user.Images.Data;
+
+            }
+            else
+            {
+                model.Image = defaultPhoto();
+            }
+
+            var curLoc = locService.GetLocation(user.CurrentLocationId);
+            model.CurrentLocation = curLoc;
+
 
 
             //if (homeLocation.Count() > 1)
@@ -312,11 +288,45 @@ namespace network.Controllers
             return View(model);
         }
 
+       // GET
+        public ActionResult ChangePhoto()
+        {
+            ChangePhotoViewModel model = new ChangePhotoViewModel();
+            model.Id = GetId();
 
+            return PartialView("_ChangePhoto", model);
+        }
 
+        [HttpPost]
+        public ActionResult ChangePhoto(ChangePhotoViewModel viewModel)
+        {
+            var imageFile = viewModel.Image;
+            if (imageFile != null)
+            {
+                Images headerImage=new Images();
+                var user = userService.SearchUser(GetId());
 
+           
+                byte[] imageData = null;
+                using (var binaryReader = new BinaryReader(imageFile.InputStream))
+                {
+                    imageData = binaryReader.ReadBytes(imageFile.ContentLength);
+                }
+                headerImage.Name = imageFile.FileName;
+                headerImage.Data = imageData;
+                headerImage.ContentType = imageFile.ContentType;
 
+                imgService.InsertImage(headerImage);
 
+                user.ImagesId = headerImage.Id;
+                userService.EditUser(user);
+
+                return RedirectToAction("Page", "Users");
+            }
+
+            return HttpNotFound();
+
+        }
 
         // GET: Users/Delete/5
         public ActionResult Delete(int id)
@@ -396,7 +406,93 @@ namespace network.Controllers
         }
 
 
-       
+
+        public byte[] defaultPhoto()
+        {
+            var photo = imgService.SearchImg(1058);
+
+            return photo.Data;
+        }
+
+
+
+
+        //function for convert HttpPostedFileBase to byte[]
+
+        public byte[] ConvertPhoto(HttpPostedFileBase img)
+        {
+            byte[] imageData = null;
+
+            if (img != null)
+            {
+                using (var binaryReader = new BinaryReader(img.InputStream))
+                {
+                    imageData = binaryReader.ReadBytes(img.ContentLength);
+                }
+            }
+            return imageData;
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -550,6 +646,38 @@ namespace network.Controllers
         //    }
         //}
 
+
+
+        //[HttpGet]
+        //public ActionResult ShowUsers()
+        //{
+        //    string id = User.Identity.GetUserId();
+        //    var users = userService.GetUser(id).ToList();
+
+        //    List<ShowUserViewModel> model = new List<ShowUserViewModel>();
+
+        //    foreach (var b in users)
+        //    {
+        //        ShowUserViewModel userr = new ShowUserViewModel();
+
+        //        userr.Id = b.Id;
+        //        var user = userService.SearchUser(userr.Id);
+
+        //        userr.Firstname = user.Firstname;
+        //        userr.Name = user.Name;
+        //        //user.Image = b.Images.Data;
+        //        //user.User = b.AspNetUsers;
+
+        //        //var friend = friendServ.SearchByFriend(b.UserId);
+
+        //        //if (friend != null)
+        //        //    //user.User = b.AspNetUsers;
+        //        model.Add(userr);
+        //    }
+
+        //    return View(model);
+
+        //    }
 
 
     }

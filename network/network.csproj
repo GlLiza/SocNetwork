@@ -307,6 +307,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Views\ViewModels\ChangePhotoViewModel.cs" />
     <Compile Include="Views\ViewModels\CreateUserViewModel.cs" />
     <Compile Include="Views\ViewModels\PageViewModel.cs" />
     <Compile Include="Views\ViewModels\SendRequestViewModel.cs" />
@@ -354,6 +355,7 @@
     <Content Include="BLL\EF\EF.edmx.diagram">
       <DependentUpon>EF.edmx</DependentUpon>
     </Content>
+    <Content Include="Scripts\ChangePhoto.js" />
     <Content Include="Scripts\createUs.js" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
@@ -427,6 +429,8 @@
     <Content Include="Views\Users\Create.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\ShowUsers.cshtml" />
+    <Content Include="Views\Album\Details.cshtml" />
+    <Content Include="Views\Users\_ChangePhoto.cshtml" />
     <Content Include="Views\Users\Page.cshtml" />
   </ItemGroup>
   <ItemGroup>

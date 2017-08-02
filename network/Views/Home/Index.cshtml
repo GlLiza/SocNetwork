@@ -1,34 +1,177 @@
-﻿@using Microsoft.AspNet.Identity
-@using network.BLL.EF
+﻿@model network.Views.ViewModels.PageViewModel
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
 </head>
 <body>
-  <div class="navbar @*navbar-inverse*@ ">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    </div>
+
+<body>
+
+@*<div class="navbar navbar-inverse ">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
                 </div>
             </div>
+        </div>*@
 
 
-@{
-    Html.RenderAction("Details", "Users");
-            }
+@*@{
+    Html.RenderAction("Page", "Users");
+}*@
 
 
 
-            @*<div id="friendsrequest">
-                @Ajax.ActionLink("Friends","Details","Users",
-                        new AjaxOptions {UpdateTargetId = "friendsrequest" })
-                        </div>*@
+@*<div id="friendsrequest">
+        @Ajax.ActionLink("Friends","Details","Users",
+                new AjaxOptions {UpdateTargetId = "friendsrequest" })
+                </div>*@
+
+
+</body>
+
+    
+    
+    
+  
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*@using (Html.BeginForm("Page","Users"))
+    {
+<div>
+
+    <dd>
+        <div class="col-md-3">
+            @if (Model.Image.Length != 0)
+                {
+
+            <img id="user_img" style="border: solid" src="data:image/png;base64, @Convert.ToBase64String(Model.Image)">
+
+
+            <button id="openModal">Change photo</button>
+
+            @*<button type="button" class="btn" data-toggle="modal" data-target="#changePhotoDialog">
+
+
+                    Change photo
+                </button>
+        </div>
+    </dd>
+
+
+    <dd class="page">
+        @Html.DisplayFor(model => model.Name)
+        @Html.DisplayFor(model => model.Firstname)
+    </dd>
+
+
+
+    <dt>
+        @Html.DisplayNameFor(model => model.DateOfBirthday)
+        @Html.DisplayFor(model => model.DateOfBirthday)
+    </dt>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.FamStat.Name)
+        @Html.DisplayFor(model => model.FamStat.Name)
+    </dt>
+
+    ______________________________________________________
+
+    <dt>
+
+        @Html.DisplayNameFor(model => model.CurrentLocation.Country)
+        @Html.DisplayFor(model => model.CurrentLocation.Country)
+    </dt>
+    <dt>
+        @Html.DisplayNameFor(model => model.CurrentLocation.State)
+        @Html.DisplayFor(model => model.CurrentLocation.State)
+    </dt>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.CurrentLocation.City)
+        @Html.DisplayFor(model => model.CurrentLocation.City)
+    </dt>
+    <hr />
+    <dd>
+
+    </dd>
+
+</div>
+@*}
+
+<div id='changeModal' class='modal hide fade in' data-url='@Url.Action("ChangePhoto","Users")'>
+    <div id='changeContainer'>
+    </div>
+</div>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*@section scripts
+    {
+        <script type="text/javascript">
+
+            $(function () {
+                $.ajaxSetup({ cache: false });
+               $(".compItem").click(function (e) {
+
+                    e.preventDefault();
+                    $.get(this.href, function (data) {
+                        $('#dialogContent').html(data);
+                        $('#modDialog').modal('show');
+                    });
+                });
+            })
+        </script>
+    }*@

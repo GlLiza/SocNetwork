@@ -109,7 +109,7 @@ namespace network.Controllers
 
 
 
-                    return RedirectToAction("Index", "Home", userModel);
+                    return RedirectToAction("Page", "Users", userModel);
 
 
                      

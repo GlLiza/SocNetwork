@@ -156,3 +156,21 @@ td {
     align-content:right;
     
 }
+
+
+.page {
+    color:#53a3cd;
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.partialChangPhoto {
+    height:20px;
+    width:200px;
+    /*overflow-y:auto;*/
+}
+
+
+.modal-body {
+    height: 200px;
+}
