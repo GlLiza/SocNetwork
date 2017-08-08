@@ -9,6 +9,7 @@ namespace network
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"
+                      , "~/Scripts/jquery-ui-{version}.js"
                         //, "~/Scripts/ChangePhoto.js"
                         ));
 

@@ -174,3 +174,17 @@ td {
 .modal-body {
     height: 200px;
 }
+
+
+.ui-datepicker-calendar {
+   display: none;
+}
+.ui-datepicker-month {
+   display: none;
+}
+.ui-datepicker-prev{
+   display: none;
+}
+.ui-datepicker-next{
+   display: none;
+}

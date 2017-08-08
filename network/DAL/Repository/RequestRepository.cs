@@ -52,14 +52,17 @@ namespace network.DAL.Repository
             return context.Requests.Find(id);
         }
 
-        public IEnumerable<Requests> SearchRequests(string id)
+        public Requests SearchByUsersId(string idIng, string idEd)
         {
-            var item = context.Requests.ToList();
+            var request =
+                context.Requests.FirstOrDefault(s => s.Requesting_user_id == idIng && s.Requested_user_id == idEd);
+            return request;
+        }
 
-            var request = from req in item.AsEnumerable()
-                          where (req.Requesting_user_id == id) && (req.FriendStatuses.Name == "Active")
-                                       select req; 
-
+        public IQueryable<Requests> SearchRequests(string id)
+        {
+            var request = context.Requests.
+                Where(s => s.Requesting_user_id == id && s.Status_id == 1);
             return request;
         }
 
@@ -76,8 +79,25 @@ namespace network.DAL.Repository
         public void Update(Requests requests)
         {
             Requests req = context.Requests.Find(requests.Id);
-            context.Entry(req).CurrentValues.SetValues(requests);
+            //context.Entry(requests).State=EntityState.Modified;
+            context.Entry(requests).CurrentValues.SetValues(requests);
         }
+
+
+        public IQueryable<Requests> ShowNewRequests(string id)
+        {
+            var list = context.Requests
+                .Where(s => s.Requesting_user_id == id && s.Status_id == 1);
+            return list;
+
+        }
+
+        public Requests ReturnRequests(string idEd, string idIng)
+        {
+            return context.Requests
+                .FirstOrDefault(s => s.Requested_user_id == idEd && s.Requesting_user_id == idIng && s.Status_id==1);
+        }
+
 
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using network.BLL.EF;
 
 namespace network.Views.ViewModels
@@ -15,14 +14,6 @@ namespace network.Views.ViewModels
 
         public byte[] Image { get; set; }
 
-
-        [Display(Name = "Are we friends?")]
-        public bool? Status { get; set; }
-
-
         public AspNetUsers User { get; set; }
-
-
-
     }
 }

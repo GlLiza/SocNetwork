@@ -72,7 +72,7 @@ namespace network.BLL
         }
 
 
-        public IEnumerable<Requests> CurrentRequestses(string id)
+        public IQueryable<Requests> CurrentRequestses(string id)
         {
             return  requestRepository.SearchRequests(id);
         }
@@ -83,6 +83,32 @@ namespace network.BLL
             requestRepository.Save();
         }
 
+        public IQueryable<Requests> RequestList(string id)
+        {
+            return requestRepository.ShowNewRequests(id);
+        }
+
+        public Requests SearchUsers(string userIng, string userEd)
+        {
+            return requestRepository.SearchByUsersId(userIng, userEd);
+        }
+
+        public void Save()
+        {
+            requestRepository.Save();
+        }
+
+
+        public bool Check (string idEd,string idIng)
+        {
+           
+                var request = requestRepository.ReturnRequests(idEd, idIng);
+                if (request != null)
+                 return true;
+                    return false;
+          
+          
+        }
 
     }
 }

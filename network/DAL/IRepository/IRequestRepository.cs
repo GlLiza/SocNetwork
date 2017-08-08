@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using network.BLL.EF;
 
 namespace network.DAL.IRepository
@@ -13,10 +14,10 @@ namespace network.DAL.IRepository
         void Save();
 
         Requests SearchById(int id);
-        IEnumerable<Requests> SearchRequests(string id);
+        Requests SearchByUsersId(string idIng, string idEd);
+        IQueryable<Requests> SearchRequests(string id);
+        IQueryable<Requests> ShowNewRequests(string id);
 
-        
-
-        
+        Requests ReturnRequests(string idOne, string idTwo);
     }
 }

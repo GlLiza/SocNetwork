@@ -9,7 +9,7 @@ using WebGrease.Css.Extensions;
 
 namespace network.BLL
 {
-    public class PhotoalbumService
+    public class PhAlbumService
     {
         private NetworkContext db = new NetworkContext();
 
@@ -18,7 +18,7 @@ namespace network.BLL
         private IImagesRepository imgRepository;
 
 
-        public PhotoalbumService()
+        public PhAlbumService()
         {
             albumRepository = new AlbumRepository(db);
             AlbAndPhRepository=new AlbAndPhotoRepository(db);

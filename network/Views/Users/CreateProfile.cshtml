@@ -5,7 +5,7 @@
 }
 
 
-@using (Html.BeginForm("Edit", "Users",FormMethod.Post, new {id=Model.Id, enctype="multipart/form-data"}))
+@using (Html.BeginForm("CreateProfile", "Users",FormMethod.Post, new {id=Model.Id, enctype="multipart/form-data"}))
 {
     <div class="form-horizontal">
         @*@Html.AntiForgeryToken()*@
@@ -136,12 +136,22 @@
                             <label class="control-label">School name</label>
                             <input maxlength="200" name="SchoolName" type="text" required="required" class="form-control" placeholder="Enter school name"/>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label">Graduation year</label>
-                            <input value="yyyy" type="date" name="GraduationYear" id="gradstime">
-
+                        @*<div class="form-group">
+                            @*<label class="control-label">Graduation year:</label>*@
+                          @*  @Html.LabelFor(model=>model.GraduationYear, "Graduation year",htmlAttributes:new {@class="control-label col-md-2"})
+                            @Html.DropDownListFor(model=>model.GraduationYear, Enumerable.Range(1970,DateTime.Now.Year-1970+1).Reverse().Select(x=>new SelectListItem(){Value=x.ToString(),Text = x.ToString()}))
+                    </div>*@
+                    
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.GraduationYear, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.GraduationYear, Enumerable.Range(1970, DateTime.Now.Year - 1970 + 1).Reverse().Select(x => new SelectListItem() { Value = x.ToString(), Text = x.ToString() }))
+                            @*@Html.EditorFor(model => model.GraduationYear, new { htmlAttributes = new { @class = "form-control" } })*@
+                            @Html.ValidationMessageFor(model => model.GraduationYear, "", new {@class = "text-danger"})
                         </div>
-                        <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
+                    </div>
+
+                    <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
                     </div>
                 </div>
             </div>
@@ -210,5 +220,17 @@
 }
 
 
+
+@*@section Scripts{
+    <script type="text/javascript">
+        var start = 1950;
+        var end = new Date().getFullYear();
+        var options = "";
+        for (var year = start ; year <= end; year++) {
+            options += "<option>" + year + "</option>";
+        }
+        document.getElementById("year").innerHTML = options;
+    </script>
+}*@
 
 

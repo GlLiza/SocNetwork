@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using network.BLL.EF;
 using network.DAL.IRepository;
 using network.DAL.Repository;
@@ -70,6 +71,47 @@ namespace network.BLL
             return familyStatusRepository.GetListFamStatus();
         }
 
+
+
+
+
+
+        // позволяет вернуть список друзей
+        public List<UserDetails> GetUsersByFriendship(IQueryable<Friendship> friendships)   
+        {
+            List<UserDetails> usersList=new List<UserDetails>();
+
+            foreach (var users in friendships)
+            {
+                var item = SearchByUserId(users.Friend_id);
+                usersList.Add(item);
+            }
+            return usersList;
+
+        }
+
+        //позволяет получить список прочих пользователей (не друзей)
+        public List<UserDetails> AnotherUsers(IQueryable<Friendship> friendships, List<UserDetails> users)
+        {
+            List<UserDetails> list=new List<UserDetails>();
+
+            List<UserDetails> friendList=GetUsersByFriendship(friendships);
+
+
+            foreach (var user in users)
+            {
+                if (friendList.Count != 0)
+                {
+                    foreach (var friend in friendList)
+                    {
+                        if (friend != user)
+                            list.Add(user);
+                    }
+                }
+                else list.Add(user);
+            }
+            return list;
+        }
 
     }
 }

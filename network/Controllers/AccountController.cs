@@ -109,7 +109,7 @@ namespace network.Controllers
 
 
 
-                    return RedirectToAction("Page", "Users", userModel);
+                    return RedirectToAction("Index", "Users", userModel);
 
 
                      
@@ -210,7 +210,7 @@ namespace network.Controllers
                         // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                         // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                        return RedirectToAction("Edit", "Users", us);
+                        return RedirectToAction("CreateProfile", "Users", us);
                     }
                     AddErrors(result);
                 }
@@ -461,7 +461,7 @@ namespace network.Controllers
             var AuthenticationManager = ctx.Authentication;
 
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Users");
         }
 
         //
@@ -518,7 +518,7 @@ namespace network.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home");       //change!!!!!!
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

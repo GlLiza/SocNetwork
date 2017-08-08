@@ -7,18 +7,18 @@ using System.Web.Mvc;
 
 namespace network.Controllers
 {
-    public class AlbumController : Controller
+    public class ImgAlbumController : Controller
     {
 
         public NetworkContext Db = new NetworkContext();
-        public PhotoalbumService AlbumServ;
+        public PhAlbumService AlbumServ;
         public UserService UserServ;
         public ImageService ImgServ;
 
         
-        public AlbumController()
+        public ImgAlbumController()
         {
-            AlbumServ = new PhotoalbumService();
+            AlbumServ = new PhAlbumService();
             UserServ = new UserService();
             ImgServ = new ImageService();
         }
@@ -167,7 +167,6 @@ namespace network.Controllers
         }
 
         [HttpPost]
-
         public ActionResult DeletePhoto(Images img)
         {
             AlbumServ.DeletePhoto(img);
@@ -179,5 +178,16 @@ namespace network.Controllers
             var photos = AlbumServ.OpenAlbum(id);
             return PartialView("OpenAlbum",photos);
         }
+
+
+
+        ////set default empty img
+        //public byte[] DefaultPhoto()
+        //{
+        //    var photo = ImgServ.SearchImg(1058);
+
+        //    return photo.Data;
+        //}
+
     }
 }

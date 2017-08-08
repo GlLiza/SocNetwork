@@ -16,5 +16,7 @@ namespace network.DAL.IRepository
         Friendship SearchById(int id);
         void Save();
         IQueryable<Friendship> GetListFriends(string id);
+
+   
     }
 }
