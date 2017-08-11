@@ -175,8 +175,20 @@ td {
     height: 200px;
 }
 
+.button-del {
+    text-align:center;
+    border: none;
+}
 
-.ui-datepicker-calendar {
+
+.container {
+        text-align: center;
+    }
+.prgr {
+    height: 30px;
+}
+
+/*.ui-datepicker-calendar {
    display: none;
 }
 .ui-datepicker-month {
@@ -187,4 +199,13 @@ td {
 }
 .ui-datepicker-next{
    display: none;
-}
+}*/
+
+/*.btn-group button {
+    background-color: #4CAF50; 
+    border: 1px solid green; 
+    color: white; 
+    padding: 10px 24px; 
+    cursor: pointer; 
+    float: left;
+}*/

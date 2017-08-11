@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using network.BLL.EF;
@@ -15,6 +14,7 @@ namespace network.DAL.Repository
         {
             this.context = context;
         }
+
         
 
         private bool disposed = false;
@@ -42,60 +42,49 @@ namespace network.DAL.Repository
             context.SaveChanges();
         }
 
-        public void NewRequest(Requests request)
+
+        public void AddRequest(Requests request)
         {
             context.Requests.Add(request);
+        }
+
+        public void CancelRequests(Requests request)
+        {
+            if (request == null)
+            {
+                request.FriendStatuses.Name = "Active";
+                context.Entry(request).State = EntityState.Modified;
+            }
+        }
+
+        public void Update(Requests requests)
+        {
+            context.Entry(requests).CurrentValues.SetValues(requests);
         }
 
         public Requests SearchById(int id)
         {
             return context.Requests.Find(id);
         }
-
+        
         public Requests SearchByUsersId(string idIng, string idEd)
         {
-            var request =
-                context.Requests.FirstOrDefault(s => s.Requesting_user_id == idIng && s.Requested_user_id == idEd);
-            return request;
+            return context.Requests.FirstOrDefault(s => s.Requesting_user_id == idIng && s.Requested_user_id == idEd);
         }
+        
 
-        public IQueryable<Requests> SearchRequests(string id)
+        //возвращает активный список запросов
+        public IQueryable<Requests> GetActiveRequests(string id)
         {
-            var request = context.Requests.
-                Where(s => s.Requesting_user_id == id && s.Status_id == 1);
-            return request;
-        }
-
-
-        public void CancelRequests(Requests request)
-        {
-            Requests req = context.Requests.Find(request.Id);
-            req.FriendStatuses.Name = "Active";
-            context.Entry(req).State=EntityState.Modified;
-
+            return context.Requests.Where(s => s.Requesting_user_id == id && s.Status_id == 1);
+           
         }
 
 
-        public void Update(Requests requests)
+        //возвращает активный запрос для определенных пользователей
+        public Requests CheckRequests(string idEd, string idIng)
         {
-            Requests req = context.Requests.Find(requests.Id);
-            //context.Entry(requests).State=EntityState.Modified;
-            context.Entry(requests).CurrentValues.SetValues(requests);
-        }
-
-
-        public IQueryable<Requests> ShowNewRequests(string id)
-        {
-            var list = context.Requests
-                .Where(s => s.Requesting_user_id == id && s.Status_id == 1);
-            return list;
-
-        }
-
-        public Requests ReturnRequests(string idEd, string idIng)
-        {
-            return context.Requests
-                .FirstOrDefault(s => s.Requested_user_id == idEd && s.Requesting_user_id == idIng && s.Status_id==1);
+            return context.Requests.FirstOrDefault(s => s.Requested_user_id == idEd && s.Requesting_user_id == idIng && s.Status_id==1);
         }
 
 

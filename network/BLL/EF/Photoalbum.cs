@@ -26,5 +26,6 @@ namespace network.BLL.EF
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlbAndPhot> AlbAndPhot { get; set; }
+        public virtual UserDetails UserDetails { get; set; }
     }
 }

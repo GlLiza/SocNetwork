@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using network.BLL.EF;
 using network.DAL.IRepository;
 
@@ -16,15 +14,18 @@ namespace network.DAL.Repository
             context = cont;
         }
 
-        public void AddFriend(Friendship friend)
+
+
+        public void AddFriend(Friendship friendship)
         {
-            context.Friendship.Add(friend);
+            context.Friendship.Add(friendship);
         }
 
-        public void DeleteFriend(Friendship friendship)
+        public void DeleteFriend(int id)
         {
-            Friendship friend = context.Friendship.Find(friendship.Id);
-            context.Friendship.Remove(friend);
+            Friendship friendship = context.Friendship.Find(id);
+            if (friendship != null)
+                context.Friendship.Remove(friendship);
         }
 
         private bool disposed = false;
@@ -52,18 +53,16 @@ namespace network.DAL.Repository
             context.SaveChanges();
         }
 
-        public Friendship SearchByCurrentUserId(string id)
+
+        //возвращает объект класса Friendship(друга) по id пользователей 
+        public Friendship SearchByUsers(string idU, string idF)
         {
             return context.Friendship
-                .SingleOrDefault(s => s.User_id == id);
+                .FirstOrDefault(s => s.User_id == idF && s.Friend_id == idU);
         }
 
-        public Friendship SearchBySecondUserId(string id)
-        {
-            return context.Friendship
-                .FirstOrDefault(s => s.User_id == id);
-        }
 
+        //получает список друзей
         public IQueryable<Friendship> GetListFriends(string id)
         {
             var list = context.Friendship
@@ -71,18 +70,24 @@ namespace network.DAL.Repository
             return list;
         }
 
+
+
         public Friendship SearchById(int id)
         {
             return context.Friendship.Find(id);
         }
 
-     
 
 
-
-
-
-
+        //функция проверяет являются ли пользователи друзьями
+        public bool Check(string uId, string fId)
+        {
+            var result = context.Friendship
+                .FirstOrDefault(x => x.User_id == uId && x.Friend_id == fId);
+            if (result != null)
+                return true;
+            return false;
+        }
 
     }
 }

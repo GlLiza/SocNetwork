@@ -97,20 +97,14 @@ namespace network.BLL
 
             List<UserDetails> friendList=GetUsersByFriendship(friendships);
 
+            var userIds = users.Select(u => u.Id);
+            var friendsIds = friendList.Select(f => f.Id);
 
-            foreach (var user in users)
-            {
-                if (friendList.Count != 0)
-                {
-                    foreach (var friend in friendList)
-                    {
-                        if (friend != user)
-                            list.Add(user);
-                    }
-                }
-                else list.Add(user);
-            }
-            return list;
+            var diff = userIds.Where(x => !friendsIds.Contains(x));
+
+            var result = users.Where(x => diff.Contains(x.Id)).ToList();
+
+            return result;
         }
 
     }

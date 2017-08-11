@@ -1,4 +1,13 @@
-﻿@model IEnumerable<network.Views.ViewModels.ShowUserViewModel>
+﻿@using network.Controllers
+@model IEnumerable<network.Views.ViewModels.ShowUserViewModel>
+
+
+       @ViewData["Error"]
+
+@{
+    FriendshipController f=new FriendshipController();
+}
+
 
 
 <table class="table">
@@ -14,8 +23,10 @@
         </td>
 
         <td>
+            <a href="@Url.Action("UsersPage","Users", new {id=item.Id},null)">
             @Html.DisplayFor(modelItem => item.Name)
             @Html.DisplayFor(modelItem => item.Firstname)
+                </a>
         </td>
         
         <td>
@@ -23,8 +34,17 @@
                 <button class="btn">...</button>
                 <button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
                 <ul class="dropdown-menu">
-                  <li>@Html.ActionLink("Add to friends","SendRequest","Friendship", new { id = item.User.Id },null)</li>
+                    
+                    
+                    @*@{
+                        if (f.CheckRequest(item.User.Id) == false)
 
+                        {*@
+                            <a href="@Url.Action("SendRequest", "Friendship", new {id = item.User.Id})">Add to friends</a>
+                        @*}
+                    }*@
+
+                  
                 </ul>
             </div>
         </td>

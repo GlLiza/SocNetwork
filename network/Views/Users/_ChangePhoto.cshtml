@@ -1,4 +1,6 @@
-﻿@model network.Views.ViewModels.ChangePhotoViewModel
+﻿
+@model network.Views.ViewModels.ChangePhotoViewModel
+
 
 <div id="changePhotoDialog">
     <div class="modal-dialog modal-sm">
@@ -11,21 +13,23 @@
             </div>
 
             <div class="modal-body">
-                @using (Html.BeginForm("ChangePhoto", "Users", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("ChangePhoto", "Users", FormMethod.Post, new {enctype = "multipart/form-data", id = "Change"}))
                 {
                     @Html.HiddenFor(m => m.Id)
                     <label class="btn btn-info btn-file">
-                        Select photo <input type="file" name="Image" id="imageFile" />
+                        Select photo <input type="file" name="Image" id="imageFile"/>
                     </label>
 
                     <button class="btn btn-success pull-right" type="submit" id="changePhoto"> Change photo</button>
-
-                    <div id="progressbar" class="progress-bar">
-                        <div id="progresslabel" class="progressbarlabel"></div>
-                    </div>
-
                 }
-                    </div>
+                       
+                        <div class="progress" style="width:50%">
+                            <div class="progress-bar"></div>
+                            <div class="percent">0%</div>
+                        </div>
+
+                <div id="status"></div>
+                </div>
 
 
         </div>
@@ -34,3 +38,53 @@
 </div>
 
 
+@*@section scripts {*@
+
+    @*<script type="text/javascript">
+        $(function () {
+            var shouldIncrease = true;
+            var progress = $("#progress1").swidget();
+
+            setInterval(function () {
+                if (progress.value() < 100 && shouldIncrease) {
+                    progress.value(progress.value() + 1);
+                }
+                else {
+                    shouldIncrease = false;
+                    progress.value(progress.value() - 1);
+                    if (progress.value() == 0) {
+                        shouldIncrease = true;
+                    }
+                }
+            }, 30);
+        });
+    </script>*@
+    
+    @*<script>
+        $.noConflict();
+        jQuery(document).ready(function ($) {
+
+            var bar = $('.progress-bar');
+            var percent = $('.percent');
+            var status = $('#status');
+
+            $('#Change').ajaxForm({
+                beforeSend: function () {
+                    status.empty();
+                    var percentVal = '0%';
+                    bar.width(percentVal);
+                    percent.html(percentVal);
+                },
+                uploadProgress: function (event, position, total, percentComplete) {
+                    var percentVal = percentComplete + '%';
+                    bar.width(percentVal);
+                    percent.html(percentVal);
+                },
+                complete: function (xhr) {
+                    status.html(xhr.responseText);
+                }
+            });
+        });
+    </script>
+
+}*@

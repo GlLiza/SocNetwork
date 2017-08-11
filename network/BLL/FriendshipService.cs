@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using network.BLL.EF;
 using network.DAL.IRepository;
@@ -18,24 +18,31 @@ namespace network.BLL
             friendRepository=new FriendshipRepository(db);
             requestRepository=new RequestRepository(db);
         }
-
         
+
+        //FRIENDSHIPS
+
+
         public void AddFriendship(Friendship friend)
         {
-            friendRepository.AddFriend(friend);
-            friendRepository.Save();
+            if (friend != null)
+            {
+                friendRepository.AddFriend(friend);
+                friendRepository.Save();
+            }
+           
         }
 
-        public void DeleteFriendship(Friendship friend)
+        public void DeleteFriendship(int id )
         {
-            Friendship friendship1 = friendRepository.SearchById(friend.Id);
-            
-            Friendship friendship2 = friendRepository.SearchBySecondUserId(friendship1.Friend_id);
+            Friendship friendshipU = friendRepository.SearchById(id);
+            Friendship friendshipF = friendRepository.SearchByUsers(friendshipU.User_id, friendshipU.Friend_id);
+        
+            friendRepository.DeleteFriend(friendshipU.Id);
+            friendRepository.Save();
+            friendRepository.DeleteFriend(friendshipF.Id);
+            friendRepository.Save();
 
-            friendRepository.DeleteFriend(friendship1);
-            friendRepository.Save();
-            friendRepository.DeleteFriend(friendship2);
-            friendRepository.Save();
         }
 
         public IQueryable<Friendship> GetFriendList(string id)
@@ -49,15 +56,41 @@ namespace network.BLL
             return friendRepository.SearchById(id);
         }
 
-        public Friendship SearchByFriend(string id)
+        public Friendship SearchByUsers(string idU, string idF)
         {
-            return friendRepository.SearchBySecondUserId(id);
+            return friendRepository.SearchByUsers(idU, idF);
         }
+
+
+        //check friendship
+        public bool CheckFriendship(string userId, string friendId)
+        {
+            if (friendRepository.Check(userId, friendId))
+                return true;
+            return false;
+        }
+
+
+
+
+
+
+
+
+        //REQUESTS
 
         public void AddRequest(Requests request)
         {
-            requestRepository.NewRequest(request);
-            requestRepository.Save();
+            try
+            {
+                requestRepository.AddRequest(request);
+                requestRepository.Save();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
         public void CancelRequest(Requests request)
@@ -74,7 +107,7 @@ namespace network.BLL
 
         public IQueryable<Requests> CurrentRequestses(string id)
         {
-            return  requestRepository.SearchRequests(id);
+            return  requestRepository.GetActiveRequests(id);
         }
 
         public void UpdateRequest(Requests requests)
@@ -85,29 +118,29 @@ namespace network.BLL
 
         public IQueryable<Requests> RequestList(string id)
         {
-            return requestRepository.ShowNewRequests(id);
+            return requestRepository.GetActiveRequests(id);
         }
 
         public Requests SearchUsers(string userIng, string userEd)
         {
             return requestRepository.SearchByUsersId(userIng, userEd);
         }
-
-        public void Save()
-        {
-            requestRepository.Save();
-        }
-
-
+        
+        //check requests
         public bool Check (string idEd,string idIng)
         {
            
-                var request = requestRepository.ReturnRequests(idEd, idIng);
+                var request = requestRepository.CheckRequests(idEd, idIng);
                 if (request != null)
                  return true;
                     return false;
           
           
+        }
+
+        public void Save()
+        {
+            requestRepository.Save();
         }
 
     }

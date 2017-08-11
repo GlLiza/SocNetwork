@@ -2,7 +2,6 @@
 using System;
 using System.Linq;
 using network.BLL.EF;
-using System.Data.Entity;
 
 namespace network.DAL.Repository
 {
@@ -67,5 +66,13 @@ namespace network.DAL.Repository
         {
             return context.Photoalbum.Find(id);
         }
+
+        public IQueryable<Photoalbum> GetListAlbums(int id)
+        {
+            var albums = context.Photoalbum
+                .Where(s => s.UserId == id);
+            return albums;
+        }
+
     }
 }

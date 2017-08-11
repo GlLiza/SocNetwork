@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using network.BLL;
 using network.BLL.EF;
 
 namespace network.DAL.IRepository
@@ -12,10 +11,7 @@ namespace network.DAL.IRepository
         void DeleteImage (int id);
         void UpdateImage (Images images);
         void Save ();
-
-  
         Images GetImageById(int? id);
-
         byte[] ReturnImage(string id);
     }
 }

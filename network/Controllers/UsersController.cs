@@ -9,6 +9,8 @@ using network.BLL;
 using network.BLL.EF;
 using network.Views.ViewModels;
 
+
+
 namespace network.Controllers
 {
     public class UsersController : Controller
@@ -32,6 +34,7 @@ namespace network.Controllers
             imgService=new ImageService();
         }
 
+        
         [HttpGet]
         public ActionResult Index()
         {
@@ -127,8 +130,39 @@ namespace network.Controllers
             return RedirectToAction("Login", "Account");
         }
 
+        public ActionResult UsersPage(int id)
+        {
+            var friend = userService.SearchUser(id);
+
+            if (friendServ.CheckFriendship(User.Identity.GetUserId(), friend.UserId))
+            {
+                FriendShow modell = new FriendShow();
+                modell.Id = friend.Id;
+                modell.Name = friend.Name;
+                modell.Firstname = friend.Firstname;
+                modell.DateOfBirthday = friend.DateOfBirthday;
+                modell.FamStat = friend.FamilyStatus;
+                modell.Image = friend.Images.Data;
+
+                Location curLoc = locService.GetLocation(friend.Id);
+
+                modell.CurrentLocation = curLoc;
 
 
+                return View("FriendsPage",modell);
+            }
+            else
+            {
+                NotFriendShow model = new NotFriendShow();
+                model.Id = friend.Id;
+                model.Name = friend.Name;
+                model.Firstname = friend.Firstname;
+                model.Image = friend.Images.Data;
+
+                return View("NotFriendsPage",model);
+            }
+        }
+        
 
         [HttpGet]
         public ActionResult BrowseUsers()
@@ -154,16 +188,11 @@ namespace network.Controllers
 
                 model.Add(item);
             }
+            ViewData["Error"] = TempData["message"];
 
             return View(model);
         }
-
-      
-
-
-       
-
-
+        
 
 
         public ActionResult CreateProfile(int id)
@@ -292,6 +321,8 @@ namespace network.Controllers
         {
             ChangePhotoViewModel model = new ChangePhotoViewModel();
             model.Id = GetId();
+
+         
 
             return PartialView("_ChangePhoto", model);
         }

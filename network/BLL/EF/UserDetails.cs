@@ -14,6 +14,12 @@ namespace network.BLL.EF
     
     public partial class UserDetails
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public UserDetails()
+        {
+            this.Photoalbum = new HashSet<Photoalbum>();
+        }
+    
         public int Id { get; set; }
         public string UserId { get; set; }
         public string Name { get; set; }
@@ -34,5 +40,7 @@ namespace network.BLL.EF
         public virtual Location Location1 { get; set; }
         public virtual School School { get; set; }
         public virtual WorkPlace WorkPlace { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Photoalbum> Photoalbum { get; set; }
     }
 }

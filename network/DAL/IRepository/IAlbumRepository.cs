@@ -11,8 +11,9 @@ namespace network.DAL.IRepository
         void UpdateAlbum(Photoalbum album);
         void Save();
         Photoalbum GetAlbumById(int id);
+        IQueryable<Photoalbum> GetListAlbums(int id);
 
-       
-        
+
+
     }
 }

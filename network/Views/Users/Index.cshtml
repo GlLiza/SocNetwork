@@ -80,6 +80,35 @@
                         $('#changeModal').modal('show');
                     });
             });
+        //});
+
+        //alert("completed");
+        //$.noConflict();
+        //jQuery(document).ready(function ($) {
+
+            var bar = $('#Change .progress-bar');
+            var percent = $('#Change .percent');
+            var status = $('#Change #status');
+
+            $('#Change').ajaxForm({
+                beforeSend: function () {
+                    status.empty();
+                    var percentVal = '0%';
+                    bar.width(percentVal);
+                    percent.html(percentVal);
+                    alert(percentVal);
+                },
+                uploadProgress: function (event, position, total, percentComplete) {
+                    var percentVal = percentComplete + '%';
+                    bar.width(percentVal);
+                    percent.html(percentVal);
+                    alert(percentVal);
+                },
+                complete: function (xhr) {
+                    alert("completed");
+                    status.html(xhr.responseText);
+                }
+            });
         });
     </script>
 }

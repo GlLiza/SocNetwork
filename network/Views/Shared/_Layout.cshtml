@@ -4,39 +4,45 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    
-   
 
 </head>
 <body>
-<div class="header">
-    <div class="col-md-3">
-        <div class="masthead">
-            <h3 class="text-muted">@Html.ActionLink("Social network", "Index", "Users")</h3>
+    <div class="header">
+        <div class="col-md-3">
+            <div class="masthead">
+                <h3 class="text-muted">@Html.ActionLink("Social network", "Index", "Users")</h3>
+            </div>
+        </div>
+        @Html.Partial("_LoginPartial")
+    </div>
+    <div class="content">
+        <div class="col-md-3">
+            @Html.Partial("Menu")
+        </div>
+        <div class="col-md-6">
+            @RenderBody()
         </div>
     </div>
-    @Html.Partial("_LoginPartial")
-</div>
-<div class="content">
-    <div class="col-md-3">
-        @Html.Partial("Menu")
-    </div>
-    <div class="col-md-6">
-        @RenderBody()
-    </div>
-</div>
 
 
-<footer>
-    <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-</footer>
+    <footer>
+        <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+    </footer>
 
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    
+    
+  
+    @*<script src="http://malsup.github.com/jquery.form.js"></script>*@
+
+
     
 
-
-
 </body>
+    
+  
 </html>

@@ -1,11 +1,8 @@
 ﻿using network.BLL.EF;
 using network.DAL.IRepository;
 using network.DAL.Repository;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using WebGrease.Css.Extensions;
 
 namespace network.BLL
 {
@@ -25,15 +22,15 @@ namespace network.BLL
             imgRepository=new ImagesRepository(db);
         }
 
+
+
+
+        //PHOTOALBUM
         public IQueryable<Photoalbum> GetListAlbums(int id)
         {
-
-            var user = db.UserDetails.Find(id);
-            var albums = db.Photoalbum
-                .Where(s => s.UserId == id);
-            return albums;
+            return albumRepository.GetListAlbums(id);
         }
-
+        
         public void AddNewAlbum(Photoalbum alb)
         {
             albumRepository.AddNewAlbum(alb);
@@ -46,7 +43,7 @@ namespace network.BLL
             Photoalbum album = albumRepository.GetAlbumById(alb.Id);
             
 
-            var item = GetListEntry(album);
+            var item = GetListEntry(album.Id);
 
             var photos = GetArrayImg(item);
            
@@ -86,9 +83,12 @@ namespace network.BLL
 
         public Photoalbum SearchAlbum(int id)
         {
-           var album=albumRepository.GetAlbumById(id);
-            return album;
+            return albumRepository.GetAlbumById(id);
         }
+
+        
+        
+        //ALBUM_AND_PHOTOS
 
         public void AddNewEntry(AlbAndPhot entr)
         {
@@ -115,18 +115,21 @@ namespace network.BLL
             AlbAndPhRepository.Save();
         }
 
-        public IQueryable<AlbAndPhot> GetListEntry(Photoalbum alb)
+        public IQueryable<AlbAndPhot> GetListEntry(int id)
         {
-            Photoalbum album = albumRepository.GetAlbumById(alb.Id);
+            Photoalbum album = albumRepository.GetAlbumById(id);
 
             var item = db.AlbAndPhot
                .Where(q => q.PhotoalbumId == album.Id);
+
             return item;
         }
 
+        //возвращает список фотографий соответствующих entrys
         public List<Images> GetArrayImg(IQueryable<AlbAndPhot> entrys)
         {
             List<Images> arrayImg = new List<Images>();
+
             foreach (var a in entrys)
             {
                 var ph = db.Images
@@ -136,28 +139,31 @@ namespace network.BLL
             }
             return arrayImg;
         }
+        
 
 
 
+        //IMAGES
 
+       //получает список фотографий альбома
         public List<Images> OpenAlbum(int id)
         {
-            var album = albumRepository.GetAlbumById(id);
-
-            var item = GetListEntry(album);
-            var imgs= GetArrayImg(item);
-
-           return imgs;
+            var item = GetListEntry(id);
+            return GetArrayImg(item);
         }
 
-        public void DeletePhoto(Images img)
+        //удаляет фото из альбома
+        public void DeletePhoto(int id)
         {
-            var images = imgRepository.GetImageById(img.Id);
+            var images = imgRepository.GetImageById(id);
             var entry = AlbAndPhRepository.GetEntryByPhotoId(images.Id);
+
             DeleteAlbAndPhot(entry);
+
             imgRepository.DeleteImage(images.Id);
             imgRepository.Save();
 
         }
+
     }
 }

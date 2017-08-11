@@ -4,13 +4,13 @@ using System;
 using System.IO;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace network.Controllers
 {
     public class ImgAlbumController : Controller
     {
 
-        public NetworkContext Db = new NetworkContext();
         public PhAlbumService AlbumServ;
         public UserService UserServ;
         public ImageService ImgServ;
@@ -21,13 +21,17 @@ namespace network.Controllers
             AlbumServ = new PhAlbumService();
             UserServ = new UserService();
             ImgServ = new ImageService();
+            
         }
 
         // GET: Album
         public ActionResult Index()
         {
-            return View();
+            var listAlbums = AlbumServ.GetListAlbums(GetId());
+            return View(listAlbums);
         }
+
+
 
         // GET: Album/Details/5
         public ActionResult Details(int id)
@@ -44,11 +48,11 @@ namespace network.Controllers
 
         // POST: Album/Create
         [HttpPost]
-        public ActionResult Create(int id, Photoalbum alb)
+        public ActionResult Create(Photoalbum alb)
         {
             try
             {
-                alb.UserId = id;
+                alb.UserId = GetId();
                 AlbumServ.AddNewAlbum(alb);
 
                 return RedirectToAction("Index","Users");
@@ -169,7 +173,7 @@ namespace network.Controllers
         [HttpPost]
         public ActionResult DeletePhoto(Images img)
         {
-            AlbumServ.DeletePhoto(img);
+            AlbumServ.DeletePhoto(img.Id);
             return RedirectToAction("Index", "Users");
         }
 
@@ -177,6 +181,13 @@ namespace network.Controllers
         {
             var photos = AlbumServ.OpenAlbum(id);
             return PartialView("OpenAlbum",photos);
+        }
+
+
+        public int GetId()
+        {
+            var user = UserServ.SearchByUserId(User.Identity.GetUserId());
+            return user.Id;
         }
 
 

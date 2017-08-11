@@ -80,7 +80,8 @@ namespace network
             //    ClientSecret = ""
             //});
 
-           
+            app.MapSignalR();
+
         }
     }
 }

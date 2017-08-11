@@ -1,0 +1,24 @@
+﻿@model network.Views.ViewModels.NotFriendShow
+
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("UsersPage", "Users"))
+{
+    <dd>
+        <div class="col-md-3">
+
+            <img id="user_img" style="border: solid" src="data:image/png;base64, @Convert.ToBase64String(Model.Image)">
+
+        </div>
+    </dd>
+
+    <dd class="page">
+        @Html.DisplayFor(model => model.Name)
+        @Html.DisplayFor(model => model.Firstname)
+    </dd>
+
+}
+

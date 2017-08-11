@@ -1,0 +1,14 @@
+﻿@model IQueryable<network.BLL.EF.Photoalbum>
+
+    @Html.ActionLink("Add new photoalbum","Create","ImgAlbum",FormMethod.Get,null)
+
+<table class="table">
+    @foreach (var item in Model)
+    {
+        <td>
+            <tr>@Html.DisplayFor(modelItem =>item.Name)</tr>
+    
+
+        </td>
+    }
+</table>

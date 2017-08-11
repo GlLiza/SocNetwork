@@ -53,6 +53,37 @@ namespace network.Controllers
         }
 
 
+        public ActionResult FriendsOfFriends(int id)
+        {
+            List<ShowUserViewModel> model = new List<ShowUserViewModel>();
+
+            var friend = userService.SearchUser(id);
+
+            var frOffr = friendServ.GetFriendList(friend.UserId);
+
+            if (frOffr != null)
+            {
+                foreach (var b in frOffr)
+                {
+                    ShowUserViewModel userr = new ShowUserViewModel();
+
+                    var user = userService.SearchByUserId(b.Friend_id);
+
+                    userr.Id = user.Id;
+                    userr.Firstname = user.Firstname;
+                    userr.Name = user.Name;
+                    userr.Image = user.Images.Data;
+                    userr.User = user.AspNetUsers;
+                    user.AspNetUsers = b.AspNetUsers;
+
+                    model.Add(userr);
+                }
+                return View(model);
+            }
+            return RedirectToAction("Index", "Users");
+
+        }
+
 
         //GET:count requests
         public ActionResult CountRequests()
@@ -66,10 +97,10 @@ namespace network.Controllers
             model.Requests = listfriends;
 
             model.UserDetails = user;
-            int a = model.Requests.Count();
+            //int a = model.Requests.Count();
 
-            if(a>0)
-                return PartialView(a);
+            if(model.Requests.Count()> 0)
+                return PartialView(model.Requests.Count());
             return HttpNotFound();
 
         }
@@ -116,9 +147,15 @@ namespace network.Controllers
                 request.Status_id = 1;
                 request.Date_requsted = DateTime.Now;
                 friendServ.AddRequest(request);
+
+                TempData["message"] = "Request has been sent to user";
+
                 return RedirectToAction("BrowseUsers", "Users");
             }
-            return RedirectToAction("Index", "Friendship");
+
+            TempData["message"] = "Request has't been sent to user";
+
+           return RedirectToAction("BrowseUsers", "Users");
         }
 
 
@@ -135,8 +172,7 @@ namespace network.Controllers
             Requests req = friendServ.SearchRequest(requestsId);
             req.Status_id = 3;
             friendServ.Save();
-            //friendServ.UpdateRequest(req);
-
+           
             Friendship friendship1 = new Friendship();
             friendship1.User_id = req.Requesting_user_id;
             friendship1.Friend_id = req.Requested_user_id;
@@ -158,7 +194,6 @@ namespace network.Controllers
             Requests req = friendServ.SearchRequest(id);
             req.Status_id = 2;
             friendServ.Save();
-            //friendServ.UpdateRequest(req);
 
             return RedirectToAction("Index", "Friendship");
         }
@@ -169,20 +204,34 @@ namespace network.Controllers
             Requests req = friendServ.SearchRequest(id);
             req.Status_id = 4;
             friendServ.Save();
-            //friendServ.UpdateRequest(req);
+            
 
             return RedirectToAction("Index", "Friendship");
         }
 
-        
+
+
+
+
 
         //delete friendship
-        public ActionResult Delete(string id)
-        {
-            Friendship friend = friendServ.SearchByFriend(id);
 
-            if (friend == null) return HttpNotFound();
-            friendServ.DeleteFriendship(friend);
+        //GET
+        public ActionResult Delete(int id)
+        {
+            var us= userService.SearchUser(id);
+            return PartialView("_DeleteFriends",us.UserId);
+        }
+
+
+        [HttpPost]
+        public ActionResult Delete(string Id)
+        {
+
+            Friendship friendship = friendServ.SearchByUsers(User.Identity.GetUserId(), Id);
+
+            if (friendship == null) return HttpNotFound();
+            friendServ.DeleteFriendship(friendship.Id);
             return RedirectToAction("Index", "Friendship");
         }
         

@@ -192,7 +192,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AlbAndPhot_Photoalbum1">
+        <Association Name="FK_AlbAndPhot_Photoalbum">
           <End Role="Photoalbum" Type="Self.Photoalbum" Multiplicity="1" />
           <End Role="AlbAndPhot" Type="Self.AlbAndPhot" Multiplicity="*" />
           <ReferentialConstraint>
@@ -281,6 +281,18 @@
             </Principal>
             <Dependent Role="Friendship">
               <PropertyRef Name="Friend_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Photoalbum_UserDetails">
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
+          <End Role="Photoalbum" Type="Self.Photoalbum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Photoalbum">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -427,7 +439,7 @@
             <End Role="Images" EntitySet="Images" />
             <End Role="AlbAndPhot" EntitySet="AlbAndPhot" />
           </AssociationSet>
-          <AssociationSet Name="FK_AlbAndPhot_Photoalbum1" Association="Self.FK_AlbAndPhot_Photoalbum1">
+          <AssociationSet Name="FK_AlbAndPhot_Photoalbum" Association="Self.FK_AlbAndPhot_Photoalbum">
             <End Role="Photoalbum" EntitySet="Photoalbum" />
             <End Role="AlbAndPhot" EntitySet="AlbAndPhot" />
           </AssociationSet>
@@ -454,6 +466,10 @@
           <AssociationSet Name="FK_Frienship_AspNetUsers1" Association="Self.FK_Frienship_AspNetUsers1">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Friendship" EntitySet="Friendship" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Photoalbum_UserDetails" Association="Self.FK_Photoalbum_UserDetails">
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="Photoalbum" EntitySet="Photoalbum" />
           </AssociationSet>
           <AssociationSet Name="FK_Requests_AspNetUsers" Association="Self.FK_Requests_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -631,6 +647,7 @@
           <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AlbAndPhot" Relationship="Self.FK_AlbAndPhot_Photoalbum1" FromRole="Photoalbum" ToRole="AlbAndPhot" />
+          <NavigationProperty Name="UserDetails" Relationship="NetworkModel.FK_Photoalbum_UserDetails" FromRole="Photoalbum" ToRole="UserDetails" />
         </EntityType>
         <EntityType Name="Requests">
           <Key>
@@ -688,6 +705,7 @@
           <NavigationProperty Name="School" Relationship="Self.FK_UserDetails_School" FromRole="UserDetails" ToRole="School" />
           <NavigationProperty Name="WorkPlace" Relationship="Self.FK_UserDetails_WorkPlace" FromRole="UserDetails" ToRole="WorkPlace" />
           <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Photoalbum" Relationship="NetworkModel.FK_Photoalbum_UserDetails" FromRole="UserDetails" ToRole="Photoalbum" />
         </EntityType>
         <EntityType Name="WorkPlace">
           <Key>
@@ -987,7 +1005,23 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <AssociationSet Name="FK_Photoalbum_UserDetails" Association="NetworkModel.FK_Photoalbum_UserDetails">
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="Photoalbum" EntitySet="Photoalbum" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_Photoalbum_UserDetails">
+          <End Type="NetworkModel.UserDetails" Role="UserDetails" Multiplicity="1" />
+          <End Type="NetworkModel.Photoalbum" Role="Photoalbum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Photoalbum">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
