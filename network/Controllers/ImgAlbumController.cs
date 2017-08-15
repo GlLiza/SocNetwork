@@ -5,6 +5,7 @@ using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using network.Views.ViewModels;
 
 namespace network.Controllers
 {
@@ -40,6 +41,11 @@ namespace network.Controllers
             return View();
         }
 
+
+
+
+
+
         // GET: Album/Create
         public ActionResult Create()
         {
@@ -55,13 +61,19 @@ namespace network.Controllers
                 alb.UserId = GetId();
                 AlbumServ.AddNewAlbum(alb);
 
-                return RedirectToAction("Index","Users");
+                return RedirectToAction("Index","ImgAlbum");
             }
             catch (Exception e)
             {
                 return View();
             }
         }
+
+
+
+
+
+
 
         // GET: Album/Edit/5
         public ActionResult Edit(int id)
@@ -120,34 +132,37 @@ namespace network.Controllers
 
 
 
+
+        
         public ActionResult AddPhoto(int id)
         {
-            //var al = albumServ.SearchAlbum(id);
-            return View("AddPhoto");
+            AddPhotoViewModel model=new AddPhotoViewModel();
+            model.Id = id;
+            return PartialView("_AddPhoto",model);
         }
-
+    
         [HttpPost]
-        public ActionResult AddPhoto(int id, HttpPostedFileBase img)
+        public ActionResult AddPhoto(AddPhotoViewModel model)
         {
             try
             {
-                Photoalbum album = AlbumServ.SearchAlbum(id);
+                Photoalbum album = AlbumServ.SearchAlbum(model.Id);
                 Images headerImage = new Images();
                 AlbAndPhot entry=new AlbAndPhot();
                 entry.PhotoalbumId = album.Id;
 
 
 
-                if (img != null)
+                if (model.Image != null)
                 {
                     byte[] imageData = null;
-                    using (var binaryReader = new BinaryReader(img.InputStream))
+                    using (var binaryReader = new BinaryReader(model.Image.InputStream))
                     {
-                        imageData = binaryReader.ReadBytes(img.ContentLength);
+                        imageData = binaryReader.ReadBytes(model.Image.ContentLength);
                     }
-                    headerImage.Name = img.FileName;
+                    headerImage.Name = model.Image.FileName;
                     headerImage.Data = imageData;
-                    headerImage.ContentType = img.ContentType;
+                    headerImage.ContentType = model.Image.ContentType;
 
                     ImgServ.InsertImage(headerImage);
                     entry.ImageId = headerImage.Id;
@@ -155,7 +170,7 @@ namespace network.Controllers
                     AlbumServ.AddNewEntry(entry);
                 }
 
-                return RedirectToAction("Index","Users");
+                return RedirectToAction("OpenAlbum","ImgAlbum",new {id=model.Id});
             }
 
             catch (Exception ex)
@@ -163,6 +178,11 @@ namespace network.Controllers
                 return View();
             }
         }
+
+
+
+
+
 
         public ActionResult DeletePhoto(int id)
         {
@@ -177,11 +197,23 @@ namespace network.Controllers
             return RedirectToAction("Index", "Users");
         }
 
-        public PartialViewResult OpenAlbum(int id)
+
+
+
+        //позволяет открыть альбом
+        public ActionResult OpenAlbum(int id)
         {
-            var photos = AlbumServ.OpenAlbum(id);
-            return PartialView("OpenAlbum",photos);
+            OpenAlbumViewModel model = new OpenAlbumViewModel();
+            model.Id = id;
+            model.Photos = AlbumServ.OpenAlbum(id);
+            return View(model);
+
         }
+
+
+
+
+
 
 
         public int GetId()

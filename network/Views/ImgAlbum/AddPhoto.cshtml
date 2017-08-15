@@ -1,26 +1,21 @@
-﻿@model network.BLL.EF.AlbAndPhot
+﻿@using network.BLL.EF
+@model network.BLL.EF.AlbAndPhot
 
-@using (Html.BeginForm(Html.BeginForm(Html.BeginForm("AddPhoto", "Album", FormMethod.Post,
+@using (Html.BeginForm("AddPhoto", "ImgAlbum", FormMethod.Post,
     new
     {
         @id = "id",
         @role = "form",
         @enctype = "multipart/form-data"
-    })))) 
+    }))
+
 {
-    @Html.AntiForgeryToken()
-    
+    @*@Html.AntiForgeryToken()*@
+
     <div class="form-horizontal">
-        <h4>AlbAndPhot</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.PhotoalbumId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PhotoalbumId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PhotoalbumId, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
+     
+        @*<hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Images, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -34,9 +29,8 @@
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
+        
+
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

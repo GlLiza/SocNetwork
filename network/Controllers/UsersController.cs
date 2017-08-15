@@ -321,9 +321,6 @@ namespace network.Controllers
         {
             ChangePhotoViewModel model = new ChangePhotoViewModel();
             model.Id = GetId();
-
-         
-
             return PartialView("_ChangePhoto", model);
         }
         

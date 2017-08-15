@@ -315,11 +315,13 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Views\ViewModels\AddPhotoViewModel.cs" />
     <Compile Include="Views\ViewModels\ChangePhotoViewModel.cs" />
     <Compile Include="Views\ViewModels\CreateUserViewModel.cs" />
     <Compile Include="Views\ViewModels\FriendShow.cs" />
     <Compile Include="Views\ViewModels\NewRequestsViewModel.cs" />
     <Compile Include="Views\ViewModels\NotFriendShow.cs" />
+    <Compile Include="Views\ViewModels\OpenAlbumViewModel.cs" />
     <Compile Include="Views\ViewModels\PageViewModel.cs" />
     <Compile Include="Views\ViewModels\SendRequestViewModel.cs" />
     <Compile Include="Views\ViewModels\ShowUserViewModel.cs" />
@@ -469,9 +471,7 @@
     <Content Include="Views\Users\BrowsePhotoAlbum.cshtml" />
     <Content Include="Views\ImgAlbum\Create.cshtml" />
     <Content Include="Views\ImgAlbum\Edit.cshtml" />
-    <Content Include="Views\ImgAlbum\OpenAlbum.cshtml" />
     <Content Include="Views\ImgAlbum\BrowseAlbums.cshtml" />
-    <Content Include="Views\ImgAlbum\AddPhoto.cshtml" />
     <Content Include="Views\ImgAlbum\Delete.cshtml" />
     <Content Include="Views\ImgAlbum\DeletePhoto.cshtml" />
     <Content Include="Views\Shared\Menu.cshtml" />
@@ -489,6 +489,8 @@
     <Content Include="Views\Friendship\_DeleteFriends.cshtml" />
     <Content Include="Views\Friendship\FriendsOfFriends.cshtml" />
     <Content Include="Views\ImgAlbum\Index.cshtml" />
+    <Content Include="Views\ImgAlbum\OpenAlbum.cshtml" />
+    <Content Include="Views\ImgAlbum\_AddPhoto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

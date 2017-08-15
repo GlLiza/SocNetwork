@@ -1,14 +1,20 @@
 ﻿@model IQueryable<network.BLL.EF.Photoalbum>
 
-    @Html.ActionLink("Add new photoalbum","Create","ImgAlbum",FormMethod.Get,null)
+<div class="glyphicon-plus">
+    @Html.ActionLink("Add new photoalbum", "Create", "ImgAlbum", FormMethod.Get, null)
+    </div>
 
-<table class="table">
-    @foreach (var item in Model)
-    {
-        <td>
-            <tr>@Html.DisplayFor(modelItem =>item.Name)</tr>
-    
-
-        </td>
+<table>
+    @{
+        foreach (var item in Model)
+        {
+            <div class="col-md-3 glyphicon glyphicon-camera">
+                <a href="@Url.Action("OpenAlbum", "ImgAlbum", new {id = item.Id})">
+                    @Html.DisplayFor(modelItem => item.Name)
+                </a>
+            </div>
+        }
     }
+
 </table>
+

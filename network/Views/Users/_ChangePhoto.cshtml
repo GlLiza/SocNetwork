@@ -1,10 +1,8 @@
-﻿
-@model network.Views.ViewModels.ChangePhotoViewModel
+﻿@model network.Views.ViewModels.ChangePhotoViewModel
 
 
 <div id="changePhotoDialog">
     <div class="modal-dialog modal-sm">
-
         <div class="modal-content">
 
             <div class="modal-header">
@@ -13,7 +11,7 @@
             </div>
 
             <div class="modal-body">
-                @using (Html.BeginForm("ChangePhoto", "Users", FormMethod.Post, new {enctype = "multipart/form-data", id = "Change"}))
+                @using (Html.BeginForm("ChangePhoto", "Users", FormMethod.Post, new {enctype = "multipart/form-data", id = Model.Id}))
                 {
                     @Html.HiddenFor(m => m.Id)
                     <label class="btn btn-info btn-file">
