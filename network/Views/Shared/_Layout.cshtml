@@ -19,7 +19,7 @@
         <div class="col-md-3">
             @Html.Partial("Menu")
         </div>
-        <div class="col-md-6">
+        <div class="col-md-9">
             @RenderBody()
         </div>
     </div>
@@ -32,13 +32,10 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    
 
-    
-    
+@RenderSection("scripts", required: false)
   
-    @*<script src="http://malsup.github.com/jquery.form.js"></script>*@
-
 
     
 

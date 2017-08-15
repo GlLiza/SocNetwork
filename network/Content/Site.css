@@ -150,11 +150,10 @@ td {
 }
 
 #user_img {
-     height:170px;
-     width: 160px;
+     height:130px;
+     width: 140px;
      border-radius: 8px;
     align-content:right;
-    
 }
 
 
@@ -209,3 +208,21 @@ td {
     cursor: pointer; 
     float: left;
 }*/
+
+
+.gallery {
+    height: 130px;
+    overflow: hidden;
+    width: 200px;
+    display: inline-block;
+}
+
+.gallery-img {
+    height:80px;
+    width: 80px;
+    border: solid;
+    border-width: 1px;
+} 
+
+
+

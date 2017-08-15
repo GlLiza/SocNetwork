@@ -25,12 +25,14 @@ namespace network
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/RegistrScript.js",
                       "~/Scripts/createUs.js",
+                      "~/Scripts/IncreaseImg.js",
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/createUs.css",
                       "~/Content/RegistrCSS.css",
+                      "~/Content/IncreaseImg.css",
                       "~/Content/site.css"));
 
             //bundles.Add(new ScriptBundle("~/bundles/registr").Include(

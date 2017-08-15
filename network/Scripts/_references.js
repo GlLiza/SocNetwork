@@ -2,6 +2,7 @@
 /// <reference path="bootstrap.js" />
 /// <reference path="changephoto.js" />
 /// <reference path="createus.js" />
+/// <reference path="increaseimg.js" />
 /// <reference path="jquery.signalr-2.1.2.min.js" />
 /// <reference path="jquery.validate.js" />
 /// <reference path="jquery.validate.unobtrusive.js" />
