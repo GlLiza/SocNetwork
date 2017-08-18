@@ -1,20 +1,67 @@
 ﻿@model IQueryable<network.BLL.EF.Photoalbum>
+    
 
-<div class="glyphicon-plus">
-    @Html.ActionLink("Add new photoalbum", "Create", "ImgAlbum", FormMethod.Get, null)
+<div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+</div>
+
+<nav class="navbar navbar-inverse" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="@Url.Action("Create","ImgAlbum",FormMethod.Get,null)">Add new album<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-plus"></span></a></li>
+            </ul>
+        </div>
     </div>
+</nav>
 
-<table>
-    @{
+
+
+
+<div class="jumbotron">
+    
+    @if (Model.Any())
+    {
         foreach (var item in Model)
         {
-            <div class="col-md-3 glyphicon glyphicon-camera">
-                <a href="@Url.Action("OpenAlbum", "ImgAlbum", new {id = item.Id})">
-                    @Html.DisplayFor(modelItem => item.Name)
-                </a>
+            <div class="btn-group alb">
+                <button class="btn"><a href="@Url.Action("OpenAlbum","ImgAlbum",new {id=item.Id})">@Html.DisplayFor(modelItem => item.Name)</a></button>
+
+                <button class="btn dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                </button>
+                
+
+                <ul class="dropdown-menu">
+                    <li></li>
+                    <li>@Html.ActionLink("Open album", "OpenAlbum", new {id = item.Id})</li>
+                    <li>@Html.ActionLink("Delete album", "Delete", new {id = item.Id})</li>
+                    <li>@Html.ActionLink("Change albums name", "Edit", new {id = item.Id})</li>
+                    <li class="divider"></li>
+                </ul>
             </div>
         }
-    }
+    }    
+    
+    <hr/>
+    other photo
 
-</table>
 
+</div>

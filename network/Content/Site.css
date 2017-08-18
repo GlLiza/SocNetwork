@@ -17,7 +17,6 @@
 
 
 
-
 #regContainer{
     margin-top: 3%;  
 }
@@ -215,6 +214,7 @@ td {
     overflow: hidden;
     width: 200px;
     display: inline-block;
+    padding-right: 10px;
 }
 
 .gallery-img {
@@ -225,4 +225,9 @@ td {
 } 
 
 
+td .alb {
 
+    margin: 50px;
+    padding: 30px;
+    display: inline-block;
+}

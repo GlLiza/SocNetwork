@@ -2,7 +2,6 @@
 using network.BLL.EF;
 using System;
 using System.IO;
-using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using network.Views.ViewModels;
@@ -10,7 +9,7 @@ using network.Views.ViewModels;
 namespace network.Controllers
 {
     public class ImgAlbumController : Controller
-    {
+    { 
 
         public PhAlbumService AlbumServ;
         public UserService UserServ;
@@ -90,13 +89,16 @@ namespace network.Controllers
             try
             {
                 AlbumServ.EditAlbum(album);
-                return RedirectToAction("Index","Users");
+                return RedirectToAction("OpenAlbum","ImgAlbum",new {id=album.Id});
             }
             catch (Exception ex)
             {
                 return View();
             }
         }
+
+
+
 
         // GET: Album/Delete/5
         public ActionResult Delete(int id)
@@ -114,7 +116,7 @@ namespace network.Controllers
                
                 AlbumServ.DeleteAlbum(alb);
 
-                return RedirectToAction("Index","Users");
+                return RedirectToAction("Index","ImgAlbum");
             }
             catch (Exception e)
             {
@@ -205,6 +207,7 @@ namespace network.Controllers
         {
             OpenAlbumViewModel model = new OpenAlbumViewModel();
             model.Id = id;
+            model.NameAlb = AlbumServ.SearchAlbum(id).Name;
             model.Photos = AlbumServ.OpenAlbum(id);
             return View(model);
 

@@ -1,59 +1,99 @@
 ﻿@model network.Views.ViewModels.OpenAlbumViewModel
 
 
+<div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+</div>
 
 
 
-<div class="jumbotron" style="height: 100%;">
-    <input type="button" class="btn-info" id="openModal" value="+">
 
-    <hr/>
+<nav class="navbar navbar-inverse"  role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="@Url.Action("Delete","ImgAlbum",new {id=Model.Id})">Remove album<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-trash"></span></a></li>
+                <li><a href="@Url.Action("Edit","ImgAlbum",new {id=Model.Id})">Edit album<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-pencil"></span></a></li>
+                <li id="openModal"><a href=#>Add photo<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-plus"></span></a></li>
+
+            </ul>
+        </div>
+    </div>s
+</nav>
+
+
+
+
+@*<div class="jumbotron" style="height: 100%;">
+    <input type="button" class="btn-info" id="openModal" value="+">*@
+    
+    
+    <div class="jumbotron" style="height: 100%;">
+    <div class="page" align="center">
+        @Html.DisplayFor(model => model.NameAlb)
+    </div>
+
+
+    <hr />
     @if (Model.Photos.Count > 0)
-    {     
+    {
         @*<div class="row-fluid">*@
-                @*<div class="items">*@
+        @*<div class="items">*@
 
 
 
-        foreach (var image in Model.Photos)
-        {
+    foreach (var image in Model.Photos)
+    {
 
-            <div class="col-md-9 gallery">
+        <div class="col-md-9 gallery">
 
-                <img id="user_img" class="img-circle image gallery-img" 
-                     src="data:image/png;base64, @Convert.ToBase64String(image.Data)"/>
-            </div>
+            <img id="user_img" class="img-circle image gallery-img"
+                 src="data:image/png;base64, @Convert.ToBase64String(image.Data)" />
+        </div>
         }
 
-    
-
-
-            @*</div>*@
-        @*</div>*@
     }
-</div>
 
-
-
-
-
-
-
-<div id="addModal" class="modal fade" data-url='@Url.Action("AddPhoto", "ImgAlbum",new {id=Model.Id},null)'>
-    <div id="addContainer">
     </div>
-</div>
 
 
 
-@section Scripts{
+
+
+
+
+    <div id="addModal" class="modal fade" data-url='@Url.Action("AddPhoto", "ImgAlbum",new {id=Model.Id},null)'>
+        <div id="addContainer">
+        </div>
+    </div>
+
+
+
+    @section Scripts{
         <script type="text/javascript">
-            $(function() {
-                $('#openModal').click(function() {
+            $(function () {
+                $('#openModal').click(function () {
                     var url = $('#addModal').data('url');
 
                     $.get(url,
-                        function(data) {
+                        function (data) {
                             $('#addContainer').html(data);
 
                             $('#addModal').modal('show');
@@ -62,6 +102,8 @@
             });
         </script>
     }
+
+
 
 
 

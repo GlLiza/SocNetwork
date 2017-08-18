@@ -26,6 +26,7 @@ namespace network
                       "~/Scripts/RegistrScript.js",
                       "~/Scripts/createUs.js",
                       "~/Scripts/IncreaseImg.js",
+                      
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(

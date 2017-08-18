@@ -344,6 +344,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\createUs.css" />
     <Content Include="Content\IncreaseImg.css" />
+    <Content Include="Content\MenuForAlb.css" />
     <Content Include="Content\RegistrCSS.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />

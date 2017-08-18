@@ -8,5 +8,7 @@ namespace network.Views.ViewModels
         public int Id { get; set; }
 
         public List<Images> Photos{ get; set; }
+
+        public string NameAlb { get; set; }
     }
 }
