@@ -86,6 +86,13 @@ namespace network.BLL
             return albumRepository.GetAlbumById(id);
         }
 
+        public IQueryable<Photoalbum> GetAlbums(int id)
+        {
+            return albumRepository.GetListAlbums(id);
+        }
+
+
+
         
         
         //ALBUM_AND_PHOTOS
@@ -137,6 +144,7 @@ namespace network.BLL
 
                 arrayImg.Add(ph);
             }
+            arrayImg.Sort((x, y) =>y.Date.Value.CompareTo(x.Date.Value) );
             return arrayImg;
         }
         
@@ -151,7 +159,7 @@ namespace network.BLL
             var item = GetListEntry(id);
             return GetArrayImg(item);
         }
-
+        
         //удаляет фото из альбома
         public void DeletePhoto(int id)
         {
@@ -164,6 +172,48 @@ namespace network.BLL
             imgRepository.Save();
 
         }
+        
+        //возdращает список профильных изобр
+        public List<Images> GetProfImgId (UserDetails user)
+        {
+            var profPhot = db.Images
+                .Where(q => q.Id == user.ImagesId).ToList();
+
+            return profPhot;
+        }
+        
+
+
+        //возвращает все изображения пользователя
+        public List<Images> GetAllImg (int id)
+        {
+            UserDetails user = db.UserDetails.Find(id);
+
+            List<Images> all=new List<Images>();
+
+            var profImg = GetProfImgId(user);
+
+            foreach (var img in profImg)
+            {
+                all.Add(img);
+            }
+
+            var albums = GetAlbums(id);
+            foreach (var alb in albums)
+            {
+                var item = GetListEntry(alb.Id);
+                var a = GetArrayImg(item);
+                foreach (var aa in a)
+                {
+                    all.Add(aa);
+                }
+              
+
+            }
+
+            return all;
+        }
+
 
     }
 }

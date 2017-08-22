@@ -1,4 +1,5 @@
-﻿@model IQueryable<network.BLL.EF.Photoalbum>
+﻿@model network.Views.ViewModels.ImgViewModel
+
     
 
 <div class="navbar-header">
@@ -35,33 +36,48 @@
 
 
 
-<div class="jumbotron">
-    
-    @if (Model.Any())
-    {
-        foreach (var item in Model)
+<div class="jumbotron container-fluid">
+    <div class="row">
+        @if (Model.Albums.Count() > 0)
         {
-            <div class="btn-group alb">
-                <button class="btn"><a href="@Url.Action("OpenAlbum","ImgAlbum",new {id=item.Id})">@Html.DisplayFor(modelItem => item.Name)</a></button>
+              foreach (var item in Model.Albums)
+        {
 
-                <button class="btn dropdown-toggle" data-toggle="dropdown">
-                    <span class="caret"></span>
-                </button>
-                
+                    <div class="btn-group alb">
+                        <button class="btn"><a href="@Url.Action("OpenAlbum", "ImgAlbum", new {id = item.Id})">@Html.DisplayFor(modelItem => item.Name)</a></button>
 
-                <ul class="dropdown-menu">
-                    <li></li>
-                    <li>@Html.ActionLink("Open album", "OpenAlbum", new {id = item.Id})</li>
-                    <li>@Html.ActionLink("Delete album", "Delete", new {id = item.Id})</li>
-                    <li>@Html.ActionLink("Change albums name", "Edit", new {id = item.Id})</li>
-                    <li class="divider"></li>
-                </ul>
-            </div>
+                        <button class="btn dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                        </button>
+
+
+                        <ul class="dropdown-menu">
+                            <li></li>
+                            <li>@Html.ActionLink("Open album", "OpenAlbum", new { id = item.Id })</li>
+                            <li >@Html.ActionLink("Delete album", "Delete", new { id = item.Id })</li>
+                            <li>@Html.ActionLink("Change albums name", "Edit", new { id = item.Id })</li>
+                            <li class="divider"></li>
+                        </ul>
+                    </div>
         }
     }    
-    
-    <hr/>
-    other photo
+        <div class="row">
+            <div class="col-xs-12"><hr/></div>
+            @if (Model.Images.Capacity > 0)
+            {
+                foreach (var img in Model.Images)
+                {
+                    <div class="col-md-9 gallery">
 
+                        <img id="user_img" class="img-circle image gallery-img"
+                             src="data:image/png;base64, @Convert.ToBase64String(img.Data)"/>
+
+                    </div>
+                }
+            }
+            <div class="col-xs-12"><hr /></div>
+        </div>
+       
+    </div>
 
 </div>

@@ -5980,6 +5980,13 @@ button.close {
   .modal-sm {
     width: 300px;
   }
+
+  .modal-lg {
+      width: 200px;
+     
+  }
+
+
 }
 @media (min-width: 992px) {
   .modal-lg {

@@ -1,0 +1,48 @@
+﻿@model network.BLL.EF.Photoalbum
+
+
+<div id="editDialog">
+<div class="modal-dialog">
+    <div class="modal-content">
+        
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            Edit
+        </div>
+
+        <div class="modal-body">
+            @using (Html.BeginForm("Edit", "ImgAlbum", FormMethod.Post, new {@id = "id", @enctype = "multipart/form-data"}))
+            {
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.UserDetails)
+                @Html.HiddenFor(model => model.UserId)
+
+                <div class="row">
+
+                    <div class="col-md-4" style="align-self: right">
+                        @Html.LabelFor(model => model.Name)
+                    </div>
+
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Name)
+                    </div>
+                </div>
+
+            }
+
+
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-offset-8 col-md-4 ">
+
+                        <button type="submit" class="btn btn-info" style="margin: 15px">Update</button>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+</div>

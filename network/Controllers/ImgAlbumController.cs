@@ -27,23 +27,24 @@ namespace network.Controllers
         // GET: Album
         public ActionResult Index()
         {
+            ImgViewModel model=new ImgViewModel();
             var listAlbums = AlbumServ.GetListAlbums(GetId());
-            return View(listAlbums);
+            model.Albums = listAlbums;
+
+            var listPhotos = AlbumServ.GetAllImg(GetId());
+            model.Images = listPhotos;
+
+
+            return View(model);
         }
-
-
+        
 
         // GET: Album/Details/5
         public ActionResult Details(int id)
         {
-            
             return View();
         }
-
-
-
-
-
+        
 
         // GET: Album/Create
         public ActionResult Create()
@@ -67,11 +68,7 @@ namespace network.Controllers
                 return View();
             }
         }
-
-
-
-
-
+        
 
 
         // GET: Album/Edit/5
@@ -79,34 +76,53 @@ namespace network.Controllers
         {
             var album = AlbumServ.SearchAlbum(id);
 
-            return View("Edit",album);
+            return PartialView("_Edit",album);
         }
-
+        
         // POST: Album/Edit/5
         [HttpPost]
         public ActionResult Edit( Photoalbum album)
         {
             try
             {
-                AlbumServ.EditAlbum(album);
-                return RedirectToAction("OpenAlbum","ImgAlbum",new {id=album.Id});
+                if (album != null)
+                {
+
+                    AlbumServ.EditAlbum(album);
+                    return RedirectToAction("OpenAlbum", "ImgAlbum", new {id = album.Id});
+                }
+
             }
+
             catch (Exception ex)
             {
                 return View();
             }
+            return HttpNotFound();
         }
 
 
 
+        public ActionResult DeletePhoto(int id)
+        {
+            Images img = ImgServ.SearchImg(id);
+            return PartialView("_Deletephoto", img);
+        }
+
+        [HttpPost]
+        public ActionResult DeletePhoto(Images img)
+        {
+            AlbumServ.DeletePhoto(img.Id);
+            return RedirectToAction("Index", "Users");
+        }
 
         // GET: Album/Delete/5
         public ActionResult Delete(int id)
         {
             var alb = AlbumServ.SearchAlbum(id);
-            return View("Delete", alb);
+            return PartialView("Delete", alb);
         }
-
+        
         // POST: Album/Delete/5
         [HttpPost]
         public ActionResult Delete(Photoalbum alb)
@@ -131,10 +147,7 @@ namespace network.Controllers
 
             return View(photalbum);
         }
-
-
-
-
+        
         
         public ActionResult AddPhoto(int id)
         {
@@ -165,6 +178,7 @@ namespace network.Controllers
                     headerImage.Name = model.Image.FileName;
                     headerImage.Data = imageData;
                     headerImage.ContentType = model.Image.ContentType;
+                    headerImage.Date=DateTime.Now;
 
                     ImgServ.InsertImage(headerImage);
                     entry.ImageId = headerImage.Id;
@@ -180,27 +194,7 @@ namespace network.Controllers
                 return View();
             }
         }
-
-
-
-
-
-
-        public ActionResult DeletePhoto(int id)
-        {
-            Images img = ImgServ.SearchImg(id);
-            return View("Deletephoto", img);
-        }
-
-        [HttpPost]
-        public ActionResult DeletePhoto(Images img)
-        {
-            AlbumServ.DeletePhoto(img.Id);
-            return RedirectToAction("Index", "Users");
-        }
-
-
-
+        
 
         //позволяет открыть альбом
         public ActionResult OpenAlbum(int id)
@@ -212,12 +206,7 @@ namespace network.Controllers
             return View(model);
 
         }
-
-
-
-
-
-
+        
 
         public int GetId()
         {
@@ -225,15 +214,6 @@ namespace network.Controllers
             return user.Id;
         }
 
-
-
-        ////set default empty img
-        //public byte[] DefaultPhoto()
-        //{
-        //    var photo = ImgServ.SearchImg(1058);
-
-        //    return photo.Data;
-        //}
 
     }
 }

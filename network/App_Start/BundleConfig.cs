@@ -34,20 +34,7 @@ namespace network
                       "~/Content/createUs.css",
                       "~/Content/RegistrCSS.css",
                       "~/Content/IncreaseImg.css",
-                      "~/Content/site.css"));
-
-            //bundles.Add(new ScriptBundle("~/bundles/registr").Include(
-            //    "~/Scripts/RegistrScript.js",
-            //    "~/Content/RegistrCSS.css"));
-
-            //bundles.Add(new StyleBundle("~/Content/css").Include(
-            //          "~/Content/bootstrap.css",
-            //          "~/Content/site.css"));
-
-            //bundles.Add(new ScriptBundle("~/bundles/createUser").Include(
-            //    "~/Scripts/createUs.js",
-            //    "~/Content/createUs.css"
-            //    ));
+                      "~/Content/Site.css"));
         }
     }
 }

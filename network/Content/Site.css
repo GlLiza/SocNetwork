@@ -162,6 +162,11 @@ td {
     font-weight: bold;
 }
 
+.menu {
+     color:#53a3cd;
+    font-size: 18px;
+}
+
 .partialChangPhoto {
     height:20px;
     width:200px;
@@ -169,9 +174,9 @@ td {
 }
 
 
-.modal-body {
+/*.modal-body {
     height: 200px;
-}
+}*/
 
 .button-del {
     text-align:center;
@@ -185,28 +190,6 @@ td {
 .prgr {
     height: 30px;
 }
-
-/*.ui-datepicker-calendar {
-   display: none;
-}
-.ui-datepicker-month {
-   display: none;
-}
-.ui-datepicker-prev{
-   display: none;
-}
-.ui-datepicker-next{
-   display: none;
-}*/
-
-/*.btn-group button {
-    background-color: #4CAF50; 
-    border: 1px solid green; 
-    color: white; 
-    padding: 10px 24px; 
-    cursor: pointer; 
-    float: left;
-}*/
 
 
 .gallery {
@@ -230,4 +213,29 @@ td .alb {
     margin: 50px;
     padding: 30px;
     display: inline-block;
+}
+
+#editDialog >.modal-dialog .modal-content{
+     height: 180px;
+     width: 380px;
+}
+
+#addPhotoDialog > .modal-dialog .modal-content {
+    height: 180px;
+     width: 380px;
+}
+
+#delDialog >.modal-dialog .modal-content {
+      height: 180px;
+     width: 380px;
+}
+
+
+
+hr {
+    border-color: black;
+}
+.navbar-inverse {
+        background-color: black;
+    border-color: black;
 }

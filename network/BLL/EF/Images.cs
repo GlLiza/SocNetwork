@@ -25,6 +25,7 @@ namespace network.BLL.EF
         public string Name { get; set; }
         public byte[] Data { get; set; }
         public string ContentType { get; set; }
+        public Nullable<System.DateTime> Date { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlbAndPhot> AlbAndPhot { get; set; }

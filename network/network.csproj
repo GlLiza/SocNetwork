@@ -319,6 +319,7 @@
     <Compile Include="Views\ViewModels\ChangePhotoViewModel.cs" />
     <Compile Include="Views\ViewModels\CreateUserViewModel.cs" />
     <Compile Include="Views\ViewModels\FriendShow.cs" />
+    <Compile Include="Views\ViewModels\ImgViewModel.cs" />
     <Compile Include="Views\ViewModels\NewRequestsViewModel.cs" />
     <Compile Include="Views\ViewModels\NotFriendShow.cs" />
     <Compile Include="Views\ViewModels\OpenAlbumViewModel.cs" />
@@ -344,7 +345,6 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\createUs.css" />
     <Content Include="Content\IncreaseImg.css" />
-    <Content Include="Content\MenuForAlb.css" />
     <Content Include="Content\RegistrCSS.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -473,10 +473,7 @@
     <Content Include="Views\Users\Delete.cshtml" />
     <Content Include="Views\Users\BrowsePhotoAlbum.cshtml" />
     <Content Include="Views\ImgAlbum\Create.cshtml" />
-    <Content Include="Views\ImgAlbum\Edit.cshtml" />
     <Content Include="Views\ImgAlbum\BrowseAlbums.cshtml" />
-    <Content Include="Views\ImgAlbum\Delete.cshtml" />
-    <Content Include="Views\ImgAlbum\DeletePhoto.cshtml" />
     <Content Include="Views\Shared\Menu.cshtml" />
     <Content Include="Views\Shared\_LayoutLog.cshtml" />
     <Content Include="Views\Users\CreateProfile.cshtml" />
@@ -494,6 +491,9 @@
     <Content Include="Views\ImgAlbum\Index.cshtml" />
     <Content Include="Views\ImgAlbum\OpenAlbum.cshtml" />
     <Content Include="Views\ImgAlbum\_AddPhoto.cshtml" />
+    <Content Include="Views\ImgAlbum\_Edit.cshtml" />
+    <Content Include="Views\ImgAlbum\_DeletePhoto.cshtml" />
+    <Content Include="Views\ImgAlbum\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

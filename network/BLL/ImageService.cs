@@ -11,10 +11,12 @@ namespace network.BLL
         NetworkContext db = new NetworkContext();
 
         private IImagesRepository imagesRepository;
+        private IUserRepository userRepository;
  
         public ImageService()
         {
             imagesRepository = new ImagesRepository(db);
+            userRepository=new UserRepository(db);
         }
 
         public IEnumerable<Images> GetImages()
@@ -50,6 +52,8 @@ namespace network.BLL
             return img;
         }
 
+
+        
 
 
 

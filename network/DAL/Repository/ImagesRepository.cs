@@ -77,5 +77,16 @@ namespace network.DAL.Repository
             var img = context.Images.Find(id);
             return img.Data;
         }
+
+
+        //возвращает профильные изображения
+        //public List<Images> ListImg(UserDetails user)
+        //{
+        //    List<UserDetails>profPhoto = context.UserDetails
+        //        .Where(u => u.ImagesId == user.Id).ToList();
+
+
+        //}
+
     }
 }
