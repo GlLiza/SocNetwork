@@ -6,9 +6,9 @@ using network.DAL.IRepository;
 
 namespace network.DAL.Repository
 {
-    public class WorkPlaceRepository : IWorkPlaceRepository
+    public class WorkPlaceRepository : RepositoryBase,IWorkPlaceRepository
     {
-        private NetworkContext context;
+      
 
         public WorkPlaceRepository(NetworkContext cont)
         {
@@ -25,28 +25,7 @@ namespace network.DAL.Repository
             WorkPlace place = context.WorkPlace.Find(placeId);
             context.WorkPlace.Remove(place);
         }
-
-        private bool disposed = false;
-
-        protected virtual void Dispose(bool disposed)
-        {
-            if (!this.disposed)
-            {
-                if (disposed)
-                {
-                    context.Dispose();
-                }
-            }
-            this.disposed = true;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-
+        
         public IEnumerable<WorkPlace> GetListWorks(int id)
         {
             UserDetails user = context.UserDetails.Find(id);
@@ -61,12 +40,7 @@ namespace network.DAL.Repository
         {
             return context.WorkPlace.Find(id);
         }
-
-        public void Save()
-        {
-            context.SaveChanges();
-        }
-
+        
         public void Update(WorkPlace place)
         {
             WorkPlace pl = context.WorkPlace.Find(place.Id);

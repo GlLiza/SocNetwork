@@ -1,15 +1,18 @@
-﻿@model network.Views.ViewModels.ImgViewModel
+﻿@using Microsoft.Ajax.Utilities
+@model network.Views.ViewModels.ALbumsViewModel
+
+
 
     
 
-<div class="navbar-header">
+@*<div class="navbar-header">
     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
     </button>
-</div>
+</div>*@
 
 <nav class="navbar navbar-inverse" role="navigation">
     <div class="container-fluid">
@@ -28,7 +31,8 @@
         <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="@Url.Action("Create","ImgAlbum",FormMethod.Get,null)">Add new album<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-plus"></span></a></li>
-            </ul>
+                
+             </ul>
         </div>
     </div>
 </nav>
@@ -37,47 +41,70 @@
 
 
 <div class="jumbotron container-fluid">
-    <div class="row">
-        @if (Model.Albums.Count() > 0)
-        {
-              foreach (var item in Model.Albums)
-        {
-
-                    <div class="btn-group alb">
-                        <button class="btn"><a href="@Url.Action("OpenAlbum", "ImgAlbum", new {id = item.Id})">@Html.DisplayFor(modelItem => item.Name)</a></button>
-
-                        <button class="btn dropdown-toggle" data-toggle="dropdown">
-                            <span class="caret"></span>
-                        </button>
-
-
-                        <ul class="dropdown-menu">
-                            <li></li>
-                            <li>@Html.ActionLink("Open album", "OpenAlbum", new { id = item.Id })</li>
-                            <li >@Html.ActionLink("Delete album", "Delete", new { id = item.Id })</li>
-                            <li>@Html.ActionLink("Change albums name", "Edit", new { id = item.Id })</li>
-                            <li class="divider"></li>
-                        </ul>
-                    </div>
-        }
-    }    
-        <div class="row">
-            <div class="col-xs-12"><hr/></div>
-            @if (Model.Images.Capacity > 0)
-            {
-                foreach (var img in Model.Images)
-                {
-                    <div class="col-md-9 gallery">
-
-                        <img id="user_img" class="img-circle image gallery-img"
-                             src="data:image/png;base64, @Convert.ToBase64String(img.Data)"/>
-
-                    </div>
-                }
-            }
-            <div class="col-xs-12"><hr /></div>
+    @*<div class="row">*@
+        
+        <div class="row page" align="center">
+            Albums
         </div>
-       
+
+
+        @if (Model.Albums.Count > 0)
+        {
+            <div class="scrolAlb">
+                <div class="row" style="display: inline-flex">
+                    @foreach (var item in Model.Albums)
+                    {
+                        if (item.TitleImage != null)
+                        {
+                            <a href="@Url.Action("OpenAlbum","ImgAlbum",new {id=item.AlbumId},null)">
+                                <img class="img-circle gallery-img "
+                                     src="data:image/png;base64, @Convert.ToBase64String(item.TitleImage.Data)" />
+                            </a>
+                        }
+
+                        <a href="@Url.Action("OpenAlbum","ImgAlbum",new {id=item.AlbumId},null)">
+                            <img class="emptyAlb">
+                        </a>
+                        
+                    }
+
+                </div>
+            </div>
+        }
+
+    <div class="row">
+        <div class="col-xs-12"><hr/>
+        </div>
+            
+            
+
+            
+        <div class="row page" align="center">
+            Photos
+        </div>
+        @if (Model.Images.AllImages.Capacity > 0)
+        {
+
+            <div class="scrolAlb ">
+                <div class="row" style="display:inline-flex">
+                    @foreach (var img in Model.Images.AllImages)
+                    {
+                        <div class="col-md-9 galleryImg">
+
+                            <img id="user_img" class="img-circle image gallery-img"
+                                 src="data:image/png;base64, @Convert.ToBase64String(img.Data)"/>
+
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+        <div class="col-xs-12">
+            <hr/>
+        </div>
     </div>
+    
+    @*</div>*@
 
 </div>

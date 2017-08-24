@@ -1,13 +1,12 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
 using network.BLL.EF;
 using network.DAL.IRepository;
 
 namespace network.DAL.Repository
 {
-    public class AlbAndPhotoRepository : IAlbAndPhotoRepository
+    public class AlbAndPhotoRepository : RepositoryBase,IAlbAndPhotoRepository
     {
-        private NetworkContext context;
 
         public AlbAndPhotoRepository(NetworkContext con)
         {
@@ -24,37 +23,13 @@ namespace network.DAL.Repository
             AlbAndPhot album = context.AlbAndPhot.Find(alb.Id);
             context.AlbAndPhot.Remove(album);
         }
-
-        private bool disposed = false;
-
-        protected virtual void Dispose(bool disposed)
-        {
-            if (!this.disposed)
-            {
-                if (disposed)
-                {
-                    context.Dispose();
-                }
-            }
-            this.disposed = true;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
+        
         public AlbAndPhot GetEntryById(int id)
         {
             return context.AlbAndPhot.Find(id);
         }
 
-        public void Save()
-        {
-            context.SaveChanges();
-        }
-
+        
         public void UpdateEntry(AlbAndPhot album)
         {
             AlbAndPhot alb = context.AlbAndPhot.Find(album.Id);
@@ -68,6 +43,15 @@ namespace network.DAL.Repository
                 .FirstOrDefault(s => s.ImageId == id);
             return entry;
         }
-        
+
+
+
+        public List<Images> GetPhotosFromAlbums(int albumsId)
+        {
+            var photos = context.AlbAndPhot.Where(x => x.PhotoalbumId == albumsId).Select(i => i.Images).ToList();
+            return photos;
+        }
+
+
     }
 }

@@ -11,10 +11,12 @@ namespace network.BLL
         NetworkContext db = new NetworkContext();
 
         private ILocationRepository locationRepository;
+        public RepositoryBase reposBase;
 
         public LocationService()
         {
             locationRepository=new LocationRepository(db);
+            reposBase = new RepositoryBase();
         }
 
         public void AddLocation(Location location)

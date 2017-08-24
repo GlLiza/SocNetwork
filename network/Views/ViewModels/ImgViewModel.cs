@@ -1,13 +1,26 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using network.BLL.EF;
 
 namespace network.Views.ViewModels
 {
-    public class ImgViewModel
-    {
-        public List<Images> Images { get; set; }
 
-        public IQueryable<Photoalbum> Albums { get; set; }
+    public class AlbumViewModel
+    {
+        public int AlbumId { get; set; }
+        public string Name { get; set; }
+        public Images TitleImage { get; set; }
+    }
+
+    public class AlbumImgViewModel
+    {
+        public List<Images> AllImages { get; set; }
+    }
+
+    public class ALbumsViewModel
+    {
+        public List<AlbumViewModel> Albums { get; set; }
+
+        public AlbumImgViewModel Images { get; set; }
+
     }
 }

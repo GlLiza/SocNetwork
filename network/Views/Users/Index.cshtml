@@ -4,11 +4,13 @@
 {
     <div>
         <dd>
-            <div class="col-md-3">
+            <div class="col-md-2">
+                <div class="row">
 
-                <img id="user_img" style="border: solid" src="data:image/png;base64, @Convert.ToBase64String(Model.Image)">
-                
-                <input type="button" id="openModal" value="Change photo" />
+                    <img id="user_img" style="border: solid" src="data:image/png;base64, @Convert.ToBase64String(Model.Image)">
+                </div>
+
+                <input type="button" class="btn-info" id="openModal" value="Change photo" />
             </div>
         </dd>
 

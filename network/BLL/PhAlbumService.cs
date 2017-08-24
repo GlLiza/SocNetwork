@@ -11,15 +11,16 @@ namespace network.BLL
         private NetworkContext db = new NetworkContext();
 
         private IAlbumRepository albumRepository;
-        private IAlbAndPhotoRepository AlbAndPhRepository;
+        private IAlbAndPhotoRepository albAndPhRepository;
         private IImagesRepository imgRepository;
 
-
+        public RepositoryBase reposBase;
         public PhAlbumService()
         {
             albumRepository = new AlbumRepository(db);
-            AlbAndPhRepository=new AlbAndPhotoRepository(db);
+            albAndPhRepository=new AlbAndPhotoRepository(db);
             imgRepository=new ImagesRepository(db);
+            reposBase=new RepositoryBase();
         }
 
 
@@ -34,7 +35,7 @@ namespace network.BLL
         public void AddNewAlbum(Photoalbum alb)
         {
             albumRepository.AddNewAlbum(alb);
-            albumRepository.Save();
+            reposBase.Save();
         }
 
         public void DeleteAlbum(Photoalbum alb)
@@ -55,9 +56,9 @@ namespace network.BLL
                         .First(q => q.PhotoalbumId == album.Id);
 
                 imgRepository.DeleteImage(img.Id);
-                AlbAndPhRepository.DeleteEntry(entry);
+                albAndPhRepository.DeleteEntry(entry);
                 imgRepository.Save();
-                AlbAndPhRepository.Save();
+                albAndPhRepository.Save();
 
             }
            
@@ -71,14 +72,14 @@ namespace network.BLL
             //}
 
             albumRepository.DeleteAlbum(album);
-            albumRepository.Save();
+            reposBase.Save();
 
         }
 
         public void EditAlbum(Photoalbum alb)
         {
             albumRepository.UpdateAlbum(alb);
-            albumRepository.Save();
+            //albumRepository.Save();
         }
 
         public Photoalbum SearchAlbum(int id)
@@ -99,27 +100,27 @@ namespace network.BLL
 
         public void AddNewEntry(AlbAndPhot entr)
         {
-          AlbAndPhRepository.AddNewEntry(entr);
-          AlbAndPhRepository.Save();
+          albAndPhRepository.AddNewEntry(entr);
+          albAndPhRepository.Save();
 
         }
 
         public AlbAndPhot SearcAlbAndPhot(int id)
         {
-            return AlbAndPhRepository.GetEntryById(id);
+            return albAndPhRepository.GetEntryById(id);
         }
 
         public void EditAlbAndPhot(AlbAndPhot alb)
         {
-            AlbAndPhRepository.UpdateEntry(alb);
-            AlbAndPhRepository.Save();
+            albAndPhRepository.UpdateEntry(alb);
+            albAndPhRepository.Save();
         }
 
 
         public void DeleteAlbAndPhot(AlbAndPhot alb)
         {
-            AlbAndPhRepository.DeleteEntry(alb);
-            AlbAndPhRepository.Save();
+            albAndPhRepository.DeleteEntry(alb);
+            albAndPhRepository.Save();
         }
 
         public IQueryable<AlbAndPhot> GetListEntry(int id)
@@ -164,7 +165,7 @@ namespace network.BLL
         public void DeletePhoto(int id)
         {
             var images = imgRepository.GetImageById(id);
-            var entry = AlbAndPhRepository.GetEntryByPhotoId(images.Id);
+            var entry = albAndPhRepository.GetEntryByPhotoId(images.Id);
 
             DeleteAlbAndPhot(entry);
 
@@ -214,6 +215,37 @@ namespace network.BLL
             return all;
         }
 
+
+
+
+        //public Images GetLastImg(int albumId)
+        //{
+        //    List<Images> imgs = OpenAlbum(albumId);
+
+        //    Images lastImg = imgRepository.CompareDate(imgs);
+        //    return lastImg;
+        //}
+
+        //
+        public List<Images> AlbumImg(List<Photoalbum> albums)
+        {
+            List<Images> imgs = new List<Images>();
+
+            foreach (var alb in albums)
+            {
+                var img = GetLastImgAlbum(alb.Id);
+                imgs.Add(img);
+            }
+            return imgs;
+        }
+
+
+        public Images GetLastImgAlbum(int albumId)
+        {
+            var allPhoto = albAndPhRepository.GetPhotosFromAlbums(albumId);
+            Images img = imgRepository.CompareDate(allPhoto);
+            return img;
+        }
 
     }
 }

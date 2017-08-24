@@ -12,11 +12,13 @@ namespace network.BLL
         private IFriendshipRepository friendRepository;
 
         private IRequestRepository requestRepository;
+        public RepositoryBase reposBase;
 
         public FriendshipService()
         {
             friendRepository=new FriendshipRepository(db);
             requestRepository=new RequestRepository(db);
+            reposBase = new RepositoryBase();
         }
         
 

@@ -6,10 +6,8 @@ using network.DAL.IRepository;
 
 namespace network.DAL.Repository
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : RepositoryBase,IUserRepository
     {
-        private NetworkContext context;
-
         public UserRepository(NetworkContext cont)
         {
             context = cont;
@@ -25,45 +23,18 @@ namespace network.DAL.Repository
             UserDetails user = context.UserDetails.Find(userId);
             context.UserDetails.Remove(user);
         }
-
-        private bool disposed = false;
-
-        protected virtual void Dispose(bool disposed)
-        {
-            if (!this.disposed)
-            {
-                if (disposed)
-                {
-                    context.Dispose();
-                }
-            }
-            this.disposed = true;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
+        
         public IEnumerable<UserDetails> GetUserList()
         {
             return context.UserDetails;
         }
-
-        public void Save()
-        {
-            context.SaveChanges();
-        }
-
+        
         public void Update(UserDetails user)
         {
             var us = context.UserDetails.Find(user.Id);
             context.Entry(us).CurrentValues.SetValues(user);
         }
-
-
-
+        
         public UserDetails GetUserById(int id)
         {
             var item = context.UserDetails.Find(id);
@@ -77,13 +48,6 @@ namespace network.DAL.Repository
                 yield return a;
             }
         }
-
-       
-
-        //IQueryable<Gender> IUserRepository.ListGenders()
-        //{
-        //    return context.Gender;
-        //}
     }
 }
 

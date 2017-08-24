@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using network.BLL.EF;
 
@@ -13,5 +14,7 @@ namespace network.DAL.IRepository
         void Save ();
         Images GetImageById(int? id);
         byte[] ReturnImage(string id);
+
+        Images CompareDate(List<Images> list);
     }
 }

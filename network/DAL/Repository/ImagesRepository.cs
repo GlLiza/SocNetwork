@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using network.BLL.EF;
@@ -6,10 +7,9 @@ using network.DAL.IRepository;
 
 namespace network.DAL.Repository
 {
-    public class ImagesRepository : IImagesRepository
+    public class ImagesRepository : RepositoryBase,IImagesRepository
     {
-        private NetworkContext context;
-
+       
         public ImagesRepository(NetworkContext cont)
         {
             context = cont;
@@ -28,37 +28,9 @@ namespace network.DAL.Repository
             context.Images.Remove(img);
         }
 
-
-        private bool disposed = false;
-
-        protected virtual void Dispose(bool disposed)
-        {
-            if (!this.disposed)
-            {
-                if (disposed)
-                {
-                    context.Dispose();
-                }
-            }
-            this.disposed = true;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-
-
         public IQueryable<Images> GetImages()
         {
             return context.Images;
-        }
-
-        public void Save()
-        {
-            context.SaveChanges();
         }
 
         public void UpdateImage(Images images)
@@ -78,15 +50,13 @@ namespace network.DAL.Repository
             return img.Data;
         }
 
+        //сравнивает дату добавления изображения с текущей датой
+        public Images CompareDate(List<Images> list)
+        {
+            var t = list.OrderByDescending(x => x.Date).FirstOrDefault();
+            return t;
+        }
 
-        //возвращает профильные изображения
-        //public List<Images> ListImg(UserDetails user)
-        //{
-        //    List<UserDetails>profPhoto = context.UserDetails
-        //        .Where(u => u.ImagesId == user.Id).ToList();
-
-
-        //}
 
     }
 }

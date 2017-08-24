@@ -5,10 +5,9 @@ using network.DAL.IRepository;
 
 namespace network.DAL.Repository
 {
-    public class FriendshipRepository : IFriendshipRepository
+    public class FriendshipRepository : RepositoryBase,IFriendshipRepository
     {
-        private NetworkContext context;
-
+      
         public FriendshipRepository(NetworkContext cont)
         {
             context = cont;
@@ -27,32 +26,6 @@ namespace network.DAL.Repository
             if (friendship != null)
                 context.Friendship.Remove(friendship);
         }
-
-        private bool disposed = false;
-
-        protected virtual void Dispose(bool disposed)
-        {
-            if (!this.disposed)
-            {
-                if (disposed)
-                {
-                    context.Dispose();
-                }
-            }
-            this.disposed = true;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        public void Save()
-        {
-            context.SaveChanges();
-        }
-
 
         //возвращает объект класса Friendship(друга) по id пользователей 
         public Friendship SearchByUsers(string idU, string idF)

@@ -15,19 +15,26 @@
         </div>
         @Html.Partial("_LoginPartial")
     </div>
-    <div class="content">
+<div class="content">
+   
         <div class="col-md-3 menu">
             @Html.Partial("Menu")
         </div>
-        <div class="col-md-9">
-            @RenderBody()
-        </div>
+
+    <div class="col-md-9">
+        @RenderBody()
+    </div>
+</div>
+
+    
+<footer>
+    
+    <div class="container col-md-12">
+        <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
     </div>
 
+</footer>
 
-    <footer>
-        <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-    </footer>
 
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/jquery")

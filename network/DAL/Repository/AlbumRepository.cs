@@ -1,14 +1,11 @@
 ﻿using network.DAL.IRepository;
-using System;
 using System.Linq;
 using network.BLL.EF;
 
 namespace network.DAL.Repository
 {
-    public class AlbumRepository : IAlbumRepository
+    public class AlbumRepository : RepositoryBase, IAlbumRepository
     {
-        private NetworkContext context;
-
         public AlbumRepository(NetworkContext con)
         {
             context = con;
@@ -23,32 +20,6 @@ namespace network.DAL.Repository
         {
             Photoalbum album = context.Photoalbum.Find(alb.Id);
             context.Photoalbum.Remove(album);
-        }
-
-        private bool disposed = false;
-
-        protected virtual void Dispose(bool disposed)
-        {
-            if (!this.disposed)
-            {
-                if (disposed)
-                {
-                    context.Dispose();
-                }
-            }
-            this.disposed = true;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        
-
-        public void Save()
-        {
             context.SaveChanges();
         }
 
@@ -59,6 +30,7 @@ namespace network.DAL.Repository
 
             Photoalbum alb = context.Photoalbum.Find(album.Id);
             context.Entry(alb).CurrentValues.SetValues(album);
+            context.SaveChanges();
         }
 
 
@@ -73,6 +45,7 @@ namespace network.DAL.Repository
                 .Where(s => s.UserId == id);
             return albums;
         }
+
 
     }
 }

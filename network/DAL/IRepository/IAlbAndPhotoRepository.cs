@@ -1,5 +1,6 @@
 ﻿using network.BLL.EF;
 using System;
+using System.Collections.Generic;
 
 namespace network.DAL.IRepository
 {
@@ -12,5 +13,8 @@ namespace network.DAL.IRepository
         AlbAndPhot GetEntryById(int id);
 
         AlbAndPhot GetEntryByPhotoId(int id);
+
+
+        List<Images> GetPhotosFromAlbums(int albumsId);
     }
 }

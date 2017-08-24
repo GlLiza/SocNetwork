@@ -6,42 +6,14 @@ using network.DAL.IRepository;
 
 namespace network.DAL.Repository
 {
-    public class RequestRepository : IRequestRepository
+    public class RequestRepository : RepositoryBase,IRequestRepository
     {
-        private NetworkContext context;
 
         public RequestRepository(NetworkContext context)
         {
             this.context = context;
         }
-
         
-
-        private bool disposed = false;
-
-        protected virtual void Dispose(bool disposed)
-        {
-            if (!this.disposed)
-            {
-                if (disposed)
-                {
-                    context.Dispose();
-                }
-            }
-            this.disposed = true;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        public void Save()
-        {
-            context.SaveChanges();
-        }
-
 
         public void AddRequest(Requests request)
         {

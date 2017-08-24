@@ -9,11 +9,12 @@ namespace network.BLL
     {
         NetworkContext db = new NetworkContext();
         private ISchoolRepository schoolRepository;
-
+        public RepositoryBase reposBase;
 
         public SchoolService()
         {
             schoolRepository=new SchoolRepository(db);
+            reposBase = new RepositoryBase();
         }
 
         public void AddSchool(School sch)

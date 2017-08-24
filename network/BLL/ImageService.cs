@@ -12,11 +12,13 @@ namespace network.BLL
 
         private IImagesRepository imagesRepository;
         private IUserRepository userRepository;
- 
+        public RepositoryBase reposBase;
+
         public ImageService()
         {
             imagesRepository = new ImagesRepository(db);
             userRepository=new UserRepository(db);
+            reposBase = new RepositoryBase();
         }
 
         public IEnumerable<Images> GetImages()
@@ -54,6 +56,8 @@ namespace network.BLL
 
 
         
+
+
 
 
 

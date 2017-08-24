@@ -13,12 +13,15 @@ namespace network.BLL
         private IUserRepository userRepository;
         private IImagesRepository imagesRepository;
         private IFamilyStatusRepository familyStatusRepository;
+        public RepositoryBase reposBase;
 
         public UserService()
         {
             userRepository=new UserRepository(db);
             imagesRepository=new ImagesRepository(db);
             familyStatusRepository=new FamilyStatusRepository(db);
+            reposBase = new RepositoryBase();
+
         }
 
         public  IQueryable<UserDetails> GetUser(string id)

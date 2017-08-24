@@ -1,7 +1,9 @@
 ﻿using network.BLL;
 using network.BLL.EF;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using network.Views.ViewModels;
@@ -11,14 +13,14 @@ namespace network.Controllers
     public class ImgAlbumController : Controller
     { 
 
-        public PhAlbumService AlbumServ;
+        public PhAlbumService albumServ;
         public UserService UserServ;
         public ImageService ImgServ;
 
         
         public ImgAlbumController()
         {
-            AlbumServ = new PhAlbumService();
+            albumServ = new PhAlbumService();
             UserServ = new UserService();
             ImgServ = new ImageService();
             
@@ -27,15 +29,63 @@ namespace network.Controllers
         // GET: Album
         public ActionResult Index()
         {
-            ImgViewModel model=new ImgViewModel();
-            var listAlbums = AlbumServ.GetListAlbums(GetId());
-            model.Albums = listAlbums;
+            ALbumsViewModel model=new ALbumsViewModel();
 
-            var listPhotos = AlbumServ.GetAllImg(GetId());
-            model.Images = listPhotos;
 
+
+
+
+            List<AlbumViewModel> albumViewModel=new List<AlbumViewModel>();
+         
+            var listAlbums = albumServ.GetListAlbums(GetId()).ToList();
+
+            foreach (var album in listAlbums)
+            {
+                AlbumViewModel modelAlb = new AlbumViewModel();
+
+
+                modelAlb.AlbumId = album.Id;
+                modelAlb.Name = album.Name;
+                modelAlb.TitleImage = albumServ.GetLastImgAlbum(album.Id);
+
+
+                if (modelAlb.TitleImage == null)
+                    modelAlb.TitleImage = ImgServ.SearchImg(1058);
+
+
+                albumViewModel.Add(modelAlb);
+            }
+
+            AlbumImgViewModel AlbImgModel=new AlbumImgViewModel();
+            var listImgAlb = albumServ.GetAllImg(GetId());
+            AlbImgModel.AllImages = listImgAlb;
+
+
+            model.Albums = albumViewModel;
+            model.Images = AlbImgModel;
 
             return View(model);
+
+
+
+
+
+
+
+            //AlbumViewModel albumViewModel=new AlbumViewModel();
+            //AlbumImgViewModel AlbImgModel=new AlbumImgViewModel();
+            //ImgViewModel model=new ImgViewModel();
+
+
+
+            //model.Albums = listAlbums;
+            //var imgFor = AlbumServ.AlbumImg(model.Albums.ToList());
+            //model.ImgForAlb = imgFor;
+
+
+            //var listPhotos = AlbumServ.GetAllImg(GetId());
+            //model.Images = listPhotos;
+            
         }
         
 
@@ -59,7 +109,7 @@ namespace network.Controllers
             try
             {
                 alb.UserId = GetId();
-                AlbumServ.AddNewAlbum(alb);
+                albumServ.AddNewAlbum(alb);
 
                 return RedirectToAction("Index","ImgAlbum");
             }
@@ -74,7 +124,7 @@ namespace network.Controllers
         // GET: Album/Edit/5
         public ActionResult Edit(int id)
         {
-            var album = AlbumServ.SearchAlbum(id);
+            var album = albumServ.SearchAlbum(id);
 
             return PartialView("_Edit",album);
         }
@@ -88,7 +138,7 @@ namespace network.Controllers
                 if (album != null)
                 {
 
-                    AlbumServ.EditAlbum(album);
+                    albumServ.EditAlbum(album);
                     return RedirectToAction("OpenAlbum", "ImgAlbum", new {id = album.Id});
                 }
 
@@ -112,14 +162,14 @@ namespace network.Controllers
         [HttpPost]
         public ActionResult DeletePhoto(Images img)
         {
-            AlbumServ.DeletePhoto(img.Id);
+            albumServ.DeletePhoto(img.Id);
             return RedirectToAction("Index", "Users");
         }
 
         // GET: Album/Delete/5
         public ActionResult Delete(int id)
         {
-            var alb = AlbumServ.SearchAlbum(id);
+            var alb = albumServ.SearchAlbum(id);
             return PartialView("Delete", alb);
         }
         
@@ -130,7 +180,7 @@ namespace network.Controllers
             try
             {
                
-                AlbumServ.DeleteAlbum(alb);
+                albumServ.DeleteAlbum(alb);
 
                 return RedirectToAction("Index","ImgAlbum");
             }
@@ -143,7 +193,7 @@ namespace network.Controllers
         public ActionResult BrowseAlbums(int id)
         {
             var user = UserServ.SearchUser(id);
-            var photalbum = AlbumServ.GetListAlbums(user.Id);
+            var photalbum = albumServ.GetListAlbums(user.Id);
 
             return View(photalbum);
         }
@@ -161,7 +211,7 @@ namespace network.Controllers
         {
             try
             {
-                Photoalbum album = AlbumServ.SearchAlbum(model.Id);
+                Photoalbum album = albumServ.SearchAlbum(model.Id);
                 Images headerImage = new Images();
                 AlbAndPhot entry=new AlbAndPhot();
                 entry.PhotoalbumId = album.Id;
@@ -183,7 +233,7 @@ namespace network.Controllers
                     ImgServ.InsertImage(headerImage);
                     entry.ImageId = headerImage.Id;
                     
-                    AlbumServ.AddNewEntry(entry);
+                    albumServ.AddNewEntry(entry);
                 }
 
                 return RedirectToAction("OpenAlbum","ImgAlbum",new {id=model.Id});
@@ -201,8 +251,12 @@ namespace network.Controllers
         {
             OpenAlbumViewModel model = new OpenAlbumViewModel();
             model.Id = id;
-            model.NameAlb = AlbumServ.SearchAlbum(id).Name;
-            model.Photos = AlbumServ.OpenAlbum(id);
+            model.NameAlb = albumServ.SearchAlbum(id).Name;
+            model.Photos = albumServ.OpenAlbum(id);
+            //var im = AlbumServ.GetLastImg(id);
+
+
+
             return View(model);
 
         }
@@ -213,7 +267,6 @@ namespace network.Controllers
             var user = UserServ.SearchByUserId(User.Identity.GetUserId());
             return user.Id;
         }
-
-
+        
     }
 }
