@@ -228,7 +228,7 @@ namespace network.Controllers
                     headerImage.Name = model.Image.FileName;
                     headerImage.Data = imageData;
                     headerImage.ContentType = model.Image.ContentType;
-                    headerImage.Date=DateTime.Now;
+                    headerImage.Date=DateTime.Now; 
 
                     ImgServ.InsertImage(headerImage);
                     entry.ImageId = headerImage.Id;

@@ -42,35 +42,41 @@
 
 <div class="jumbotron container-fluid">
     @*<div class="row">*@
-        
-        <div class="row page" align="center">
-            Albums
-        </div>
+
+    <div class="row page" align="center">
+        Albums
+    </div>
 
 
-        @if (Model.Albums.Count > 0)
-        {
-            <div class="scrolAlb">
-                <div class="row" style="display: inline-flex">
-                    @foreach (var item in Model.Albums)
+    @if (Model.Albums.Count > 0)
+    {
+        <div class="scrolAlb">
+            <div class="row" style="display: inline-flex">
+                @foreach (var item in Model.Albums)
+                {
+                    if (item.TitleImage != null)
                     {
-                        if (item.TitleImage != null)
-                        {
-                            <a href="@Url.Action("OpenAlbum","ImgAlbum",new {id=item.AlbumId},null)">
-                                <img class="img-circle gallery-img "
-                                     src="data:image/png;base64, @Convert.ToBase64String(item.TitleImage.Data)" />
-                            </a>
-                        }
+                        <a href="@Url.Action("OpenAlbum", "ImgAlbum", new {id = item.AlbumId}, null)">
+                                    <div class="nameAlb">
+                                    <img class="img-circle gallery-img "
+                                         src="data:image/png;base64, @Convert.ToBase64String(item.TitleImage.Data)"/>
+                                </div>
+                                </a>
 
-                        <a href="@Url.Action("OpenAlbum","ImgAlbum",new {id=item.AlbumId},null)">
-                            <img class="emptyAlb">
-                        </a>
-                        
+                     
                     }
 
-                </div>
+                    @*<a href="@Url.Action("OpenAlbum","ImgAlbum",new {id=item.AlbumId},null)">
+                            <img class="emptyAlb">
+                        </a>*@
+
+                }
+
             </div>
-        }
+        </div>
+    }
+       
+    </div>
 
     <div class="row">
         <div class="col-xs-12"><hr/>
@@ -107,4 +113,3 @@
     
     @*</div>*@
 
-</div>

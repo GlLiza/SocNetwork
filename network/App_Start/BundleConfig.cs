@@ -25,7 +25,9 @@ namespace network
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/RegistrScript.js",
                       "~/Scripts/createUs.js",
-                      "~/Scripts/IncreaseImg.js",
+                       //"~/Scripts/IncreaseImg.js",
+                       //"~/Scripts/owl.carousel.js",
+                       //"~/Scripts/ImgCarousel.js",
                       
                       "~/Scripts/respond.js"));
 
@@ -33,7 +35,8 @@ namespace network
                       "~/Content/bootstrap.css",
                       "~/Content/createUs.css",
                       "~/Content/RegistrCSS.css",
-                      "~/Content/IncreaseImg.css",
+                      //"~/Content/IncreaseImg.css",
+                      "~/Content/ImgCarousel.css",
                       "~/Content/Site.css"));
         }
     }
