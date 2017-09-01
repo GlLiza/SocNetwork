@@ -231,6 +231,11 @@ td .alb {
 }
 
 
+.ModalInModal {
+      height: 380px;
+     width: 380px;
+}
+
 
 hr {
     border-color: black;
@@ -279,3 +284,15 @@ footer {
   width:5%;
 }*/
 
+
+/*#delPhModal {
+	margin-top:200px;
+}*/
+
+
+/*#delPhModal {
+    height: 180px;
+    width: 330px;
+    margin: 10px;
+
+}*/

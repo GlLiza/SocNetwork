@@ -1,0 +1,241 @@
+﻿<div id="stack1" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Stack One</h4>
+    </div>
+    <div class="modal-body">
+        <p>One fine body…</p>
+        <p>One fine body…</p>
+        <p>One fine body…</p>
+        <input class="form-control" type="text" data-tabindex="1">
+        <input class="form-control" type="text" data-tabindex="2">
+        <button class="btn btn-default" data-toggle="modal" href="#stack2">Launch modal</button>
+    </div>
+    <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+        <button type="button" class="btn btn-primary">Ok</button>
+    </div>
+</div>
+
+<div id="stack2" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Stack Two</h4>
+    </div>
+    <div class="modal-body">
+        <p>One fine body…</p>
+        <p>One fine body…</p>
+        <input class="form-control" type="text" data-tabindex="1">
+        <input class="form-control" type="text" data-tabindex="2">
+        <button class="btn btn-default" data-toggle="modal" href="#stack3">Launch modal</button>
+    </div>
+    <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+        <button type="button" class="btn btn-primary">Ok</button>
+    </div>
+</div>
+
+<div id="stack3" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Stack Three</h4>
+    </div>
+    <div class="modal-body">
+        <p>One fine body…</p>
+        <input class="form-control" type="text" data-tabindex="1">
+        <input class="form-control" type="text" data-tabindex="2">
+    </div>
+    <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+        <button type="button" class="btn btn-primary">Ok</button>
+    </div>
+</div>
+
+
+
+
+@*@foreach (var item in Model)
+{
+    <li class="list-group-item">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>
+                    Instrument: @item.InstrumentId
+                </h4>
+            </div>
+            <div class="col-md-4">
+                @item.Type
+            </div>
+            <div class="col-md-4">
+                <!-- Button trigger modal -->
+                <button type="button" class="open-dialog btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" data-id="@item.InstrumentId">
+                    View details
+                </button>
+
+                <script type="text/javascript">
+                        $(document).on("click", ".open-dialog", function() {
+                            var modalId = $(this).data('id');
+                            $(".modal-dialog #myModal").val(modalId);
+                        })
+                </script>
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModal"></h4>
+                            </div>
+                            <div class="modal-body">
+                                @item.Message
+                                <br /> <br /> <br />
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        Slide: <a href="/Home/Slide" class="Button">1234500323</a>
+                                    </div>
+                                    <div class="col-md-4">
+                                        Instrument: @Html.ActionLink(item.ruInstmentId, "Instrument", new { instrumentid = item.InstrumentId })
+                                    </div>
+                                    <div class="col-md-4">
+                                        Checked: @item.Checked
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+}*@
+
+
+
+
+@*<div>
+    <ul class="list-group">
+        @foreach (var item in Model)
+        {
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h4>
+                            Instrument: <a id="details" href="#">Details</a>
+                        </h4>
+                    </div>
+                    <div class="col-md-4">
+                        @item.Type
+                    </div>
+                    <div class="col-md-4">
+                        <!-- Button trigger modal -->
+                         <button type="button" class="open-dialog btn btn-primary btn-sm" data-url="@Url.Action("Instrument", new { instrumentid = item.InstrumentId })">
+                                View details
+                            </button>
+
+                        <script type="text/javascript">
+                        $(document).on("click", ".open-dialog", function() {
+                            $('#details').attr('href', $(this).data('url')); // update the links url
+                        });
+                        </script>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    @item.Message
+                    <br /> <br /> <br />
+                    <div class="row">
+                        <div class="col-md-4">
+                            Slide: <a href="/Home/Slide" class="Button">1234500323</a>
+                        </div>
+                        <div class="col-md-4">
+                            Instrument: <a id="details" href="#">Details</a>
+                        </div>
+                        <div class="col-md-4">
+                            Checked: @item.Checked
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>*@
+    
+    
+    
+
+    @*@section Scripts{
+        <script type="text/javascript">
+                $(function () {
+                    $(document).on("click",
+                    ".open-dialog",
+                    function () {
+                        $('#details').attr('href', $(this).data('url')); // update the links url
+                    });
+
+
+                });
+        </script>
+    }*@
+
+
+
+
+
+@*<a data-toggle="modal" href="#myModal" class="btn btn-primary">Launch modal</a>
+
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Modal title</h4>
+            </div><div class="container"></div>
+            <div class="modal-body">
+                Content for the dialog / modal goes here.
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <a data-toggle="modal" href="#myModal2" class="btn btn-primary">Launch modal</a>
+            </div>
+            <div class="modal-footer">
+                <a href="#" data-dismiss="modal" class="btn">Close</a>
+                <a href="#" class="btn btn-primary">Save changes</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="myModal2" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Second Modal title</h4>
+            </div><div class="container"></div>
+            <div class="modal-body">
+                Content for the dialog / modal goes here.
+            </div>
+            <div class="modal-footer">
+                <a href="#" data-dismiss="modal" class="btn">Close</a>
+                <a href="#" class="btn btn-primary">Save changes</a>
+            </div>
+        </div>
+    </div>
+</div>*@

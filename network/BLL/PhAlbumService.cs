@@ -145,7 +145,7 @@ namespace network.BLL
 
                 arrayImg.Add(ph);
             }
-            arrayImg.Sort((x, y) =>y.Date.Value.CompareTo(x.Date.Value) );
+            arrayImg.Sort((x, y) =>y.Date.Value.CompareTo(x.Date.Value));
             return arrayImg;
         }
         
@@ -164,13 +164,17 @@ namespace network.BLL
         //удаляет фото из альбома
         public void DeletePhoto(int id)
         {
-            var images = imgRepository.GetImageById(id);
-            var entry = albAndPhRepository.GetEntryByPhotoId(images.Id);
+            if (id != 0)
+            {
+                var images = imgRepository.GetImageById(id);
+                var entry = albAndPhRepository.GetEntryByPhotoId(images.Id);
 
-            DeleteAlbAndPhot(entry);
+                DeleteAlbAndPhot(entry);
 
-            imgRepository.DeleteImage(images.Id);
-            imgRepository.Save();
+                imgRepository.DeleteImage(images.Id);
+                imgRepository.Save();
+            }
+           
 
         }
         

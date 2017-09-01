@@ -500,6 +500,7 @@
     <Content Include="Views\ImgAlbum\_Edit.cshtml" />
     <Content Include="Views\ImgAlbum\_DeletePhoto.cshtml" />
     <Content Include="Views\ImgAlbum\Delete.cshtml" />
+    <Content Include="Views\Home\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
