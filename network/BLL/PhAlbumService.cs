@@ -167,12 +167,15 @@ namespace network.BLL
             if (id != 0)
             {
                 var images = imgRepository.GetImageById(id);
-                var entry = albAndPhRepository.GetEntryByPhotoId(images.Id);
+                if (images != null)
+                {
+                    var entry = albAndPhRepository.GetEntryByPhotoId(images.Id);
 
-                DeleteAlbAndPhot(entry);
+                    DeleteAlbAndPhot(entry);
 
-                imgRepository.DeleteImage(images.Id);
-                imgRepository.Save();
+                    imgRepository.DeleteImage(images.Id);
+                    imgRepository.Save();
+                }
             }
            
 

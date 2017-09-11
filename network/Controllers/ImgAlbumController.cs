@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using Microsoft.AspNet.Identity;
 using network.Views.ViewModels;
 
@@ -153,18 +155,25 @@ namespace network.Controllers
 
 
 
-        public ActionResult DeletePhoto(int id)
+        [HttpGet]
+        public ActionResult DeletePhoto()
         {
-            Images img = ImgServ.SearchImg(id);
-            return PartialView("_Deletephoto", img);
+            return PartialView("_Deletephoto");
         }
 
         [HttpPost]
-        public ActionResult DeletePhoto(Images img)
+        public String DeletePhoto(int imageId)
         {
-            albumServ.DeletePhoto(img.Id);
-            return RedirectToAction("Index", "Users");
+            if (imageId != null)
+                albumServ.DeletePhoto((int)imageId);
+
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            var res = new HttpStatusCodeResult(HttpStatusCode.OK);
+            return js.Serialize(res);
+            //return RedirectToAction("Index","ImgAlbum");
         }
+
+
 
         // GET: Album/Delete/5
         public ActionResult Delete(int id)
@@ -255,9 +264,7 @@ namespace network.Controllers
             model.Photos = albumServ.OpenAlbum(id);
             //var im = AlbumServ.GetLastImg(id);
 
-
-
-            return View(model);
+           return View(model);
 
         }
         

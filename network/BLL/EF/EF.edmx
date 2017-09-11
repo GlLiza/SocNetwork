@@ -105,6 +105,7 @@
           <Property Name="Data" Type="varbinary(max)" />
           <Property Name="ContentType" Type="nvarchar" MaxLength="50" />
           <Property Name="Date" Type="datetime" />
+          <Property Name="Visibility" Type="bit" />
         </EntityType>
         <EntityType Name="Location">
           <Key>
@@ -628,6 +629,7 @@
           <NavigationProperty Name="AlbAndPhot" Relationship="Self.FK_AlbAndPhot_Images" FromRole="Images" ToRole="AlbAndPhot" />
           <NavigationProperty Name="UserDetails" Relationship="Self.FK_UserDetails_Images" FromRole="Images" ToRole="UserDetails" />
           <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="Visibility" Type="Boolean" />
         </EntityType>
         <EntityType Name="Location">
           <Key>
@@ -1122,6 +1124,7 @@
           <EntitySetMapping Name="Images">
             <EntityTypeMapping TypeName="NetworkModel.Images">
               <MappingFragment StoreEntitySet="Images">
+                <ScalarProperty Name="Visibility" ColumnName="Visibility" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />

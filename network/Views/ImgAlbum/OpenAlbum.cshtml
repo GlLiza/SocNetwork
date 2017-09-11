@@ -30,12 +30,12 @@
         <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="@Url.Action("Index", "ImgAlbum")"><span style="font-size: 16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-arrow-left"></span></a></li>
-                <li id="Mod"><a href=#>Delete album<span style="font-size: 16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-trash"></span></a></li>
-                <li id="opMod"><a href=#>Edit album<span style="font-size: 16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-pencil"></span></a></li>
-                <li id="openModal"><a href=#>Add photo<span style="font-size: 16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-plus"></span></a></li>
+                <li id="deleteModal"><a href=#>Delete album<span style="font-size: 16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-trash"></span></a></li>
+                <li id="editModal"><a href=#>Edit album<span style="font-size: 16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-pencil"></span></a></li>
+                <li id="addPhotoModal"><a href=#>Add photo<span style="font-size: 16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-plus"></span></a></li>
                 
                 
-                @*<li id="exampleMod"><a href=#>Open modal<span style="font-size: 16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-apple"></span></a></li>*@
+                <li id="exampleMod"><a href=#>Open modal<span style="font-size: 16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-apple"></span></a></li>
 
             </ul>
         </div>
@@ -78,7 +78,7 @@
 
   @*modal for carousel*@
 
-<div class="modal" id="myModal" role="dialog" data-focus-on="input:first" style="display: none;">
+<div class="modal" id="carouselModal" role="dialog" data-focus-on="input:first" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
             
@@ -88,13 +88,13 @@
             </div>
             
             <div class="modal-body">
-                <div id="modalCarousel" class="carousel">
+                <div id="Carousel" class="carousel">
                     <div class="carousel-inner"></div>
-                    <a class="carousel-control left" href="#modalCarousel" data-slide="prev">
+                    <a class="carousel-control left" href="#Carousel" data-slide="prev">
                         <i class="glyphicon glyphicon-chevron-left"></i>
                     </a>
                     
-                    <a class="carousel-control right" href="#modalCarousel" data-slide="next">
+                    <a class="carousel-control right" href="#Carousel" data-slide="next">
                         <i class="glyphicon glyphicon-chevron-right"></i>
                     </a>
 
@@ -102,7 +102,7 @@
             </div>
             
             <div class="modal-footer">
-                <a data-toggle="modal" href="#delPhModal">Delete</a>
+                <a data-toggle="modal" href="#delPhMod">Delete</a>
                 <a href="#" data-dismiss="modal" class="btn">Close</a>
             </div>
             
@@ -115,17 +115,16 @@
 
 
 @*modal for deletePhoto*@
-<div id="delPhModal" class="modal fade" tabindex="-1" data-backdrop="static" data-focus-on="input:first" style="display: none;">
+<div id="delPhMod" class="modal fade del" tabindex="-1" data-backdrop="static" data-focus-on="input:first" style="display: none;">
    
     <div class="modal-dialog">
         @*<div class="col-md-4 col-md-offset-4">*@
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <button id="crossId" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h4 class="modal-title">Delete</h4>
             </div>
-            @using (Html.BeginForm("DeletePhoto", "ImgAlbum"))
-            {
+
                 <div class="modal-body">
                    
                     <div class="row">
@@ -133,37 +132,30 @@
                         Are you sure you want to delete this photo?
 
                     </div>
-                   
-                   
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
-                    <button class="btn btn-primary">Ok</button>
+                    <button  type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+                    <button id="delOk" class="btn btn-primary">Ok</button>
                 </div>
-            }
+
         </div>
         @*</div>*@
     </div>
 </div>
 
 
-
-
-
-
-
-<div id="addModal" class="modal fade" data-url='@Url.Action("AddPhoto", "ImgAlbum",new {id=Model.Id},null)'>
+<div id="addMod" class="modal fade" data-url='@Url.Action("AddPhoto", "ImgAlbum",new {id=Model.Id},null)'>
     <div id="addContainer">
     </div>
 </div>
 
-<div id="editModal" class="modal fade" data-url='@Url.Action("Edit","ImgAlbum",new {id=Model.Id},null)'>
+<div id="editMod" class="modal fade" data-url='@Url.Action("Edit","ImgAlbum",new {id=Model.Id},null)'>
     <div id="editContainer">
     </div>
 </div>
 
-<div id="delModal" class="modal fade" data-url='@Url.Action("Delete","ImgAlbum",new {id=Model.Id},null)'>
+<div id="delMod" class="modal fade" data-url='@Url.Action("Delete","ImgAlbum",new {id=Model.Id},null)'>
     <div id="delContainer">
     </div>
 </div>
@@ -172,92 +164,105 @@
 
 
 
-
-
 @section Scripts{
-            <script type="text/javascript">
-                $(function () {
-                    $('#openModal').click(function () {
-                        var url = $('#addModal').data('url');
+    <script type="text/javascript">
+        $(function() {
+            $('#addPhotoModal').click(function() {
+                var url = $('#addMod').data('url');
 
-                        $.get(url,
-                            function (data) {
-                                $('#addContainer').html(data);
+                $.get(url,
+                    function(data) {
+                        $('#addContainer').html(data);
 
-                                $('#addModal').modal('show');
-                            });
+                        $('#addMod').modal('show');
+                    });
+            });
+
+
+            $('#editModal').click(function() {
+                var url = $('#editMod').data('url');
+
+                $.get(url,
+                    function(data) {
+                        $('#editContainer').html(data);
+
+                        $('#editMod').modal('show');
+                    });
+            });
+
+
+            $('#deleteModal').click(function() {
+                var url = $('#delMod').data('url');
+
+                $.get(url,
+                    function(data) {
+                        $('#delContainer').html(data);
+
+                        $('#delMod').modal('show');
                     });
 
-
-                    $('#opMod').click(function () {
-                        var url = $('#editModal').data('url');
-
-                        $.get(url,
-                            function (data) {
-                                $('#editContainer').html(data);
-
-                                $('#editModal').modal('show');
-                            });
-                    });
+            });
 
 
-                    $('#Mod').click(function () {
-                        var url = $('#delModal').data('url');
+            //carousel
+            $('.content-holder .thumbnail').each(function(i) {
+                var item = $('<div class="item"></div>');
+                var itemDiv = $(this).parents('div');
+                var title = $(this).parent('a').attr("title");
 
-                        $.get(url,
-                            function (data) {
-                                $('#delContainer').html(data);
+                item.attr("title", title);
+                $(itemDiv.html()).appendTo(item);
+                item.appendTo('.carousel-inner');
+                if (i === 0) { // set first item active
+                    item.addClass('active');
+                }
+            });
 
-                                $('#delModal').modal('show');
-                            });
+            /* activate the carousel */
+            $('#Carousel').carousel({ interval: false });
 
-                    });
-
-
-
-
-                    //carousel
-                    $('.content-holder .thumbnail').each(function (i) {
-                        var item = $('<div class="item"></div>');
-                        var itemDiv = $(this).parents('div');
-                        var title = $(this).parent('a').attr("title");
-
-                        item.attr("title", title);
-                        $(itemDiv.html()).appendTo(item);
-                        item.appendTo('.carousel-inner');
-                        if (i === 0) { // set first item active
-                            item.addClass('active');
-                        }
-                    });
-
-                    /* activate the carousel */
-                    $('#modalCarousel').carousel({ interval: false });
-
-                    /* change modal title when slide changes */
-                    $('#modalCarousel').on('slid.bs.carousel', function () {
-                        $('.modal-title').html($(this).find('.active').attr("title"));
-                    });
-
-                    var imageId;
-                    /* when clicking a thumbnail */
-                    $('.gallery-photos a').click(function () {
-                        imageId = $(this).data('id');
-
-                        var idx = $(this).parents('div').index();
-                        var id = parseInt(idx);
-                        $('#myModal').modal('show'); // show the modal
-                        $('#modalCarousel').carousel(id); // slide carousel to selected
-                    });
- 
-                  
-                    //for modal in modal
-                    $('#exampleMod').click(function () {
-                        //$('data-id').val($(this).data('id'));
-                        $('#myModal').modal({ show: true });
-                    });
-
+            /* change modal title when slide changes */
+            $('#Carousel').on('slid.bs.carousel',
+                function() {
+                    $('.modal-title').html($(this).find('.active').attr("title"));
                 });
-            </script>
-        }
 
+            var imageId;
+            /* when clicking a thumbnail */
+            $('.gallery-photos a').click(function() {
+                //var imageId = new FormData();
+                var imageId = $(this).data('id');
+                console.log(imageId);
+                var idx = $(this).parents('div').index();
+               
+                var id = parseInt(idx);
+                $('#carouselModal').modal('show'); // show the modal
+                $('#Carousel').carousel(id); // slide carousel to selected
 
+                $('#delOk').on("click",
+                    function() {
+                        $.ajax({
+                            url: '@Url.Action("DeletePhoto", "ImgAlbum")',
+                            type: 'POST',
+                            data: {
+                                'imageId': imageId
+                            },
+                            dataType: "json",
+                            success: function(response) {
+                                debugger;
+                                $('.del').modal('hide');
+                            },
+
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                debugger;
+                               $('.del').modal('hide');
+                            }
+                        });
+
+                    });
+
+            });
+
+        })
+    </script>
+}
