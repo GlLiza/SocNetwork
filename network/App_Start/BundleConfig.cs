@@ -34,6 +34,7 @@ namespace network
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/createUs.css",
+                      "~/Content/Albums.css",
                       "~/Content/RegistrCSS.css",
                       //"~/Content/IncreaseImg.css",
                       "~/Content/ImgCarousel.css",

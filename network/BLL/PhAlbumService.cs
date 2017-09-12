@@ -35,7 +35,7 @@ namespace network.BLL
         public void AddNewAlbum(Photoalbum alb)
         {
             albumRepository.AddNewAlbum(alb);
-            reposBase.Save();
+            albAndPhRepository.Save();
         }
 
         public void DeleteAlbum(Photoalbum alb)

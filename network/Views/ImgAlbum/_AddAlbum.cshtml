@@ -1,0 +1,45 @@
+﻿@model network.BLL.EF.Photoalbum
+    
+<div id="addAlbumDialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add photoalbum</h4>
+            </div>
+
+            <div class="modal-body">
+                @using (Html.BeginForm("AddAlbum", "ImgAlbum", FormMethod.Post,null))
+                {
+                    @Html.HiddenFor(m => m.Id)
+
+                    <div class="row">
+
+                        <div class="col-md-4" style="align-self: right">
+                            <label>Enter album's name</label>
+                        </div>
+
+                        <div class="col-md-8">
+                            @Html.EditorFor(model=>model.Name)
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-offset-8 col-md-4 ">
+
+                                <button class="btn btn-info pull-right" type="submit" > Add album</button>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            
+
+        </div>
+        </div>
+</div>
+
+

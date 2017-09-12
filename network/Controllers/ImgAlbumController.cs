@@ -32,9 +32,7 @@ namespace network.Controllers
         public ActionResult Index()
         {
             ALbumsViewModel model=new ALbumsViewModel();
-
-
-
+            
 
 
             List<AlbumViewModel> albumViewModel=new List<AlbumViewModel>();
@@ -96,22 +94,24 @@ namespace network.Controllers
         {
             return View();
         }
-        
 
-        // GET: Album/Create
-        public ActionResult Create()
+
+        //GET: Album/Create
+        public ActionResult AddAlbum()
         {
-            return View("Create");
+            Photoalbum album=new Photoalbum();
+            return PartialView("_AddAlbum",album);
         }
 
         // POST: Album/Create
         [HttpPost]
-        public ActionResult Create(Photoalbum alb)
+        public ActionResult AddAlbum(Photoalbum album)
         {
             try
             {
-                alb.UserId = GetId();
-                albumServ.AddNewAlbum(alb);
+                album.UserId = GetId();
+                //album.UserDetails = UserServ.SearchUser(album.UserId);
+                albumServ.AddNewAlbum(album);
 
                 return RedirectToAction("Index","ImgAlbum");
             }
@@ -155,6 +155,7 @@ namespace network.Controllers
 
 
 
+        //for photo
         [HttpGet]
         public ActionResult DeletePhoto()
         {
@@ -175,14 +176,16 @@ namespace network.Controllers
 
 
 
-        // GET: Album/Delete/5
+
+        //for album
+        [HttpGet]
         public ActionResult Delete(int id)
         {
             var alb = albumServ.SearchAlbum(id);
             return PartialView("Delete", alb);
         }
         
-        // POST: Album/Delete/5
+        
         [HttpPost]
         public ActionResult Delete(Photoalbum alb)
         {
@@ -199,6 +202,8 @@ namespace network.Controllers
             }
         }
 
+
+
         public ActionResult BrowseAlbums(int id)
         {
             var user = UserServ.SearchUser(id);
@@ -208,6 +213,9 @@ namespace network.Controllers
         }
         
         
+
+
+
         public ActionResult AddPhoto(int id)
         {
             AddPhotoViewModel model=new AddPhotoViewModel();
@@ -237,7 +245,8 @@ namespace network.Controllers
                     headerImage.Name = model.Image.FileName;
                     headerImage.Data = imageData;
                     headerImage.ContentType = model.Image.ContentType;
-                    headerImage.Date=DateTime.Now; 
+                    headerImage.Date=DateTime.Now;
+                    headerImage.Visibility = true;
 
                     ImgServ.InsertImage(headerImage);
                     entry.ImageId = headerImage.Id;

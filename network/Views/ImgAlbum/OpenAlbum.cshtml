@@ -34,9 +34,6 @@
                 <li id="editModal"><a href=#>Edit album<span style="font-size: 16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-pencil"></span></a></li>
                 <li id="addPhotoModal"><a href=#>Add photo<span style="font-size: 16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-plus"></span></a></li>
                 
-                
-                <li id="exampleMod"><a href=#>Open modal<span style="font-size: 16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-apple"></span></a></li>
-
             </ul>
         </div>
     </div>
@@ -61,9 +58,12 @@
                     {
                         @*@Html.HiddenFor(m=>m.Id)*@
                         <div class="col-lg-2 col-sm-3 col-xs-6 gallery">
-                            <a href="#" data-id="@image.Id">
-                                <img class="thumbnail img-responsive" src="data:image/png;base64, @Convert.ToBase64String(image.Data)">
-                            </a>
+                            @*<div class="image-title">*@
+                                <a href="#" data-id="@image.Id">
+                                    <img class="thumbnail img-responsive" src="data:image/png;base64, @Convert.ToBase64String(image.Data)">
+                                </a>
+                               
+                                @*</div>*@
                         </div>
                     }
                 }
@@ -102,7 +102,7 @@
             </div>
             
             <div class="modal-footer">
-                <a data-toggle="modal" href="#delPhMod">Delete</a>
+               <a data-toggle="modal" href="#delPhMod">Delete</a>
                 <a href="#" data-dismiss="modal" class="btn">Close</a>
             </div>
             
