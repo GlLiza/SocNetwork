@@ -5,7 +5,7 @@
 }
 h1,
 h1+p {
-	margin: 30px 15px 0;
+	margin: 30px 15px 0
 	font-weight: 300;
 }
 h1+p a {
@@ -83,8 +83,8 @@ figure:hover+span {
 
 
 img {
-    width:inherit;
-	height:inherit;
+    width:300px;
+	height:200px;
 }
 
 .hover01 figure img {
@@ -103,3 +103,15 @@ h2 span {
 	color: #aaa;
 	font-size: 85%;
 }
+
+
+
+ img .thumbnail .img-responsive {
+     height: 200px;
+     width: 300px;
+ }
+ 
+ .gallery a {
+     height: 200px;
+     width: 300px;
+ }

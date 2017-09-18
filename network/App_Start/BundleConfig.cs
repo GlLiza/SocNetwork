@@ -24,11 +24,12 @@ namespace network
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/RegistrScript.js",
+                      //"~/Scripts/IncreaseImg.js",
                       "~/Scripts/createUs.js",
-                       //"~/Scripts/IncreaseImg.js",
-                       //"~/Scripts/owl.carousel.js",
-                       //"~/Scripts/ImgCarousel.js",
-                      
+
+                      //"~/Scripts/owl.carousel.js",
+                      //"~/Scripts/ImgCarousel.js",
+
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
@@ -36,7 +37,7 @@ namespace network
                       "~/Content/createUs.css",
                       "~/Content/Albums.css",
                       "~/Content/RegistrCSS.css",
-                      //"~/Content/IncreaseImg.css",
+                      "~/Content/IncreaseImg.css",
                       "~/Content/ImgCarousel.css",
                       "~/Content/Site.css"));
         }

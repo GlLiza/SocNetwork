@@ -1,13 +1,13 @@
 ﻿@model network.Views.ViewModels.ALbumsViewModel
 
-@*<div class="navbar-header">
+<div class="navbar-header">
     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
     </button>
-</div>*@
+</div>
 
 <nav class="navbar navbar-inverse" role="navigation">
     <div class="container-fluid">
@@ -36,8 +36,7 @@
 
 
 <div class="jumbotron container-fluid">
-    @*<div class="row">*@
-
+    
     <div class="row page" align="center">
         Albums
     </div>
@@ -51,66 +50,54 @@
                 {
                     <div class="hover01 column">
                         <div>
-                            <a href="@Url.Action("OpenAlbum","ImgAlbum",new {id=item.AlbumId},null)"><figure><img  src="data:image/png;base64, @Convert.ToBase64String(item.TitleImage.Data)" /></figure>
-                            <h2><span>@Html.DisplayFor(m=>item.Name)</span></h2>
+                            <a href="@Url.Action("OpenAlbum", "ImgAlbum", new {id = item.AlbumId}, null)">
+                                <figure><img src="data:image/png;base64, @Convert.ToBase64String(item.TitleImage.Data)"/></figure>
+                                <h2><span>@Html.DisplayFor(m => item.Name)</span>
+                                </h2>
                             </a>
                         </div>
                     </div>
-
                 }
-                </div>
+            </div>
         </div>
-        }
-    
-    
-    
-
-       
+    }
 </div>
 
-    <div class="row">
-        <div class="col-xs-12"><hr/>
-        </div>
-            
-            
 
-            
-        <div class="row page" align="center">
-            Photos
-        </div>
-        @if (Model.Images.AllImages.Capacity > 0)
-        {
-
-            <div class="scrolAlb ">
-                <div class="row" style="display:inline-flex">
-                    @foreach (var img in Model.Images.AllImages)
-                    {
-                        <div class="col-md-9 galleryImg">
-
-                            <img id="user_img" class="img-circle image gallery-img"
-                                 src="data:image/png;base64, @Convert.ToBase64String(img.Data)"/>
-
-                        </div>
-                    }
-                </div>
-            </div>
-        }
-
-        <div class="col-xs-12">
-            <hr/>
-        </div>
+   
+<div class="jumbotron container-fluid">
+    <div class="row page" align="center">
+        Photos
     </div>
+    @if (Model.Images.AllImages.Capacity > 0)
+    {
+        <div class="scrolAlb ">
+            <div class="row" style="display:inline-flex">
+                @foreach (var img in Model.Images.AllImages)
+                {
+                    <div class="column">
+                        <figure>
+                            <img src="data:image/png;base64, @Convert.ToBase64String(img.Data)" />
+                        </figure>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+  
 
 
 
 
 
-
-<div id="addAlbumModal" class="modal fade" data-url='@Url.Action("AddAlbum", "ImgAlbum", FormMethod.Post)'>
+    <div id="addAlbumModal" class="modal fade" data-url='@Url.Action("AddAlbum", "ImgAlbum", FormMethod.Post)'>
     <div id="addContainer">
     </div>
 
 </div>
+
+
 
 @section Scripts{
     <script type="text/javascript">
@@ -127,6 +114,8 @@
             });
         })
     </script>
+    
+    <script src="@Url.Content("~/Scripts/IncreaseImg.js")"></script>
 }
 
  

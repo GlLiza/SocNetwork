@@ -50,33 +50,27 @@
     <hr />
 
     <div class="content-holder">
-        <div class="container">
-            <div class="row gallery-photos">
-                @if (Model.Photos.Count > 0)
+        <div class="row gallery-photos">
+            @if (Model.Photos.Count > 0)
+            {
+                foreach (var image in Model.Photos)
                 {
-                    foreach (var image in Model.Photos)
-                    {
-                        @*@Html.HiddenFor(m=>m.Id)*@
-                        <div class="col-lg-2 col-sm-3 col-xs-6 gallery">
-                            @*<div class="image-title">*@
-                                <a href="#" data-id="@image.Id">
-                                    <img class="thumbnail img-responsive" src="data:image/png;base64, @Convert.ToBase64String(image.Data)">
-                                </a>
-                               
-                                @*</div>*@
-                        </div>
-                    }
+                    <div class="gallery">
+                        <a href="#" data-id="@image.Id">
+                            <img class="thumbnail img-responsive" src="data:image/png;base64, @Convert.ToBase64String(image.Data)">
+                        </a>
+                    </div>
                 }
-
-            </div>
+            }
         </div>
-
     </div>
-
 </div>
 
 
-  @*modal for carousel*@
+
+
+
+@*modal for carousel*@
 
 <div class="modal" id="carouselModal" role="dialog" data-focus-on="input:first" style="display: none;">
     <div class="modal-dialog">
@@ -84,7 +78,6 @@
             
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h3 class="modal-title">Photo</h3>
             </div>
             
             <div class="modal-body">
