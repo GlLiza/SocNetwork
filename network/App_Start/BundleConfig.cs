@@ -24,7 +24,7 @@ namespace network
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/RegistrScript.js",
-                      //"~/Scripts/IncreaseImg.js",
+                      "~/Scripts/IncreaseImg.js",
                       "~/Scripts/createUs.js",
 
                       //"~/Scripts/owl.carousel.js",

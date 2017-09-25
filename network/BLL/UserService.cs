@@ -34,13 +34,13 @@ namespace network.BLL
         public void InsertUser(UserDetails user)
         {
             userRepository.AddUser(user);
-            userRepository.Save();
+            //userRepository.Save();
         }
 
         public void EditUser(UserDetails user)
         {
             userRepository.Update(user);
-            userRepository.Save();
+            //base.Save();
 
         }
 
@@ -48,7 +48,7 @@ namespace network.BLL
         {
             UserDetails us = userRepository.GetUserById(user.Id);
             userRepository.DeleteUser(us.Id);
-            userRepository.Save();
+            //userRepository.Save();
         }
 
         public UserDetails SearchUser(int id)

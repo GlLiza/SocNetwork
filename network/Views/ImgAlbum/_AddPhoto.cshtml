@@ -13,16 +13,13 @@
             <div class="modal-body">
                 @using (Html.BeginForm("AddPhoto", "ImgAlbum", FormMethod.Post, new {@enctype = "multipart/form-data",id=Model.Id}))
                 {
-                    @*<div class="row">*@
                     @Html.HiddenFor(m=>m.Id)
                     <label class="btn btn-file">
                         <input type="file" name="Image" id="imageFile"/>
                     </label>
 
-                        <button class="btn btn-info pull-right" type="submit" id="changePhoto"> Add photo</button>
-                        
-                        @*</div>*@
-                        }
+                    <button class="btn btn-info pull-right" type="submit" id="changePhoto">OK</button>
+                    }
             </div>
 
         </div>

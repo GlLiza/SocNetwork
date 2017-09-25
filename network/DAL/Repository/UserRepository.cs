@@ -48,6 +48,14 @@ namespace network.DAL.Repository
                 yield return a;
             }
         }
+
+        public int ReturnIntId(string id)
+        {
+            var user = context.UserDetails
+                .Single(s => s.UserId == id);
+                
+            return user.Id;
+        }
     }
 }
 

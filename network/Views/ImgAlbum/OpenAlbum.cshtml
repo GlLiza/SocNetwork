@@ -41,7 +41,7 @@
 
 
 
-<div class="jumbotron container-fluid">
+<div class="jumbotron container-fluid" id="panel">
     <div class="page" align="center">
         @Html.DisplayFor(model => model.NameAlb)
     </div>
@@ -83,6 +83,7 @@
             <div class="modal-body">
                 <div id="Carousel" class="carousel">
                     <div class="carousel-inner"></div>
+
                     <a class="carousel-control left" href="#Carousel" data-slide="prev">
                         <i class="glyphicon glyphicon-chevron-left"></i>
                     </a>
@@ -198,6 +199,7 @@
 
 
             //carousel
+
             $('.content-holder .thumbnail').each(function(i) {
                 var item = $('<div class="item"></div>');
                 var itemDiv = $(this).parents('div');
@@ -226,11 +228,11 @@
                 //var imageId = new FormData();
                 var imageId = $(this).data('id');
                 console.log(imageId);
-                var idx = $(this).parents('div').index();
-               
+                var idx = $(this).parents('div').index();   //!!!!!!!! index()  - находит данный элемент из числа согласованых
+
                 var id = parseInt(idx);
                 $('#carouselModal').modal('show'); // show the modal
-                $('#Carousel').carousel(id); // slide carousel to selected
+                $('#Carousel').carousel(id); // slide carousel to selected  инициализирует карусель
 
                 $('#delOk').on("click",
                     function() {
@@ -241,14 +243,24 @@
                                 'imageId': imageId
                             },
                             dataType: "json",
-                            success: function(response) {
-                                debugger;
+                            success: function (response) {
+
                                 $('.del').modal('hide');
+                             
+
+                                debugger;
+                               
+                                $('#carouselModal').modal('hide');
+                                debugger;
+                                $("a[data-id='" + imageId + "']").parent('.gallery').remove();
+
+                                //$("[data-id='" + imageId + "']").parent('.modal').remove();
+                               
                             },
 
                             error: function(xhr, ajaxOptions, thrownError) {
                                 debugger;
-                               $('.del').modal('hide');
+                                $('.del').modal('hide');
                             }
                         });
 

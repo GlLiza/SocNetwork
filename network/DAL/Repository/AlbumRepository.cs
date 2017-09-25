@@ -16,11 +16,20 @@ namespace network.DAL.Repository
             context.Photoalbum.Add(album);
         }
 
-        public void DeleteAlbum(Photoalbum alb)
+        public bool DeleteAlbum(int albId)
         {
-            Photoalbum album = context.Photoalbum.Find(alb.Id);
-            context.Photoalbum.Remove(album);
-            context.SaveChanges();
+            Photoalbum album = context.Photoalbum.Find(albId);
+
+            if (album != null)
+            {
+                context.Photoalbum.Remove(album);
+                context.SaveChanges();
+                return true;
+            }
+
+            return false;
+
+
         }
 
         public void UpdateAlbum(Photoalbum album)
@@ -42,7 +51,8 @@ namespace network.DAL.Repository
         public IQueryable<Photoalbum> GetListAlbums(int id)
         {
             var albums = context.Photoalbum
-                .Where(s => s.UserId == id);
+                .Where(s => s.UserId == id)
+                .OrderByDescending(s=>s.Id);
             return albums;
         }
 

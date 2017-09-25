@@ -9,6 +9,46 @@
     </button>
 </div>
 
+
+<nav class="navbar navbar-inverse" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+
+    </div>
+</nav>
+
+<div class="jumbotron container-fluid">
+    <div class="row page" align="center">
+        Photos
+    </div>
+    @if (Model.Images.AllImages.Capacity > 0)
+    {
+        <div class="scrolAlb ">
+            <div class="row" style="display:inline-flex">
+                @foreach (var img in Model.Images.AllImages)
+                {
+                    <div class="column">
+                        <figure>
+                            <img class="image" href="#" src="data:image/png;base64, @Convert.ToBase64String(img.Data)" />
+                        </figure>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+
+
 <nav class="navbar navbar-inverse" role="navigation">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -26,12 +66,11 @@
         <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="active" id="addAlbum"><a href=#>Add new album<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-plus"></span></a></li>
-                
-             </ul>
+
+            </ul>
         </div>
     </div>
 </nav>
-
 
 
 
@@ -64,27 +103,7 @@
 </div>
 
 
-   
-<div class="jumbotron container-fluid">
-    <div class="row page" align="center">
-        Photos
-    </div>
-    @if (Model.Images.AllImages.Capacity > 0)
-    {
-        <div class="scrolAlb ">
-            <div class="row" style="display:inline-flex">
-                @foreach (var img in Model.Images.AllImages)
-                {
-                    <div class="column">
-                        <figure>
-                            <img src="data:image/png;base64, @Convert.ToBase64String(img.Data)" />
-                        </figure>
-                    </div>
-                }
-            </div>
-        </div>
-    }
-</div>
+
   
 
 

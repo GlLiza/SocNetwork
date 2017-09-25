@@ -24,8 +24,9 @@ namespace network.DAL.Repository
         public void DeleteImage(int id)
         {
             Images img = context.Images.Find(id);
-               
-            context.Images.Remove(img);
+
+            if(img!=null)
+                context.Images.Remove(img);
         }
 
         public IQueryable<Images> GetImages()
@@ -40,7 +41,8 @@ namespace network.DAL.Repository
 
         public Images GetImageById(int? id)
         {
-            var item = context.Images.Find(id);
+            var item = context.Images
+                .SingleOrDefault(s=>s.Id==id);
             return item;
         }
 

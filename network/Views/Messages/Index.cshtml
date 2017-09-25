@@ -1,0 +1,85 @@
+﻿@model IEnumerable<network.Views.ViewModels.MessagesViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+</div>
+
+
+<nav class="navbar navbar-inverse" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        
+        
+        <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li id="selectRec"><a href=#>Search <span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-search"></span></a></li>
+
+            </ul>
+        </div>
+
+
+    </div>
+</nav>
+
+
+<div id="selectMod" class="modal fade" data-url='@Url.Action("SelectReceiver", "Messages",null)'>
+<div id="selectContainer">
+    </div>
+</div>
+
+
+
+@section Scripts{
+    <script type="text/javascript">
+        $(function() {
+            $('#selectRec').click(function() {
+                var url = $('#selectMod').data('url');
+
+                $.get(url,
+                    function(data) {
+                        $('#selectContainer').html(data);
+
+                        $('#selectMod').modal('show');
+                    });
+            });
+
+
+            //$('#beginChat').click(function () {
+            //    var url = $('#').data('url');
+
+            //    $.get(url,
+            //        function (data) {
+            //            $('#selectContainer').html(data);
+
+            //            $('#selectMod').modal('show');
+            //        });
+            //});
+
+        });
+    </script>
+}
+
+
+
+
+
+
+

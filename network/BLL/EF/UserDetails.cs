@@ -18,6 +18,8 @@ namespace network.BLL.EF
         public UserDetails()
         {
             this.Photoalbum = new HashSet<Photoalbum>();
+            this.Conversation = new HashSet<Conversation>();
+            this.Messages = new HashSet<Messages>();
         }
     
         public int Id { get; set; }
@@ -42,5 +44,10 @@ namespace network.BLL.EF
         public virtual WorkPlace WorkPlace { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Photoalbum> Photoalbum { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Conversation> Conversation { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Messages> Messages { get; set; }
+        public virtual Participants Participants { get; set; }
     }
 }

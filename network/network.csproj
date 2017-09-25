@@ -221,6 +221,9 @@
     <Compile Include="BLL\EF\AspNetUsers.cs">
       <DependentUpon>EF.tt</DependentUpon>
     </Compile>
+    <Compile Include="BLL\EF\Conversation.cs">
+      <DependentUpon>EF.tt</DependentUpon>
+    </Compile>
     <Compile Include="BLL\EF\C__MigrationHistory.cs">
       <DependentUpon>EF.tt</DependentUpon>
     </Compile>
@@ -254,6 +257,12 @@
     <Compile Include="BLL\EF\Location.cs">
       <DependentUpon>EF.tt</DependentUpon>
     </Compile>
+    <Compile Include="BLL\EF\Messages.cs">
+      <DependentUpon>EF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BLL\EF\Participants.cs">
+      <DependentUpon>EF.tt</DependentUpon>
+    </Compile>
     <Compile Include="BLL\EF\Photoalbum.cs">
       <DependentUpon>EF.tt</DependentUpon>
     </Compile>
@@ -273,6 +282,7 @@
       <DependentUpon>EF.tt</DependentUpon>
     </Compile>
     <Compile Include="BLL\LocationService.cs" />
+    <Compile Include="BLL\MessagesService.cs" />
     <Compile Include="BLL\SchoolService.cs" />
     <Compile Include="BLL\WorkPlaceService.cs" />
     <Compile Include="BLL\FamilyStatusService.cs" />
@@ -285,23 +295,30 @@
     <Compile Include="Controllers\FriendshipController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="DAL\IRepository\IAlbAndPhotoRepository.cs" />
     <Compile Include="DAL\IRepository\IAlbumRepository.cs" />
+    <Compile Include="DAL\IRepository\IConversationRepository.cs" />
     <Compile Include="DAL\IRepository\IFamilyStatusRepository.cs" />
     <Compile Include="DAL\IRepository\IFriendshipRepository.cs" />
     <Compile Include="DAL\IRepository\IImagesRepository.cs" />
     <Compile Include="DAL\IRepository\ILocationRepository.cs" />
+    <Compile Include="DAL\IRepository\IMessageRepository.cs" />
+    <Compile Include="DAL\IRepository\IParticipantsRepository.cs" />
     <Compile Include="DAL\IRepository\IRequestRepository.cs" />
     <Compile Include="DAL\IRepository\ISchoolRepository.cs" />
     <Compile Include="DAL\IRepository\IUserRepository.cs" />
     <Compile Include="DAL\IRepository\IWorkPlaceRepository.cs" />
     <Compile Include="DAL\Repository\AlbAndPhotoRepository.cs" />
     <Compile Include="DAL\Repository\AlbumRepository.cs" />
+    <Compile Include="DAL\Repository\ConversationRepository.cs" />
     <Compile Include="DAL\Repository\FamilyStatusRepository.cs" />
     <Compile Include="DAL\Repository\FriendshipRepository.cs" />
     <Compile Include="DAL\Repository\ImagesRepository.cs" />
     <Compile Include="DAL\Repository\LocationRepository.cs" />
+    <Compile Include="DAL\Repository\MessagesRepository.cs" />
+    <Compile Include="DAL\Repository\ParticipantsRepository.cs" />
     <Compile Include="DAL\Repository\RepositoryBase.cs" />
     <Compile Include="DAL\Repository\RequestRepository.cs" />
     <Compile Include="DAL\Repository\SchoolRepository.cs" />
@@ -321,6 +338,7 @@
     <Compile Include="Views\ViewModels\CreateUserViewModel.cs" />
     <Compile Include="Views\ViewModels\FriendShow.cs" />
     <Compile Include="Views\ViewModels\ImgViewModel.cs" />
+    <Compile Include="Views\ViewModels\MessagesViewModel.cs" />
     <Compile Include="Views\ViewModels\NewRequestsViewModel.cs" />
     <Compile Include="Views\ViewModels\NotFriendShow.cs" />
     <Compile Include="Views\ViewModels\OpenAlbumViewModel.cs" />
@@ -501,6 +519,8 @@
     <Content Include="Views\ImgAlbum\Delete.cshtml" />
     <Content Include="Views\Home\View.cshtml" />
     <Content Include="Views\ImgAlbum\_AddAlbum.cshtml" />
+    <Content Include="Views\Messages\Index.cshtml" />
+    <Content Include="Views\Messages\_SelectReceiver.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

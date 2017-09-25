@@ -11,7 +11,9 @@ namespace network.DAL.IRepository
         void AddUser (UserDetails user);
         void DeleteUser (int userId);
         void Update(UserDetails user);
-        void Save();
+
+        int ReturnIntId(string id);
+        //void Save();
 
         UserDetails GetUserById(int id);
         //IQueryable<Gender> ListGenders();

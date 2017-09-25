@@ -1,4 +1,5 @@
-﻿using network.BLL.EF;
+﻿using System;
+using network.BLL.EF;
 using network.DAL.IRepository;
 using network.DAL.Repository;
 using System.Collections.Generic;
@@ -15,12 +16,13 @@ namespace network.BLL
         private IImagesRepository imgRepository;
 
         public RepositoryBase reposBase;
+
         public PhAlbumService()
         {
             albumRepository = new AlbumRepository(db);
-            albAndPhRepository=new AlbAndPhotoRepository(db);
-            imgRepository=new ImagesRepository(db);
-            reposBase=new RepositoryBase();
+            albAndPhRepository = new AlbAndPhotoRepository(db);
+            imgRepository = new ImagesRepository(db);
+            reposBase = new RepositoryBase();
         }
 
 
@@ -31,50 +33,54 @@ namespace network.BLL
         {
             return albumRepository.GetListAlbums(id);
         }
-        
+
         public void AddNewAlbum(Photoalbum alb)
         {
             albumRepository.AddNewAlbum(alb);
             albAndPhRepository.Save();
         }
 
-        public void DeleteAlbum(Photoalbum alb)
+
+
+
+        public bool DeleteAlbum(int albId)
         {
-            
-            Photoalbum album = albumRepository.GetAlbumById(alb.Id);
-            
-
-            var item = GetListEntry(album.Id);
-
-            var photos = GetArrayImg(item);
-           
-            foreach (var a in photos)
+            if (albId <= 0) throw new ArgumentOutOfRangeException(nameof(albId));
             {
-                var img = imgRepository.GetImageById(a.Id);
+            
+            Photoalbum album = albumRepository.GetAlbumById(albId);
+            var item = GetListEntry(album.Id); //получаем список записей (альб ->изобр)
 
-                var entry = db.AlbAndPhot
-                        .First(q => q.PhotoalbumId == album.Id);
+            if (item.Count() != 0)
+            {
+                var photos = GetArrayImg(item); //получаем список изобр альбома
 
-                imgRepository.DeleteImage(img.Id);
-                albAndPhRepository.DeleteEntry(entry);
-                imgRepository.Save();
-                albAndPhRepository.Save();
+                foreach (var a in photos)
+                {
+                    var entry = GetEntry(album.Id, a.Id);
 
+                    imgRepository.DeleteImage(a.Id);
+                    albAndPhRepository.DeleteEntry(entry);
+                    imgRepository.Save();
+                    albAndPhRepository.Save();
+                }
+
+                albumRepository.DeleteAlbum(album.Id);
             }
-           
-
-           
-
-            //foreach (var k in item)
-            //{
-            //    AlbAndPhRepository.DeleteEntry(k);
-            //    AlbAndPhRepository.Save();
-            //}
-
-            albumRepository.DeleteAlbum(album);
-            reposBase.Save();
-
+                return true;
+            }
         }
+        
+
+
+    //получает запись по id альбома и id изображения
+        public AlbAndPhot GetEntry(int albumId, int imageId)
+        {
+            return db.AlbAndPhot.SingleOrDefault(q => q.Photoalbum.Id == albumId && q.ImageId == imageId);
+        }
+
+
+
 
         public void EditAlbum(Photoalbum alb)
         {

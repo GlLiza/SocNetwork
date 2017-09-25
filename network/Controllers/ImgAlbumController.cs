@@ -171,6 +171,8 @@ namespace network.Controllers
             JavaScriptSerializer js = new JavaScriptSerializer();
             var res = new HttpStatusCodeResult(HttpStatusCode.OK);
             return js.Serialize(res);
+
+
             //return RedirectToAction("Index","ImgAlbum");
         }
 
@@ -191,11 +193,11 @@ namespace network.Controllers
         {
             try
             {
-               
-                albumServ.DeleteAlbum(alb);
-
+               if (albumServ.DeleteAlbum(alb.Id))
+                return RedirectToAction("Index","ImgAlbum");
                 return RedirectToAction("Index","ImgAlbum");
             }
+            
             catch (Exception e)
             {
                 return View();

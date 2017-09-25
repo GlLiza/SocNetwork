@@ -106,7 +106,7 @@ h2 span {
 
 
 
- img .thumbnail .img-responsive {
+ img > .thumbnail >.img-responsive {
      height: 200px;
      width: 300px;
  }
