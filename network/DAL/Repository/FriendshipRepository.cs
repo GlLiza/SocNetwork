@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using network.BLL.EF;
 using network.DAL.IRepository;
@@ -8,9 +9,8 @@ namespace network.DAL.Repository
     public class FriendshipRepository : RepositoryBase,IFriendshipRepository
     {
       
-        public FriendshipRepository(NetworkContext cont)
+        public FriendshipRepository(NetworkContext cont) : base(cont)
         {
-            context = cont;
         }
 
 
@@ -62,5 +62,18 @@ namespace network.DAL.Repository
             return false;
         }
 
+        //получить список id друзей по id-пользователя
+        public List<string> GetListFriendsId(string id)
+        {
+            var list = context.Friendship
+                .Where(s => s.User_id == id).Select(i=>i.Friend_id).ToList();
+            return list;
+        }
+
+        //извлекает список друзей из списка
+        //public IQueryable<Friendship> SortFriendList(IQueryable<Friendship> friends)
+        //{
+        //    var resultFrindsList =context
+        //}
     }
 }

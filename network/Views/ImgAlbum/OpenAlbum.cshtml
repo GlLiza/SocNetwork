@@ -235,13 +235,16 @@
                 $('#Carousel').carousel(id); // slide carousel to selected  инициализирует карусель
 
                 $('#delOk').on("click",
-                    function() {
+                    function () {
+                        debugger;
                         $.ajax({
                             url: '@Url.Action("DeletePhoto", "ImgAlbum")',
                             type: 'POST',
+                            
                             data: {
                                 'imageId': imageId
                             },
+                         
                             dataType: "json",
                             success: function (response) {
 

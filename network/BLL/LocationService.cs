@@ -16,7 +16,7 @@ namespace network.BLL
         public LocationService()
         {
             locationRepository=new LocationRepository(db);
-            reposBase = new RepositoryBase();
+            reposBase = new RepositoryBase(db);
         }
 
         public void AddLocation(Location location)

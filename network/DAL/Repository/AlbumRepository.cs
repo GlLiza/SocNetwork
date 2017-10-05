@@ -6,9 +6,9 @@ namespace network.DAL.Repository
 {
     public class AlbumRepository : RepositoryBase, IAlbumRepository
     {
-        public AlbumRepository(NetworkContext con)
+        public AlbumRepository(NetworkContext cont) : base(cont)
         {
-            context = con;
+            
         }
 
         public void AddNewAlbum(Photoalbum album)

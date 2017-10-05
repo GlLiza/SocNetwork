@@ -14,7 +14,7 @@ namespace network.BLL
         public SchoolService()
         {
             schoolRepository=new SchoolRepository(db);
-            reposBase = new RepositoryBase();
+            reposBase = new RepositoryBase(db);
         }
 
         public void AddSchool(School sch)

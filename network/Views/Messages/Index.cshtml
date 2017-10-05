@@ -40,7 +40,7 @@
 </nav>
 
 
-<div id="selectMod" class="modal fade" data-url='@Url.Action("SelectReceiver", "Messages",null)'>
+<div id="selectMod" class="modal fade" data-url='@Url.Action("SelectReceiver","Messages",null)'>
 <div id="selectContainer">
     </div>
 </div>
@@ -53,26 +53,37 @@
             $('#selectRec').click(function() {
                 var url = $('#selectMod').data('url');
 
+
                 $.get(url,
                     function(data) {
                         $('#selectContainer').html(data);
 
                         $('#selectMod').modal('show');
+
+                        $('.beginChat').click(function() {
+                            var receiverId = $(this).data('id');
+
+                            $.ajax({
+                                url: '@Url.Action("SelectReceiver", "Messages")',
+                                type: 'POST',
+                                data: {
+                                    'receiverId': receiverId
+                                },
+
+                                dataType: "json",
+                                success: function(response) {
+                                    $('#selectMod').modal('hide');
+                                    debugger;
+
+                                },
+                                error: function(xhr, ajaxOptions, thrownError) {
+                                    debugger;
+                                    $('#selectMod').modal('hide');
+                                }
+                            });
+                        });
                     });
             });
-
-
-            //$('#beginChat').click(function () {
-            //    var url = $('#').data('url');
-
-            //    $.get(url,
-            //        function (data) {
-            //            $('#selectContainer').html(data);
-
-            //            $('#selectMod').modal('show');
-            //        });
-            //});
-
         });
     </script>
 }

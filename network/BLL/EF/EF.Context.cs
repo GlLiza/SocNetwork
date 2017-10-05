@@ -42,8 +42,8 @@ namespace network.BLL.EF
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<UserDetails> UserDetails { get; set; }
         public virtual DbSet<WorkPlace> WorkPlace { get; set; }
-        public virtual DbSet<Conversation> Conversation { get; set; }
         public virtual DbSet<Messages> Messages { get; set; }
+        public virtual DbSet<Conversation> Conversation { get; set; }
         public virtual DbSet<Participants> Participants { get; set; }
     }
 }

@@ -14,19 +14,11 @@ namespace network.BLL.EF
     
     public partial class Participants
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Participants()
-        {
-            this.Messages = new HashSet<Messages>();
-        }
-    
         public int Id { get; set; }
         public int Conversation_id { get; set; }
         public int Users_id { get; set; }
     
         public virtual Conversation Conversation { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Messages> Messages { get; set; }
         public virtual UserDetails UserDetails { get; set; }
     }
 }

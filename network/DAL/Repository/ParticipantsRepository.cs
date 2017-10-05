@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using network.BLL.EF;
 using network.DAL.IRepository;
@@ -7,9 +9,8 @@ namespace network.DAL.Repository
 {
     public class ParticipantsRepository: RepositoryBase,IParticipantsRepository
     {
-        public ParticipantsRepository(NetworkContext cont)
+        public ParticipantsRepository(NetworkContext cont):base(cont)
         {
-            context = cont;
         }
 
 
@@ -26,7 +27,7 @@ namespace network.DAL.Repository
                 context.Participants.Remove(participants);
         }
 
-        public void UpdateParicipants(Participants participants)
+        public void UpdateParticipants(Participants participants)
         {
             context.Entry(participants).State=EntityState.Modified;
         }
@@ -34,6 +35,11 @@ namespace network.DAL.Repository
         public IQueryable<Participants> GetListParticipants()
         {
             return context.Participants;
+        }
+
+        public List<int> GetListFriendsId(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

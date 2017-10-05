@@ -205,7 +205,7 @@ namespace network.Controllers
             {
                 Id=user.Id,
                 //UserId = user.UserId,
-                FamilyStatus =userService.GetAllFamStatuses(),
+              //  FamilyStatus =userService.GetAllFamStatuses(),
                // GenderStatus = userService.GetAllGenders()
 
             };
@@ -311,12 +311,7 @@ namespace network.Controllers
         }
         
 
-
-
-
-
-
-       // GET
+        // GET
         public ActionResult ChangePhoto()
         {
             ChangePhotoViewModel model = new ChangePhotoViewModel();
@@ -399,12 +394,6 @@ namespace network.Controllers
             }
         }
 
-
-
-
-
-
-
         public UserDetails GetUser()
         {
             var user = userService.SearchByUserId(User.Identity.GetUserId());
@@ -418,16 +407,12 @@ namespace network.Controllers
         }
 
 
-
         public byte[] DefaultPhoto()
         {
             var photo = imgService.SearchImg(1058);
 
             return photo.Data;
         }
-
-
-
 
         //function for convert HttpPostedFileBase to byte[]
 

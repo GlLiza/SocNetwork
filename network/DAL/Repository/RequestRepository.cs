@@ -9,9 +9,8 @@ namespace network.DAL.Repository
     public class RequestRepository : RepositoryBase,IRequestRepository
     {
 
-        public RequestRepository(NetworkContext context)
+        public RequestRepository(NetworkContext cont):base(cont)
         {
-            this.context = context;
         }
         
 

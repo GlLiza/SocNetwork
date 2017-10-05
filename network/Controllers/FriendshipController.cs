@@ -171,7 +171,8 @@ namespace network.Controllers
         {
             Requests req = friendServ.SearchRequest(requestsId);
             req.Status_id = 3;
-            friendServ.Save();
+            //!!!!!!!!!!
+            //friendServ.Save();
            
             Friendship friendship1 = new Friendship();
             friendship1.User_id = req.Requesting_user_id;
@@ -193,7 +194,8 @@ namespace network.Controllers
         {
             Requests req = friendServ.SearchRequest(id);
             req.Status_id = 2;
-            friendServ.Save();
+            //!!!!!!!!!!!
+            //friendServ.Save();
 
             return RedirectToAction("Index", "Friendship");
         }
@@ -203,7 +205,8 @@ namespace network.Controllers
         {
             Requests req = friendServ.SearchRequest(id);
             req.Status_id = 4;
-            friendServ.Save();
+            //!!!!!!!!
+            //friendServ.Save();
             
 
             return RedirectToAction("Index", "Friendship");

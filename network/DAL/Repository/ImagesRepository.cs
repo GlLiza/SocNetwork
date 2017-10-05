@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using network.BLL.EF;
@@ -10,9 +9,8 @@ namespace network.DAL.Repository
     public class ImagesRepository : RepositoryBase,IImagesRepository
     {
        
-        public ImagesRepository(NetworkContext cont)
+        public ImagesRepository(NetworkContext cont):base(cont)
         {
-            context = cont;
         }
 
 

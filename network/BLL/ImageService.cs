@@ -18,7 +18,7 @@ namespace network.BLL
         {
             imagesRepository = new ImagesRepository(db);
             userRepository=new UserRepository(db);
-            reposBase = new RepositoryBase();
+            reposBase = new RepositoryBase(db);
         }
 
         public IEnumerable<Images> GetImages()

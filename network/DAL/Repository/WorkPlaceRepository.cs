@@ -10,9 +10,8 @@ namespace network.DAL.Repository
     {
       
 
-        public WorkPlaceRepository(NetworkContext cont)
+        public WorkPlaceRepository(NetworkContext cont):base(cont)
         {
-            context = cont;
         }
 
         public void AddWorkPlace(WorkPlace place)

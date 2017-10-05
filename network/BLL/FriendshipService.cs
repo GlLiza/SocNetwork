@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using network.BLL.EF;
 using network.DAL.IRepository;
@@ -18,7 +19,7 @@ namespace network.BLL
         {
             friendRepository=new FriendshipRepository(db);
             requestRepository=new RequestRepository(db);
-            reposBase = new RepositoryBase();
+            reposBase = new RepositoryBase(db);
         }
         
 
@@ -63,6 +64,17 @@ namespace network.BLL
             return friendRepository.SearchByUsers(idU, idF);
         }
 
+        //получаем список id всех друзей
+        public List<string> GetFriendsIdsList(string id)
+        {
+            return friendRepository.GetListFriendsId(id);
+        }
+
+        
+
+
+
+      
 
         //check friendship
         public bool CheckFriendship(string userId, string friendId)
@@ -140,10 +152,10 @@ namespace network.BLL
           
         }
 
-        public void Save()
-        {
-            requestRepository.Save();
-        }
+        //public void Save()
+        //{
+        //    requestRepository.Save();
+        //}
 
     }
 }

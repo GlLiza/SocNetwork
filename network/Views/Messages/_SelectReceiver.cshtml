@@ -13,30 +13,32 @@
             <div class="modal-body">
                 
                 <table class="table">
-                    
-                    @using (Html.BeginForm("SelectReceiver", "Messages", FormMethod.Post, null))
-                    {
-                        if (Model.FriendsList != null)
+                        @if (Model.FriendsList != null)
                         {
                             <div class="scrolSelRec style="display: inline-flex">
-                            <hr />
-                            @foreach (var friend in Model.FriendsList)
-                            {
-                                <a href="#">
-                                    <div class="row  .content_for_friends " id="beginChat">
-                                        <div class="text">
-                                            <img class="select_friend_img" src="data:image/png;base64, @Convert.ToBase64String(friend.Image)">
+                                <hr />
+                                @foreach (var friend in Model.FriendsList)
+                                {
+                                    <a href="#" >
+                                        <div class="beginChat" data-id="@friend.Id">
+                                            <div class="row  .content_for_friends ">
 
-                                            @Html.DisplayFor(modelItem => friend.Name)
-                                            @Html.DisplayFor(modelItem => friend.FirstName)
+                                                <div class="text">
+                                                    <img class="select_friend_img" src="data:image/png;base64, @Convert.ToBase64String(friend.Image)">
+                                                    @Html.DisplayFor(modelItem => friend.Name)
+                                                    @Html.DisplayFor(modelItem => friend.FirstName)
+                                                </div>
+
+                                                @*@Html.HiddenFor(modelItem => friend.Id)
+                                                @Html.HiddenFor(modelItem => friend.Image)*@
+                                            </div>
                                         </div>
-                                    </div>
-                                    </a>
-                                <hr/>
-                            }
-                                </div>
+                                </a>
+
+                                    <hr />
+                                }
+                            </div>
                         }
-                    }
                 </table>
             </div>
 
@@ -44,3 +46,25 @@
         </div>
 </div>
 
+@*@section Scripts{
+    <script type="text/javascript">
+        $(function() {
+            $.ajax({
+                url: '@Url.Action("SelectReceiver", "Messages")',
+                type: 'POST',
+                data: $('#friendsList').serialize(),
+                //data: {
+                //    'imageId': imageId
+                //},
+                //dataType: "json",
+                success: function(response) {
+                },
+
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert("!!!!!!");
+                }
+            });
+        })
+
+    </script>
+}*@

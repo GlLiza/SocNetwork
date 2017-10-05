@@ -9,9 +9,8 @@ namespace network.DAL.Repository
     {
      
 
-        public LocationRepository(NetworkContext con)
+        public LocationRepository(NetworkContext cont):base(cont)
         {
-            context = con;
         }
 
         public void AddNewLocation(Location location)

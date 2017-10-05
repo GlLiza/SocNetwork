@@ -22,7 +22,7 @@ namespace network.BLL
             albumRepository = new AlbumRepository(db);
             albAndPhRepository = new AlbAndPhotoRepository(db);
             imgRepository = new ImagesRepository(db);
-            reposBase = new RepositoryBase();
+            reposBase = new RepositoryBase(db);
         }
 
 

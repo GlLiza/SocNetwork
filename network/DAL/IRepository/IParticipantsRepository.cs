@@ -1,5 +1,6 @@
 ﻿using network.BLL.EF;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace network.DAL.IRepository
@@ -8,8 +9,9 @@ namespace network.DAL.IRepository
     {
         void AddParticipants(Participants participants);
         void DeleteParticipants(int id);
-        void UpdateParicipants(Participants participants);
-      
+        void UpdateParticipants(Participants participants);
+        List<int> GetListFriendsId(int id);
+
 
         IQueryable<Participants> GetListParticipants();
     }

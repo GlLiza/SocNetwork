@@ -28,6 +28,7 @@ namespace network.BLL
             friendshipRepository = new FriendshipRepository(db);
             userRepository=new UserRepository(db);
             imagesRepository=new ImagesRepository(db);
+            reposBase=new RepositoryBase(db);
         }
 
 
@@ -37,27 +38,41 @@ namespace network.BLL
             return friendshipRepository.GetListFriends(id);
         }
 
-
-        //get UserDetails information for friends
-        public List<FriendMsg> GetUserDetails(IQueryable<Friendship> friendships)
+        //get list of friend's Ids without existing conversations
+        public List<int> GetFriendsIdsList(int id)
         {
-            List<FriendMsg> friendDetails= new List<FriendMsg>();
+            List<int> friendsIds=new List<int>();
 
-            foreach (var friend in friendships)
+            var conversationIdsList = conversationRepository.GetConversationsIdsByCreatorId(id);
+            if(conversationIdsList!=null)
+                friendsIds=conversationRepository.GetFriendsIdsList(conversationIdsList);
+            return friendsIds;
+        }
+
+
+
+
+
+
+
+        //get  information for friends
+        public List<FriendMsg> GetUserDetails(List<UserDetails> userList)
+        {
+            List<FriendMsg> detailsList= new List<FriendMsg>();
+
+            foreach (var item in userList)
             {
                 FriendMsg user =new FriendMsg();
-                var userDetails=userRepository.GetUserById(GetIntId(friend.Friend_id));
+                var userDetails=userRepository.GetUserById(item.Id);
                 var image = imagesRepository.GetImageById(userDetails.ImagesId);
-                //if (userDetails != null && image != null)
-                //{
+                
+                    user.Id = userDetails.Id;
                     user.Name = userDetails.Name;
                     user.FirstName = userDetails.Firstname;
                     user.Image = image.Data;
-                    friendDetails.Add(user);
-                //}
-               
+                    detailsList.Add(user);
             }
-            return friendDetails.ToList();
+            return detailsList.ToList();
         }
         
 
@@ -65,6 +80,51 @@ namespace network.BLL
         public int GetIntId(string id)
         {
             return userRepository.ReturnIntId(id);
+        }
+
+
+
+        
+
+
+
+
+        //  CONVERSATION
+        public void CreateConversation(Conversation conversation)
+        {
+            if (conversation != null)
+            {
+                conversationRepository.AddConversations(conversation);
+                reposBase.Save();
+
+            }
+        }
+
+
+        //позволяет получить список id друзей, с которыми существует Conversation
+        public List<int> GetFriendsIdListFromConversation(int id)
+        {
+            List<int> friendsIds=new List<int>();
+
+            var conversationsIds = conversationRepository.GetConversationsIdsByCreatorId(id);
+            if (conversationsIds != null)
+            {
+               friendsIds = conversationRepository.GetFriendsIdsList(conversationsIds);
+            }
+            return friendsIds;
+        }
+
+
+        //PARTICIPANTS
+
+        public void CreateParticipants(Participants participants)
+       {
+            if (participants != null)
+            {
+                participantsRepository.AddParticipants(participants);
+                reposBase.Save();
+            }
+            
         }
 
     }

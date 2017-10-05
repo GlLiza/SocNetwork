@@ -8,9 +8,8 @@ namespace network.DAL.Repository
 {
     public class UserRepository : RepositoryBase,IUserRepository
     {
-        public UserRepository(NetworkContext cont)
+        public UserRepository(NetworkContext cont):base(cont)
         {
-            context = cont;
         }
 
         public void AddUser(UserDetails user)
@@ -56,6 +55,8 @@ namespace network.DAL.Repository
                 
             return user.Id;
         }
+
+     
     }
 }
 

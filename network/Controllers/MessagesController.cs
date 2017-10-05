@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using Microsoft.AspNet.Identity;
 using network.BLL;
 using network.BLL.EF;
@@ -12,10 +15,16 @@ namespace network.Controllers
     {
 
         public MessagesService msgService;
+        public UserService userService;
+        public FriendshipService friendService;
+     
+       
 
         public MessagesController()
         {
-            msgService=new MessagesService();
+            msgService = new MessagesService();
+            userService = new UserService();
+            friendService=new FriendshipService();
         }
 
         // GET: Messages
@@ -26,98 +35,167 @@ namespace network.Controllers
 
 
         //GET: select a receiver
+        [HttpGet]
         public ActionResult SelectReceiver()
         {
-            SelectReceiver receiver=new SelectReceiver();
-            IQueryable<Friendship> friendships = msgService.GetFriendForSelect(User.Identity.GetUserId());
-            if (friendships!=null)
-            receiver.FriendsList=msgService.GetUserDetails(friendships);
-            
+            SelectReceiver receiver = new SelectReceiver();
+            List<UserDetails> receiverList = GetFriendsForSearch();
+
+            if (receiverList != null)
+                receiver.FriendsList = msgService.GetUserDetails(receiverList);
+
             return PartialView("_SelectReceiver", receiver);
         }
 
 
         //POST: create a chat
         [HttpPost]
-        public ActionResult SelectReceiver(Participants participants)
+        public String SelectReceiver(int receiverId)
         {
+            var conversation = CreateConversation();
+            if (receiverId != 0)
+                CreateParticipants(receiverId, conversation.Id);
 
-            return View();
+
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            var res = new HttpStatusCodeResult(HttpStatusCode.OK);
+            return js.Serialize(res);
+        }
+
+
+
+        public List<UserDetails> GetFriendsForSearch()
+        {
+            string strId = User.Identity.GetUserId();
+            var listIdsString = friendService.GetFriendsIdsList(strId);
+
+            var intIds = userService.ConvertListIds(strId, listIdsString);   //преобразование id из string в int
+
+            var listFriendConvers =
+                msgService.GetFriendsIdListFromConversation(intIds.Item1);
+
+            var dataForReceiver = userService.GetDataForSearch(intIds.Item2, listFriendConvers);
+
+            return dataForReceiver;
         }
 
 
 
 
-        // GET: Messages/Details/5
-        public ActionResult Details(int id)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public Conversation CreateConversation()
         {
-            return View();
+            Conversation conversation = new Conversation();
+
+            conversation.Creator_id = msgService.GetIntId(User.Identity.GetUserId());
+            conversation.Created_at = DateTime.Now.Date;
+            msgService.CreateConversation(conversation);
+
+            return conversation;
         }
 
-        // GET: Messages/Create
-        public ActionResult Create()
+        public Participants CreateParticipants(int receiverId, int conversationId)
         {
-            return View();
-        }
+            Participants participants = new Participants();
 
-        // POST: Messages/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
+            if (receiverId>0 && conversationId> 0)
             {
-                // TODO: Add insert logic here
+                participants.Conversation_id = conversationId;
+                participants.Users_id = receiverId;
 
-                return RedirectToAction("Index");
+                msgService.CreateParticipants(participants);
             }
-            catch
-            {
-                return View();
-            }
+            return participants;
         }
 
-        // GET: Messages/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
 
-        // POST: Messages/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
-        // GET: Messages/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+        //// GET: Messages/Details/5
+        //public ActionResult Details(int id)
+        //{
+        //    return View();
+        //}
 
-        // POST: Messages/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
+        //// GET: Messages/Create
+        //public ActionResult Create()
+        //{
+        //    return View();
+        //}
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //// POST: Messages/Create
+        //[HttpPost]
+        //public ActionResult Create(FormCollection collection)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add insert logic here
+
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
+
+        //// GET: Messages/Edit/5
+        //public ActionResult Edit(int id)
+        //{
+        //    return View();
+        //}
+
+        //// POST: Messages/Edit/5
+        //[HttpPost]
+        //public ActionResult Edit(int id, FormCollection collection)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add update logic here
+
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
+
+        //// GET: Messages/Delete/5
+        //public ActionResult Delete(int id)
+        //{
+        //    return View();
+        //}
+
+        //// POST: Messages/Delete/5
+        //[HttpPost]
+        //public ActionResult Delete(int id, FormCollection collection)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add delete logic here
+
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
     }
 }

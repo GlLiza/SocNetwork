@@ -8,9 +8,8 @@ namespace network.DAL.Repository
     public class AlbAndPhotoRepository : RepositoryBase,IAlbAndPhotoRepository
     {
 
-        public AlbAndPhotoRepository(NetworkContext con)
+        public AlbAndPhotoRepository(NetworkContext cont):base(cont)
         {
-            context = con;
         }
 
         public void AddNewEntry(AlbAndPhot alb)

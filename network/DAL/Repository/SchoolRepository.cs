@@ -8,9 +8,8 @@ namespace network.DAL.Repository
     public class SchoolRepository : RepositoryBase,ISchoolRepository
     {
        
-        public SchoolRepository(NetworkContext context)
+        public SchoolRepository(NetworkContext cont):base(cont)
         {
-            this.context = context;
         }
 
         public void AddSchool(School school)

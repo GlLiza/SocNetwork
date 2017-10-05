@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Microsoft.VisualBasic.ApplicationServices;
-using network.BLL.EF;
 
 namespace network.Views.ViewModels
 {
@@ -28,6 +24,7 @@ namespace network.Views.ViewModels
 
     public class FriendMsg
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string FirstName { get; set; }
         public byte[] Image { get; set; }

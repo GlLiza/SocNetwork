@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
-using Microsoft.AspNet.SignalR.Messaging;
+using Microsoft.Ajax.Utilities;
 using network.BLL.EF;
 using network.DAL.IRepository;
 
@@ -11,9 +9,8 @@ namespace network.DAL.Repository
 {
     public class MessagesRepository: RepositoryBase,IMessageRepository
     {
-        public MessagesRepository(NetworkContext cont)
+        public MessagesRepository(NetworkContext cont):base(cont)
         {
-            context = cont;
         }
 
         public void AddMessage(Messages message)
@@ -38,5 +35,9 @@ namespace network.DAL.Repository
         {
             return context.Messages;
         }
+
+      
+
+
     }
 }

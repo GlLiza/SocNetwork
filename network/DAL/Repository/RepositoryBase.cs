@@ -7,6 +7,11 @@ namespace network.DAL.Repository
     {
         protected NetworkContext context;
 
+        public RepositoryBase(NetworkContext con)
+        {
+            context = con;
+        }
+
         private bool disposed = false;
 
         protected virtual void Dispose(bool disposed)

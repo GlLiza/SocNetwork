@@ -4,14 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="d6472d02a7cb406eab25f6546dbcf8c1" Name="Diagram1" ZoomLevel="82">
+      <Diagram DiagramId="d6472d02a7cb406eab25f6546dbcf8c1" Name="Diagram1" ZoomLevel="105">
         <EntityTypeShape EntityType="NetworkModel.C__MigrationHistory" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="NetworkModel.AlbAndPhot" Width="1.5" PointX="3" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="NetworkModel.AspNetRoles" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="NetworkModel.AspNetUserClaims" Width="1.5" PointX="4.75" PointY="5.5" IsExpanded="true" />
         <EntityTypeShape EntityType="NetworkModel.AspNetUserLogins" Width="1.5" PointX="2.75" PointY="8.625" IsExpanded="true" />
         <EntityTypeShape EntityType="NetworkModel.AspNetUsers" Width="1.5" PointX="10.25" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NetworkModel.FamilyStatus" Width="1.5" PointX="14.5" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NetworkModel.FamilyStatus" Width="1.5" PointX="15.75" PointY="6.875" IsExpanded="true" />
         <EntityTypeShape EntityType="NetworkModel.Friendship" Width="1.5" PointX="10.5" PointY="11.25" IsExpanded="true" />
         <EntityTypeShape EntityType="NetworkModel.FriendStatuses" Width="1.5" PointX="8.375" PointY="9.5" IsExpanded="true" />
         <EntityTypeShape EntityType="NetworkModel.Images" Width="1.5" PointX="5.875" PointY="1" IsExpanded="true" />
@@ -40,14 +40,11 @@
         <AssociationConnector Association="NetworkModel.FK_UserDetails_WorkPlace" ManuallyRouted="false" />
         <AssociationConnector Association="NetworkModel.AspNetUserRoles" ManuallyRouted="false" />
         <AssociationConnector Association="NetworkModel.FK_Photoalbum_UserDetails" />
-        <EntityTypeShape EntityType="NetworkModel.Conversation" Width="1.5" PointX="14.5" PointY="1.25" />
-        <EntityTypeShape EntityType="NetworkModel.Messages" Width="1.5" PointX="18.5" PointY="1.625" />
-        <EntityTypeShape EntityType="NetworkModel.Participants" Width="1.5" PointX="16.625" PointY="4.25" />
+        <EntityTypeShape EntityType="NetworkModel.Messages" Width="1.5" PointX="20.125" PointY="1" />
+        <EntityTypeShape EntityType="NetworkModel.Conversation" Width="1.5" PointX="12.875" PointY="0.5" />
         <AssociationConnector Association="NetworkModel.FK_Conversation_UserDetails" />
-        <AssociationConnector Association="NetworkModel.FK_Messages_Conversation" />
+        <EntityTypeShape EntityType="NetworkModel.Participants" Width="1.5" PointX="16" PointY="2.625" />
         <AssociationConnector Association="NetworkModel.FK_Participants_Conversation" />
-        <AssociationConnector Association="NetworkModel.FK_Messages_Participants" />
-        <AssociationConnector Association="NetworkModel.FK_Messages_UserDetails" />
         <AssociationConnector Association="NetworkModel.FK_Participants_UserDetails" />
       </Diagram>
     </edmx:Diagrams>

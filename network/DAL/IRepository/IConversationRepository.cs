@@ -1,5 +1,6 @@
 ﻿using network.BLL.EF;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace network.DAL.IRepository
@@ -11,6 +12,8 @@ namespace network.DAL.IRepository
         void UpdateConversations(Conversation convert);
        
         IQueryable<Conversation> GetListConversations();
+        List<int> GetConversationsIdsByCreatorId(int id);
+        List<int> GetFriendsIdsList(List<int> conversationsIdsList);
 
     }
 
