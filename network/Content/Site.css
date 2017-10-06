@@ -353,7 +353,16 @@ footer {
       color: black;
       font-size: 18px;
       text-align: center
-        
+  }
+
+  .chat {
+      background-color: #cccccc;  
+      /*background-color:#778899;*/  
+  }
+
+  .activeChat {
+      background-color:;  
+      /*background-color:#778899;*/  
   }
  
 

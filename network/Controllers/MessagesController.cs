@@ -17,20 +17,24 @@ namespace network.Controllers
         public MessagesService msgService;
         public UserService userService;
         public FriendshipService friendService;
-     
-       
+        public ImageService imgService;
+
+
 
         public MessagesController()
         {
             msgService = new MessagesService();
             userService = new UserService();
             friendService=new FriendshipService();
+            imgService = new ImageService();
         }
 
         // GET: Messages
         public ActionResult Index()
         {
-            return View();
+            List<ConversationViewModel> model=new List<ConversationViewModel>();
+            var a = ConversationList(model);
+            return View(a);
         }
 
 
@@ -63,13 +67,39 @@ namespace network.Controllers
         }
 
 
+        //[HttpGet]
+        //public ActionResult Messages(int id)
+        //{
+        //    var friend = userService.SearchUser(id);
+        //    MessagesViewModel model=new MessagesViewModel();
+        //    model.NameSender = friend.Name;
+        //    model.FirstNameSender = friend.Firstname;
+        //    model.Image = imgService.ReturnImage(friend.ImagesId.Value);
+
+        //}
+
+        //[HttpPost]
+        //public ActionResult Messages()
+        //{
+
+        //}
+
+
+
+
+
+
+
+
+
+
 
         public List<UserDetails> GetFriendsForSearch()
         {
             string strId = User.Identity.GetUserId();
             var listIdsString = friendService.GetFriendsIdsList(strId);
 
-            var intIds = userService.ConvertListIds(strId, listIdsString);   //преобразование id из string в int
+            var intIds = userService.ConvertListIds(strId, listIdsString);   
 
             var listFriendConvers =
                 msgService.GetFriendsIdListFromConversation(intIds.Item1);
@@ -78,26 +108,7 @@ namespace network.Controllers
 
             return dataForReceiver;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
         public Conversation CreateConversation()
         {
             Conversation conversation = new Conversation();
@@ -122,6 +133,40 @@ namespace network.Controllers
             }
             return participants;
         }
+
+        public List<ConversationViewModel> ConversationList(List<ConversationViewModel> model)
+        {
+            int id = userService.CovertId(User.Identity.GetUserId());
+
+            var listFriendConvers = msgService.GetFriendsIdListFromConversation(id);
+
+            var conversationdata = userService.GetUserDetailsByListId(listFriendConvers);
+
+
+            foreach (var user in conversationdata)
+            {
+                ConversationViewModel friend=new ConversationViewModel();
+
+                var image = imgService.SearchImg(user.ImagesId);
+
+                friend.Id = user.Id;
+                friend.Name = user.Name;
+                friend.FirstName = user.Firstname;
+                friend.Image = image.Data;
+
+                model.Add(friend);
+            }
+
+            return model;
+        }
+
+
+
+
+
+
+
+
 
 
 

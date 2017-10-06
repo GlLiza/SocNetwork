@@ -54,8 +54,12 @@ namespace network.BLL
             return img;
         }
 
+        public byte[] ReturnImage(int id)
+        {
+            byte[] imageData = imagesRepository.GetImageById(id).Data;
+            return imageData;
+        }
 
-        
 
 
 

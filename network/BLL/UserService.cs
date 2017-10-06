@@ -56,11 +56,7 @@ namespace network.BLL
             return userRepository.GetUserById(id);
            }
 
-        public byte[] ReturnImage(int id)
-        {
-            byte[] imageData = imagesRepository.GetImageById(id).Data;
-            return imageData;
-        }
+      
 
         public UserDetails SearchByUserId(string i)
         {

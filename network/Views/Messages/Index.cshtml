@@ -1,4 +1,4 @@
-﻿@model IEnumerable<network.Views.ViewModels.MessagesViewModel>
+﻿@model List<network.Views.ViewModels.ConversationViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -26,8 +26,8 @@
                 <span class="icon-bar"></span>
             </button>
         </div>
-        
-        
+
+
         <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li id="selectRec"><a href=#>Search <span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-search"></span></a></li>
@@ -40,57 +40,95 @@
 </nav>
 
 
-<div id="selectMod" class="modal fade" data-url='@Url.Action("SelectReceiver","Messages",null)'>
-<div id="selectContainer">
+<div class="jumbotron container-fluid">
+
+    <div class="row page" align="center">
+        Conversation
     </div>
-</div>
+
+    @if (Model.Capacity > 0)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+    <td>
+        <div class="row chatId">
+            <a href="#">
+                <div class="col-md-offset-5">
+                    <img id="user_img"
+                         style="border: solid" src="data:image/png;base64, @Convert.ToBase64String(item.Image)"
+                         class="img-circle">
+
+                    @Html.DisplayFor(modelItem => item.Name)
+                    @Html.DisplayFor(modelItem => item.FirstName)
+
+                </div>
+            </a>
+        </div>
+                </td>
+            </tr>
+        }
+    }
+
+    </div>
 
 
 
-@section Scripts{
-    <script type="text/javascript">
-        $(function() {
-            $('#selectRec').click(function() {
-                var url = $('#selectMod').data('url');
+
+    <div id="selectMod" class="modal fade" data-url='@Url.Action("SelectReceiver","Messages",null)'>
+        <div id="selectContainer">
+        </div>
+    </div>
 
 
-                $.get(url,
-                    function(data) {
-                        $('#selectContainer').html(data);
 
-                        $('#selectMod').modal('show');
+    @section Scripts{
+        <script type="text/javascript">
+            $(function() {
+                $('#selectRec').click(function() {
+                    var url = $('#selectMod').data('url');
 
-                        $('.beginChat').click(function() {
-                            var receiverId = $(this).data('id');
 
-                            $.ajax({
-                                url: '@Url.Action("SelectReceiver", "Messages")',
-                                type: 'POST',
-                                data: {
-                                    'receiverId': receiverId
-                                },
+                    $.get(url,
+                        function(data) {
+                            $('#selectContainer').html(data);
 
-                                dataType: "json",
-                                success: function(response) {
-                                    $('#selectMod').modal('hide');
-                                    debugger;
+                            $('#selectMod').modal('show');
 
-                                },
-                                error: function(xhr, ajaxOptions, thrownError) {
-                                    debugger;
-                                    $('#selectMod').modal('hide');
-                                }
+                            $('.beginChat').click(function() {
+                                var receiverId = $(this).data('id');
+
+                                $.ajax({
+                                    url: '@Url.Action("SelectReceiver", "Messages")',
+                                    type: 'POST',
+                                    data: {
+                                        'receiverId': receiverId
+                                    },
+
+                                    dataType: "json",
+                                    success: function(response) {
+                                        $('#selectMod').modal('hide');
+                                        debugger;
+
+                                    },
+                                    error: function(xhr, ajaxOptions, thrownError) {
+                                        debugger;
+                                        $('#selectMod').modal('hide');
+                                    }
+                                });
                             });
                         });
-                    });
+                });
+
+                //$(".chatId").mouseover(function () { $(this).addClass(".activeChat"); });
+                //debugger;
+                //$(".chatId").mouseout(function () { $(this).removeClass(".activeChat"); });
+
+                $(".chatId").bind({
+                    'mouseover': function () { $(this).css("background-color", "#cccccc"); },
+                    'mouseout': function () { $(this).css("background-color", "transparent"); },
+                });
+
             });
-        });
-    </script>
-}
-
-
-
-
-
-
-
+        </script>
+    }

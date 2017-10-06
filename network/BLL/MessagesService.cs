@@ -56,13 +56,13 @@ namespace network.BLL
 
 
         //get  information for friends
-        public List<FriendMsg> GetUserDetails(List<UserDetails> userList)
+        public List<ConversationViewModel> GetUserDetails(List<UserDetails> userList)
         {
-            List<FriendMsg> detailsList= new List<FriendMsg>();
+            List<ConversationViewModel> detailsList= new List<ConversationViewModel>();
 
             foreach (var item in userList)
             {
-                FriendMsg user =new FriendMsg();
+                ConversationViewModel user =new ConversationViewModel();
                 var userDetails=userRepository.GetUserById(item.Id);
                 var image = imagesRepository.GetImageById(userDetails.ImagesId);
                 
