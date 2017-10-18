@@ -22,25 +22,18 @@ namespace network.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private readonly UserService _userServ;
 
-        private ApplicationDbContext db = new ApplicationDbContext();
-
-
-
-
-
-        public AccountController()
-        {}
-
-
+        public AccountController(UserService userService)
+        {
+            _userServ = DependencyResolver.Current.GetService<UserService>();
+        }
 
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
-
-
         }
 
         public ApplicationSignInManager SignInManager
@@ -58,7 +51,7 @@ namespace network.Controllers
         //
         // GET: /Account/Login
         [AllowAnonymous]        // атрибут открывает публичный доступ к методу контроллера
-        public ActionResult Login(string returnUrl)     //действие для АУТЕНТИФИКАЦИИ  
+        public ActionResult Login(string returnUrl)       
 
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -71,6 +64,7 @@ namespace network.Controllers
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+
         {
     
 
@@ -86,32 +80,17 @@ namespace network.Controllers
                 switch (result)
                 {
                     case SignInStatus.Success:
-
-
-                    UserService userService = new UserService();
-                    FriendshipService friendshipService=new FriendshipService();
-
+                    
                     var manager=new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
                   
-
                     var currentUser = manager.FindByEmail(model.Email);
-
-
-                    var us = userService.SearchByUserId(currentUser.Id);
-
-                    //var friendlist = friendshipService.CurrentRequestses(us.UserId);
+                    var us = _userServ.SearchByUserId(currentUser.Id);
 
                     UsersDetailsViewModel userModel=new UsersDetailsViewModel();
                         userModel.Id = us.UserId;
-                    
                         userModel.UserDetails = us;
-                       //userModel.Requests = friendlist;
-
-
 
                     return RedirectToAction("Index", "Users", userModel);
-
-
                      
                     case SignInStatus.LockedOut:
                         return View("Lockout");
@@ -122,12 +101,7 @@ namespace network.Controllers
                         ModelState.AddModelError("", "Invalid login attempt.");
                         return View(model);
                 }
-        
-
         }
-
-
-
 
 
 
@@ -200,9 +174,8 @@ namespace network.Controllers
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                        UserService userService = new UserService();
                         var us = new UserDetails { UserId = user.Id };
-                        userService.InsertUser(us);
+                        _userServ.InsertUser(us);
 
                         // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                         // Send an email with this link
@@ -461,6 +434,7 @@ namespace network.Controllers
             var AuthenticationManager = ctx.Authentication;
 
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            Session.Abandon();
             return RedirectToAction("Index", "Users");
         }
 

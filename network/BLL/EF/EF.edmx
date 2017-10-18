@@ -327,6 +327,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Messages_Participants">
+          <End Role="Participants" Type="Self.Participants" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Participants">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="Participants_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Participants_Conversation">
           <End Role="Conversation" Type="Self.Conversation" Multiplicity="1" />
           <End Role="Participants" Type="Self.Participants" Multiplicity="*" />
@@ -540,6 +552,10 @@
           <AssociationSet Name="FK_Frienship_AspNetUsers1" Association="Self.FK_Frienship_AspNetUsers1">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Friendship" EntitySet="Friendship" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_Participants" Association="Self.FK_Messages_Participants">
+            <End Role="Participants" EntitySet="Participants" />
+            <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
           <AssociationSet Name="FK_Participants_Conversation" Association="Self.FK_Participants_Conversation">
             <End Role="Conversation" EntitySet="Conversation" />
@@ -1110,6 +1126,10 @@
             <End Role="UserDetails" EntitySet="UserDetails" />
             <End Role="Participants" EntitySet="Participants" />
           </AssociationSet>
+          <AssociationSet Name="FK_Messages_Participants" Association="NetworkModel.FK_Messages_Participants">
+            <End Role="Participants" EntitySet="Participants" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
           </EntityContainer>
         <Association Name="FK_Photoalbum_UserDetails">
           <End Type="NetworkModel.UserDetails" Role="UserDetails" Multiplicity="1" />
@@ -1133,6 +1153,7 @@
           <Property Name="Participants_id" Type="Int32" Nullable="false" />
           <Property Name="Message" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Created_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Participants" Relationship="NetworkModel.FK_Messages_Participants" FromRole="Messages" ToRole="Participants" />
         </EntityType>
         <EntityType Name="Conversation">
           <Key>
@@ -1167,6 +1188,7 @@
           <Property Name="Users_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Conversation" Relationship="NetworkModel.FK_Participants_Conversation" FromRole="Participants" ToRole="Conversation" />
           <NavigationProperty Name="UserDetails" Relationship="NetworkModel.FK_Participants_UserDetails" FromRole="Participants" ToRole="UserDetails" />
+          <NavigationProperty Name="Messages" Relationship="NetworkModel.FK_Messages_Participants" FromRole="Participants" ToRole="Messages" />
         </EntityType>
         <Association Name="FK_Participants_Conversation">
           <End Type="NetworkModel.Conversation" Role="Conversation" Multiplicity="1" />
@@ -1189,6 +1211,18 @@
             </Principal>
             <Dependent Role="Participants">
               <PropertyRef Name="Users_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_Participants">
+          <End Type="NetworkModel.Participants" Role="Participants" Multiplicity="1" />
+          <End Type="NetworkModel.Messages" Role="Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Participants">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="Participants_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

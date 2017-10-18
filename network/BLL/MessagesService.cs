@@ -9,33 +9,31 @@ namespace network.BLL
 {
     public class MessagesService
     {
-        private NetworkContext db = new NetworkContext();
-        private IMessageRepository messageRepository;
-        private IParticipantsRepository participantsRepository;
-        private IConversationRepository conversationRepository;
-        private IFriendshipRepository friendshipRepository;
-        private IUserRepository userRepository;
-        private IImagesRepository imagesRepository;
-
-        public RepositoryBase reposBase;
-
+        private readonly IParticipantsRepository _participantsRepository;
+        private readonly IConversationRepository _conversationRepository;
+        private readonly IFriendshipRepository _friendshipRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly IImagesRepository _imgRepository;
 
         public MessagesService()
         {
-            participantsRepository=new ParticipantsRepository(db);
-            conversationRepository=new ConversationRepository(db);
-            messageRepository =new MessagesRepository(db);
-            friendshipRepository = new FriendshipRepository(db);
-            userRepository=new UserRepository(db);
-            imagesRepository=new ImagesRepository(db);
-            reposBase=new RepositoryBase(db);
+        }
+
+        public MessagesService(ParticipantsRepository participantsRepository, ConversationRepository conversationRepository, 
+            FriendshipRepository friendshipRepository, UserRepository userRepository, ImagesRepository imgRepository)
+        {
+            _participantsRepository = participantsRepository;
+            _conversationRepository = conversationRepository;
+            _friendshipRepository = friendshipRepository;
+            _userRepository = userRepository;
+            _imgRepository = imgRepository ;
         }
 
 
         //get all friends
         public IQueryable<Friendship> GetFriendForSelect(string id)
         {
-            return friendshipRepository.GetListFriends(id);
+            return _friendshipRepository.GetListFriends(id);
         }
 
         //get list of friend's Ids without existing conversations
@@ -43,18 +41,13 @@ namespace network.BLL
         {
             List<int> friendsIds=new List<int>();
 
-            var conversationIdsList = conversationRepository.GetConversationsIdsByCreatorId(id);
+            var conversationIdsList = _conversationRepository.GetConversationsIdsByCreatorId(id);
             if(conversationIdsList!=null)
-                friendsIds=conversationRepository.GetFriendsIdsList(conversationIdsList);
+                friendsIds = _conversationRepository.GetFriendsIdsList(conversationIdsList);
             return friendsIds;
         }
 
-
-
-
-
-
-
+        
         //get  information for friends
         public List<ConversationViewModel> GetUserDetails(List<UserDetails> userList)
         {
@@ -63,8 +56,8 @@ namespace network.BLL
             foreach (var item in userList)
             {
                 ConversationViewModel user =new ConversationViewModel();
-                var userDetails=userRepository.GetUserById(item.Id);
-                var image = imagesRepository.GetImageById(userDetails.ImagesId);
+                var userDetails= _userRepository.GetUserById(item.Id);
+                var image = _imgRepository.GetImageById(userDetails.ImagesId);
                 
                     user.Id = userDetails.Id;
                     user.Name = userDetails.Name;
@@ -79,24 +72,18 @@ namespace network.BLL
         //translate Id-string -> Id-int
         public int GetIntId(string id)
         {
-            return userRepository.ReturnIntId(id);
+            return _userRepository.ReturnIntId(id);
         }
 
-
-
         
-
-
-
 
         //  CONVERSATION
         public void CreateConversation(Conversation conversation)
         {
             if (conversation != null)
             {
-                conversationRepository.AddConversations(conversation);
-                reposBase.Save();
-
+                _conversationRepository.AddConversations(conversation);
+               
             }
         }
 
@@ -106,10 +93,10 @@ namespace network.BLL
         {
             List<int> friendsIds=new List<int>();
 
-            var conversationsIds = conversationRepository.GetConversationsIdsByCreatorId(id);
+            var conversationsIds = _conversationRepository.GetConversationsIdsByCreatorId(id);
             if (conversationsIds != null)
             {
-               friendsIds = conversationRepository.GetFriendsIdsList(conversationsIds);
+               friendsIds = _conversationRepository.GetFriendsIdsList(conversationsIds);
             }
             return friendsIds;
         }
@@ -121,8 +108,7 @@ namespace network.BLL
        {
             if (participants != null)
             {
-                participantsRepository.AddParticipants(participants);
-                reposBase.Save();
+                _participantsRepository.AddParticipants(participants);
             }
             
         }

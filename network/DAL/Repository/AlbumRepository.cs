@@ -6,6 +6,10 @@ namespace network.DAL.Repository
 {
     public class AlbumRepository : RepositoryBase, IAlbumRepository
     {
+        public AlbumRepository()
+        {
+        }
+
         public AlbumRepository(NetworkContext cont) : base(cont)
         {
             
@@ -13,17 +17,18 @@ namespace network.DAL.Repository
 
         public void AddNewAlbum(Photoalbum album)
         {
-            context.Photoalbum.Add(album);
+            _context.Photoalbum.Add(album);
+            base.Save();
         }
 
         public bool DeleteAlbum(int albId)
         {
-            Photoalbum album = context.Photoalbum.Find(albId);
+            Photoalbum album = _context.Photoalbum.Find(albId);
 
             if (album != null)
             {
-                context.Photoalbum.Remove(album);
-                context.SaveChanges();
+                _context.Photoalbum.Remove(album);
+                base.Save();
                 return true;
             }
 
@@ -34,23 +39,20 @@ namespace network.DAL.Repository
 
         public void UpdateAlbum(Photoalbum album)
         {
-
-            //context.Entry(album).State = EntityState.Unchanged;
-
-            Photoalbum alb = context.Photoalbum.Find(album.Id);
-            context.Entry(alb).CurrentValues.SetValues(album);
-            context.SaveChanges();
+            Photoalbum alb = _context.Photoalbum.Find(album.Id);
+            _context.Entry(alb).CurrentValues.SetValues(album);
+            base.Save();
         }
 
 
         public Photoalbum GetAlbumById(int id)
         {
-            return context.Photoalbum.Find(id);
+            return _context.Photoalbum.Find(id);
         }
 
         public IQueryable<Photoalbum> GetListAlbums(int id)
         {
-            var albums = context.Photoalbum
+            var albums = _context.Photoalbum
                 .Where(s => s.UserId == id)
                 .OrderByDescending(s=>s.Id);
             return albums;

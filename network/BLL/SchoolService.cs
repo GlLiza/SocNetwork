@@ -7,44 +7,42 @@ namespace network.BLL
 {
     public class SchoolService
     {
-        NetworkContext db = new NetworkContext();
-        private ISchoolRepository schoolRepository;
-        public RepositoryBase reposBase;
+        private readonly ISchoolRepository _schoolRepository;
 
         public SchoolService()
         {
-            schoolRepository=new SchoolRepository(db);
-            reposBase = new RepositoryBase(db);
+        }
+
+        public SchoolService(SchoolRepository schoolRepository)
+        {
+            _schoolRepository = schoolRepository;
         }
 
         public void AddSchool(School sch)
         {
-            schoolRepository.AddSchool(sch);
-            schoolRepository.Save();
+            _schoolRepository.AddSchool(sch);
         }
 
         public void DeleteSchool(School sch)
         {
-            School school = schoolRepository.GetSchoolById(sch.Id);
+            School school = _schoolRepository.GetSchoolById(sch.Id);
 
-            schoolRepository.DeleteSchool(school);
-            schoolRepository.Save();
+            _schoolRepository.DeleteSchool(school);
         }
 
         public School SearchSchool(int id)
         {
-            return schoolRepository.GetSchoolById(id);
+            return _schoolRepository.GetSchoolById(id);
         }
 
         public void UpdateSchool(School school)
         {
-            schoolRepository.UpdateSchool(school);
-            schoolRepository.Save();
+            _schoolRepository.UpdateSchool(school);
         }
 
         public IEnumerable<School> GetListSchools(int useId)
         {
-            return schoolRepository.GetListSchool(useId);
+            return _schoolRepository.GetListSchool(useId);
         }
 
 

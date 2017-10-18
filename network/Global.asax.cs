@@ -18,6 +18,8 @@ namespace network
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.Name;
+
+            Bootstrapper.Initialise();
          
         }
     }

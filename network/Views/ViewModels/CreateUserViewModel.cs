@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using network.BLL.EF;
+using network.DAL.Enums;
 
 namespace network.Views.ViewModels
 {
@@ -10,7 +11,9 @@ namespace network.Views.ViewModels
     {
         public int Id { get; set; }
         public string UserId { get; set; }
-        public string Gender { get; set; }
+
+        public Gender Gender { get; set; }
+
         public string Name { get; set; }
         [Display(Name = "Firstname")]
         public string Firstname { get; set; }
@@ -18,10 +21,12 @@ namespace network.Views.ViewModels
         [Display(Name = "Date of birth")]
         [DataType(DataType.Date)]
         public DateTime? DateOfBirthday { get; set; }
+
         public int? SelectedStatus { get; set; }
         [Display(Name = "Family status")]
         public virtual FamilyStatus FamStat { get; set; }
         public virtual IQueryable<FamilyStatus> FamilyStatus { get; set; }
+
         public string CompanyName { get; set; }
         public string Position { get; set; }
         public string Description { get; set; }

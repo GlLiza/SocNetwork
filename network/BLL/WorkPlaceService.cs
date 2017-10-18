@@ -1,49 +1,49 @@
 ﻿using System.Collections.Generic;
+using network.BLL.EF;
 using network.DAL.IRepository;
 using network.DAL.Repository;
 
-namespace network.BLL.EF
+namespace network.BLL
 {
     public class WorkPlaceService
     {
-        NetworkContext db = new NetworkContext();
-        private IWorkPlaceRepository workPlaceRepository;
+
+        private readonly IWorkPlaceRepository _workPlaceRepository;
 
         public WorkPlaceService()
         {
-            workPlaceRepository=new WorkPlaceRepository(db);
+        }
+
+        public WorkPlaceService(WorkPlaceRepository workPlaceRepository)
+        {
+            _workPlaceRepository = workPlaceRepository;
         }
 
         public void AddWorkPlace(WorkPlace place)
         {
-            workPlaceRepository.AddWorkPlace(place);
-            workPlaceRepository.Save();
+            _workPlaceRepository.AddWorkPlace(place);
         }
 
         public void DeleteWorkPlace(WorkPlace place)
         {
-            WorkPlace pl = workPlaceRepository.GetPlaseById(place.Id);
-            workPlaceRepository.DeleteWorkPlace(pl.Id);
-            workPlaceRepository.Save();
+            WorkPlace pl = _workPlaceRepository.GetPlaseById(place.Id);
+            _workPlaceRepository.DeleteWorkPlace(pl.Id);
         }
 
         public WorkPlace SearchPlace(int id)
         {
-          return workPlaceRepository.GetPlaseById(id);
+          return _workPlaceRepository.GetPlaseById(id);
         }
 
         public void Update(WorkPlace place)
         {
-            workPlaceRepository.Update(place);
-            workPlaceRepository.Save();
+            _workPlaceRepository.Update(place);
         }
 
         public IEnumerable<WorkPlace> GetListWorks(int useId)
         {
-            return workPlaceRepository.GetListWorks(useId);
+            return _workPlaceRepository.GetListWorks(useId);
         }
-
-
 
     }
 }

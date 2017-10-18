@@ -7,39 +7,46 @@ namespace network.DAL.Repository
 {
     public class SchoolRepository : RepositoryBase,ISchoolRepository
     {
-       
+
+        public SchoolRepository()
+        {
+        }
+
         public SchoolRepository(NetworkContext cont):base(cont)
         {
         }
 
         public void AddSchool(School school)
         {
-            context.School.Add(school);
+            _context.School.Add(school);
+            base.Save();
         }
 
         public void DeleteSchool(School school)
         {
-            School sch = context.School.Find(school.Id);
+            School sch = _context.School.Find(school.Id);
 
-            context.School.Remove(sch); ;
+            _context.School.Remove(sch); ;
+            base.Save();
         }
 
         public School GetSchoolById(int id)
         {
-            return context.School.Find(id);
+            return _context.School.Find(id);
         }
         
         public void UpdateSchool(School school)
         {
-            School sch = context.School.Find(school.Id);
-            context.Entry(sch).CurrentValues.SetValues(school);
+            School sch = _context.School.Find(school.Id);
+            _context.Entry(sch).CurrentValues.SetValues(school);
+            base.Save();
         }
 
         public IEnumerable<School> GetListSchool(int? id)
         {
-            UserDetails user = context.UserDetails.Find(id);
+            UserDetails user = _context.UserDetails.Find(id);
 
-            var schoolList = context.School
+            var schoolList = _context.School
                 .Where(s => s.Id == user.SchoolId);
 
             return schoolList;

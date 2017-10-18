@@ -8,30 +8,33 @@ namespace network.DAL.Repository
 {
     public class ConversationRepository : RepositoryBase, IConversationRepository
     {
+        public ConversationRepository() { }
+
         public ConversationRepository(NetworkContext cont) : base(cont)
         {
         }
 
         public void AddConversations(Conversation conver)
         {
-            context.Conversation.Add(conver);
+            _context.Conversation.Add(conver);
+            base.Save();
         }
 
         public void DeleteConversations(int id)
         {
-            Conversation conver = context.Conversation.Find(id);
+            Conversation conver = _context.Conversation.Find(id);
             if (conver != null)
-                context.Conversation.Remove(conver);
+                _context.Conversation.Remove(conver);
         }
 
         public IQueryable<Conversation> GetListConversations()
         {
-            return context.Conversation;
+            return _context.Conversation;
         }
 
         public void UpdateConversations(Conversation convert)
         {
-           context.Entry(convert).State=EntityState.Modified;
+           _context.Entry(convert).State=EntityState.Modified;
         }
 
        
@@ -39,7 +42,7 @@ namespace network.DAL.Repository
         //get conversation's ids list by creator's id
         public List<int> GetConversationsIdsByCreatorId(int id)
         {
-            return context.Conversation.Where(i => i.Creator_id == id).Select(x=>x.Id).ToList();
+            return _context.Conversation.Where(i => i.Creator_id == id).Select(x=>x.Id).ToList();
         }
 
         //get users_id from conversation's list of id
@@ -49,7 +52,7 @@ namespace network.DAL.Repository
 
             foreach (int convId in conversationIds)
             {
-                var friendId = context.Participants.SingleOrDefault(x => x.Conversation_id == convId);
+                var friendId = _context.Participants.SingleOrDefault(x => x.Conversation_id == convId);
                 friendsIdList.Add(friendId.Users_id);
             }
 

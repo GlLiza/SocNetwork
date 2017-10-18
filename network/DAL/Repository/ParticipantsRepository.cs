@@ -9,6 +9,11 @@ namespace network.DAL.Repository
 {
     public class ParticipantsRepository: RepositoryBase,IParticipantsRepository
     {
+        public ParticipantsRepository() 
+        {
+        }
+
+
         public ParticipantsRepository(NetworkContext cont):base(cont)
         {
         }
@@ -16,25 +21,26 @@ namespace network.DAL.Repository
 
         public void AddParticipants(Participants participants)
         {
-            context.Participants.Add(participants);
+            _context.Participants.Add(participants);
+            base.Save();
         }
 
         public void DeleteParticipants(int id)
         {
-            Participants participants = context.Participants.Find(id);
+            Participants participants = _context.Participants.Find(id);
 
             if (participants != null)
-                context.Participants.Remove(participants);
+                _context.Participants.Remove(participants);
         }
 
         public void UpdateParticipants(Participants participants)
         {
-            context.Entry(participants).State=EntityState.Modified;
+            _context.Entry(participants).State=EntityState.Modified;
         }
 
         public IQueryable<Participants> GetListParticipants()
         {
-            return context.Participants;
+            return _context.Participants;
         }
 
         public List<int> GetListFriendsId(int id)

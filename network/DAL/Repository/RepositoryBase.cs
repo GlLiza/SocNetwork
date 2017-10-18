@@ -5,11 +5,15 @@ namespace network.DAL.Repository
 {
     public class RepositoryBase : IDisposable
     {
-        protected NetworkContext context;
+        protected NetworkContext _context;
 
         public RepositoryBase(NetworkContext con)
         {
-            context = con;
+            _context = con;
+        }
+
+        public RepositoryBase()
+        {
         }
 
         private bool disposed = false;
@@ -20,7 +24,7 @@ namespace network.DAL.Repository
             {
                 if (disposed)
                 {
-                    context.Dispose();
+                    _context.Dispose();
                 }
             }
             this.disposed = true;
@@ -34,7 +38,7 @@ namespace network.DAL.Repository
 
         public void Save()
         {
-            context.SaveChanges();
+            _context.SaveChanges();
         }
     }
 }

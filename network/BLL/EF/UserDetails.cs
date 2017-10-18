@@ -26,9 +26,9 @@ namespace network.BLL.EF
         public string UserId { get; set; }
         public string Name { get; set; }
         public string Firstname { get; set; }
-        public Nullable<System.DateTime> DateOfBirthday { get; set; }
-        public Nullable<int> FamilyStatusId { get; set; }
-        public Nullable<int> ImagesId { get; set; }
+        public DateTime? DateOfBirthday { get; set; }
+        public int? FamilyStatusId { get; set; }
+        public int? ImagesId { get; set; }
         public Nullable<int> WorkPlaceId { get; set; }
         public Nullable<int> SchoolId { get; set; }
         public Nullable<int> HomeTownLocationId { get; set; }

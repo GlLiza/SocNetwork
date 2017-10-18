@@ -9,64 +9,43 @@ namespace network.BLL
 {
     public class UserService
     {
-        private NetworkContext db = new NetworkContext();
+        private readonly IUserRepository _userRepository;
 
-        private IUserRepository userRepository;
-        private IImagesRepository imagesRepository;
-        private IFamilyStatusRepository familyStatusRepository;
-        public RepositoryBase reposBase;
+        //public UserService()
+        //{
+        //}
 
-        public UserService()
+        public UserService(UserRepository userRepository)
         {
-            userRepository=new UserRepository(db);
-            imagesRepository=new ImagesRepository(db);
-            familyStatusRepository=new FamilyStatusRepository(db);
-            reposBase = new RepositoryBase(db);
-
+            _userRepository = userRepository;
         }
 
-        public  IQueryable<UserDetails> GetUser(string id)
+        public  IEnumerable<UserDetails> GetUser(string id)
         {
-            var users = db.UserDetails
-                .Where(s => s.AspNetUsers.Id != id);
+            var users = _userRepository.GetUserList();
             return users;
         }
 
         public void InsertUser(UserDetails user)
         {
-            userRepository.AddUser(user);
+            _userRepository.AddUser(user);
         }
 
         public void EditUser(UserDetails user)
         {
-            userRepository.Update(user);
-            //base.Save();
-
+            _userRepository.Update(user);
         }
 
         public void DeleteUser(UserDetails user)
         {
-            UserDetails us = userRepository.GetUserById(user.Id);
-            userRepository.DeleteUser(us.Id);
-            //userRepository.Save();
+            UserDetails us = _userRepository.GetUserById(user.Id);
+            _userRepository.DeleteUser(us.Id);
         }
 
-        public UserDetails SearchUser(int id)
+        public UserDetails SearchUser(int? id)
         {
-            return userRepository.GetUserById(id);
-           }
-
-      
-
-        public UserDetails SearchByUserId(string i)
-        {
-            var item = db.UserDetails
-                .SingleOrDefault(s => s.UserId == i);
-            return item;
+            return _userRepository.GetUserById(id);
         }
-
-
-
 
 
 
@@ -84,19 +63,19 @@ namespace network.BLL
             return listInt;
         }
 
-
-        //позволяет получить int-ый id  из string-id
         public int CovertId(string id)
         {
-            var user = SearchByUserId(id);
-            return user.Id;
+            var user = _userRepository.ReturnIntId(id);
+            return user;
         }
 
-
-
-
-
-
+        public UserDetails SearchByUserId(string id)
+        {
+            var intId = _userRepository.ReturnIntId(id);
+            var user = _userRepository.GetUserById(intId);
+            return user;
+        }
+        
 
         //позволяет преобразовать string-Id в int-Id для метода GetFriendsForSearch()
         public Tuple<int, List<int>> ConvertListIds(string id,List<string> strList )
@@ -105,6 +84,8 @@ namespace network.BLL
             List<int> intListFriends = ConvertListId(strList);
             return Tuple.Create<int, List<int>>(intIduser, intListFriends);
         }
+
+      
 
 
         //позволяет вернуть все данные для друзей по списку id
@@ -134,37 +115,16 @@ namespace network.BLL
         //позволяет получить данные для объектов, полученные путем исключения одного списка из другого
         public List<UserDetails> GetDataForSearch(List<int> listIdsAll, List<int> listIdsFromConvers)
         {
-
             var list = ExcludeListIdInListId(listIdsAll, listIdsFromConvers);
-
             return GetUserDetailsByListId(list).ToList();
         }
 
-
-
         
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // позволяет вернуть все данные для друзей 
+        //позволяет вернуть все данные для друзей 
         //!!!!!!!!!!!!!!!!!!!!!!!!!
-        public List<UserDetails> GetUsersByFriendship(IQueryable<Friendship> friendships)   
+        public List<UserDetails> GetUsersByFriendship(IQueryable<Friendship> friendships)
         {
-            List<UserDetails> usersList=new List<UserDetails>();
+            List<UserDetails> usersList = new List<UserDetails>();
 
             foreach (var users in friendships)
             {
@@ -173,14 +133,14 @@ namespace network.BLL
             }
             return usersList;
         }
-        
-        //позволяет получить список прочих пользователей (не друзей)
+
+        //позволяет получить список прочих пользователей(не друзей)
         //!!!!!!!!!!!!!!!!!!!!!!!!!
         public List<UserDetails> AnotherUsers(IQueryable<Friendship> friendships, List<UserDetails> users)
         {
-            List<UserDetails> list=new List<UserDetails>();
+            List<UserDetails> list = new List<UserDetails>();
 
-            List<UserDetails> friendList=GetUsersByFriendship(friendships);
+            List<UserDetails> friendList = GetUsersByFriendship(friendships);
 
             var userIds = users.Select(u => u.Id);
             var friendsIds = friendList.Select(f => f.Id);
@@ -191,13 +151,6 @@ namespace network.BLL
 
             return result;
         }
-        
-        //public IQueryable<FamilyStatus> GetAllFamStatuses()
-        //{
-        //    return familyStatusRepository.GetListFamStatus();
-        //}
-
-        //позволяет получить список int-Id по string-Id 
 
     }
 }

@@ -5,8 +5,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.VisualBasic.ApplicationServices;
 using network.BLL;
 using network.BLL.EF;
+using network.DAL.Repository;
 using network.Views.ViewModels;
 
 
@@ -15,45 +17,41 @@ namespace network.Controllers
 {
     public class UsersController : Controller
     {
+        private readonly UserService _userService;
+        private readonly WorkPlaceService _workPlaceService;
+        private readonly SchoolService _schoolService;
+        private readonly LocationService _locService;
+        private readonly FriendshipService _friendServ;
+        private readonly ImageService _imgService;
 
-        public NetworkContext db = new NetworkContext();
-        public UserService userService;
-        public WorkPlaceService workPlaceService;
-        public SchoolService schoolService;
-        public LocationService locService;
-        public FriendshipService friendServ;
-        public ImageService imgService;
-
-        public UsersController()
+        public UsersController(UserService userService, WorkPlaceService workPlaceService, SchoolService schoolService,
+            LocationService locService, FriendshipService friendServ, ImageService imgService)
         {
-            userService = new UserService();
-            locService=new LocationService();
-            workPlaceService=new WorkPlaceService();
-            friendServ =new FriendshipService();
-            schoolService=new SchoolService();
-            imgService=new ImageService();
+            _userService = userService;
+            _workPlaceService = workPlaceService;
+            _friendServ = friendServ;
+            _schoolService = schoolService;
+            _imgService = imgService;
+            _locService = locService;
         }
 
         
+        [Authorize]
         [HttpGet]
         public ActionResult Index()
         {
             PageViewModel model = new PageViewModel();
-            var currentUser = GetUser();
+            var a = User.Identity.GetUserId();
+            var currentUser = _userService.SearchByUserId(a);
 
             if (currentUser!=null)
             {
 
                 var user = currentUser;
-                // var User = userService.SearchByUserId(user.UserId);             //from table AspNetUsers
-                var companys = workPlaceService.GetListWorks(user.Id);
-                var schools = schoolService.GetListSchools(user.Id);
-                //var homeLocation=locService.ListHomeLoc(user.HomeTownLocationId);
-                //var curLocation = locService.ListCurrentLoc(user.CurrentLocationId);
-
-
-
-
+                //var companys = _workPlaceService.GetListWorks(user.Id);
+                //var schools = _schoolService.GetListSchools(user.Id);
+            
+                
                 model.Id = user.Id;
                 model.Name = user.Name;
                 model.Firstname = user.Firstname;
@@ -71,7 +69,7 @@ namespace network.Controllers
                     model.Image = DefaultPhoto();
                 }
 
-                var curLoc = locService.GetLocation(user.CurrentLocationId);
+                var curLoc = _locService.GetLocation(user.CurrentLocationId);
                 model.CurrentLocation = curLoc;
 
 
@@ -132,9 +130,9 @@ namespace network.Controllers
 
         public ActionResult UsersPage(int id)
         {
-            var friend = userService.SearchUser(id);
+            var friend = _userService.SearchUser(id);
 
-            if (friendServ.CheckFriendship(User.Identity.GetUserId(), friend.UserId))
+            if (_friendServ.CheckFriendship(User.Identity.GetUserId(), friend.UserId))
             {
                 FriendShow modell = new FriendShow();
                 modell.Id = friend.Id;
@@ -144,7 +142,7 @@ namespace network.Controllers
                 modell.FamStat = friend.FamilyStatus;
                 modell.Image = friend.Images.Data;
 
-                Location curLoc = locService.GetLocation(friend.Id);
+                Location curLoc = _locService.GetLocation(friend.Id);
 
                 modell.CurrentLocation = curLoc;
 
@@ -170,10 +168,10 @@ namespace network.Controllers
             List<ShowUserViewModel> model = new List<ShowUserViewModel>();
 
 
-            var friendList = friendServ.GetFriendList(User.Identity.GetUserId());
-            var users = userService.GetUser(User.Identity.GetUserId()).ToList();
+            var friendList = _friendServ.GetFriendList(User.Identity.GetUserId());
+            var users = _userService.GetUser(User.Identity.GetUserId()).ToList();
 
-            var othersUsers = userService.AnotherUsers(friendList, users);
+            var othersUsers = _userService.AnotherUsers(friendList, users);
 
             foreach (var u in othersUsers)
             {
@@ -195,19 +193,13 @@ namespace network.Controllers
         
 
 
-        public ActionResult CreateProfile(int id)
+        public ActionResult CreateProfile(int? id)
         {
-            UserDetails user = userService.SearchUser(id);
+            UserDetails user = _userService.SearchUser(id);
 
-
-            
             var model = new CreateUserViewModel
             {
-                Id=user.Id,
-                //UserId = user.UserId,
-              //  FamilyStatus =userService.GetAllFamStatuses(),
-               // GenderStatus = userService.GetAllGenders()
-
+                Id=user.Id
             };
             return View("CreateProfile", model);
         }
@@ -224,7 +216,7 @@ namespace network.Controllers
                 School school=new School();
                 Images headerImage = new Images();
 
-                UserDetails user = userService.SearchUser(model.Id);
+                UserDetails user = _userService.SearchUser(model.Id);
 
 
 
@@ -239,10 +231,10 @@ namespace network.Controllers
                     headerImage.Data = imageData;
                     headerImage.ContentType = model.Image.ContentType;
 
-                    imgService.InsertImage(headerImage);
+                    _imgService.InsertImage(headerImage);
 
                     user.ImagesId = headerImage.Id;
-                    userService.EditUser(user);
+                    _userService.EditUser(user);
                 }
                 else user.Images.Data = DefaultPhoto();
                 
@@ -253,7 +245,7 @@ namespace network.Controllers
                 currentLoc.Street = model.Street;
                 currentLoc.Country = model.Country;
 
-                locService.AddLocation(currentLoc);
+                _locService.AddLocation(currentLoc);
 
                 user.CurrentLocationId = currentLoc.Id;
 
@@ -265,7 +257,7 @@ namespace network.Controllers
                 homeLocation.State = model.HomeState;
                 homeLocation.Street = model.HomeStreet;
 
-                locService.AddLocation(homeLocation);
+                _locService.AddLocation(homeLocation);
                 user.HomeTownLocationId = homeLocation.Id;
 
 
@@ -274,7 +266,7 @@ namespace network.Controllers
                 school.Name = model.SchoolName;
                 school.GraduationYear = model.GraduationYear;
 
-                schoolService.AddSchool(school);
+                _schoolService.AddSchool(school);
                 user.SchoolId = school.Id;
 
 
@@ -285,7 +277,7 @@ namespace network.Controllers
                 work.StartDate = model.StartDate;
                 work.EndDate = model.EndDate;
 
-                workPlaceService.AddWorkPlace(work);
+                _workPlaceService.AddWorkPlace(work);
                 user.WorkPlaceId = work.Id;
 
 
@@ -299,7 +291,7 @@ namespace network.Controllers
                 user.FamilyStatusId = model.SelectedStatus;
                 user.Gender = model.Gender;
 
-                userService.EditUser(user);
+                _userService.EditUser(user);
               
                 return RedirectToAction("Index","Users");
 
@@ -326,7 +318,7 @@ namespace network.Controllers
             if (imageFile != null)
             {
                 Images headerImage=new Images();
-                var user = userService.SearchUser(GetId());
+                var user = _userService.SearchUser(GetId());
 
            
                 byte[] imageData = null;
@@ -338,10 +330,10 @@ namespace network.Controllers
                 headerImage.Data = imageData;
                 headerImage.ContentType = imageFile.ContentType;
 
-                imgService.InsertImage(headerImage);
+                _imgService.InsertImage(headerImage);
 
                 user.ImagesId = headerImage.Id;
-                userService.EditUser(user);
+                _userService.EditUser(user);
 
                 return RedirectToAction("Index", "Users");
             }
@@ -356,60 +348,60 @@ namespace network.Controllers
 
 
         // GET: Users/Delete/5
-        public ActionResult Delete(int id)
-        {
-            var user = userService.SearchUser(id);
-            return View("Delete",user);
-        }
+        //public ActionResult Delete(int id)
+        //{
+        //    var user = _userService.SearchUser(id);
+        //    return View("Delete",user);
+        //}
 
-        // POST: Users/Delete/5
-        [HttpPost]
-        public ActionResult Delete(UserDetails u)
-        {
-            try
-            {
-                var user = userService.SearchUser(u.Id);
-                var USER = db.AspNetUsers.Find(user.UserId);
-
-
-                //if (u.ImagesId != null)
-                //{
-                //    var photo = imgServ.SearchImg(u.ImagesId);
-                //    imgServ.DeleteImage(photo);
-                //}
-
-                userService.DeleteUser(user);
+        //// POST: Users/Delete/5
+        //[HttpPost]
+        //public ActionResult Delete(UserDetails u)
+        //{
+        //    try
+        //    {
+        //        var user = _userService.SearchUser(u.Id);
+        //        var USER = db.AspNetUsers.Find(user.UserId);
 
 
-                if (USER.Id!=null)
-                db.AspNetUsers.Remove(USER);
+        //        //if (u.ImagesId != null)
+        //        //{
+        //        //    var photo = imgServ.SearchImg(u.ImagesId);
+        //        //    imgServ.DeleteImage(photo);
+        //        //}
+
+        //        _userService.DeleteUser(user);
+
+
+        //        if (USER.Id!=null)
+        //        db.AspNetUsers.Remove(USER);
                 
-                db.SaveChanges();
+        //        db.SaveChanges();
 
-                return RedirectToAction("LogOff", "Account");
-            }
-            catch (Exception e)
-            {
-                return View();
-            }
-        }
+        //        return RedirectToAction("LogOff", "Account");
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return View();
+        //    }
+        //}
 
         public UserDetails GetUser()
         {
-            var user = userService.SearchByUserId(User.Identity.GetUserId());
+            var user = _userService.SearchByUserId(User.Identity.GetUserId());
             return user;
         }
 
         public int GetId()
         {
-            var user = userService.SearchByUserId(User.Identity.GetUserId());
+            var user = _userService.SearchByUserId(User.Identity.GetUserId());
             return user.Id;
         }
 
 
         public byte[] DefaultPhoto()
         {
-            var photo = imgService.SearchImg(1058);
+            var photo = _imgService.SearchImg(1058);
 
             return photo.Data;
         }
@@ -431,36 +423,7 @@ namespace network.Controllers
 
         }
 
-
-
-
-
-
-
-        //public ActionResult AddPhoto(HttpPostedFileBase img)
-        //{
-        //   // int id=0;
-        //    if (img != null)
-        //    {
-
-        //        byte[] imageData = null;
-        //        using (var binaryReader = new BinaryReader(img.InputStream))
-        //        { 
-        //            imageData = binaryReader.ReadBytes(img.ContentLength);
-        //        }
-        //        var headerImage = new Images()
-        //        {
-        //            Name = img.FileName,
-        //            Data= imageData,
-        //            ContentType = img.ContentType
-        //        };
-        //        imgService.InsertImage(headerImage);
-
-        //    }
-
-        //    return View();
-        //}
-
+        
 
 
 

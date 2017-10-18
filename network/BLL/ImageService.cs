@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using network.BLL.EF;
 using network.DAL.IRepository;
 using network.DAL.Repository;
@@ -8,62 +7,52 @@ namespace network.BLL
 {
     public class ImageService
     {
-        NetworkContext db = new NetworkContext();
-
-        private IImagesRepository imagesRepository;
-        private IUserRepository userRepository;
-        public RepositoryBase reposBase;
+        private readonly IImagesRepository _imagesRepository;
 
         public ImageService()
         {
-            imagesRepository = new ImagesRepository(db);
-            userRepository=new UserRepository(db);
-            reposBase = new RepositoryBase(db);
         }
 
+        public ImageService(ImagesRepository imgRepository)
+        {
+            _imagesRepository = imgRepository;
+        }
+
+
+       
         public IEnumerable<Images> GetImages()
         {
-            var images = from s in db.Images
-                select s;
+            var images = _imagesRepository.GetImages();
             return images;
         }
 
         public void InsertImage(Images image)
         {
-            imagesRepository.AddImage(image);
-            imagesRepository.Save();
+            _imagesRepository.AddImage(image);
         }
 
         public void EditUser(Images image)
         {
-            imagesRepository.UpdateImage(image);
-            imagesRepository.Save();
-
+            _imagesRepository.UpdateImage(image);
         }
 
         public void DeleteImage(Images image)
         {
-            Images img = imagesRepository.GetImageById(image.Id);
-            imagesRepository.DeleteImage(img.Id);
-            imagesRepository.Save();
+            Images img = _imagesRepository.GetImageById(image.Id);
+            _imagesRepository.DeleteImage(img.Id);
         }
 
         public Images SearchImg(int? id)
         {
-            Images img = imagesRepository.GetImageById(id);
+            Images img = _imagesRepository.GetImageById(id);
             return img;
         }
 
         public byte[] ReturnImage(int id)
         {
-            byte[] imageData = imagesRepository.GetImageById(id).Data;
+            byte[] imageData = _imagesRepository.GetImageById(id).Data;
             return imageData;
         }
-
-
-
-
-
-
+        
     }
 }

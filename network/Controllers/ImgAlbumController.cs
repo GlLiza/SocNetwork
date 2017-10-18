@@ -13,19 +13,18 @@ using network.Views.ViewModels;
 namespace network.Controllers
 {
     public class ImgAlbumController : Controller
-    { 
+    {
 
-        public PhAlbumService albumServ;
-        public UserService UserServ;
-        public ImageService ImgServ;
+        private readonly PhAlbumService _albumServ;
+        private readonly UserService _userServ;
+        private readonly ImageService _imgServ;
 
         
-        public ImgAlbumController()
+        public ImgAlbumController(PhAlbumService albumServ,UserService userServ, ImageService imgServ)
         {
-            albumServ = new PhAlbumService();
-            UserServ = new UserService();
-            ImgServ = new ImageService();
-            
+            _albumServ = albumServ;
+            _userServ = userServ;
+            _imgServ = imgServ;
         }
 
         // GET: Album
@@ -37,7 +36,7 @@ namespace network.Controllers
 
             List<AlbumViewModel> albumViewModel=new List<AlbumViewModel>();
          
-            var listAlbums = albumServ.GetListAlbums(GetId()).ToList();
+            var listAlbums = _albumServ.GetListAlbums(GetId()).ToList();
 
             foreach (var album in listAlbums)
             {
@@ -46,18 +45,18 @@ namespace network.Controllers
 
                 modelAlb.AlbumId = album.Id;
                 modelAlb.Name = album.Name;
-                modelAlb.TitleImage = albumServ.GetLastImgAlbum(album.Id);
+                modelAlb.TitleImage = _albumServ.GetLastImgAlbum(album.Id);
 
 
                 if (modelAlb.TitleImage == null)
-                    modelAlb.TitleImage = ImgServ.SearchImg(1058);
+                    modelAlb.TitleImage = _imgServ.SearchImg(1058);
 
 
                 albumViewModel.Add(modelAlb);
             }
 
             AlbumImgViewModel AlbImgModel=new AlbumImgViewModel();
-            var listImgAlb = albumServ.GetAllImg(GetId());
+            var listImgAlb = _albumServ.GetAllImg(GetId());
             AlbImgModel.AllImages = listImgAlb;
 
 
@@ -65,37 +64,8 @@ namespace network.Controllers
             model.Images = AlbImgModel;
 
             return View(model);
-
-
-
-
-
-
-
-            //AlbumViewModel albumViewModel=new AlbumViewModel();
-            //AlbumImgViewModel AlbImgModel=new AlbumImgViewModel();
-            //ImgViewModel model=new ImgViewModel();
-
-
-
-            //model.Albums = listAlbums;
-            //var imgFor = AlbumServ.AlbumImg(model.Albums.ToList());
-            //model.ImgForAlb = imgFor;
-
-
-            //var listPhotos = AlbumServ.GetAllImg(GetId());
-            //model.Images = listPhotos;
-            
         }
         
-
-        // GET: Album/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-
         //GET: Album/Create
         public ActionResult AddAlbum()
         {
@@ -110,8 +80,7 @@ namespace network.Controllers
             try
             {
                 album.UserId = GetId();
-                //album.UserDetails = UserServ.SearchUser(album.UserId);
-                albumServ.AddNewAlbum(album);
+                _albumServ.AddNewAlbum(album);
 
                 return RedirectToAction("Index","ImgAlbum");
             }
@@ -126,7 +95,7 @@ namespace network.Controllers
         // GET: Album/Edit/5
         public ActionResult Edit(int id)
         {
-            var album = albumServ.SearchAlbum(id);
+            var album = _albumServ.SearchAlbum(id);
 
             return PartialView("_Edit",album);
         }
@@ -140,7 +109,7 @@ namespace network.Controllers
                 if (album != null)
                 {
 
-                    albumServ.EditAlbum(album);
+                    _albumServ.EditAlbum(album);
                     return RedirectToAction("OpenAlbum", "ImgAlbum", new {id = album.Id});
                 }
 
@@ -166,14 +135,12 @@ namespace network.Controllers
         public String DeletePhoto(int imageId)
         {
             if (imageId != null)
-                albumServ.DeletePhoto((int)imageId);
+                _albumServ.DeletePhoto((int)imageId);
 
             JavaScriptSerializer js = new JavaScriptSerializer();
             var res = new HttpStatusCodeResult(HttpStatusCode.OK);
             return js.Serialize(res);
 
-
-            //return RedirectToAction("Index","ImgAlbum");
         }
 
 
@@ -183,7 +150,7 @@ namespace network.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var alb = albumServ.SearchAlbum(id);
+            var alb = _albumServ.SearchAlbum(id);
             return PartialView("Delete", alb);
         }
         
@@ -193,7 +160,7 @@ namespace network.Controllers
         {
             try
             {
-               if (albumServ.DeleteAlbum(alb.Id))
+               if (_albumServ.DeleteAlbum(alb.Id))
                 return RedirectToAction("Index","ImgAlbum");
                 return RedirectToAction("Index","ImgAlbum");
             }
@@ -208,8 +175,8 @@ namespace network.Controllers
 
         public ActionResult BrowseAlbums(int id)
         {
-            var user = UserServ.SearchUser(id);
-            var photalbum = albumServ.GetListAlbums(user.Id);
+            var user = _userServ.SearchUser(id);
+            var photalbum = _albumServ.GetListAlbums(user.Id);
 
             return View(photalbum);
         }
@@ -230,7 +197,7 @@ namespace network.Controllers
         {
             try
             {
-                Photoalbum album = albumServ.SearchAlbum(model.Id);
+                Photoalbum album = _albumServ.SearchAlbum(model.Id);
                 Images headerImage = new Images();
                 AlbAndPhot entry=new AlbAndPhot();
                 entry.PhotoalbumId = album.Id;
@@ -250,10 +217,10 @@ namespace network.Controllers
                     headerImage.Date=DateTime.Now;
                     headerImage.Visibility = true;
 
-                    ImgServ.InsertImage(headerImage);
+                    _imgServ.InsertImage(headerImage);
                     entry.ImageId = headerImage.Id;
                     
-                    albumServ.AddNewEntry(entry);
+                    _albumServ.AddNewEntry(entry);
                 }
 
                 return RedirectToAction("OpenAlbum","ImgAlbum",new {id=model.Id});
@@ -271,9 +238,8 @@ namespace network.Controllers
         {
             OpenAlbumViewModel model = new OpenAlbumViewModel();
             model.Id = id;
-            model.NameAlb = albumServ.SearchAlbum(id).Name;
-            model.Photos = albumServ.OpenAlbum(id);
-            //var im = AlbumServ.GetLastImg(id);
+            model.NameAlb = _albumServ.SearchAlbum(id).Name;
+            model.Photos = _albumServ.OpenAlbum(id);
 
            return View(model);
 
@@ -282,7 +248,7 @@ namespace network.Controllers
 
         public int GetId()
         {
-            var user = UserServ.SearchByUserId(User.Identity.GetUserId());
+            var user = _userServ.SearchByUserId(User.Identity.GetUserId());
             return user.Id;
         }
         

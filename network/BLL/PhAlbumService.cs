@@ -9,20 +9,22 @@ namespace network.BLL
 {
     public class PhAlbumService
     {
-        private NetworkContext db = new NetworkContext();
-
-        private IAlbumRepository albumRepository;
-        private IAlbAndPhotoRepository albAndPhRepository;
-        private IImagesRepository imgRepository;
-
-        public RepositoryBase reposBase;
+        private readonly IAlbumRepository _albumRepository;
+        private readonly IAlbAndPhotoRepository _albAndPhRepository;
+        private readonly IImagesRepository _imgRepository;
+        private readonly IUserRepository _userRepository;
 
         public PhAlbumService()
         {
-            albumRepository = new AlbumRepository(db);
-            albAndPhRepository = new AlbAndPhotoRepository(db);
-            imgRepository = new ImagesRepository(db);
-            reposBase = new RepositoryBase(db);
+        }
+
+        public PhAlbumService(AlbumRepository albumRepository, AlbAndPhotoRepository albAndPhotoRepository,
+            ImagesRepository imgRepository,UserRepository userRepository)
+        {
+            _albumRepository = albumRepository;
+            _albAndPhRepository = albAndPhotoRepository;
+            _imgRepository = imgRepository;
+            _userRepository = userRepository;
         }
 
 
@@ -31,24 +33,20 @@ namespace network.BLL
         //PHOTOALBUM
         public IQueryable<Photoalbum> GetListAlbums(int id)
         {
-            return albumRepository.GetListAlbums(id);
+            return _albumRepository.GetListAlbums(id);
         }
 
         public void AddNewAlbum(Photoalbum alb)
         {
-            albumRepository.AddNewAlbum(alb);
-            albAndPhRepository.Save();
+            _albumRepository.AddNewAlbum(alb);
         }
-
-
-
-
+        
         public bool DeleteAlbum(int albId)
         {
             if (albId <= 0) throw new ArgumentOutOfRangeException(nameof(albId));
             {
             
-            Photoalbum album = albumRepository.GetAlbumById(albId);
+            Photoalbum album = _albumRepository.GetAlbumById(albId);
             var item = GetListEntry(album.Id); //получаем список записей (альб ->изобр)
 
             if (item.Count() != 0)
@@ -57,100 +55,75 @@ namespace network.BLL
 
                 foreach (var a in photos)
                 {
-                    var entry = GetEntry(album.Id, a.Id);
+                    var entry = _albAndPhRepository.GetEntry(album.Id, a.Id);
 
-                    imgRepository.DeleteImage(a.Id);
-                    albAndPhRepository.DeleteEntry(entry);
-                    imgRepository.Save();
-                    albAndPhRepository.Save();
+                    _imgRepository.DeleteImage(a.Id);
+                    _albAndPhRepository.DeleteEntry(entry);
                 }
 
-                albumRepository.DeleteAlbum(album.Id);
+                _albumRepository.DeleteAlbum(album.Id);
             }
                 return true;
             }
         }
-        
 
-
-    //получает запись по id альбома и id изображения
-        public AlbAndPhot GetEntry(int albumId, int imageId)
+        public IQueryable<AlbAndPhot> GetListEntry(int id)
         {
-            return db.AlbAndPhot.SingleOrDefault(q => q.Photoalbum.Id == albumId && q.ImageId == imageId);
+            Photoalbum album = _albumRepository.GetAlbumById(id);
+
+            var item = _albAndPhRepository.ReturnEntriesByAlbumId(album);
+
+            return item;
         }
-
-
-
-
+        
+        //получает запись по id альбома и id изображения
+        public AlbAndPhot GetEntryByIds(int albumId, int imageId)
+        {
+            return _albAndPhRepository.GetEntryByIds(albumId,imageId);
+        }
+        
         public void EditAlbum(Photoalbum alb)
         {
-            albumRepository.UpdateAlbum(alb);
-            //albumRepository.Save();
+            _albumRepository.UpdateAlbum(alb);
         }
 
         public Photoalbum SearchAlbum(int id)
         {
-            return albumRepository.GetAlbumById(id);
+            return _albumRepository.GetAlbumById(id);
         }
 
         public IQueryable<Photoalbum> GetAlbums(int id)
         {
-            return albumRepository.GetListAlbums(id);
+            return _albumRepository.GetListAlbums(id);
         }
-
-
-
-        
         
         //ALBUM_AND_PHOTOS
 
         public void AddNewEntry(AlbAndPhot entr)
         {
-          albAndPhRepository.AddNewEntry(entr);
-          albAndPhRepository.Save();
-
+          _albAndPhRepository.AddNewEntry(entr);
         }
 
         public AlbAndPhot SearcAlbAndPhot(int id)
         {
-            return albAndPhRepository.GetEntryById(id);
+            return _albAndPhRepository.GetEntryById(id);
         }
 
         public void EditAlbAndPhot(AlbAndPhot alb)
         {
-            albAndPhRepository.UpdateEntry(alb);
-            albAndPhRepository.Save();
+            _albAndPhRepository.UpdateEntry(alb);
         }
 
 
         public void DeleteAlbAndPhot(AlbAndPhot alb)
         {
-            albAndPhRepository.DeleteEntry(alb);
-            albAndPhRepository.Save();
+            _albAndPhRepository.DeleteEntry(alb);
         }
 
-        public IQueryable<AlbAndPhot> GetListEntry(int id)
-        {
-            Photoalbum album = albumRepository.GetAlbumById(id);
-
-            var item = db.AlbAndPhot
-               .Where(q => q.PhotoalbumId == album.Id);
-
-            return item;
-        }
-
-        //возвращает список фотографий соответствующих entrys
+        ////возвращает список фотографий соответствующих entrys и сортирует их по дате
         public List<Images> GetArrayImg(IQueryable<AlbAndPhot> entrys)
         {
-            List<Images> arrayImg = new List<Images>();
-
-            foreach (var a in entrys)
-            {
-                var ph = db.Images
-                   .FirstOrDefault(r => r.Id == a.ImageId);
-
-                arrayImg.Add(ph);
-            }
+            var arrayImg = _albAndPhRepository.GetArrayImageByEntry(entrys);
             arrayImg.Sort((x, y) =>y.Date.Value.CompareTo(x.Date.Value));
             return arrayImg;
         }
@@ -172,15 +145,14 @@ namespace network.BLL
         {
             if (id != 0)
             {
-                var images = imgRepository.GetImageById(id);
+                var images = _imgRepository.GetImageById(id);
                 if (images != null)
                 {
-                    var entry = albAndPhRepository.GetEntryByPhotoId(images.Id);
+                    var entry = _albAndPhRepository.GetEntryByPhotoId(images.Id);
 
                     DeleteAlbAndPhot(entry);
 
-                    imgRepository.DeleteImage(images.Id);
-                    imgRepository.Save();
+                    _imgRepository.DeleteImage(images.Id);
                 }
             }
            
@@ -190,10 +162,7 @@ namespace network.BLL
         //возdращает список профильных изобр
         public List<Images> GetProfImgId (UserDetails user)
         {
-            var profPhot = db.Images
-                .Where(q => q.Id == user.ImagesId).ToList();
-
-            return profPhot;
+            return _albAndPhRepository.GetProfImg(user);
         }
         
 
@@ -201,7 +170,7 @@ namespace network.BLL
         //возвращает все изображения пользователя
         public List<Images> GetAllImg (int id)
         {
-            UserDetails user = db.UserDetails.Find(id);
+            var user = _userRepository.GetUserById(id);
 
             List<Images> all=new List<Images>();
 
@@ -221,25 +190,20 @@ namespace network.BLL
                 {
                     all.Add(aa);
                 }
-              
-
             }
-
             return all;
+        }
+        
+
+        public Images GetLastImg(int albumId)
+        {
+            List<Images> imgs = OpenAlbum(albumId);
+
+            Images lastImg = _imgRepository.CompareDate(imgs);
+            return lastImg;
         }
 
 
-
-
-        //public Images GetLastImg(int albumId)
-        //{
-        //    List<Images> imgs = OpenAlbum(albumId);
-
-        //    Images lastImg = imgRepository.CompareDate(imgs);
-        //    return lastImg;
-        //}
-
-        //
         public List<Images> AlbumImg(List<Photoalbum> albums)
         {
             List<Images> imgs = new List<Images>();
@@ -255,8 +219,8 @@ namespace network.BLL
 
         public Images GetLastImgAlbum(int albumId)
         {
-            var allPhoto = albAndPhRepository.GetPhotosFromAlbums(albumId);
-            Images img = imgRepository.CompareDate(allPhoto);
+            var allPhoto = _albAndPhRepository.GetPhotosFromAlbums(albumId);
+            Images img = _imgRepository.CompareDate(allPhoto);
             return img;
         }
 

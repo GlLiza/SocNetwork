@@ -20,5 +20,7 @@ namespace network.BLL.EF
         public int Participants_id { get; set; }
         public string Message { get; set; }
         public Nullable<System.DateTime> Created_at { get; set; }
+    
+        public virtual Participants Participants { get; set; }
     }
 }

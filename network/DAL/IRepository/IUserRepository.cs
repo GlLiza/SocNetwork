@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using network.BLL.EF;
+using network.DAL.Enums;
 
 namespace network.DAL.IRepository
 {
@@ -10,11 +12,9 @@ namespace network.DAL.IRepository
         void AddUser (UserDetails user);
         void DeleteUser (int userId);
         void Update(UserDetails user);
-
         int ReturnIntId(string id);
-        //void Save();
-
-        UserDetails GetUserById(int id);
-        //IQueryable<Gender> ListGenders();
+        UserDetails GetUserById(int? id);
+        IQueryable<UserDetails> GetListFemal(Gender gender);
+        IQueryable<UserDetails> GetListMal(Gender gender);
     }
 }

@@ -8,7 +8,10 @@ namespace network.DAL.Repository
 {
     public class WorkPlaceRepository : RepositoryBase,IWorkPlaceRepository
     {
-      
+
+        public WorkPlaceRepository() 
+        {
+        }
 
         public WorkPlaceRepository(NetworkContext cont):base(cont)
         {
@@ -16,20 +19,22 @@ namespace network.DAL.Repository
 
         public void AddWorkPlace(WorkPlace place)
         {
-            context.WorkPlace.Add(place);
+            _context.WorkPlace.Add(place);
+            base.Save();
         }
 
         public void DeleteWorkPlace(int placeId)
         {
-            WorkPlace place = context.WorkPlace.Find(placeId);
-            context.WorkPlace.Remove(place);
+            WorkPlace place = _context.WorkPlace.Find(placeId);
+            _context.WorkPlace.Remove(place);
+            base.Save();
         }
         
         public IEnumerable<WorkPlace> GetListWorks(int id)
         {
-            UserDetails user = context.UserDetails.Find(id);
+            UserDetails user = _context.UserDetails.Find(id);
 
-            var placesUs = context.WorkPlace
+            var placesUs = _context.WorkPlace
                 .Where(s => s.Id == user.WorkPlaceId);
 
             return placesUs;
@@ -37,13 +42,14 @@ namespace network.DAL.Repository
 
         public WorkPlace GetPlaseById(int id)
         {
-            return context.WorkPlace.Find(id);
+            return _context.WorkPlace.Find(id);
         }
         
         public void Update(WorkPlace place)
         {
-            WorkPlace pl = context.WorkPlace.Find(place.Id);
-            context.Entry(pl).CurrentValues.SetValues(place);
+            WorkPlace pl = _context.WorkPlace.Find(place.Id);
+            _context.Entry(pl).CurrentValues.SetValues(place);
+            base.Save();
         }
     }
 }

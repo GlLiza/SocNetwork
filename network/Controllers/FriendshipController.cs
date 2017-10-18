@@ -11,14 +11,14 @@ namespace network.Controllers
 {
     public class FriendshipController : Controller
     {
-        public NetworkContext db = new NetworkContext();
-        public FriendshipService friendServ;
-        public UserService userService;
+       
+        private readonly FriendshipService _friendServ;
+        private readonly UserService _userService;
 
-        public FriendshipController()
+        public FriendshipController(FriendshipService friendServ, UserService userService)
         {
-            friendServ=new FriendshipService();
-            userService = new UserService();
+            _friendServ= friendServ;
+            _userService = userService;
         }
 
 
@@ -28,7 +28,7 @@ namespace network.Controllers
         {
             List<ShowUserViewModel> model = new List<ShowUserViewModel>();
 
-            var frList = friendServ.GetFriendList(User.Identity.GetUserId());
+            var frList = _friendServ.GetFriendList(User.Identity.GetUserId());
 
             if (frList != null)
             {
@@ -36,7 +36,7 @@ namespace network.Controllers
                 {
                     ShowUserViewModel userr = new ShowUserViewModel();
 
-                    var user = userService.SearchByUserId(b.Friend_id);
+                    var user = _userService.SearchByUserId(b.Friend_id);
 
                     userr.Id = user.Id;
                     userr.Firstname = user.Firstname;
@@ -57,9 +57,9 @@ namespace network.Controllers
         {
             List<ShowUserViewModel> model = new List<ShowUserViewModel>();
 
-            var friend = userService.SearchUser(id);
+            var friend = _userService.SearchUser(id);
 
-            var frOffr = friendServ.GetFriendList(friend.UserId);
+            var frOffr = _friendServ.GetFriendList(friend.UserId);
 
             if (frOffr != null)
             {
@@ -67,7 +67,7 @@ namespace network.Controllers
                 {
                     ShowUserViewModel userr = new ShowUserViewModel();
 
-                    var user = userService.SearchByUserId(b.Friend_id);
+                    var user = _userService.SearchByUserId(b.Friend_id);
 
                     userr.Id = user.Id;
                     userr.Firstname = user.Firstname;
@@ -91,13 +91,12 @@ namespace network.Controllers
             UsersDetailsViewModel model=new UsersDetailsViewModel();
             model.Id = User.Identity.GetUserId();
          
-            var user = userService.SearchByUserId(model.Id);
+            var user = _userService.SearchByUserId(model.Id);
 
-            IQueryable<Requests> listfriends = friendServ.CurrentRequestses(model.Id);
+            IQueryable<Requests> listfriends = _friendServ.CurrentRequestses(model.Id);
             model.Requests = listfriends;
 
             model.UserDetails = user;
-            //int a = model.Requests.Count();
 
             if(model.Requests.Count()> 0)
                 return PartialView(model.Requests.Count());
@@ -111,15 +110,15 @@ namespace network.Controllers
         {
             List<NewRequestsViewModel> model = new List<NewRequestsViewModel>();
 
-            var newFr = friendServ.RequestList(User.Identity.GetUserId());
+            var newFr = _friendServ.RequestList(User.Identity.GetUserId());
 
             if (newFr != null)
             {
                 foreach (var b in newFr)
                 {
                     NewRequestsViewModel user = new NewRequestsViewModel();
-                    var requestedUser = userService.SearchByUserId(b.Requested_user_id);
-                    var request = friendServ.SearchUsers(b.Requesting_user_id, b.Requested_user_id);
+                    var requestedUser = _userService.SearchByUserId(b.Requested_user_id);
+                    var request = _friendServ.SearchUsers(b.Requesting_user_id, b.Requested_user_id);
 
                     user.Id = requestedUser.UserId;
                     user.Name = requestedUser.Name;
@@ -146,7 +145,7 @@ namespace network.Controllers
                 request.Requested_user_id = User.Identity.GetUserId();
                 request.Status_id = 1;
                 request.Date_requsted = DateTime.Now;
-                friendServ.AddRequest(request);
+                _friendServ.AddRequest(request);
 
                 TempData["message"] = "Request has been sent to user";
 
@@ -162,17 +161,15 @@ namespace network.Controllers
         public bool CheckRequest(string id)
         {
             string Id = User.Identity.GetUserId();
-            return friendServ.Check(Id, id);
+            return _friendServ.Check(Id, id);
         }
         
         
        
         public ActionResult AcceptRequest(int requestsId)
         {
-            Requests req = friendServ.SearchRequest(requestsId);
+            Requests req = _friendServ.SearchRequest(requestsId);
             req.Status_id = 3;
-            //!!!!!!!!!!
-            //friendServ.Save();
            
             Friendship friendship1 = new Friendship();
             friendship1.User_id = req.Requesting_user_id;
@@ -182,8 +179,8 @@ namespace network.Controllers
             friendship2.User_id = req.Requested_user_id;
             friendship2.Friend_id = req.Requesting_user_id;
 
-            friendServ.AddFriendship(friendship1);
-            friendServ.AddFriendship(friendship2);
+            _friendServ.AddFriendship(friendship1);
+            _friendServ.AddFriendship(friendship2);
 
 
             return RedirectToAction("Index", "Friendship");
@@ -192,10 +189,8 @@ namespace network.Controllers
         
         public ActionResult RejectrRequest(int id)
         {
-            Requests req = friendServ.SearchRequest(id);
+            Requests req = _friendServ.SearchRequest(id);
             req.Status_id = 2;
-            //!!!!!!!!!!!
-            //friendServ.Save();
 
             return RedirectToAction("Index", "Friendship");
         }
@@ -203,11 +198,8 @@ namespace network.Controllers
 
         public ActionResult IgnoreRequest(int id)
         {
-            Requests req = friendServ.SearchRequest(id);
+            Requests req = _friendServ.SearchRequest(id);
             req.Status_id = 4;
-            //!!!!!!!!
-            //friendServ.Save();
-            
 
             return RedirectToAction("Index", "Friendship");
         }
@@ -222,7 +214,7 @@ namespace network.Controllers
         //GET
         public ActionResult Delete(int id)
         {
-            var us= userService.SearchUser(id);
+            var us= _userService.SearchUser(id);
             return PartialView("_DeleteFriends",us.UserId);
         }
 
@@ -231,10 +223,10 @@ namespace network.Controllers
         public ActionResult Delete(string Id)
         {
 
-            Friendship friendship = friendServ.SearchByUsers(User.Identity.GetUserId(), Id);
+            Friendship friendship = _friendServ.SearchByUsers(User.Identity.GetUserId(), Id);
 
             if (friendship == null) return HttpNotFound();
-            friendServ.DeleteFriendship(friendship.Id);
+            _friendServ.DeleteFriendship(friendship.Id);
             return RedirectToAction("Index", "Friendship");
         }
         

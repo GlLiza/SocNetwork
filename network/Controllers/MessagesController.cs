@@ -1,32 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using Microsoft.AspNet.Identity;
 using network.BLL;
 using network.BLL.EF;
+using network.DAL.IRepository;
+using network.DAL.Repository;
 using network.Views.ViewModels;
+
 
 namespace network.Controllers
 {
     public class MessagesController : Controller
     {
-
-        public MessagesService msgService;
-        public UserService userService;
-        public FriendshipService friendService;
-        public ImageService imgService;
-
-
+        private readonly MessagesService _msgService;
+        private readonly UserService _userService;
+        private readonly FriendshipService _friendService;
+        private readonly ImageService _imgService;
 
         public MessagesController()
         {
-            msgService = new MessagesService();
-            userService = new UserService();
-            friendService=new FriendshipService();
-            imgService = new ImageService();
+        }
+
+        public MessagesController(MessagesService msgService, UserService userService, FriendshipService friendService, ImageService imgService)
+        {
+            _msgService = msgService;
+            _userService = userService;
+            _friendService = friendService;
+            _imgService = imgService;
         }
 
         // GET: Messages
@@ -46,7 +49,7 @@ namespace network.Controllers
             List<UserDetails> receiverList = GetFriendsForSearch();
 
             if (receiverList != null)
-                receiver.FriendsList = msgService.GetUserDetails(receiverList);
+                receiver.FriendsList = this._msgService.GetUserDetails(receiverList);
 
             return PartialView("_SelectReceiver", receiver);
         }
@@ -66,45 +69,20 @@ namespace network.Controllers
             return js.Serialize(res);
         }
 
-
-        //[HttpGet]
-        //public ActionResult Messages(int id)
-        //{
-        //    var friend = userService.SearchUser(id);
-        //    MessagesViewModel model=new MessagesViewModel();
-        //    model.NameSender = friend.Name;
-        //    model.FirstNameSender = friend.Firstname;
-        //    model.Image = imgService.ReturnImage(friend.ImagesId.Value);
-
-        //}
-
-        //[HttpPost]
-        //public ActionResult Messages()
-        //{
-
-        //}
-
-
-
-
-
-
-
-
+        
 
 
 
         public List<UserDetails> GetFriendsForSearch()
         {
             string strId = User.Identity.GetUserId();
-            var listIdsString = friendService.GetFriendsIdsList(strId);
+            var listIdsString = this._friendService.GetFriendsIdsList(strId);
 
-            var intIds = userService.ConvertListIds(strId, listIdsString);   
+            var intIds = this._userService.ConvertListIds(strId, listIdsString);   
 
-            var listFriendConvers =
-                msgService.GetFriendsIdListFromConversation(intIds.Item1);
+            var listFriendConvers =this._msgService.GetFriendsIdListFromConversation(intIds.Item1);
 
-            var dataForReceiver = userService.GetDataForSearch(intIds.Item2, listFriendConvers);
+            var dataForReceiver = this._userService.GetDataForSearch(intIds.Item2, listFriendConvers);
 
             return dataForReceiver;
         }
@@ -113,9 +91,9 @@ namespace network.Controllers
         {
             Conversation conversation = new Conversation();
 
-            conversation.Creator_id = msgService.GetIntId(User.Identity.GetUserId());
+            conversation.Creator_id = this._msgService.GetIntId(User.Identity.GetUserId());
             conversation.Created_at = DateTime.Now.Date;
-            msgService.CreateConversation(conversation);
+            this._msgService.CreateConversation(conversation);
 
             return conversation;
         }
@@ -129,25 +107,25 @@ namespace network.Controllers
                 participants.Conversation_id = conversationId;
                 participants.Users_id = receiverId;
 
-                msgService.CreateParticipants(participants);
+                this._msgService.CreateParticipants(participants);
             }
             return participants;
         }
 
         public List<ConversationViewModel> ConversationList(List<ConversationViewModel> model)
         {
-            int id = userService.CovertId(User.Identity.GetUserId());
+            int id = _userService.CovertId(User.Identity.GetUserId());
 
-            var listFriendConvers = msgService.GetFriendsIdListFromConversation(id);
+            var listFriendConvers = this._msgService.GetFriendsIdListFromConversation(id);
 
-            var conversationdata = userService.GetUserDetailsByListId(listFriendConvers);
+            var conversationdata = this._userService.GetUserDetailsByListId(listFriendConvers);
 
 
             foreach (var user in conversationdata)
             {
-                ConversationViewModel friend=new ConversationViewModel();
+                var friend=new ConversationViewModel();
 
-                var image = imgService.SearchImg(user.ImagesId);
+                var image = this._imgService.SearchImg(user.ImagesId);
 
                 friend.Id = user.Id;
                 friend.Name = user.Name;
@@ -159,88 +137,6 @@ namespace network.Controllers
 
             return model;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-        //// GET: Messages/Details/5
-        //public ActionResult Details(int id)
-        //{
-        //    return View();
-        //}
-
-        //// GET: Messages/Create
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
-
-        //// POST: Messages/Create
-        //[HttpPost]
-        //public ActionResult Create(FormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add insert logic here
-
-        //        return RedirectToAction("Index");
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-
-        //// GET: Messages/Edit/5
-        //public ActionResult Edit(int id)
-        //{
-        //    return View();
-        //}
-
-        //// POST: Messages/Edit/5
-        //[HttpPost]
-        //public ActionResult Edit(int id, FormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add update logic here
-
-        //        return RedirectToAction("Index");
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-
-        //// GET: Messages/Delete/5
-        //public ActionResult Delete(int id)
-        //{
-        //    return View();
-        //}
-
-        //// POST: Messages/Delete/5
-        //[HttpPost]
-        //public ActionResult Delete(int id, FormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add delete logic here
-
-        //        return RedirectToAction("Index");
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+        
     }
 }

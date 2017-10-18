@@ -8,7 +8,11 @@ namespace network.DAL.Repository
 {
     public class ImagesRepository : RepositoryBase,IImagesRepository
     {
-       
+
+        public ImagesRepository()
+        {
+        }
+
         public ImagesRepository(NetworkContext cont):base(cont)
         {
         }
@@ -16,37 +20,41 @@ namespace network.DAL.Repository
 
         public void AddImage(Images images)
         {
-            context.Images.Add(images);
+            _context.Images.Add(images);
+            base.Save();
         }
 
         public void DeleteImage(int id)
         {
-            Images img = context.Images.Find(id);
+            Images img = _context.Images.Find(id);
 
             if(img!=null)
-                context.Images.Remove(img);
+                _context.Images.Remove(img);
+
+            base.Save();
         }
 
-        public IQueryable<Images> GetImages()
+        public IEnumerable<Images> GetImages()
         {
-            return context.Images;
+            return _context.Images;
         }
 
         public void UpdateImage(Images images)
         {
-            context.Entry(images).State=EntityState.Modified;
+            _context.Entry(images).State=EntityState.Modified;
+            base.Save();
         }
 
         public Images GetImageById(int? id)
         {
-            var item = context.Images
+            var item = _context.Images
                 .SingleOrDefault(s=>s.Id==id);
             return item;
         }
 
         public byte[] ReturnImage(string id)
         {
-            var img = context.Images.Find(id);
+            var img = _context.Images.Find(id);
             return img.Data;
         }
 

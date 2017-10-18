@@ -1,20 +1,17 @@
 ﻿@model network.Views.ViewModels.CreateUserViewModel
-
+    
 @{
-    ViewBag.Title = "CreateProfile";
-    Layout = "~/Views/Shared/_LayoutCreate.cshtml";
+    Layout = "~/Views/Shared/_LayoutLog.cshtml";
 }
 
-<h2>CreateProfile</h2>
 
-@using (Html.BeginForm("CreateProfile", "Users", FormMethod.Post, new { id = Model.Id, enctype = "multipart/form-data" }))
+@using (Html.BeginForm("CreateProfile", "Users",FormMethod.Post, new {id=Model.Id, enctype="multipart/form-data"}))
 {
-
     <div class="form-horizontal">
         @*@Html.AntiForgeryToken()*@
 
         <div class="container">
-
+            
             <div class="stepwizard col-md-offset-3">
                 <div class="stepwizard-row setup-panel">
                     <div class="stepwizard-step">
@@ -51,20 +48,20 @@
                             <label>
                                 <p> @Html.RadioButtonFor(x => x.Gender, "Male") Male  </p>
                                 <p> @Html.RadioButtonFor(x => x.Gender, "Female") Female  </p>
-                            </label>
-                        </div>
-
+                                </label>
+                                </div>
+                      
                         <div class="form-group">
-                            <label class="control-label">First Name</label>
-                            <input maxlength="100" name="Name" type="text" required="required" class="form-control" placeholder="Enter First Name" />
+                         <label class="control-label">First Name</label>
+                            <input maxlength="100" name="Name" type="text" required="required" class="form-control" placeholder="Enter First Name"/>
                         </div>
                         <div class="form-group">
                             <label class="control-label">Last Name</label>
-                            <input maxlength="100" name="Firstname" type="text" required="required" class="form-control" placeholder="Enter Last Name" />
+                            <input maxlength="100" name="Firstname" type="text" required="required" class="form-control" placeholder="Enter Last Name"/>
                         </div>
 
-
-
+                        
+                        
 
                         <div class="form-group">
                             <label class="control-label">Photo</label>
@@ -72,8 +69,8 @@
                                 Select photo <input type="file" name="Image" @*style="display: none;"*@ />
                             </label>
                         </div>
-
-
+                        
+                        
 
 
                         <div class="form-group">
@@ -81,23 +78,23 @@
                             <input type="date" name="DateOfBirthday" id="bdaytime">
 
                         </div>
-
+                        
                         <div class="form-group">
                             <label class="control-label">Select status </label>
                             <br>
-
+                            
                             @*@Html.DropDownListFor(model=>model.SelectedStatus, new SelectList(Model.FamilyStatus, "Id","Name","--Select status--"))*@
-
+                        
                         </div>
                         <button class="btn btn-primary nextBtn  btn-lg pull-right" type="button">Next</button>
-
+                    
                     </div>
                 </div>
             </div>
-
-
-
-
+            
+            
+            
+            
 
             <div class="row setup-content" id="step-2">
                 <div class="col-xs-6 col-md-offset-3">
@@ -126,10 +123,10 @@
                     </div>
                 </div>
             </div>
+            
+            
 
-
-
-
+            
 
             <div class="row setup-content" id="step-3">
                 <div class="col-xs-6 col-md-offset-3">
@@ -137,24 +134,24 @@
                         <h3> Step 3</h3>
                         <div class="form-group">
                             <label class="control-label">School name</label>
-                            <input maxlength="200" name="SchoolName" type="text" required="required" class="form-control" placeholder="Enter school name" />
+                            <input maxlength="200" name="SchoolName" type="text" required="required" class="form-control" placeholder="Enter school name"/>
                         </div>
                         @*<div class="form-group">
                             @*<label class="control-label">Graduation year:</label>*@
-                        @*  @Html.LabelFor(model=>model.GraduationYear, "Graduation year",htmlAttributes:new {@class="control-label col-md-2"})
-                                    @Html.DropDownListFor(model=>model.GraduationYear, Enumerable.Range(1970,DateTime.Now.Year-1970+1).Reverse().Select(x=>new SelectListItem(){Value=x.ToString(),Text = x.ToString()}))
-                            </div>*@
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.GraduationYear, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.DropDownListFor(model => model.GraduationYear, Enumerable.Range(1970, DateTime.Now.Year - 1970 + 1).Reverse().Select(x => new SelectListItem() { Value = x.ToString(), Text = x.ToString() }))
-                                @*@Html.EditorFor(model => model.GraduationYear, new { htmlAttributes = new { @class = "form-control" } })*@
-                                @Html.ValidationMessageFor(model => model.GraduationYear, "", new { @class = "text-danger" })
-                            </div>
+                          @*  @Html.LabelFor(model=>model.GraduationYear, "Graduation year",htmlAttributes:new {@class="control-label col-md-2"})
+                            @Html.DropDownListFor(model=>model.GraduationYear, Enumerable.Range(1970,DateTime.Now.Year-1970+1).Reverse().Select(x=>new SelectListItem(){Value=x.ToString(),Text = x.ToString()}))
+                    </div>*@
+                    
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.GraduationYear, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.GraduationYear, Enumerable.Range(1970, DateTime.Now.Year - 1970 + 1).Reverse().Select(x => new SelectListItem() { Value = x.ToString(), Text = x.ToString() }))
+                            @*@Html.EditorFor(model => model.GraduationYear, new { htmlAttributes = new { @class = "form-control" } })*@
+                            @Html.ValidationMessageFor(model => model.GraduationYear, "", new {@class = "text-danger"})
                         </div>
+                    </div>
 
-                        <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
+                    <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
                     </div>
                 </div>
             </div>
@@ -184,9 +181,9 @@
                 </div>
             </div>
 
-
-
-
+            
+            
+            
 
             <div class="row setup-content" id="step-5">
                 <div class="col-xs-6 col-md-offset-3">
@@ -194,11 +191,11 @@
                         <h3> Step 5</h3>
                         <div class="form-group">
                             <label class="control-label">Company Name</label>
-                            <input maxlength="200" name="CompanyName" type="text" required="required" class="form-control" placeholder="Enter Company Name" />
+                            <input maxlength="200" name="CompanyName" type="text" required="required" class="form-control" placeholder="Enter Company Name"/>
                         </div>
                         <div class="form-group">
                             <label class="control-label">Position</label>
-                            <input maxlength="200" name="Position" type="text" required="required" class="form-control" placeholder="Enter position" />
+                            <input maxlength="200" name="Position" type="text" required="required" class="form-control" placeholder="Enter position"/>
                         </div>
 
                         <div class="form-group">
@@ -214,14 +211,26 @@
 
                     </div>
                 </div>
-            </div>
-
-
+                      </div>
+            
+            
 
         </div>
     </div>
 }
 
-@*<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>*@
+
+
+@*@section Scripts{
+    <script type="text/javascript">
+        var start = 1950;
+        var end = new Date().getFullYear();
+        var options = "";
+        for (var year = start ; year <= end; year++) {
+            options += "<option>" + year + "</option>";
+        }
+        document.getElementById("year").innerHTML = options;
+    </script>
+}*@
+
+

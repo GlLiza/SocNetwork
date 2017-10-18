@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using network.BLL.EF;
 
 namespace network.DAL.IRepository
 {
     interface IImagesRepository:IDisposable
     {
-        IQueryable<Images> GetImages ();
+        //IQueryable<Images> GetImages ();
         void AddImage (Images images);
         void DeleteImage (int id);
         void UpdateImage (Images images);
@@ -16,5 +15,6 @@ namespace network.DAL.IRepository
         byte[] ReturnImage(string id);
 
         Images CompareDate(List<Images> list);
+        IEnumerable<Images> GetImages();
     }
 }
