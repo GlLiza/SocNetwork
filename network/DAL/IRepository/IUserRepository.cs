@@ -16,5 +16,7 @@ namespace network.DAL.IRepository
         UserDetails GetUserById(int? id);
         IQueryable<UserDetails> GetListFemal(Gender gender);
         IQueryable<UserDetails> GetListMal(Gender gender);
+
+        IQueryable<FamilyStatus> GetFamStatuses();
     }
 }

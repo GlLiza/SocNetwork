@@ -328,6 +328,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="DAL\Enums\Enums.cs" />
     <Compile Include="DAL\IRepository\IAlbAndPhotoRepository.cs" />
     <Compile Include="DAL\IRepository\IAlbumRepository.cs" />
     <Compile Include="DAL\IRepository\IConversationRepository.cs" />

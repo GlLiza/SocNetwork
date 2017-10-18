@@ -11,10 +11,6 @@ namespace network.BLL
     {
         private readonly IUserRepository _userRepository;
 
-        //public UserService()
-        //{
-        //}
-
         public UserService(UserRepository userRepository)
         {
             _userRepository = userRepository;
@@ -47,6 +43,10 @@ namespace network.BLL
             return _userRepository.GetUserById(id);
         }
 
+        public IQueryable<FamilyStatus> GetFamStatuses()
+        {
+            return _userRepository.GetFamStatuses();
+        }
 
 
 

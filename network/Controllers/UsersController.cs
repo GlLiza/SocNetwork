@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.VisualBasic.ApplicationServices;
-using network.BLL;
-using network.BLL.EF;
-using network.DAL.Repository;
-using network.Views.ViewModels;
+﻿    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.VisualBasic.ApplicationServices;
+    using network.BLL;
+    using network.BLL.EF;
+    using network.DAL.Repository;
+    using network.Views.ViewModels;
 
 
 
@@ -35,7 +35,7 @@ namespace network.Controllers
             _locService = locService;
         }
 
-        
+
         [Authorize]
         [HttpGet]
         public ActionResult Index()
@@ -44,14 +44,14 @@ namespace network.Controllers
             var a = User.Identity.GetUserId();
             var currentUser = _userService.SearchByUserId(a);
 
-            if (currentUser!=null)
+            if (currentUser != null)
             {
 
                 var user = currentUser;
                 //var companys = _workPlaceService.GetListWorks(user.Id);
                 //var schools = _schoolService.GetListSchools(user.Id);
-            
-                
+
+
                 model.Id = user.Id;
                 model.Name = user.Name;
                 model.Firstname = user.Firstname;
@@ -147,7 +147,7 @@ namespace network.Controllers
                 modell.CurrentLocation = curLoc;
 
 
-                return View("FriendsPage",modell);
+                return View("FriendsPage", modell);
             }
             else
             {
@@ -157,10 +157,10 @@ namespace network.Controllers
                 model.Firstname = friend.Firstname;
                 model.Image = friend.Images.Data;
 
-                return View("NotFriendsPage",model);
+                return View("NotFriendsPage", model);
             }
         }
-        
+
 
         [HttpGet]
         public ActionResult BrowseUsers()
@@ -190,7 +190,7 @@ namespace network.Controllers
 
             return View(model);
         }
-        
+
 
 
         public ActionResult CreateProfile(int? id)
@@ -199,26 +199,24 @@ namespace network.Controllers
 
             var model = new CreateUserViewModel
             {
-                Id=user.Id
+                Id = user.Id,
+                FamilyStatus = _userService.GetFamStatuses()
             };
             return View("CreateProfile", model);
         }
-        
+
         // POST: Users/Edit/5
         [HttpPost]
         public ActionResult CreateProfile(CreateUserViewModel model)
-      {
+        {
             try
             {
-                Location currentLoc=new Location();
-                Location homeLocation=new Location();
-                WorkPlace work=new WorkPlace();
-                School school=new School();
+                Location currentLoc = new Location();
+                Location homeLocation = new Location();
+                WorkPlace work = new WorkPlace();
+                School school = new School();
                 Images headerImage = new Images();
-
                 UserDetails user = _userService.SearchUser(model.Id);
-
-
 
                 if (model.Image != null)
                 {
@@ -237,8 +235,6 @@ namespace network.Controllers
                     _userService.EditUser(user);
                 }
                 else user.Images.Data = DefaultPhoto();
-                
-
 
                 currentLoc.City = model.City;
                 currentLoc.State = model.State;
@@ -246,11 +242,7 @@ namespace network.Controllers
                 currentLoc.Country = model.Country;
 
                 _locService.AddLocation(currentLoc);
-
                 user.CurrentLocationId = currentLoc.Id;
-
-
-
 
                 homeLocation.Country = model.HomeCountry;
                 homeLocation.City = model.HomeCity;
@@ -261,15 +253,11 @@ namespace network.Controllers
                 user.HomeTownLocationId = homeLocation.Id;
 
 
-
-
                 school.Name = model.SchoolName;
                 school.GraduationYear = model.GraduationYear;
 
                 _schoolService.AddSchool(school);
                 user.SchoolId = school.Id;
-
-
 
                 work.CompanyName = model.CompanyName;
                 work.Position = model.Position;
@@ -281,27 +269,25 @@ namespace network.Controllers
                 user.WorkPlaceId = work.Id;
 
 
-
-
-
                 user.Name = model.Name;
                 user.Firstname = model.Firstname;
-               
+
                 user.DateOfBirthday = model.DateOfBirthday;
                 user.FamilyStatusId = model.SelectedStatus;
-                user.Gender = model.Gender;
+                user.Gender = Convert.ToString(model.Gender);
 
                 _userService.EditUser(user);
-              
-                return RedirectToAction("Index","Users");
 
+
+                return RedirectToAction("Index", "Users");
             }
+
             catch (Exception e)
             {
                 return View();
             }
         }
-        
+
 
         // GET
         public ActionResult ChangePhoto()
@@ -310,17 +296,17 @@ namespace network.Controllers
             model.Id = GetId();
             return PartialView("_ChangePhoto", model);
         }
-        
+
         [HttpPost]
         public ActionResult ChangePhoto(ChangePhotoViewModel viewModel)
         {
             var imageFile = viewModel.Image;
             if (imageFile != null)
             {
-                Images headerImage=new Images();
+                Images headerImage = new Images();
                 var user = _userService.SearchUser(GetId());
 
-           
+
                 byte[] imageData = null;
                 using (var binaryReader = new BinaryReader(imageFile.InputStream))
                 {
@@ -375,7 +361,7 @@ namespace network.Controllers
 
         //        if (USER.Id!=null)
         //        db.AspNetUsers.Remove(USER);
-                
+
         //        db.SaveChanges();
 
         //        return RedirectToAction("LogOff", "Account");
@@ -422,68 +408,6 @@ namespace network.Controllers
             return imageData;
 
         }
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -672,5 +596,6 @@ namespace network.Controllers
 
     }
 }
+    
 
 

@@ -62,28 +62,29 @@ namespace network.DAL.Repository
                 .First(s => s.UserId == id);
             return user.Id;
         }
+       
 
-        public IQueryable<UserDetails> GetListMal()
-        {
-            string gen = Convert.ToString(Gender.Male);
-            var list = _context.UserDetails
-                .Where(s => s.Gender == gen);
-            return list.AsQueryable();
-
-        }
-
-        public IQueryable<UserDetails> GetListFemal()
+        public IQueryable<UserDetails> GetListFemal(Gender gender)
         {
             string gen = Convert.ToString(Gender.Female);
             var list = _context.UserDetails
                 .Where(s => s.Gender == gen);
             return list.AsQueryable();
-
         }
 
+        public IQueryable<UserDetails> GetListMal(Gender gender)
+        {
+            string gen = Convert.ToString(Gender.Male);
+            var list = _context.UserDetails
+                .Where(s => s.Gender == gen);
+            return list.AsQueryable();
+        }
 
-
-
+        public IQueryable<FamilyStatus> GetFamStatuses()
+        {
+            var list = _context.FamilyStatus;
+            return list;
+        }
     }
 }
 
