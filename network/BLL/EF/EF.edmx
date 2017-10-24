@@ -171,7 +171,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="SchoolId" Type="int" Nullable="false" />
-          <Property Name="GraduationYear" Type="date" />
+          <Property Name="GraduationYear" Type="int" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -208,8 +208,10 @@
           <Property Name="CompanyName" Type="nvarchar" MaxLength="200" />
           <Property Name="Description" Type="nvarchar" MaxLength="500" />
           <Property Name="Position" Type="nvarchar" MaxLength="200" />
-          <Property Name="StartDate" Type="date" />
-          <Property Name="EndDate" Type="date" />
+          <Property Name="StartMonth" Type="nvarchar" MaxLength="50" />
+          <Property Name="StartYear" Type="int" />
+          <Property Name="EndMonth" Type="nvarchar" MaxLength="50" />
+          <Property Name="EndYear" Type="int" />
         </EntityType>
         <Association Name="FK_AlbAndPhot_Images">
           <End Role="Images" Type="Self.Images" Multiplicity="1" />
@@ -762,16 +764,6 @@
           <NavigationProperty Name="AspNetUsers1" Relationship="Self.FK_Requests_AspNetUsers1" FromRole="Requests" ToRole="AspNetUsers" />
           <NavigationProperty Name="FriendStatuses" Relationship="Self.FK_Requests_FriendStatuses" FromRole="Requests" ToRole="FriendStatuses" />
         </EntityType>
-        <EntityType Name="School">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="SchoolId" Type="Int32" Nullable="false" />
-          <Property Name="GraduationYear" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="UserDetails" Relationship="Self.FK_UserDetails_School" FromRole="School" ToRole="UserDetails" />
-        </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -802,24 +794,12 @@
           <NavigationProperty Name="Images" Relationship="Self.FK_UserDetails_Images" FromRole="UserDetails" ToRole="Images" />
           <NavigationProperty Name="Location" Relationship="Self.FK_UserDetails_Location" FromRole="UserDetails" ToRole="Location" />
           <NavigationProperty Name="Location1" Relationship="Self.FK_UserDetails_Location1" FromRole="UserDetails" ToRole="Location" />
-          <NavigationProperty Name="School" Relationship="Self.FK_UserDetails_School" FromRole="UserDetails" ToRole="School" />
-          <NavigationProperty Name="WorkPlace" Relationship="Self.FK_UserDetails_WorkPlace" FromRole="UserDetails" ToRole="WorkPlace" />
           <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Photoalbum" Relationship="NetworkModel.FK_Photoalbum_UserDetails" FromRole="UserDetails" ToRole="Photoalbum" />
           <NavigationProperty Name="Conversation" Relationship="NetworkModel.FK_Conversation_UserDetails" FromRole="UserDetails" ToRole="Conversation" />
           <NavigationProperty Name="Participants" Relationship="NetworkModel.FK_Participants_UserDetails" FromRole="UserDetails" ToRole="Participants" />
-        </EntityType>
-        <EntityType Name="WorkPlace">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CompanyName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Position" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="StartDate" Type="DateTime" Precision="0" />
-          <Property Name="EndDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="UserDetails" Relationship="Self.FK_UserDetails_WorkPlace" FromRole="WorkPlace" ToRole="UserDetails" />
+          <NavigationProperty Name="School" Relationship="NetworkModel.FK_UserDetails_School" FromRole="UserDetails" ToRole="School" />
+          <NavigationProperty Name="WorkPlace" Relationship="NetworkModel.FK_UserDetails_WorkPlace" FromRole="UserDetails" ToRole="WorkPlace" />
         </EntityType>
         <Association Name="FK_AlbAndPhot_Images">
           <End Role="Images" Type="Self.Images" Multiplicity="1" />
@@ -993,30 +973,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserDetails_School">
-          <End Role="School" Type="Self.School" Multiplicity="0..1" />
-          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="School">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserDetails">
-              <PropertyRef Name="SchoolId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserDetails_WorkPlace">
-          <End Role="WorkPlace" Type="Self.WorkPlace" Multiplicity="0..1" />
-          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="WorkPlace">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserDetails">
-              <PropertyRef Name="WorkPlaceId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="AspNetUserRoles">
           <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
@@ -1035,10 +991,8 @@
           <EntitySet Name="Location" EntityType="Self.Location" />
           <EntitySet Name="Photoalbum" EntityType="Self.Photoalbum" />
           <EntitySet Name="Requests" EntityType="Self.Requests" />
-          <EntitySet Name="School" EntityType="Self.School" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="UserDetails" EntityType="Self.UserDetails" />
-          <EntitySet Name="WorkPlace" EntityType="Self.WorkPlace" />
           <AssociationSet Name="FK_AlbAndPhot_Images" Association="Self.FK_AlbAndPhot_Images">
             <End Role="Images" EntitySet="Images" />
             <End Role="AlbAndPhot" EntitySet="AlbAndPhot" />
@@ -1095,14 +1049,6 @@
             <End Role="Location" EntitySet="Location" />
             <End Role="UserDetails" EntitySet="UserDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserDetails_School" Association="Self.FK_UserDetails_School">
-            <End Role="School" EntitySet="School" />
-            <End Role="UserDetails" EntitySet="UserDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserDetails_WorkPlace" Association="Self.FK_UserDetails_WorkPlace">
-            <End Role="WorkPlace" EntitySet="WorkPlace" />
-            <End Role="UserDetails" EntitySet="UserDetails" />
-          </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -1129,6 +1075,16 @@
           <AssociationSet Name="FK_Messages_Participants" Association="NetworkModel.FK_Messages_Participants">
             <End Role="Participants" EntitySet="Participants" />
             <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <EntitySet Name="School" EntityType="NetworkModel.School" />
+          <AssociationSet Name="FK_UserDetails_School" Association="NetworkModel.FK_UserDetails_School">
+            <End Role="School" EntitySet="School" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
+          </AssociationSet>
+          <EntitySet Name="WorkPlace" EntityType="NetworkModel.WorkPlace" />
+          <AssociationSet Name="FK_UserDetails_WorkPlace" Association="NetworkModel.FK_UserDetails_WorkPlace">
+            <End Role="WorkPlace" EntitySet="WorkPlace" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
           </AssociationSet>
           </EntityContainer>
         <Association Name="FK_Photoalbum_UserDetails">
@@ -1223,6 +1179,54 @@
             </Principal>
             <Dependent Role="Messages">
               <PropertyRef Name="Participants_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="School">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolId" Type="Int32" Nullable="false" />
+          <Property Name="GraduationYear" Type="Int32" />
+          <NavigationProperty Name="UserDetails" Relationship="NetworkModel.FK_UserDetails_School" FromRole="School" ToRole="UserDetails" />
+        </EntityType>
+        <Association Name="FK_UserDetails_School">
+          <End Type="NetworkModel.School" Role="School" Multiplicity="0..1" />
+          <End Type="NetworkModel.UserDetails" Role="UserDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="School">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDetails">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="WorkPlace">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Position" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="StartMonth" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StartYear" Type="Int32" />
+          <Property Name="EndMonth" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EndYear" Type="Int32" />
+          <NavigationProperty Name="UserDetails" Relationship="NetworkModel.FK_UserDetails_WorkPlace" FromRole="WorkPlace" ToRole="UserDetails" />
+        </EntityType>
+        <Association Name="FK_UserDetails_WorkPlace">
+          <End Type="NetworkModel.WorkPlace" Role="WorkPlace" Multiplicity="0..1" />
+          <End Type="NetworkModel.UserDetails" Role="UserDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkPlace">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDetails">
+              <PropertyRef Name="WorkPlaceId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1364,16 +1368,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="School">
-            <EntityTypeMapping TypeName="NetworkModel.School">
-              <MappingFragment StoreEntitySet="School">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
-                <ScalarProperty Name="GraduationYear" ColumnName="GraduationYear" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
             <EntityTypeMapping TypeName="NetworkModel.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
@@ -1400,18 +1394,6 @@
                 <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
                 <ScalarProperty Name="HomeTownLocationId" ColumnName="HomeTownLocationId" />
                 <ScalarProperty Name="CurrentLocationId" ColumnName="CurrentLocationId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="WorkPlace">
-            <EntityTypeMapping TypeName="NetworkModel.WorkPlace">
-              <MappingFragment StoreEntitySet="WorkPlace">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Position" ColumnName="Position" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1451,6 +1433,30 @@
               <MappingFragment StoreEntitySet="Participants">
                 <ScalarProperty Name="Users_id" ColumnName="Users_id" />
                 <ScalarProperty Name="Conversation_id" ColumnName="Conversation_id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="School">
+            <EntityTypeMapping TypeName="NetworkModel.School">
+              <MappingFragment StoreEntitySet="School">
+                <ScalarProperty Name="GraduationYear" ColumnName="GraduationYear" />
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkPlace">
+            <EntityTypeMapping TypeName="NetworkModel.WorkPlace">
+              <MappingFragment StoreEntitySet="WorkPlace">
+                <ScalarProperty Name="EndYear" ColumnName="EndYear" />
+                <ScalarProperty Name="EndMonth" ColumnName="EndMonth" />
+                <ScalarProperty Name="StartYear" ColumnName="StartYear" />
+                <ScalarProperty Name="StartMonth" ColumnName="StartMonth" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using network.BLL.EF;
 using network.DAL.Enums;
+using network.DAL.Models;
+using System.Collections.Generic;
 
 namespace network.Views.ViewModels
 {
@@ -30,21 +32,35 @@ namespace network.Views.ViewModels
         public string CompanyName { get; set; }
         public string Position { get; set; }
         public string Description { get; set; }
-        [DataType(DataType.Date)]
-        public DateTime? StartDate { get; set; }
-        [DataType(DataType.Date)]
-        public DateTime? EndDate { get; set; }
+
+
+        public WorkPeriod WorkPeriod { get; set; }
+        public string[] MonthList { get; set; }
+
+        //[DisplayFormat(DataFormatString ="{0:MM/yyyy}")]
+        //public string StartDate { get; set; }
+
+        //[DisplayFormat(DataFormatString = "{0:MM/yyyy}")]
+        //public string EndDate { get; set; }
+
         [Display(Name="School name")]
         public string SchoolName { get; set; }
-        [DisplayFormat(DataFormatString = "{yyyy/MM}",ApplyFormatInEditMode = true)]
-        public DateTime? GraduationYear { get; set; }
-        public string City { get; set; }
+        public int GraduationYear { get; set; }
+
         public string Country { get; set; }
+        public IEnumerable<Country> ListOfCountry { get; set; } 
+
+        public string City { get; set; }
+        public IEnumerable<City> ListOfCity { get; set; }
+
+
         public string Street { get; set; }
         public string State { get; set; }
         public string HomeCity { get; set; }
         public string HomeCountry { get; set; }
         public string HomeStreet { get; set; }
         public string HomeState { get; set; }
+
+       
     }
 }

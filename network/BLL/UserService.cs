@@ -4,6 +4,9 @@ using System.Linq;
 using network.BLL.EF;
 using network.DAL.IRepository;
 using network.DAL.Repository;
+using System.Globalization;
+using network.DAL.Models;
+using System.Web.Mvc;
 
 namespace network.BLL
 {
@@ -150,6 +153,25 @@ namespace network.BLL
             var result = users.Where(x => diff.Contains(x.Id)).ToList();
 
             return result;
+        }
+
+
+        public IEnumerable<Country> GetCountries()
+        {
+            return CultureInfo.GetCultures(CultureTypes.SpecificCultures)
+                .Select(x => new Country
+                {
+                    Id = new RegionInfo(x.LCID).Name,
+                    Name = new RegionInfo(x.LCID).EnglishName
+                })
+                .GroupBy(c => c.Id)
+                .Select(c => c.First())
+                .OrderBy(x => x.Name);
+        }
+
+        public string[] GetMonth()
+        {
+            return CultureInfo.CurrentCulture.DateTimeFormat.MonthNames;                
         }
 
     }

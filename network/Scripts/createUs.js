@@ -41,5 +41,19 @@
   
 
     $('div.setup-panel div a.btn-primary').trigger('click');
+
+
+    $('#select').on('change', function () {
+        $('#hcity').removeClass('hidden');
+    })
+
+    $('.month-picker').datetimepicker({
+        viewMode: 'month',
+        format: 'MM/YYYY',
+        useCurrent: false
+
+    }
+        );
+
 });
 

@@ -111,6 +111,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -342,6 +343,8 @@
     <Compile Include="DAL\IRepository\ISchoolRepository.cs" />
     <Compile Include="DAL\IRepository\IUserRepository.cs" />
     <Compile Include="DAL\IRepository\IWorkPlaceRepository.cs" />
+    <Compile Include="DAL\Models\Country.cs" />
+    <Compile Include="DAL\Models\WorkPeriod.cs" />
     <Compile Include="DAL\Repository\AlbAndPhotoRepository.cs" />
     <Compile Include="DAL\Repository\AlbumRepository.cs" />
     <Compile Include="DAL\Repository\ConversationRepository.cs" />
@@ -367,6 +370,11 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PerRequestLifetimeManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\GetCitiesByCountryServiceRef\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Views\ViewModels\AddPhotoViewModel.cs" />
     <Compile Include="Views\ViewModels\ChangePhotoViewModel.cs" />
@@ -495,6 +503,12 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <None Include="Service References\GetCitiesByCountryServiceRef\configuration91.svcinfo" />
+    <None Include="Service References\GetCitiesByCountryServiceRef\configuration.svcinfo" />
+    <None Include="Service References\GetCitiesByCountryServiceRef\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -558,6 +572,7 @@
     <Content Include="Views\Messages\_SelectReceiver.cshtml" />
     <Content Include="Views\Users\CreateProfile.cshtml" />
     <Content Include="Views\Shared\_LayoutCreate.cshtml" />
+    <None Include="Service References\GetCitiesByCountryServiceRef\globalweather.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -571,6 +586,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\GetCitiesByCountryServiceRef\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

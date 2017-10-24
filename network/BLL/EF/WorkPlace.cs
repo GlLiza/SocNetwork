@@ -24,8 +24,10 @@ namespace network.BLL.EF
         public string CompanyName { get; set; }
         public string Description { get; set; }
         public string Position { get; set; }
-        public Nullable<System.DateTime> StartDate { get; set; }
-        public Nullable<System.DateTime> EndDate { get; set; }
+        public string StartMonth { get; set; }
+        public Nullable<int> StartYear { get; set; }
+        public string EndMonth { get; set; }
+        public Nullable<int> EndYear { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserDetails> UserDetails { get; set; }
