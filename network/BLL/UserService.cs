@@ -6,7 +6,6 @@ using network.DAL.IRepository;
 using network.DAL.Repository;
 using System.Globalization;
 using network.DAL.Models;
-using System.Web.Mvc;
 
 namespace network.BLL
 {
@@ -19,7 +18,7 @@ namespace network.BLL
             _userRepository = userRepository;
         }
 
-        public  IEnumerable<UserDetails> GetUser(string id)
+        public  IEnumerable<UserDetails> GetUser()
         {
             var users = _userRepository.GetUserList();
             return users;

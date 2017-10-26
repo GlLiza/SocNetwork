@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using network.BLL.EF;
+using network.DAL.Enums;
 
 namespace network.DAL.IRepository
 {
@@ -15,5 +16,6 @@ namespace network.DAL.IRepository
         Requests SearchByUsersId(string idIng, string idEd);
         IQueryable<Requests> GetActiveRequests(string id);
         Requests CheckRequests(string idOne, string idTwo);
+        void EditStatusOfRequest(int id, FriendshipStatus active);
     }
 }

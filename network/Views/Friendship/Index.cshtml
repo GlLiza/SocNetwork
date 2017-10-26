@@ -2,15 +2,17 @@
 
 
 <li>@Html.ActionLink("Show new friends", "NewRequest", "Friendship")
-     @{ Html.RenderAction("CountRequests", "Friendship"); }</li>
+    @*<span class="badge">*@
+        @{ Html.RenderAction("CountRequests", "Friendship"); }
+    @*</span>*@
+        </li>
 
 
 <table class="table">
 
     @foreach (var item in Model)
     {
-        <tr>
-            
+        <tr>        
 
             <td>
                 @if (item.Image.Length != 0)

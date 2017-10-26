@@ -1,7 +1,7 @@
 ﻿@using network.Controllers
 @model IEnumerable<network.Views.ViewModels.NewRequestsViewModel>
 
-@{var c = new FriendshipController();}
+@*@{var c = new FriendshipController();}*@
 
 
 
@@ -22,8 +22,10 @@
                 }
             </td>
             <td>
+                <a href="@Url.Action("UsersPage","Users",new { id=item.Id},null)">
                 @Html.DisplayFor(modelItem => item.Name)
                 @Html.DisplayFor(modelItem => item.Firstname)
+                    </a>
             </td>
         
             <td>

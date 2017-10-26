@@ -3,23 +3,16 @@
     <div class="navbar-collapse collapse">
         <ul class="nav nav-pills nav-stacked">
             <li>@Html.ActionLink("My page", "Index", "Users")</li>
-            
-            
-                <li>
-                    @*@Html.ActionLink("My friends", "Index", "Friendship")
-                    <span>@{ Html.RenderAction("CountRequests", "Friendship"); }</span>*@
-                    
-                    
-                    <div class="row">
-                        <div class="col-md-8">
-                            @Html.ActionLink("My friends", "Index", "Friendship")
-                        </div>
-                        <div class="col-md-4">
-                            @{ Html.RenderAction("CountRequests", "Friendship"); }
-                        </div>
-                    </div>
+            <li>
+                @*<div class="col-md-9">*@
+                    @Html.ActionLink("My friends", "Index", "Friendship")
+                    @*</div>*@
+                @*<div class="col-md-3">*@
+                    @{ Html.RenderAction("CountRequests", "Friendship"); }
+                    @*</div>*@
                 </li>
-    
+            <p></p>
+               
             <li>@Html.ActionLink("My photos", "Index", "ImgAlbum")</li>
             <li>@Html.ActionLink("My messages", "Index", "Messages")</li>
             <li>@Html.ActionLink("My settings", "ShowUsers", "Users")</li>

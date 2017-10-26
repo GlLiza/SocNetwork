@@ -1,8 +1,14 @@
 ﻿@model int
 
 
-<div class="col-md-1" style="width: 30px; height: 30px; background-color:gainsboro">
+<div>
+    @if (Model != 0)
+    {
+        <span class="badge">
 
-    @Model.ToString()
+            @Model.ToString()
+        </span>
+    }
+   
 
 </div>

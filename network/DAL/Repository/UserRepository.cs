@@ -62,7 +62,7 @@ namespace network.DAL.Repository
                 .First(s => s.UserId == id);
             return user.Id;
         }
-       
+
 
         public IQueryable<UserDetails> GetListFemal(Gender gender)
         {

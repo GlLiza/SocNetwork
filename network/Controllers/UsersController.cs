@@ -8,7 +8,6 @@ using Microsoft.AspNet.Identity;
 using network.BLL;
 using network.BLL.EF;
 using network.Views.ViewModels;
-using System.Globalization;
 
 namespace network.Controllers
 {
@@ -20,8 +19,6 @@ namespace network.Controllers
         private readonly LocationService _locService;
         private readonly FriendshipService _friendServ;
         private readonly ImageService _imgService;
-
-        public string country = "Belarus";
 
         public UsersController(UserService userService, WorkPlaceService workPlaceService, SchoolService schoolService,
             LocationService locService, FriendshipService friendServ, ImageService imgService)
@@ -168,53 +165,46 @@ namespace network.Controllers
 
 
         var friendList = _friendServ.GetFriendList(User.Identity.GetUserId());
-        var users = _userService.GetUser(User.Identity.GetUserId()).ToList();
+        var users = _userService.GetUser().ToList();
+                    
+        int currentUserId = _userService.CovertId(User.Identity.GetUserId());
 
         var othersUsers = _userService.AnotherUsers(friendList, users);
 
         foreach (var u in othersUsers)
         {
-            ShowUserViewModel item = new ShowUserViewModel();
+            if (u.Id != currentUserId)
+            {
+                ShowUserViewModel item = new ShowUserViewModel();
 
-            item.Id = u.Id;
-            item.Firstname = u.Firstname;
-            item.Name = u.Name;
-            item.Image = u.Images.Data;
-            item.User = u.AspNetUsers;
-            item.User = u.AspNetUsers;
+                item.Id = u.Id;
+                item.Firstname = u.Firstname;
+                item.Name = u.Name;
+                item.Image = u.Images.Data;
+                item.User = u.AspNetUsers;
+                item.User = u.AspNetUsers;
 
-            model.Add(item);
-        }
-        ViewData["Error"] = TempData["message"];
+                model.Add(item);
+            }
+            }
+            ViewData["Error"] = TempData["message"];
 
-        return View(model);
+            return View(model);
     }
         
     public ActionResult CreateProfile(int? id)
     {
         UserDetails user = _userService.SearchUser(id);
-
-            //ViewData["Month"] = new SelectList(Enumerable.Range(1, 12).Select(x =>
-            //       new SelectListItem()
-            //       {
-            //           //Text = CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedMonthNames[x - 1],
-            //           Text = CultureInfo.CurrentCulture.LCID.ToString(),
-            //           Value = x.ToString()
-            //       }),"Value","Text");
-
-
-
             var model = new CreateUserViewModel
             {
                 Id = user.Id,
                 FamilyStatus = _userService.GetFamStatuses(),
                 ListOfCountry = _userService.GetCountries(),
                 MonthList=_userService.GetMonth()
-                //City=GetCities(country)
-                //ListOfCity = GetCities('Belarus');
             };
         return View("CreateProfile", model);
     }
+
     // POST: Users/Edit/5
     [HttpPost]
     public ActionResult CreateProfile(CreateUserViewModel model)

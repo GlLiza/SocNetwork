@@ -4,6 +4,7 @@ using System.Linq;
 using network.BLL.EF;
 using network.DAL.IRepository;
 using network.DAL.Repository;
+using network.DAL.Enums;
 
 namespace network.BLL
 {
@@ -137,6 +138,29 @@ namespace network.BLL
                  return true;
                     return false;
         }
+
+        //change status of request to  Active
+        public void StatusToActive(int id)
+        {
+            _requestRepository.EditStatusOfRequest(id, FriendshipStatus.Active);
+        }
+        //change status of request to  Declined
+        public void StatusToDeclined(int id)
+        {
+            _requestRepository.EditStatusOfRequest(id, FriendshipStatus.Declined);
+        }
+        //change status of request to  Accepted
+        public void StatusToAccepted(int id)
+        {
+            _requestRepository.EditStatusOfRequest(id, FriendshipStatus.Accepted);
+        }
+        //change status of request to  Ignored
+        public void StatusToIgnored(int id)
+        {
+            _requestRepository.EditStatusOfRequest(id, FriendshipStatus.Ignored);
+        }
+
+
 
     }
 }
