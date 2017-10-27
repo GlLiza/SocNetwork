@@ -60,10 +60,10 @@ namespace network.Controllers
             model.Image = user.Images.Data;
 
         }
-        else
-        {
-            model.Image = DefaultPhoto();
-        }
+        //else
+        //{
+        //    model.Image = DefaultPhoto();
+        //}
 
         var curLoc = _locService.GetLocation(user.CurrentLocationId);
         model.CurrentLocation = curLoc;
@@ -235,7 +235,7 @@ namespace network.Controllers
                 user.ImagesId = headerImage.Id;
                 _userService.EditUser(user);
             }
-            else user.Images.Data = DefaultPhoto();
+            //else user.Images.Data = DefaultPhoto();
 
             //currentLoc.City = model.City;
             //currentLoc.State = model.State;
@@ -357,12 +357,13 @@ namespace network.Controllers
     }
 
 
-    public byte[] DefaultPhoto()
-    {
-        var photo = _imgService.SearchImg(1058);
+    //public byte[] DefaultPhoto()
+    //{
+    //    //var photo = _imgService.SearchImg(1058);
+    //    var photo = ;
 
-        return photo.Data;
-    }
+    //    return photo.Data;
+    //}
 
     //function for convert HttpPostedFileBase to byte[]
 

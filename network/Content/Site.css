@@ -1,5 +1,9 @@
 ﻿html, body {
     height: 100%;
+  
+}
+body {
+      background-image:url('/Content/Pictures/bg.jpg');
 }
 
 .header, footer {
@@ -160,7 +164,7 @@ td {
 
 
 .page {
-    color:#53a3cd;
+    color:#000;
     font-size: 36px;
     font-weight: bold;
 }
@@ -174,6 +178,10 @@ td {
     height:20px;
     width:200px;
     /*overflow-y:auto;*/
+}
+
+a {
+    color:#000;
 }
 
 
@@ -272,6 +280,10 @@ footer {
     overflow-x: scroll;
  }
 
+.scrolFriends {
+    overflow-y: scroll;
+ }
+
 .gallery {
     display:inline-flex;
 }
@@ -368,9 +380,29 @@ footer {
 .badge {
     background-color:buttonface;
 }
-  
 
-  
- 
+
+.nameFirstname {
+     color:#000;
+    font-size: 26px;    
+}
+
+
+.dropdown-toggle {
+    background-color:#000;
+    color:#9d9d9d;
+}
+.btn {
+    background-color:#000;
+    color:#9d9d9d;
+}
+
+.pageHome {
+    color:#eee;
+    font-size: 36px;
+    font-weight: bold;
+}
+
+
 
 

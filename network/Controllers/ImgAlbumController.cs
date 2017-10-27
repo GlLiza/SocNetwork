@@ -30,8 +30,7 @@ namespace network.Controllers
         // GET: Album
         public ActionResult Index()
         {
-            ALbumsViewModel model=new ALbumsViewModel();
-            
+            ALbumsViewModel model=new ALbumsViewModel();          
 
 
             List<AlbumViewModel> albumViewModel=new List<AlbumViewModel>();
@@ -48,8 +47,8 @@ namespace network.Controllers
                 modelAlb.TitleImage = _albumServ.GetLastImgAlbum(album.Id);
 
 
-                if (modelAlb.TitleImage == null)
-                    modelAlb.TitleImage = _imgServ.SearchImg(1058);
+                //if (modelAlb.TitleImage == null)
+                //    modelAlb.TitleImage = _imgServ.SearchImg(1058);
 
 
                 albumViewModel.Add(modelAlb);
@@ -140,7 +139,6 @@ namespace network.Controllers
             JavaScriptSerializer js = new JavaScriptSerializer();
             var res = new HttpStatusCodeResult(HttpStatusCode.OK);
             return js.Serialize(res);
-
         }
 
 

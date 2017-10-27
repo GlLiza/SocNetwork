@@ -87,15 +87,33 @@
             <div class="row" style="display: inline-flex">
                 @foreach (var item in Model.Albums)
                 {
-                    <div class="hover01 column">
-                        <div>
-                            <a href="@Url.Action("OpenAlbum", "ImgAlbum", new {id = item.AlbumId}, null)">
-                                <figure><img src="data:image/png;base64, @Convert.ToBase64String(item.TitleImage.Data)"/></figure>
-                                <h2><span>@Html.DisplayFor(m => item.Name)</span>
-                                </h2>
-                            </a>
+                    if (item.TitleImage!=null)
+                    {
+                        <div class="hover01 column">
+                            <div>
+                                <a href="@Url.Action("OpenAlbum", "ImgAlbum", new { id = item.AlbumId }, null)">
+                                    <figure><img src="data:image/png;base64, @Convert.ToBase64String(item.TitleImage.Data)" /></figure>
+                                    <h2>
+                                        <span>@Html.DisplayFor(m => item.Name)</span>
+                                    </h2>
+                                </a>
+                            </div>
                         </div>
-                    </div>
+                    }
+                    else
+                    {
+                        <div class="hover01 column">
+                            <div>
+                                <a href="@Url.Action("OpenAlbum", "ImgAlbum", new { id = item.AlbumId }, null)">
+                                    <figure><img src="@Url.Content("~/Content/Pictures/no.jpg")"/></figure>
+                                    <h2>
+                                        <span>@Html.DisplayFor(m => item.Name)</span>
+                                    </h2>
+                                </a>
+                            </div>
+                        </div>
+                    }
+
                 }
             </div>
         </div>

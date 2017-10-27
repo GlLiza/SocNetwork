@@ -1,16 +1,71 @@
 ﻿@using network.Controllers
 @model IEnumerable<network.Views.ViewModels.ShowUserViewModel>
 
+<nav class="navbar navbar-inverse" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
 
-       @ViewData["Error"]
 
-@*@{
-    FriendshipController f=new FriendshipController();
-}*@
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+           </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="jumbotron container-fluid">
+    <div class="row page" align="center">
+        Another users 
+        <hr />
+    </div>
+
+    <div class="scrolFriends ">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="row">
+                    @if (item.Image.Length != 0)
+                    {
+                        <div class="col-lg-6">
+                            <img class="image" src="data:image/png;base64, @Convert.ToBase64String(item.Image)" />
+                        </div>
+                    }
+
+                    <div class="col-md-5">
+                        <a href="@Url.Action("UsersPage", "Users", new { id = item.Id }, null)" class="nameFirstname">
+                            @Html.DisplayFor(modelItem => item.Name)
+                            @Html.DisplayFor(modelItem => item.Firstname)
+                        </a>
+                    </div>
+
+                    @*<div class="col-md-1 btn-group">
+                        <button class="btn">...</button>
+                        <button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Accept", "AcceptRequest", "Friendship", new { requestsId = item.Requests.Id }, null)</li>
+                            <li>@Html.ActionLink("Ignore", "IgnoreRequest", "Friendship", new { id = item.Requests.Id }, null)</li>
+                            <li>@Html.ActionLink("Rejectr", "RejectrRequest", "Friendship", new { id = item.Requests.Id }, null)</li>
+                        </ul>
+                    </div>*@
+                </div>
+                <hr />
+            }
+        </div>
+    </div>
+
+</div>
 
 
-
-<table class="table">
+@*<table class="table">
 
 @foreach (var item in Model) {
     <tr>
@@ -36,13 +91,13 @@
                 <ul class="dropdown-menu">
                     
                     
-                    @*@{
+                    @{
                         if (f.CheckRequest(item.User.Id) == false)
 
-                        {*@
+                        {
                             <a href="@Url.Action("SendRequest", "Friendship", new {id = item.User.Id})">Add to friends</a>
-                        @*}
-                    }*@
+                        }
+                    }
 
                   
                 </ul>
@@ -52,4 +107,4 @@
     </tr>
 }
 
-</table>
+</table>*@
