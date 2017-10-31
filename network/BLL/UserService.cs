@@ -155,9 +155,10 @@ namespace network.BLL
         }
 
 
-        public IEnumerable<Country> GetCountries()
+        public List<string> GetCountries()
         {
-            return CultureInfo.GetCultures(CultureTypes.SpecificCultures)
+            List<string> nameOfCountry = new List<string>();
+            var country = CultureInfo.GetCultures(CultureTypes.SpecificCultures)
                 .Select(x => new Country
                 {
                     Id = new RegionInfo(x.LCID).Name,
@@ -166,6 +167,21 @@ namespace network.BLL
                 .GroupBy(c => c.Id)
                 .Select(c => c.First())
                 .OrderBy(x => x.Name);
+
+            foreach (var cn in country)
+            {
+                nameOfCountry.Add(cn.Name);
+            }
+
+            return nameOfCountry;
+
+        }
+
+        public string GetCountryNameByCode(IEnumerable<Country> country, string code)
+        {
+            var cntry = country.Where(s => s.Id == code).Select(s=>s.Name).First();
+               
+            return cntry;
         }
 
         public string[] GetMonth()

@@ -37,18 +37,12 @@ namespace network.Views.ViewModels
         public WorkPeriod WorkPeriod { get; set; }
         public string[] MonthList { get; set; }
 
-        //[DisplayFormat(DataFormatString ="{0:MM/yyyy}")]
-        //public string StartDate { get; set; }
-
-        //[DisplayFormat(DataFormatString = "{0:MM/yyyy}")]
-        //public string EndDate { get; set; }
-
         [Display(Name="School name")]
         public string SchoolName { get; set; }
         public int GraduationYear { get; set; }
 
         public string Country { get; set; }
-        public IEnumerable<Country> ListOfCountry { get; set; } 
+        public List<string> ListOfCountry { get; set; } 
 
         public string City { get; set; }
         public IEnumerable<City> ListOfCity { get; set; }

@@ -11,7 +11,7 @@
             </div>
             
             <div class="modal-body">
-                @using (Html.BeginForm("AddPhoto", "ImgAlbum", FormMethod.Post, new {@enctype = "multipart/form-data",id=Model.Id}))
+                @using (Html.BeginForm("AddPhoto", "ImgAlbum", FormMethod.Post, new {@enctype = "multipart/form-data", id=Model.Id}))
                 {
                     @Html.HiddenFor(m=>m.Id)
                     <label class="btn btn-file">
@@ -21,7 +21,6 @@
                     <button class="btn btn-info pull-right" type="submit" id="changePhoto">OK</button>
                     }
             </div>
-
         </div>
     </div>
 </div>

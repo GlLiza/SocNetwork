@@ -42,11 +42,7 @@ namespace network.Controllers
 
         if (currentUser != null)
     {
-
         var user = currentUser;
-        //var companys = _workPlaceService.GetListWorks(user.Id);
-        //var schools = _schoolService.GetListSchools(user.Id);
-
 
         model.Id = user.Id;
         model.Name = user.Name;
@@ -58,65 +54,10 @@ namespace network.Controllers
         if (user.Images != null)
         {
             model.Image = user.Images.Data;
-
         }
-        //else
-        //{
-        //    model.Image = DefaultPhoto();
-        //}
 
         var curLoc = _locService.GetLocation(user.CurrentLocationId);
         model.CurrentLocation = curLoc;
-
-
-
-        //if (homeLocation.Count() > 1)
-        //    model.ListHomLoc = homeLocation;
-        //else
-        //{
-        //    foreach (var a in homeLocation)
-        //    {
-        //        model.HomeLocation = a;
-
-        //    }
-
-        //}
-
-
-        //if (curLocation.Count() > 1)
-        //    model.ListCurLoc = curLocation;
-        //else
-        //{
-        //    foreach (var a in curLocation)
-        //    {
-        //        model.CurrentLocation = a;
-        //    }
-        //}
-
-
-
-        //if (schools.Count() > 1)
-        //    model.ListSchools = schools;
-        //else
-        //{
-        //    foreach (var a in schools)
-        //    {
-        //        model.School = a;
-        //    }
-        //}
-
-
-
-        //if (companys.Count() > 1)
-        //    model.ListPlace = companys;
-        //else
-        //{
-        //    foreach (var a in companys)
-        //    {
-        //        model.Company = a;
-        //    }
-        //}
-
 
             return View(model);
         }
@@ -235,20 +176,13 @@ namespace network.Controllers
                 user.ImagesId = headerImage.Id;
                 _userService.EditUser(user);
             }
-            //else user.Images.Data = DefaultPhoto();
 
-            //currentLoc.City = model.City;
-            //currentLoc.State = model.State;
-            //currentLoc.Street = model.Street;
             currentLoc.Country = model.Country;
 
             _locService.AddLocation(currentLoc);
             user.CurrentLocationId = currentLoc.Id;
 
             homeLocation.Country = model.HomeCountry;
-            //homeLocation.City = model.HomeCity;
-            //homeLocation.State = model.HomeState;
-            //homeLocation.Street = model.HomeStreet;
 
             _locService.AddLocation(homeLocation);
             user.HomeTownLocationId = homeLocation.Id;
@@ -331,18 +265,11 @@ namespace network.Controllers
 
     }
 
-
-
-
-
-
     public string GetCities(string CountryName)
     {
         GetCitiesByCountryServiceRef.GlobalWeatherSoapClient obj =new GetCitiesByCountryServiceRef.GlobalWeatherSoapClient {};
         return obj.GetCitiesByCountry(CountryName);
-    }
-
-    
+    }   
 
     public UserDetails GetUser()
     {
@@ -354,16 +281,7 @@ namespace network.Controllers
     {
         var user = _userService.SearchByUserId(User.Identity.GetUserId());
         return user.Id;
-    }
-
-
-    //public byte[] DefaultPhoto()
-    //{
-    //    //var photo = _imgService.SearchImg(1058);
-    //    var photo = ;
-
-    //    return photo.Data;
-    //}
+    }            
 
     //function for convert HttpPostedFileBase to byte[]
 
@@ -381,7 +299,7 @@ namespace network.Controllers
         return imageData;
 
     }
-      
+
     }
 }
     

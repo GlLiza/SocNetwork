@@ -47,13 +47,13 @@
         $('#hcity').removeClass('hidden');
     })
 
-    $('.month-picker').datetimepicker({
-        viewMode: 'month',
-        format: 'MM/YYYY',
-        useCurrent: false
+    //$('.month-picker').datetimepicker({
+    //    viewMode: 'month',
+    //    format: 'MM/YYYY',
+    //    useCurrent: false
 
-    }
-        );
+    //}
+    //    );
 
 });
 

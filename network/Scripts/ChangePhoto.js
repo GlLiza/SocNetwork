@@ -1,22 +1,5 @@
-﻿//$(function () {
-//    $('#openModal').click(function () {
-//        var url = $('#changeModal').data('url');
-
-//        $.get(url,
-//            function (data) {
-//                $('#changeContainer').html(data);
-
-//                $('#changeModal').modal('show');
-//            });
-//    });
-//});
-
-
-
-
-
-$("#changePhoto").click(function () {
-
+﻿$("#changePhoto").click(function () {
+    debugger;
     uploadFile();
 
 });
