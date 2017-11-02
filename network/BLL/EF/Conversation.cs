@@ -29,5 +29,6 @@ namespace network.BLL.EF
         public virtual UserDetails UserDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Participants> Participants { get; set; }
+        public virtual Messages Messages { get; set; }
     }
 }

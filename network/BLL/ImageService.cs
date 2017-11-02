@@ -8,16 +8,17 @@ namespace network.BLL
     public class ImageService
     {
         private readonly IImagesRepository _imagesRepository;
+        private readonly IUserRepository _userRepository;
 
         public ImageService()
         {
         }
 
-        public ImageService(ImagesRepository imgRepository)
+        public ImageService(ImagesRepository imgRepository,UserRepository userRepository)
         {
             _imagesRepository = imgRepository;
+            _userRepository = userRepository;
         }
-
 
        
         public IEnumerable<Images> GetImages()
@@ -48,11 +49,19 @@ namespace network.BLL
             return img;
         }
 
-        public byte[] ReturnImage(int id)
+        public byte[] ReturnImage(int? id)
         {
             byte[] imageData = _imagesRepository.GetImageById(id).Data;
             return imageData;
         }
         
+               
+        public byte[] GetProfilesPhoto(int UserId)
+        {
+            var user = _userRepository.GetUserById(UserId);
+            var image = _imagesRepository.GetImageById(user.ImagesId);
+            return image.Data;
+        }
+
     }
 }

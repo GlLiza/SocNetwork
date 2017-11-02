@@ -14,19 +14,21 @@ namespace network.BLL
         private readonly IFriendshipRepository _friendshipRepository;
         private readonly IUserRepository _userRepository;
         private readonly IImagesRepository _imgRepository;
+        private readonly IMessageRepository _msgRepository;
 
         public MessagesService()
         {
         }
 
         public MessagesService(ParticipantsRepository participantsRepository, ConversationRepository conversationRepository, 
-            FriendshipRepository friendshipRepository, UserRepository userRepository, ImagesRepository imgRepository)
+            FriendshipRepository friendshipRepository, UserRepository userRepository, ImagesRepository imgRepository, MessagesRepository msgRepository)
         {
             _participantsRepository = participantsRepository;
             _conversationRepository = conversationRepository;
             _friendshipRepository = friendshipRepository;
             _userRepository = userRepository;
             _imgRepository = imgRepository ;
+            _msgRepository = msgRepository;
         }
 
 
@@ -101,6 +103,13 @@ namespace network.BLL
             return friendsIds;
         }
 
+        //return Conversation by creator's id
+        public Conversation GetConvByCreatotId(int creatorId)
+        {
+            var conversation = _conversationRepository.GetByCreatorId(creatorId);
+            return conversation;
+        }
+
 
         //PARTICIPANTS
 
@@ -112,6 +121,56 @@ namespace network.BLL
             }
             
         }
+
+        public List<Participants> GetParticipByUsers_id(int Users_id)
+        {
+            return _participantsRepository.GetParticipantsByUserId(Users_id);
+        }
+
+        public List<EF.Messages> GetMessgByConversationId(int conversationId)
+        {
+            return _msgRepository.GetListMessagesByConversationId(conversationId);
+        }
+
+
+
+        //return list of members by conversation's id 
+        public List<ConversationViewModel> GetMembersForParticipants(int conversationId)
+        {
+            List<ConversationViewModel> details = new List<ConversationViewModel>();
+            var listMembers = _participantsRepository.GetParticipantsByConversId(conversationId);
+
+            foreach (var member in listMembers)
+            {
+                ConversationViewModel item = new ConversationViewModel();
+                var user = _userRepository.GetUserById(member.Users_id);
+                item.Id = user.Id;
+                item.Name = user.Name;
+                item.FirstName = user.Firstname;
+                var photo = _imgRepository.GetImageById(user.ImagesId);
+                item.Image = photo.Data;
+
+                details.Add(item);
+            }
+            return details;
+        }
+
+        //return messages for conversation
+        public List<MessageBlocks> GetMessagesForConversation(int conversationId)
+        {
+            List<MessageBlocks> blockMsg = new List<MessageBlocks>();
+            var messages = GetMessgByConversationId(conversationId);
+            foreach (var msg in messages)
+            {
+                MessageBlocks item = new MessageBlocks();
+                item.Message = msg.Message;
+                item.Time = msg.Created_at;
+                blockMsg.Add(item);
+            }
+
+            return blockMsg;
+        }
+
 
     }
 }

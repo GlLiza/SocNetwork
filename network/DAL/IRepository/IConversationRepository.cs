@@ -14,7 +14,7 @@ namespace network.DAL.IRepository
         IQueryable<Conversation> GetListConversations();
         List<int> GetConversationsIdsByCreatorId(int id);
         List<int> GetFriendsIdsList(List<int> conversationsIdsList);
-
+        Conversation GetByCreatorId(int creatorId);
     }
 
   

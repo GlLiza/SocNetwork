@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Microsoft.AspNet.SignalR.Messaging;
 using network.BLL.EF;
+using System.Collections.Generic;
 
 namespace network.DAL.IRepository
 {
@@ -12,6 +12,6 @@ namespace network.DAL.IRepository
         void UpdateMessage(Messages message);
       
         IQueryable<Messages> GetListMessages();
-
+        List<Messages> GetListMessagesByConversationId(int conversationId);
     }
 }

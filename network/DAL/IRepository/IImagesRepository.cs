@@ -6,7 +6,6 @@ namespace network.DAL.IRepository
 {
     interface IImagesRepository:IDisposable
     {
-        //IQueryable<Images> GetImages ();
         void AddImage (Images images);
         void DeleteImage (int id);
         void UpdateImage (Images images);
@@ -16,5 +15,6 @@ namespace network.DAL.IRepository
 
         Images CompareDate(List<Images> list);
         IEnumerable<Images> GetImages();
+        
     }
 }

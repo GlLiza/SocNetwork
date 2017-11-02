@@ -6,8 +6,6 @@ using System.Web.Script.Serialization;
 using Microsoft.AspNet.Identity;
 using network.BLL;
 using network.BLL.EF;
-using network.DAL.IRepository;
-using network.DAL.Repository;
 using network.Views.ViewModels;
 
 
@@ -67,11 +65,7 @@ namespace network.Controllers
             JavaScriptSerializer js = new JavaScriptSerializer();
             var res = new HttpStatusCodeResult(HttpStatusCode.OK);
             return js.Serialize(res);
-        }
-
-        
-
-
+        }   
 
         public List<UserDetails> GetFriendsForSearch()
         {
@@ -119,23 +113,41 @@ namespace network.Controllers
             var listFriendConvers = this._msgService.GetFriendsIdListFromConversation(id);
 
             var conversationdata = this._userService.GetUserDetailsByListId(listFriendConvers);
-
+            var conversatoin = _msgService.GetConvByCreatotId(id);
 
             foreach (var user in conversationdata)
             {
-                var friend=new ConversationViewModel();
+                var conversView=new ConversationViewModel();
 
                 var image = this._imgService.SearchImg(user.ImagesId);
 
-                friend.Id = user.Id;
-                friend.Name = user.Name;
-                friend.FirstName = user.Firstname;
-                friend.Image = image.Data;
 
-                model.Add(friend);
+                conversView.Id = user.Id;
+                conversView.Name = user.Name;
+                conversView.FirstName = user.Firstname;
+                conversView.Image = image.Data;
+                conversView.ConversationId = conversatoin.Id;
+
+                model.Add(conversView);
             }
 
             return model;
+        }
+
+
+        [HttpGet]
+        public ActionResult OpenConversation(int conversationId)
+        {
+            OpenConversationViewModel model = new OpenConversationViewModel();
+
+            List<ConversationViewModel> listMembers = _msgService.GetMembersForParticipants(conversationId);
+            model.Members = listMembers;
+                      
+            List<MessageBlocks> blocksMsg = _msgService.GetMessagesForConversation(conversationId);
+            model.Messages = blocksMsg;
+            model.ConversationId = conversationId;
+            
+            return View(model);
         }
         
     }

@@ -22,5 +22,7 @@ namespace network.BLL.EF
         public Nullable<System.DateTime> Created_at { get; set; }
     
         public virtual Participants Participants { get; set; }
+        public virtual Conversation Conversation { get; set; }
+        public virtual UserDetails UserDetails { get; set; }
     }
 }

@@ -47,5 +47,17 @@ namespace network.DAL.Repository
         {
             throw new NotImplementedException();
         }
+
+        public List<Participants> GetParticipantsByUserId(int userId)
+        {
+            var particip = _context.Participants.Where(s => s.Users_id == userId).ToList();
+            return particip;
+        }
+
+        public List<Participants> GetParticipantsByConversId(int conversId)
+        {
+            var particip = _context.Participants.Where(s => s.Conversation_id == conversId).ToList();
+            return particip;
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using network.BLL.EF;
@@ -59,8 +60,11 @@ namespace network.DAL.Repository
             return friendsIdList;
         }
 
-        //
-
-        
+        //return Conversation by creator's id
+        public Conversation GetByCreatorId(int creatorId)
+        {
+            var conversation = _context.Conversation.FirstOrDefault(s => s.Creator_id == creatorId);
+            return conversation;
+        } 
     }
 }

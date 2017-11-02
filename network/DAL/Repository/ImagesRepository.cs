@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using network.BLL.EF;
@@ -58,13 +59,13 @@ namespace network.DAL.Repository
             return img.Data;
         }
 
-        //сравнивает дату добавления изображения с текущей датой
+        //compare date adding of image with current date
         public Images CompareDate(List<Images> list)
         {
             var t = list.OrderByDescending(x => x.Date).FirstOrDefault();
             return t;
         }
 
-
+        
     }
 }

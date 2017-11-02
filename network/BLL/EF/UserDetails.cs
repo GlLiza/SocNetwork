@@ -20,6 +20,7 @@ namespace network.BLL.EF
             this.Photoalbum = new HashSet<Photoalbum>();
             this.Conversation = new HashSet<Conversation>();
             this.Participants = new HashSet<Participants>();
+            this.Messages = new HashSet<Messages>();
         }
     
         public int Id { get; set; }
@@ -48,5 +49,7 @@ namespace network.BLL.EF
         public virtual ICollection<Participants> Participants { get; set; }
         public virtual School School { get; set; }
         public virtual WorkPlace WorkPlace { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Messages> Messages { get; set; }
     }
 }

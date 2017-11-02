@@ -31,7 +31,7 @@
         <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li id="selectRec"><a href=#>Search <span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-search"></span></a></li>
-
+                
             </ul>
         </div>
 
@@ -43,7 +43,7 @@
 <div class="jumbotron container-fluid">
 
     <div class="row page" align="center">
-        Conversation
+        Conversations
     </div>
 
     @if (Model.Capacity > 0)
@@ -52,18 +52,37 @@
         {
             <tr>
     <td>
-        <div class="row chatId">
-            <a href="#">
-                <div class="col-md-offset-5">
-                    <img id="user_img"
-                         style="border: solid" src="data:image/png;base64, @Convert.ToBase64String(item.Image)"
-                         class="img-circle">
+        <div class="row chatId">           
+                <div class="row">
+                    <div class="col-md-6">
+                        @if (item.Image != null)
+                    {
+                            <img class="image" src="data:image/png;base64, @Convert.ToBase64String(item.Image)" />
+                        }
+                        else
+                        {
+                            <img class="image" style="border:solid;" src="@Url.Content("~/Content/Pictures/no.jpg")" />
+                        }
+                    </div>
+                    <div class="col-md-4 nameFirstname">
+                        <a href="@Url.Action("OpenConversation","Messages",new { conversationId =item.ConversationId})">
+                            @Html.DisplayFor(modelItem => item.Name)
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </a>
+        </div>
 
-                    @Html.DisplayFor(modelItem => item.Name)
-                    @Html.DisplayFor(modelItem => item.FirstName)
-
+                <div class="col-md-2 btn-group">                                        
+                    <button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        @*<li class="divider"></li>*@     
+                        <li>Remove conversation</li>                     
+                    </ul>
                 </div>
-            </a>
+
+
+
+                    </div>
+           
         </div>
                 </td>
             </tr>

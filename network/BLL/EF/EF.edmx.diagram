@@ -47,6 +47,8 @@
         <AssociationConnector Association="NetworkModel.FK_UserDetails_School" />
         <EntityTypeShape EntityType="NetworkModel.WorkPlace" Width="1.5" PointX="5.375" PointY="9" />
         <AssociationConnector Association="NetworkModel.FK_UserDetails_WorkPlace" />
+        <AssociationConnector Association="NetworkModel.FK_Messages_Conversation" />
+        <AssociationConnector Association="NetworkModel.FK_Messages_UserDetails" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
