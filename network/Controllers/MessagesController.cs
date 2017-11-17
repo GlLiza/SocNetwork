@@ -33,7 +33,7 @@ namespace network.Controllers
         // GET: Messages
         public ActionResult Index()
         {
-            List<ConversationViewModel> model=new List<ConversationViewModel>();
+            List<IndexConversationViewModel> model=new List<IndexConversationViewModel>();
             var a = ConversationList(model);
             return View(a);
         }
@@ -106,7 +106,7 @@ namespace network.Controllers
             return participants;
         }
 
-        public List<ConversationViewModel> ConversationList(List<ConversationViewModel> model)
+        public List<IndexConversationViewModel> ConversationList(List<IndexConversationViewModel> model)
         {
             int id = _userService.CovertId(User.Identity.GetUserId());
 
@@ -114,41 +114,64 @@ namespace network.Controllers
 
             var conversationdata = this._userService.GetUserDetailsByListId(listFriendConvers);
             var conversatoin = _msgService.GetConvByCreatotId(id);
+            
 
             foreach (var user in conversationdata)
             {
-                var conversView=new ConversationViewModel();
-
                 var image = this._imgService.SearchImg(user.ImagesId);
 
-
-                conversView.Id = user.Id;
-                conversView.Name = user.Name;
-                conversView.FirstName = user.Firstname;
-                conversView.Image = image.Data;
-                conversView.ConversationId = conversatoin.Id;
-
+                var conversView = new IndexConversationViewModel
+                {
+                    Conversation = new ConversationViewModel
+                    {
+                        Id = user.Id,
+                        FirstName = user.Name,
+                        LastName = user.Firstname,
+                        Image = Convert.ToBase64String(image.Data)
+                    },
+                    Conversation_id = conversatoin.Id
+                };         
                 model.Add(conversView);
             }
-
             return model;
         }
 
 
         [HttpGet]
-        public ActionResult OpenConversation(int conversationId)
+        public ActionResult OpenConversation(int? Conversation_id)
         {
             OpenConversationViewModel model = new OpenConversationViewModel();
 
-            List<ConversationViewModel> listMembers = _msgService.GetMembersForParticipants(conversationId);
+            List<ConversationViewModel> listMembers = _msgService.GetMembersForParticipants(Conversation_id);
             model.Members = listMembers;
                       
-            List<MessageBlocks> blocksMsg = _msgService.GetMessagesForConversation(conversationId);
+            List<MessageBlocks> blocksMsg = _msgService.GetMessagesForConversation(Conversation_id);
             model.Messages = blocksMsg;
-            model.ConversationId = conversationId;
+            model.Conversation_id = Conversation_id;
+            model.UserStringId =_userService.GetIntUserId(User.Identity.GetUserId());
             
             return View(model);
         }
-        
+
+        [HttpPost]
+        public ActionResult SendMessage(MessageViewModel msg)
+        {
+            if (msg != null)
+            {
+                Messages message = new Messages()
+                {
+                    Conversation_id = msg.Conversation_id,
+                    Sender_id = _userService.GetIntUserId(User.Identity.GetUserId()),
+                    Message = msg.Message,
+                    Created_at = DateTime.Now
+                };
+                            
+                _msgService.SendMsg(message);
+
+                return RedirectToAction("OpenConversation", "Messages", new { Conversation_id = message.Conversation_id });
+            }
+            return RedirectToAction("Index", "Messages");
+        }
+
     }
 }

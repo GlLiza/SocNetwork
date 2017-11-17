@@ -12,6 +12,6 @@ namespace network.DAL.IRepository
         void UpdateMessage(Messages message);
       
         IQueryable<Messages> GetListMessages();
-        List<Messages> GetListMessagesByConversationId(int conversationId);
+        IQueryable<Messages> GetListMessagesByConversationId(int? conversationId);
     }
 }

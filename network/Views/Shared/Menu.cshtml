@@ -4,12 +4,8 @@
         <ul class="nav nav-pills nav-stacked">
             <li>@Html.ActionLink("My page", "Index", "Users")</li>
             <li>
-                @*<div class="col-md-9">*@
                     @Html.ActionLink("My friends", "Index", "Friendship")
-                    @*</div>*@
-                @*<div class="col-md-3">*@
                     @{ Html.RenderAction("CountRequests", "Friendship"); }
-                    @*</div>*@
                 </li>
             <p></p>
                
@@ -25,11 +21,3 @@
 
 
 
-
-
-
-
-@*<div id="friendsrequest">
-    @Ajax.ActionLink("Friends","Details","Users",
-            new AjaxOptions {UpdateTargetId = "friendsrequest" })
-            </div>*@

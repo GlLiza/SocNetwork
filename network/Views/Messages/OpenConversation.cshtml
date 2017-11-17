@@ -38,46 +38,57 @@
 </nav>
 
 
-<div class="jumbotron container-fluid">
+<div class="jumbotron container-fluid">  
 
-    <div class="row page" align="center">
-        @*@Html.DisplayFor(model=>model.Receiver.Name)
-        @Html.DisplayFor(model => model.Receiver.Firstname)*@
-    </div>   
+    <div class="scr">
 
+    @foreach (var item in Model.Messages)
+    {
+        <div class="content">          
 
+            @if (item.SenderId == Model.UserStringId)
+            {
+                <div class="container darker">
+                    @*@if (Model.Members.FirstOrDefault(i => i.Id == item.SenderId).Image != null)
+                    {
+                        <img src="@String.Format("data:image/jpg;base64,{0}", Model.Members.FirstOrDefault(i => i.Id == item.SenderId).Image)" />
+                    }*@
 
+                    
+                    <p> @item.Message</p>
 
+                    <div class="time-right">@item.Time</div>
+                    </div>
+            }
 
+            @*<span class="time-right">@item.Time</span>*@
+        </div>           
+    }
+        </div>
 
-
-    @*<div class="container">
-        <img src="/w3images/bandmember.jpg" alt="Avatar" style="width:100%;">
-        <p>Hello. How are you today?</p>
-        <span class="time-right">11:00</span>
+    <div class="form" id="Send">
+        @using (Html.BeginForm("SendMessage", "Messages", FormMethod.Post))
+        {
+            @Html.HiddenFor(msg => msg.Conversation_id)
+            <input type="text" name="Message" placeholder="Type message and press enter..." >
+        }     
     </div>
-
-    <div class="container darker">
-        <img src="/w3images/avatar_g2.jpg" alt="Avatar" class="right" style="width:100%;">
-        <p>Hey! I'm fine. Thanks for asking!</p>
-        <span class="time-left">11:01</span>
-    </div>
-
-    <div class="container">
-        <img src="/w3images/bandmember.jpg" alt="Avatar" style="width:100%;">
-        <p>Sweet! So, what do you wanna do today?</p>
-        <span class="time-right">11:02</span>
-    </div>
-
-    <div class="container darker">
-        <img src="/w3images/avatar_g2.jpg" alt="Avatar" style="width:100%;">
-        <p>Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>
-        <span class="time-left">11:05</span>
-    </div>*@
-
-
-
 </div>
 
+@Styles.Render("~/Content/Chat.css")
 
-@*@Styles.Render("~/Content/Conversation.css")*@
+@section Scripts{
+    <script type="text/javascript">
+        $(             
+            $('#Send').keydown(function (event) {
+                debugger;
+                if (event.keyCode == 13)
+                {
+                    $('#Send').submit();
+                }
+
+            }));
+
+           
+    </script>
+}

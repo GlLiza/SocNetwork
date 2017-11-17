@@ -54,7 +54,7 @@ namespace network.DAL.Repository
             return particip;
         }
 
-        public List<Participants> GetParticipantsByConversId(int conversId)
+        public List<Participants> GetParticipantsByConversId(int? conversId)
         {
             var particip = _context.Participants.Where(s => s.Conversation_id == conversId).ToList();
             return particip;

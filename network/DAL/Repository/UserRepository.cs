@@ -83,6 +83,7 @@ namespace network.DAL.Repository
         public IQueryable<FamilyStatus> GetFamStatuses()
         {
             var list = _context.FamilyStatus;
+
             return list;
         }
     }

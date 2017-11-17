@@ -4,6 +4,7 @@ using network.BLL.EF;
 using network.DAL.IRepository;
 using network.DAL.Repository;
 using network.Views.ViewModels;
+using System;
 
 namespace network.BLL
 {
@@ -62,9 +63,9 @@ namespace network.BLL
                 var image = _imgRepository.GetImageById(userDetails.ImagesId);
                 
                     user.Id = userDetails.Id;
-                    user.Name = userDetails.Name;
-                    user.FirstName = userDetails.Firstname;
-                    user.Image = image.Data;
+                    user.FirstName = userDetails.Name;
+                    user.LastName = userDetails.Firstname;
+                    user.Image = Convert.ToBase64String(image.Data);
                     detailsList.Add(user);
             }
             return detailsList.ToList();
@@ -127,15 +128,15 @@ namespace network.BLL
             return _participantsRepository.GetParticipantsByUserId(Users_id);
         }
 
-        public List<EF.Messages> GetMessgByConversationId(int conversationId)
-        {
-            return _msgRepository.GetListMessagesByConversationId(conversationId);
-        }
+        //public List<EF.Messages> GetMessgByConversationId(int conversationId)
+        //{
+        //    return _msgRepository.GetListMessagesByConversationId(conversationId);
+        //}
 
 
 
         //return list of members by conversation's id 
-        public List<ConversationViewModel> GetMembersForParticipants(int conversationId)
+        public List<ConversationViewModel> GetMembersForParticipants(int? conversationId)
         {
             List<ConversationViewModel> details = new List<ConversationViewModel>();
             var listMembers = _participantsRepository.GetParticipantsByConversId(conversationId);
@@ -145,10 +146,10 @@ namespace network.BLL
                 ConversationViewModel item = new ConversationViewModel();
                 var user = _userRepository.GetUserById(member.Users_id);
                 item.Id = user.Id;
-                item.Name = user.Name;
-                item.FirstName = user.Firstname;
+                item.FirstName = user.Name;
+                item.LastName = user.Firstname;
                 var photo = _imgRepository.GetImageById(user.ImagesId);
-                item.Image = photo.Data;
+                item.Image = Convert.ToBase64String(photo.Data);
 
                 details.Add(item);
             }
@@ -156,21 +157,37 @@ namespace network.BLL
         }
 
         //return messages for conversation
-        public List<MessageBlocks> GetMessagesForConversation(int conversationId)
+        public List<MessageBlocks> GetMessagesForConversation(int? conversationId)
         {
             List<MessageBlocks> blockMsg = new List<MessageBlocks>();
-            var messages = GetMessgByConversationId(conversationId);
+            var messages = _msgRepository.GetListMessagesByConversationId(conversationId)
+                .OrderBy(s => s.Created_at)
+                .ToList();
             foreach (var msg in messages)
             {
                 MessageBlocks item = new MessageBlocks();
                 item.Message = msg.Message;
                 item.Time = msg.Created_at;
+                item.SenderId = msg.Sender_id;
+
+                var user = _userRepository.GetUserById(msg.Sender_id);
+                var img = _imgRepository.GetImageById(user.Id);
+
+                //item.Image =img.Data;
                 blockMsg.Add(item);
             }
 
             return blockMsg;
         }
 
+
+        public void SendMsg(Messages msg)
+        {
+            if (msg != null)
+            {
+                _msgRepository.AddMessage(msg);
+            }
+        }
 
     }
 }

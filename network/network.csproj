@@ -406,6 +406,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Chat.css" />
     <Content Include="Content\Conversation.css" />
     <Content Include="Content\createUs.css" />
     <Content Include="Content\ImgCarousel.css" />

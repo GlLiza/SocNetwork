@@ -13,7 +13,7 @@ namespace network.DAL.IRepository
         List<int> GetListFriendsId(int id);
         IQueryable<Participants> GetListParticipants();
         List<Participants> GetParticipantsByUserId(int userId);
-        List<Participants> GetParticipantsByConversId(int conversId);
+        List<Participants> GetParticipantsByConversId(int? conversId);
 
     }
 }

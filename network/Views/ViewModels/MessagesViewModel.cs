@@ -26,23 +26,40 @@ namespace network.Views.ViewModels
     public class ConversationViewModel
     {
         public int Id { get; set; }
-        public string Name { get; set; }
         public string FirstName { get; set; }
-        public byte[] Image { get; set; }
-        public int ConversationId { get; set; }
+        public string LastName { get; set; }
+        public string Image { get; set; }
     }
+
+
+    //for Messages/Index
+    public class IndexConversationViewModel
+    {
+        public int Conversation_id {get;set;}
+        public ConversationViewModel Conversation { get; set;}
+    }
+
 
     public class MessageBlocks
     {
+        public int SenderId { get; set; }
         public string Message { get; set; }
         public DateTime ? Time { get; set; }       
     }
 
+    //for Messages/OpenConversation
     public class OpenConversationViewModel
     {
-        public int ConversationId { get; set; }
+        public int? Conversation_id { get; set; }
+        public int UserStringId { get; set; }
         public List<ConversationViewModel> Members { get; set; }
         public List<MessageBlocks> Messages { get; set; }
+    }
 
+    //for Messages/SendMessage
+    public class MessageViewModel
+    {
+        public int Conversation_id { get; set; }
+        public string Message { get; set; }
     }
 }

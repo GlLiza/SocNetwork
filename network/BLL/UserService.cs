@@ -189,6 +189,11 @@ namespace network.BLL
             return CultureInfo.CurrentCulture.DateTimeFormat.MonthNames;                
         }
 
+        public int GetIntUserId(string id)
+        {
+            var user=SearchByUserId(id);
+            return user.Id;
+        } 
     }
 }
 

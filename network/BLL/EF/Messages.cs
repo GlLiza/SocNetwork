@@ -17,11 +17,9 @@ namespace network.BLL.EF
         public int Id { get; set; }
         public int Conversation_id { get; set; }
         public int Sender_id { get; set; }
-        public int Participants_id { get; set; }
         public string Message { get; set; }
         public Nullable<System.DateTime> Created_at { get; set; }
     
-        public virtual Participants Participants { get; set; }
         public virtual Conversation Conversation { get; set; }
         public virtual UserDetails UserDetails { get; set; }
     }

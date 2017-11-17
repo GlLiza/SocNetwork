@@ -134,7 +134,6 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Conversation_id" Type="int" Nullable="false" />
           <Property Name="Sender_id" Type="int" Nullable="false" />
-          <Property Name="Participants_id" Type="int" Nullable="false" />
           <Property Name="Message" Type="varchar" MaxLength="255" />
           <Property Name="Created_at" Type="datetime" />
         </EntityType>
@@ -331,25 +330,13 @@
         </Association>
         <Association Name="FK_Messages_Conversation">
           <End Role="Conversation" Type="Self.Conversation" Multiplicity="1" />
-          <End Role="Messages" Type="Self.Messages" Multiplicity="0..1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Conversation">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Messages">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Messages_Participants">
-          <End Role="Participants" Type="Self.Participants" Multiplicity="1" />
-          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Participants">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Messages">
-              <PropertyRef Name="Participants_id" />
+              <PropertyRef Name="Conversation_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -581,10 +568,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_Messages_Conversation" Association="Self.FK_Messages_Conversation">
             <End Role="Conversation" EntitySet="Conversation" />
-            <End Role="Messages" EntitySet="Messages" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Messages_Participants" Association="Self.FK_Messages_Participants">
-            <End Role="Participants" EntitySet="Participants" />
             <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
           <AssociationSet Name="FK_Messages_UserDetails" Association="Self.FK_Messages_UserDetails">
@@ -1090,7 +1073,6 @@
             <End Role="UserDetails" EntitySet="UserDetails" />
             <End Role="Photoalbum" EntitySet="Photoalbum" />
           </AssociationSet>
-          <EntitySet Name="Messages" EntityType="NetworkModel.Messages" />
           <EntitySet Name="Conversation" EntityType="NetworkModel.Conversation" />
           <AssociationSet Name="FK_Conversation_UserDetails" Association="NetworkModel.FK_Conversation_UserDetails">
             <End Role="UserDetails" EntitySet="UserDetails" />
@@ -1105,10 +1087,6 @@
             <End Role="UserDetails" EntitySet="UserDetails" />
             <End Role="Participants" EntitySet="Participants" />
           </AssociationSet>
-          <AssociationSet Name="FK_Messages_Participants" Association="NetworkModel.FK_Messages_Participants">
-            <End Role="Participants" EntitySet="Participants" />
-            <End Role="Messages" EntitySet="Messages" />
-          </AssociationSet>
           <EntitySet Name="School" EntityType="NetworkModel.School" />
           <AssociationSet Name="FK_UserDetails_School" Association="NetworkModel.FK_UserDetails_School">
             <End Role="School" EntitySet="School" />
@@ -1119,6 +1097,7 @@
             <End Role="WorkPlace" EntitySet="WorkPlace" />
             <End Role="UserDetails" EntitySet="UserDetails" />
           </AssociationSet>
+          <EntitySet Name="Messages" EntityType="NetworkModel.Messages" />
           <AssociationSet Name="FK_Messages_Conversation" Association="NetworkModel.FK_Messages_Conversation">
             <End Role="Conversation" EntitySet="Conversation" />
             <End Role="Messages" EntitySet="Messages" />
@@ -1140,20 +1119,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Messages">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Conversation_id" Type="Int32" Nullable="false" />
-          <Property Name="Sender_id" Type="Int32" Nullable="false" />
-          <Property Name="Participants_id" Type="Int32" Nullable="false" />
-          <Property Name="Message" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Created_at" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Participants" Relationship="NetworkModel.FK_Messages_Participants" FromRole="Messages" ToRole="Participants" />
-          <NavigationProperty Name="Conversation" Relationship="NetworkModel.FK_Messages_Conversation" FromRole="Messages" ToRole="Conversation" />
-          <NavigationProperty Name="UserDetails" Relationship="NetworkModel.FK_Messages_UserDetails" FromRole="Messages" ToRole="UserDetails" />
-        </EntityType>
         <EntityType Name="Conversation">
           <Key>
             <PropertyRef Name="Id" />
@@ -1166,7 +1131,7 @@
           <NavigationProperty Name="UserDetails" Relationship="NetworkModel.FK_Conversation_UserDetails" FromRole="Conversation" ToRole="UserDetails" />
           <NavigationProperty Name="Participants" Relationship="NetworkModel.FK_Participants_Conversation" FromRole="Conversation" ToRole="Participants" />
           <NavigationProperty Name="Messages" Relationship="NetworkModel.FK_Messages_Conversation" FromRole="Conversation" ToRole="Messages" />
-        </EntityType>
+          </EntityType>
         <Association Name="FK_Conversation_UserDetails">
           <End Type="NetworkModel.UserDetails" Role="UserDetails" Multiplicity="0..1" />
           <End Type="NetworkModel.Conversation" Role="Conversation" Multiplicity="*" />
@@ -1188,7 +1153,6 @@
           <Property Name="Users_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Conversation" Relationship="NetworkModel.FK_Participants_Conversation" FromRole="Participants" ToRole="Conversation" />
           <NavigationProperty Name="UserDetails" Relationship="NetworkModel.FK_Participants_UserDetails" FromRole="Participants" ToRole="UserDetails" />
-          <NavigationProperty Name="Messages" Relationship="NetworkModel.FK_Messages_Participants" FromRole="Participants" ToRole="Messages" />
         </EntityType>
         <Association Name="FK_Participants_Conversation">
           <End Type="NetworkModel.Conversation" Role="Conversation" Multiplicity="1" />
@@ -1211,18 +1175,6 @@
             </Principal>
             <Dependent Role="Participants">
               <PropertyRef Name="Users_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Messages_Participants">
-          <End Type="NetworkModel.Participants" Role="Participants" Multiplicity="1" />
-          <End Type="NetworkModel.Messages" Role="Messages" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Participants">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Messages">
-              <PropertyRef Name="Participants_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1274,15 +1226,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Messages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Conversation_id" Type="Int32" Nullable="false" />
+          <Property Name="Sender_id" Type="Int32" Nullable="false" />
+          <Property Name="Message" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Created_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Conversation" Relationship="NetworkModel.FK_Messages_Conversation" FromRole="Messages" ToRole="Conversation" />
+          <NavigationProperty Name="UserDetails" Relationship="NetworkModel.FK_Messages_UserDetails" FromRole="Messages" ToRole="UserDetails" />
+        </EntityType>
         <Association Name="FK_Messages_Conversation">
           <End Type="NetworkModel.Conversation" Role="Conversation" Multiplicity="1" />
-          <End Type="NetworkModel.Messages" Role="Messages" Multiplicity="0..1" />
+          <End Type="NetworkModel.Messages" Role="Messages" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Conversation">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Messages">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="Conversation_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1473,18 +1437,6 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="Messages">
-            <EntityTypeMapping TypeName="NetworkModel.Messages">
-              <MappingFragment StoreEntitySet="Messages">
-                <ScalarProperty Name="Created_at" ColumnName="Created_at" />
-                <ScalarProperty Name="Message" ColumnName="Message" />
-                <ScalarProperty Name="Participants_id" ColumnName="Participants_id" />
-                <ScalarProperty Name="Sender_id" ColumnName="Sender_id" />
-                <ScalarProperty Name="Conversation_id" ColumnName="Conversation_id" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Conversation">
             <EntityTypeMapping TypeName="NetworkModel.Conversation">
               <MappingFragment StoreEntitySet="Conversation">
@@ -1525,6 +1477,17 @@
                 <ScalarProperty Name="Position" ColumnName="Position" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="NetworkModel.Messages">
+              <MappingFragment StoreEntitySet="Messages">
+                <ScalarProperty Name="Created_at" ColumnName="Created_at" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Sender_id" ColumnName="Sender_id" />
+                <ScalarProperty Name="Conversation_id" ColumnName="Conversation_id" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

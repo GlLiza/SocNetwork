@@ -1,9 +1,7 @@
-﻿using System;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using network.BLL.EF;
 using network.DAL.IRepository;
-using System.Collections.Generic;
 
 namespace network.DAL.Repository
 {
@@ -20,6 +18,7 @@ namespace network.DAL.Repository
         public void AddMessage(Messages message)
         {
             _context.Messages.Add(message);
+            Save();
         }
 
         public void DeleteMessage(int id)
@@ -39,9 +38,10 @@ namespace network.DAL.Repository
             return _context.Messages;
         }
 
-        public List<Messages> GetListMessagesByConversationId(int conversationId)
+        public IQueryable<Messages> GetListMessagesByConversationId(int? conversationId)
         {
-            var listMesg = _context.Messages.Where(s => s.Conversation_id == conversationId).ToList();
+            var listMesg = _context.Messages
+                .Where(s => s.Conversation_id == conversationId);
             return listMesg;        
         }
     }
