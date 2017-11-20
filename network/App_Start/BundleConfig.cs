@@ -26,10 +26,6 @@ namespace network
                       "~/Scripts/RegistrScript.js",
                       "~/Scripts/IncreaseImg.js",
                       "~/Scripts/createUs.js",
-
-                      //"~/Scripts/owl.carousel.js",
-                      //"~/Scripts/ImgCarousel.js",
-
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
