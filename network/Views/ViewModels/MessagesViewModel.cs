@@ -51,7 +51,7 @@ namespace network.Views.ViewModels
     public class OpenConversationViewModel
     {
         public int? Conversation_id { get; set; }
-        public int UserStringId { get; set; }
+        public int CurrentUserId { get; set; }
         public List<ConversationViewModel> Members { get; set; }
         public List<MessageBlocks> Messages { get; set; }
     }

@@ -46,7 +46,7 @@ namespace network.BLL
 
             var conversationIdsList = _conversationRepository.GetConversationsIdsByCreatorId(id);
             if(conversationIdsList!=null)
-                friendsIds = _conversationRepository.GetFriendsIdsList(conversationIdsList);
+                friendsIds = _conversationRepository.GetFriendsIdsList(conversationIdsList,id);
             return friendsIds;
         }
 
@@ -99,7 +99,7 @@ namespace network.BLL
             var conversationsIds = _conversationRepository.GetConversationsIdsByCreatorId(id);
             if (conversationsIds != null)
             {
-               friendsIds = _conversationRepository.GetFriendsIdsList(conversationsIds);
+               friendsIds = _conversationRepository.GetFriendsIdsList(conversationsIds,id);
             }
             return friendsIds;
         }
@@ -188,6 +188,27 @@ namespace network.BLL
                 _msgRepository.AddMessage(msg);
             }
         }
+
+
+        public void CreateParticipants(string currentUsId, int receiverId, int conversationId)
+        {
+            var curUserId = _userRepository.ReturnIntId(currentUsId);
+            Participants participantCurUser = new Participants()
+            {
+                Conversation_id = conversationId,
+                Users_id = curUserId
+            };
+            CreateParticipants(participantCurUser);
+
+            Participants participantReceiver = new Participants()
+            {
+                Conversation_id = conversationId,
+                Users_id= receiverId
+            };
+            CreateParticipants(participantReceiver);
+
+        }
+
 
     }
 }

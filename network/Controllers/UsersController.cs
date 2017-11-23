@@ -108,7 +108,7 @@ namespace network.Controllers
         var friendList = _friendServ.GetFriendList(User.Identity.GetUserId());
         var users = _userService.GetUser().ToList();
                     
-        int currentUserId = _userService.CovertId(User.Identity.GetUserId());
+        int currentUserId = _userService.ConvertId(User.Identity.GetUserId());
 
         var othersUsers = _userService.AnotherUsers(friendList, users);
 

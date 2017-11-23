@@ -32,6 +32,7 @@ namespace network
                       "~/Content/bootstrap.css",
                       "~/Content/createUs.css",
                       "~/Content/Albums.css",
+                      "~/Content/Chat.css",
                       "~/Content/RegistrCSS.css",
                       "~/Content/IncreaseImg.css",
                       "~/Content/ImgCarousel.css",

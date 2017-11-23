@@ -8,17 +8,13 @@ body {
     border-radius: 5px;
     padding: 10px;
     margin: 10px 0;  
-    height:125px;
+    height:auto;
 }
 
 .darker {
     border-color: #ccc;
     background-color: #ddd;
 }
-
-/*.container + .darker {
-      
-}*/
 
 .containerr::after {
     content: "";
@@ -63,4 +59,27 @@ body {
     width:100%;
     height:550px;
     max-height:50%;
-} 
+}
+
+#Send {
+    padding:15px;
+}
+#addMesg {
+    height: 50px;
+    width: 1180px;
+    padding: 10px;
+    margin: 10px 0;  
+
+}
+
+.avatar {
+    height: 80px;
+    padding-right:0px;
+}  
+
+img .chat {
+    height:100px;
+    width: 140px;
+    border-radius: 25px;
+}
+

@@ -22,5 +22,10 @@ namespace network
             Bootstrapper.Initialise();
          
         }
+
+        //protected void Application_EndRequest()
+        //{
+
+        //}
     }
 }

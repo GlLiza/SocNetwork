@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using network.BLL.EF;
 using network.DAL.IRepository;
@@ -44,5 +45,18 @@ namespace network.DAL.Repository
                 .Where(s => s.Conversation_id == conversationId);
             return listMesg;        
         }
+
+        //public IQueryable<Messages> GetNotVisibilityMessage(int conversationId)
+        //{
+        //    var allMessage = GetListMessagesByConversationId(conversationId);
+        //    var 
+          
+
+        //    var listMesg = _context.Messages
+        //       .Where(s => s.Conversation_id == conversationId);
+        //    return listMesg;
+        //}
+
+
     }
 }

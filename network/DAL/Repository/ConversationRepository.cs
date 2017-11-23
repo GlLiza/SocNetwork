@@ -47,14 +47,18 @@ namespace network.DAL.Repository
         }
 
         //get users_id from conversation's list of id
-        public List<int> GetFriendsIdsList(List<int> conversationIds)
+        public List<int> GetFriendsIdsList(List<int> conversationIds, int curUserId)
         {
             List<int> friendsIdList=new List<int>();
 
             foreach (int convId in conversationIds)
             {
-                var friendId = _context.Participants.SingleOrDefault(x => x.Conversation_id == convId);
-                friendsIdList.Add(friendId.Users_id);
+                var participants = _context.Participants.Where(x => x.Conversation_id == convId && x.Users_id!=curUserId);
+                foreach (var part in participants)
+                {
+                    friendsIdList.Add(part.Users_id);
+                }
+                
             }
 
             return friendsIdList;

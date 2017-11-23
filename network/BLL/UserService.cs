@@ -59,30 +59,25 @@ namespace network.BLL
 
             foreach (var strId in strList)
             {
-                var idInt = CovertId(strId);
+                var idInt = ConvertId(strId);
                 listInt.Add(idInt);
             }
             return listInt;
         }
 
-        public int CovertId(string id)
+        public int ConvertId(string id)
         {
             var user = _userRepository.ReturnIntId(id);
             return user;
         }
 
-        public UserDetails SearchByUserId(string id)
-        {
-            var intId = _userRepository.ReturnIntId(id);
-            var user = _userRepository.GetUserById(intId);
-            return user;
-        }
+       
         
 
         //позволяет преобразовать string-Id в int-Id для метода GetFriendsForSearch()
         public Tuple<int, List<int>> ConvertListIds(string id,List<string> strList )
         {
-            int intIduser = CovertId(id);
+            int intIduser = ConvertId(id);
             List<int> intListFriends = ConvertListId(strList);
             return Tuple.Create<int, List<int>>(intIduser, intListFriends);
         }
@@ -187,6 +182,14 @@ namespace network.BLL
         public string[] GetMonth()
         {
             return CultureInfo.CurrentCulture.DateTimeFormat.MonthNames;                
+        }
+
+
+        public UserDetails SearchByUserId(string id)
+        {
+            var intId = _userRepository.ReturnIntId(id);
+            var user = _userRepository.GetUserById(intId);
+            return user;
         }
 
         public int GetIntUserId(string id)

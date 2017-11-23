@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using network.BLL.EF;
-using System.Collections.Generic;
 
 namespace network.DAL.IRepository
 {
@@ -13,5 +12,6 @@ namespace network.DAL.IRepository
       
         IQueryable<Messages> GetListMessages();
         IQueryable<Messages> GetListMessagesByConversationId(int? conversationId);
+    //    IQueryable<Messages> GetNotVisibilityMessage(int conversationId);
     }
 }

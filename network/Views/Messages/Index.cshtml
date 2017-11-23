@@ -86,60 +86,56 @@
 
 
 
-    <div id="selectMod" class="modal fade" data-url='@Url.Action("SelectReceiver","Messages",null)'>
-        <div id="selectContainer">
-        </div>
+<div id="selectMod" class="modal fade" data-url='@Url.Action("SelectReceiver","Messages",null)'>
+    <div id="selectContainer">
     </div>
+</div>
 
 
 
-    @section Scripts{
-        <script type="text/javascript">
-            $(function() {
-                $('#selectRec').click(function() {
-                    var url = $('#selectMod').data('url');
+@section Scripts{
+    <script type="text/javascript">
+        $(function() {
+            $('#selectRec').click(function() {
+                var url = $('#selectMod').data('url');
 
 
-                    $.get(url,
-                        function(data) {
-                            $('#selectContainer').html(data);
+                $.get(url,
+                    function(data) {
+                        $('#selectContainer').html(data);
 
-                            $('#selectMod').modal('show');
+                        $('#selectMod').modal('show');
 
-                            $('.beginChat').click(function() {
-                                var receiverId = $(this).data('id');
+                        $('.beginChat').click(function() {
+                            var receiverId = $(this).data('id');
 
-                                $.ajax({
-                                    url: '@Url.Action("SelectReceiver", "Messages")',
-                                    type: 'POST',
-                                    data: {
-                                        'receiverId': receiverId
-                                    },
+                            $.ajax({
+                                url: '@Url.Action("SelectReceiver", "Messages")',
+                                type: 'POST',
+                                data: {
+                                    'receiverId': receiverId
+                                },
 
-                                    dataType: "json",
-                                    success: function(response) {
-                                        $('#selectMod').modal('hide');
-                                        debugger;
+                                dataType: "json",
+                                success: function(response) {
+                                    $('#selectMod').modal('hide');
+                                    debugger;
 
-                                    },
-                                    error: function(xhr, ajaxOptions, thrownError) {
-                                        debugger;
-                                        $('#selectMod').modal('hide');
-                                    }
-                                });
+                                },
+                                error: function(xhr, ajaxOptions, thrownError) {
+                                    debugger;
+                                    $('#selectMod').modal('hide');
+                                }
                             });
                         });
-                });
-
-                //$(".chatId").mouseover(function () { $(this).addClass(".activeChat"); });
-                //debugger;
-                //$(".chatId").mouseout(function () { $(this).removeClass(".activeChat"); });
-
-                $(".chatId").bind({
-                    'mouseover': function () { $(this).css("background-color", "#cccccc"); },
-                    'mouseout': function () { $(this).css("background-color", "transparent"); },
-                });
-
+                    });
             });
-        </script>
-    }
+
+            $(".chatId").bind({
+                'mouseover': function () { $(this).css("background-color", "#cccccc"); },
+                'mouseout': function () { $(this).css("background-color", "transparent"); },
+            });
+
+        });
+    </script>
+}

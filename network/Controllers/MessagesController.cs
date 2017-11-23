@@ -57,9 +57,12 @@ namespace network.Controllers
         [HttpPost]
         public String SelectReceiver(int receiverId)
         {
+
             var conversation = CreateConversation();
             if (receiverId != 0)
-                CreateParticipants(receiverId, conversation.Id);
+            {
+                _msgService.CreateParticipants(User.Identity.GetUserId(),receiverId, conversation.Id);
+            }             
 
 
             JavaScriptSerializer js = new JavaScriptSerializer();
@@ -92,23 +95,35 @@ namespace network.Controllers
             return conversation;
         }
 
-        public Participants CreateParticipants(int receiverId, int conversationId)
-        {
-            Participants participants = new Participants();
+        //public Participants CreateParticipants(int userId, int conversationId)
+        //{
+        //    //if (userId > 0 && conversationId > 0)
+        //    //{
+        //        Participants participants = new Participants()
+        //        {
+        //            Conversation_id = conversationId,
+        //            Users_id = userId
+        //        };
+        //        _msgService.CreateParticipants(participants);
 
-            if (receiverId>0 && conversationId> 0)
-            {
-                participants.Conversation_id = conversationId;
-                participants.Users_id = receiverId;
+        //    //}
+        //    return participants;
 
-                this._msgService.CreateParticipants(participants);
-            }
-            return participants;
-        }
+
+
+            //if (receiverId>0 && conversationId> 0)
+            //{
+            //    participants.Conversation_id = conversationId;
+            //    participants.Users_id = receiverId;
+
+            //    this._msgService.CreateParticipants(participants);
+            //}
+            //return participants;
+   
 
         public List<IndexConversationViewModel> ConversationList(List<IndexConversationViewModel> model)
         {
-            int id = _userService.CovertId(User.Identity.GetUserId());
+            int id = _userService.ConvertId(User.Identity.GetUserId());
 
             var listFriendConvers = this._msgService.GetFriendsIdListFromConversation(id);
 
@@ -148,7 +163,7 @@ namespace network.Controllers
             List<MessageBlocks> blocksMsg = _msgService.GetMessagesForConversation(Conversation_id);
             model.Messages = blocksMsg;
             model.Conversation_id = Conversation_id;
-            model.UserStringId =_userService.GetIntUserId(User.Identity.GetUserId());
+            model.CurrentUserId =_userService.GetIntUserId(User.Identity.GetUserId());
             
             return View(model);
         }
@@ -173,5 +188,14 @@ namespace network.Controllers
             return RedirectToAction("Index", "Messages");
         }
 
+
+        public string GetPhotoForAvatar(int senderId)
+        {
+            var sender = _userService.SearchUser(senderId);
+            var senderImage = _imgService.GetProfilesPhoto(senderId);
+            return Convert.ToBase64String(senderImage);
+        }
+
     }
 }
+     
