@@ -64,20 +64,24 @@
                         }
                     </div>
 
-                    <div class="col-md-4 nameFirstname">
+                    <div class="col-md-2 nameFirstname">
                         <a href="@Url.Action("OpenConversation","Messages",new {Conversation_id = item.Conversation_id})">
                             @Html.DisplayFor(modelItem => item.Conversation.FirstName)
                             @Html.DisplayFor(modelItem => item.Conversation.LastName)
                         </a>
                         </div>
 
-                <div class="col-md-2 btn-group">                                        
-                    <button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
-                    <ul class="dropdown-menu">    
-                        <li>Remove conversation</li>                     
-                    </ul>
-                </div>
+                    <div class="col-md-2 btn-group">                                        
+                        <button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+                        <ul class="dropdown-menu">    
+                            <li>Remove conversation</li>                     
+                        </ul>
                     </div>
+
+                    <div class="col-md-2">
+                        New messages
+                    </div>
+                </div>
             </div>
         }
     }

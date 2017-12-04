@@ -9,9 +9,9 @@ namespace network.BLL
     {
         private readonly ISchoolRepository _schoolRepository;
 
-        public SchoolService()
-        {
-        }
+        //public SchoolService()
+        //{
+        //}
 
         public SchoolService(SchoolRepository schoolRepository)
         {

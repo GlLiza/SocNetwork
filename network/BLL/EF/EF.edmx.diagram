@@ -36,18 +36,19 @@
         <AssociationConnector Association="NetworkModel.FK_UserDetails_Location1" ManuallyRouted="false" />
         <AssociationConnector Association="NetworkModel.AspNetUserRoles" ManuallyRouted="false" />
         <AssociationConnector Association="NetworkModel.FK_Photoalbum_UserDetails" />
-        <EntityTypeShape EntityType="NetworkModel.Conversation" Width="1.5" PointX="12.875" PointY="0.5" />
-        <AssociationConnector Association="NetworkModel.FK_Conversation_UserDetails" />
-        <EntityTypeShape EntityType="NetworkModel.Participants" Width="1.5" PointX="18" PointY="0.5" />
-        <AssociationConnector Association="NetworkModel.FK_Participants_Conversation" />
-        <AssociationConnector Association="NetworkModel.FK_Participants_UserDetails" />
         <EntityTypeShape EntityType="NetworkModel.School" Width="1.5" PointX="8.375" PointY="0.875" />
         <AssociationConnector Association="NetworkModel.FK_UserDetails_School" />
         <EntityTypeShape EntityType="NetworkModel.WorkPlace" Width="1.5" PointX="5.75" PointY="11.875" />
         <AssociationConnector Association="NetworkModel.FK_UserDetails_WorkPlace" />
         <EntityTypeShape EntityType="NetworkModel.Messages" Width="1.5" PointX="16.25" PointY="3.5" />
-        <AssociationConnector Association="NetworkModel.FK_Messages_Conversation" />
         <AssociationConnector Association="NetworkModel.FK_Messages_UserDetails" />
+        <EntityTypeShape EntityType="NetworkModel.Conversation" Width="1.5" PointX="14.625" PointY="9.25" />
+        <EntityTypeShape EntityType="NetworkModel.Participants" Width="1.5" PointX="14.625" PointY="17" />
+        <AssociationConnector Association="NetworkModel.FK_Conversation_UserDetails" />
+        <AssociationConnector Association="NetworkModel.FK_Participants_UserDetails" />
+        <AssociationConnector Association="NetworkModel.FK_Conversation_UserDetails1" />
+        <AssociationConnector Association="NetworkModel.FK_Messages_Conversation" />
+        <AssociationConnector Association="NetworkModel.FK_Participants_Conversation" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

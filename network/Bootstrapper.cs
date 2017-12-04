@@ -54,7 +54,7 @@ namespace network
 
 
             container.RegisterType<AccountController>(new InjectionConstructor(typeof(UserService)));
-
+            //container.RegisterType<MessagesController>(new InjectionConstructor(typeof(MessagesService),typeof(UserService), typeof(FriendshipService), typeof(ImageService)));
 
             // register all your components with the container here
             // it is NOT necessary to register your controllers
@@ -65,5 +65,3 @@ namespace network
         }
     }
 }
-
-//,typeof(UserService)

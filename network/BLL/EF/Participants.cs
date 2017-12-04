@@ -18,7 +18,7 @@ namespace network.BLL.EF
         public int Conversation_id { get; set; }
         public int Users_id { get; set; }
     
-        public virtual Conversation Conversation { get; set; }
         public virtual UserDetails UserDetails { get; set; }
+        public virtual Conversation Conversation { get; set; }
     }
 }

@@ -90,9 +90,9 @@ namespace network.BLL
         {
             List<UserDetails> usersList = new List<UserDetails>();
 
-            foreach (var users in listId)
+            foreach (var userId in listId)
             {
-                var item = SearchUser(users);
+                var item = SearchUser(userId);
                 usersList.Add(item);
             }
             return usersList;
@@ -113,7 +113,7 @@ namespace network.BLL
         public List<UserDetails> GetDataForSearch(List<int> listIdsAll, List<int> listIdsFromConvers)
         {
             var list = ExcludeListIdInListId(listIdsAll, listIdsFromConvers);
-            return GetUserDetailsByListId(list).ToList();
+            return GetUserDetailsByListId(list);
         }
 
         

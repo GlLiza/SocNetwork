@@ -2,11 +2,14 @@
 <div class="col-md-7">
     <div class="navbar-collapse collapse">
         <ul class="nav nav-pills nav-stacked">
-            <li>@Html.ActionLink("My page", "Index", "Users")</li>
             <li>
-                    @Html.ActionLink("My friends", "Index", "Friendship")
-                    @{ Html.RenderAction("CountRequests", "Friendship"); }
-                </li>
+                @Html.ActionLink("My page", "Index", "Users")
+            </li>
+            <li>
+                @Html.ActionLink("My friends", "Index", "Friendship")
+                @{ Html.RenderAction("CountRequests", "Friendship"); }
+            </li>
+
             <p></p>
                
             <li>@Html.ActionLink("My photos", "Index", "ImgAlbum")</li>

@@ -10,9 +10,9 @@ namespace network.BLL
 
         private readonly IWorkPlaceRepository _workPlaceRepository;
 
-        public WorkPlaceService()
-        {
-        }
+        //public WorkPlaceService()
+        //{
+        //}
 
         public WorkPlaceService(WorkPlaceRepository workPlaceRepository)
         {

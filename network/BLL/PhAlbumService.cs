@@ -14,9 +14,9 @@ namespace network.BLL
         private readonly IImagesRepository _imgRepository;
         private readonly IUserRepository _userRepository;
 
-        public PhAlbumService()
-        {
-        }
+        //public PhAlbumService()
+        //{
+        //}
 
         public PhAlbumService(AlbumRepository albumRepository, AlbAndPhotoRepository albAndPhotoRepository,
             ImagesRepository imgRepository,UserRepository userRepository)

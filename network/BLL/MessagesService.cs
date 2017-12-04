@@ -17,12 +17,11 @@ namespace network.BLL
         private readonly IImagesRepository _imgRepository;
         private readonly IMessageRepository _msgRepository;
 
-        public MessagesService()
-        {
-        }
+        private readonly UserService _userService;       
 
         public MessagesService(ParticipantsRepository participantsRepository, ConversationRepository conversationRepository, 
-            FriendshipRepository friendshipRepository, UserRepository userRepository, ImagesRepository imgRepository, MessagesRepository msgRepository)
+            FriendshipRepository friendshipRepository, UserRepository userRepository, ImagesRepository imgRepository, MessagesRepository msgRepository,
+            UserService userService)
         {
             _participantsRepository = participantsRepository;
             _conversationRepository = conversationRepository;
@@ -30,28 +29,31 @@ namespace network.BLL
             _userRepository = userRepository;
             _imgRepository = imgRepository ;
             _msgRepository = msgRepository;
+            _userService = userService;
         }
 
 
         //get all friends
         public IQueryable<Friendship> GetFriendForSelect(string id)
-        {
+        {           
             return _friendshipRepository.GetListFriends(id);
         }
 
         //get list of friend's Ids without existing conversations
-        public List<int> GetFriendsIdsList(int id)
-        {
-            List<int> friendsIds=new List<int>();
+        //public List<int> GetFriendsIdsList(int id)
+        //{
+        //    List<int> friendsIds=new List<int>();
 
-            var conversationIdsList = _conversationRepository.GetConversationsIdsByCreatorId(id);
-            if(conversationIdsList!=null)
-                friendsIds = _conversationRepository.GetFriendsIdsList(conversationIdsList,id);
-            return friendsIds;
-        }
+        //    var conversationIdsList = _conversationRepository.GetConversationsIdsByUserId(id);
+        //    if(conversationIdsList!=null)
+        //        friendsIds = _conversationRepository.GetFriendsIdsList(conversationIdsList,id);
+        //    return friendsIds;
+        //}
 
         
         //get  information for friends
+
+
         public List<ConversationViewModel> GetUserDetails(List<UserDetails> userList)
         {
             List<ConversationViewModel> detailsList= new List<ConversationViewModel>();
@@ -78,38 +80,81 @@ namespace network.BLL
             return _userRepository.ReturnIntId(id);
         }
 
-        
+
+        // data for select receiver 
+        public List<UserDetails> GetReceiverForSelect(string id)
+        {
+            //var listIdStr = _friendService.GetFriendsIdsList(id);
+            var listIdStr = _friendshipRepository.GetListFriendsId(id);
+            var intIds = _userService.ConvertListIds(id, listIdStr);
+            var listFrConversation =GetFriendsIdListFromConversation(intIds.Item1);
+            var dataOfReceiver = _userService.GetDataForSearch(intIds.Item2, listFrConversation);
+            return dataOfReceiver;
+        }
+
+
 
         //  CONVERSATION
-        public void CreateConversation(Conversation conversation)
+
+        //create conversation + create participant
+        public Conversation CreateConversation(string id)
         {
-            if (conversation != null)
+            Conversation conversation = new Conversation()
             {
-                _conversationRepository.AddConversations(conversation);
-               
-            }
+                Creator_id = GetIntId(id),
+                Created_at = DateTime.Now.Date
+            };
+            _conversationRepository.AddConversations(conversation);
+
+            Participants partForCurUser = new Participants
+            {
+                Conversation_id = conversation.Id,
+                Users_id = conversation.Creator_id
+            };
+            CreateParticipants(partForCurUser);
+
+            return conversation;
+            
         }
 
 
         //позволяет получить список id друзей, с которыми существует Conversation
         public List<int> GetFriendsIdListFromConversation(int id)
         {
-            List<int> friendsIds=new List<int>();
+            List<int> friendsIds = new List<int>();
 
-            var conversationsIds = _conversationRepository.GetConversationsIdsByCreatorId(id);
+            var conversationsIds = _conversationRepository.GetConversationsIdsByUserId(id).ToList();
             if (conversationsIds != null)
             {
-               friendsIds = _conversationRepository.GetFriendsIdsList(conversationsIds,id);
+                friendsIds = _conversationRepository.GetFriendsIdsList(conversationsIds, id);
             }
             return friendsIds;
         }
 
         //return Conversation by creator's id
-        public Conversation GetConvByCreatotId(int creatorId)
+        public Conversation GetConvByUserId(int userId)
         {
-            var conversation = _conversationRepository.GetByCreatorId(creatorId);
+            var parts = _participantsRepository.GetParticipantsByUserId(userId);
+
+            var conversation = _conversationRepository.GetByCreatorId(userId);
             return conversation;
         }
+
+
+        //get conversationsdata for user
+        public Tuple<List<EF.UserDetails>, List<int>> GetConversationByStringId(string stringId)
+        {
+            int id = _userService.ConvertId(stringId);
+            var listFriendConvers = GetFriendsIdListFromConversation(id);
+            var conversationdata = _userService.GetUserDetailsByListId(listFriendConvers);
+
+            var conversation = _conversationRepository.GetConversationsIdsByUserId(id).ToList();
+
+            return Tuple.Create<List<EF.UserDetails>, List<int>>(conversationdata, conversation);
+        }
+
+
+
 
 
         //PARTICIPANTS
@@ -127,14 +172,7 @@ namespace network.BLL
         {
             return _participantsRepository.GetParticipantsByUserId(Users_id);
         }
-
-        //public List<EF.Messages> GetMessgByConversationId(int conversationId)
-        //{
-        //    return _msgRepository.GetListMessagesByConversationId(conversationId);
-        //}
-
-
-
+       
         //return list of members by conversation's id 
         public List<ConversationViewModel> GetMembersForParticipants(int? conversationId)
         {
@@ -208,6 +246,7 @@ namespace network.BLL
             CreateParticipants(participantReceiver);
 
         }
+
 
 
     }

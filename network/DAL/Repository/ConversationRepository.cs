@@ -41,9 +41,15 @@ namespace network.DAL.Repository
        
 
         //get conversation's ids list by creator's id
-        public List<int> GetConversationsIdsByCreatorId(int id)
+        public IQueryable<int> GetConversationsIdsByUserId(int id)
         {
-            return _context.Conversation.Where(i => i.Creator_id == id).Select(x=>x.Id).ToList();
+            var db = _context;
+            var conversations = from s in db.Conversation
+                                join sa in db.Participants on s.Id equals sa.Conversation_id
+                                where sa.Users_id == id
+                                select s.Id;
+            return conversations;
+            //return _context.Conversation.Where(i => i.Creator_id == id).Select(x=>x.Id);
         }
 
         //get users_id from conversation's list of id
@@ -69,6 +75,18 @@ namespace network.DAL.Repository
         {
             var conversation = _context.Conversation.FirstOrDefault(s => s.Creator_id == creatorId);
             return conversation;
-        } 
+        }
+
+        public Conversation GetConversationById(int conversationId)
+        {
+            var conversation = _context.Conversation.FirstOrDefault(s => s.Id== conversationId);
+            return conversation;
+        }
+
+        //public IQueryable<int> GetConversationsIdsByUserId(int id)
+        //{
+        //    var ids = _context.Conversation.Where(s => s.UserDetails.Id == id).Select(s => s.Id);
+        //    return ids;
+        //}
     }
 }

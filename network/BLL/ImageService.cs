@@ -10,9 +10,9 @@ namespace network.BLL
         private readonly IImagesRepository _imagesRepository;
         private readonly IUserRepository _userRepository;
 
-        public ImageService()
-        {
-        }
+        //public ImageService()
+        //{
+        //}
 
         public ImageService(ImagesRepository imgRepository,UserRepository userRepository)
         {

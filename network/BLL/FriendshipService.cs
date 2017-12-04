@@ -13,9 +13,9 @@ namespace network.BLL
         private readonly IFriendshipRepository _friendRepository;
         private readonly IRequestRepository _requestRepository;
 
-        public FriendshipService()
-        {
-        }
+        //public FriendshipService()
+        //{
+        //}
 
 
         public FriendshipService(FriendshipRepository friendshipRepository, RequestRepository requestRepository)

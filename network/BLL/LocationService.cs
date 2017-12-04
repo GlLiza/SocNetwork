@@ -9,9 +9,9 @@ namespace network.BLL
     {
         private readonly ILocationRepository _locRepository;
 
-        public LocationService()
-        {
-        }
+        //public LocationService()
+        //{
+        //}
 
         public LocationService(LocationRepository locationRepository)
         {

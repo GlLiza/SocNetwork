@@ -12,9 +12,11 @@ namespace network.DAL.IRepository
         void UpdateConversations(Conversation convert);
        
         IQueryable<Conversation> GetListConversations();
-        List<int> GetConversationsIdsByCreatorId(int id);
+        IQueryable<int> GetConversationsIdsByUserId(int id);
         List<int> GetFriendsIdsList(List<int> conversationsIdsList, int curUserId);
         Conversation GetByCreatorId(int creatorId);
+
+        Conversation GetConversationById(int conversationId);
     }
 
   

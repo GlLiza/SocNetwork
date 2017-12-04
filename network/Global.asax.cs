@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using network;
+using System;
 
 namespace network
 {
@@ -22,7 +23,12 @@ namespace network
             Bootstrapper.Initialise();
          
         }
-
+        protected void Application_Error()
+        {
+            var ex = Server.GetLastError();
+            //log the error!
+            Console.WriteLine(ex.Message);
+        }
         //protected void Application_EndRequest()
         //{
 

@@ -1,6 +1,8 @@
 using System;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
+using network.DAL.IRepository;
+using network.DAL.Repository;
 
 namespace network.App_Start
 {
@@ -36,7 +38,10 @@ namespace network.App_Start
             // container.LoadConfiguration();
 
             // TODO: Register your types here
-            // container.RegisterType<IProductRepository, ProductRepository>();
+            //container.RegisterType<IUserRepository, UserRepository>();
+            //container.RegisterType<IMessageRepository,MessagesRepository>();
+            //container.RegisterType<IFriendshipRepository,FriendshipRepository>();
+            //container.RegisterType<IImagesRepository, ImagesRepository>();
         }
     }
 }
