@@ -84,11 +84,11 @@ namespace network.BLL
         // data for select receiver 
         public List<UserDetails> GetReceiverForSelect(string id)
         {
-            //var listIdStr = _friendService.GetFriendsIdsList(id);
             var listIdStr = _friendshipRepository.GetListFriendsId(id);
             var intIds = _userService.ConvertListIds(id, listIdStr);
             var listFrConversation =GetFriendsIdListFromConversation(intIds.Item1);
             var dataOfReceiver = _userService.GetDataForSearch(intIds.Item2, listFrConversation);
+
             return dataOfReceiver;
         }
 
@@ -113,8 +113,7 @@ namespace network.BLL
             };
             CreateParticipants(partForCurUser);
 
-            return conversation;
-            
+            return conversation;            
         }
 
 

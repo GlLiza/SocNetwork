@@ -43,7 +43,7 @@ namespace network.BLL.EF
         public virtual DbSet<School> School { get; set; }
         public virtual DbSet<WorkPlace> WorkPlace { get; set; }
         public virtual DbSet<Messages> Messages { get; set; }
-        public virtual DbSet<Conversation> Conversation { get; set; }
         public virtual DbSet<Participants> Participants { get; set; }
+        public virtual DbSet<Conversation> Conversation { get; set; }
     }
 }

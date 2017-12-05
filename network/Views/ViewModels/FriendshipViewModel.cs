@@ -1,10 +1,14 @@
-﻿using System;
+﻿using network.BLL.EF;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using network.BLL.EF;
 
 namespace network.Views.ViewModels
 {
+    public class FriendshipViewModel
+    {
+    }
+
     public class FriendShow
     {
         [Key]
@@ -40,5 +44,23 @@ namespace network.Views.ViewModels
 
         public Location HomeLocation { get; set; }
         public IEnumerable<Location> ListHomLoc { get; set; }
+    }
+
+
+    //ViewModel for request
+
+    public class NewRequestsViewModel
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string Firstname { get; set; }
+        public byte[] Image { get; set; }
+        public Requests Requests { get; set; }
+    }
+
+    public class SendRequestViewModel
+    {
+        public string Id { get; set; }
+        public Requests Requests { get; set; }
     }
 }

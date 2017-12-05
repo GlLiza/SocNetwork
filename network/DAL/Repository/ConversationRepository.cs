@@ -38,18 +38,20 @@ namespace network.DAL.Repository
            _context.Entry(convert).State=EntityState.Modified;
         }
 
-       
+
 
         //get conversation's ids list by creator's id
         public IQueryable<int> GetConversationsIdsByUserId(int id)
         {
-            var db = _context;
-            var conversations = from s in db.Conversation
-                                join sa in db.Participants on s.Id equals sa.Conversation_id
-                                where sa.Users_id == id
-                                select s.Id;
+            //var db = _context;
+
+            var conversations = from s in _context.Conversation
+                                join sa in _context.Participants on s.Id equals sa.Conversation_id
+                                where s.Id == sa.Conversation_id
+                                select sa.Conversation_id;
+
             return conversations;
-            //return _context.Conversation.Where(i => i.Creator_id == id).Select(x=>x.Id);
+
         }
 
         //get users_id from conversation's list of id
