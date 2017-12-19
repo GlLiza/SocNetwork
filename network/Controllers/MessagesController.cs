@@ -31,6 +31,7 @@ namespace network.Controllers
         {
             List<IndexConversationViewModel> model = new List<IndexConversationViewModel>();
             var conversationdata = _msgService.GetConvData(User.Identity.GetUserId());
+            model = conversationdata;
             return View(model);          
         }
 

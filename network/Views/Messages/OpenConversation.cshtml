@@ -59,25 +59,25 @@
                         {
                             if (member.Image != null)
                             {
-                                <div class="col-md-2">
+                                <div class="col-md-2 avatar">
                                 <img src="@String.Format("data:image/jpg;base64,{0}", member.Image)" />
                                     </div>
                             }
 
                             else
                             {
-                                <div class="col-md-2">
+                                <div class="col-md-2 avatar">
                                     <img src="@Url.Content("~/Content/Pictures/no.jpg")" />
                                 </div>
                             }
 
                             <div class="col-md-7">
                                 <p> @item.Message</p>
-                                </div>
+                             </div>
 
-                                <div class="col-md-3">
-                                    <div class="time-right">@item.Time</div>
-                                </div>
+                            <div class="col-md-3">
+                                <div class="time-right">@item.Time</div>
+                            </div>
 
                         }
                         else

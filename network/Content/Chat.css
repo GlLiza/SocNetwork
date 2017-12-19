@@ -24,10 +24,10 @@ body {
 
 .containerr img {
     float: left;
-    max-width: 60px;
+    max-width: 80px;
     width: 100%;
     margin-right: 20px;
-    border-radius: 50%;
+    border-radius: 20%;
 }
 
 .containerr img.right {
@@ -75,11 +75,18 @@ body {
 .avatar {
     height: 80px;
     padding-right:0px;
-}  
+    margin-left:100px;
+    height:100px;
+    width: 140px;
+}
 
-img .chat {
+.chatId {
+    padding-top:20px;
+}
+
+/*.img +.chat {
     height:100px;
     width: 140px;
     border-radius: 25px;
-}
+}*/
 
