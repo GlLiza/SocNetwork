@@ -145,26 +145,31 @@ namespace network.BLL
         {
             int id = _userService.ConvertId(stringId);
             var listFriendConvers = GetFriendsIdListFromConversation(id);
-            var conversationdata = _userService.GetUserDetailsByListId(listFriendConvers);
+            var friendsData = _userService.GetUserDetailsByListId(listFriendConvers);
 
-            var conversIds = _conversationRepository.GetConversationsIdsByUserId(id).ToList();
+            var converIds = _conversationRepository.GetConversationsIdsByUserId(id).ToList();
 
             List<IndexConversationViewModel> model = new List<IndexConversationViewModel>();
-            //foreach (var convId in conversIds)
-            //{
-            //    foreach (var item in model)
-            //    {
-            //        item.Conversation_id = convId;
-            //        item.Conversation = _userService.GetUser();
-            //    }
-                
-            //}
+
+            foreach (var conId in converIds)
+            {
+                IndexConversationViewModel item = new IndexConversationViewModel();
+                item.Conversation_id = conId;
+
+                foreach (var convData in friendsData)
+                {
+                    ConversationViewModel data = new ConversationViewModel()
+                    {
+                        Id=convData.Id,
+                        FirstName=convData.Firstname,
+                        LastName=convData.Name,
+                        Image=Convert.ToBase64String(convData.Images.Data)
+                    };
+                    item.Conversation = data;
+                }
+                model.Add(item);
+            }
             return model;
-
-
-
-        //    return Tuple.Create<List<EF.UserDetails>, List<int>>(conversationdata, conversation);
-        //}
         }
 
 

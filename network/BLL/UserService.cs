@@ -81,11 +81,9 @@ namespace network.BLL
             List<int> intListFriends = ConvertListId(strList);
             return Tuple.Create<int, List<int>>(intIduser, intListFriends);
         }
-
-      
-
-
-        //позволяет вернуть все данные для друзей по списку id
+        
+        
+        //get data for friend list by id
         public List<UserDetails> GetUserDetailsByListId(List<int> listId)
         {
             List<UserDetails> usersList = new List<UserDetails>();

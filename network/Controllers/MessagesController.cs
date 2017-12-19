@@ -30,37 +30,7 @@ namespace network.Controllers
         public ActionResult Index()
         {
             List<IndexConversationViewModel> model = new List<IndexConversationViewModel>();
-
             var conversationdata = _msgService.GetConvData(User.Identity.GetUserId());
-
-          
-
-            //foreach (var data in conversationdata)
-            //{
-            //    foreach (var user in conversationdata.Item1)
-            //    {
-            //        var image = this._imgService.SearchImg(user.ImagesId);
-
-            //        var conversView = new IndexConversationViewModel
-            //        {
-            //            Conversation = new ConversationViewModel
-            //            {
-            //                Id = user.Id,
-            //                FirstName = user.Name,
-            //                LastName = user.Firstname,
-            //                Image = Convert.ToBase64String(image.Data)
-            //            },                                             
-            //        };
-
-            //        foreach (var id in conversationdata.Item2)
-            //        {
-            //            conversView.Conversation_id = id;
-            //        }
-            //    }
-              
-            //    model.Add(conversView);
-            //}
-
             return View(model);          
         }
 
