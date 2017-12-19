@@ -3,8 +3,6 @@ using System.Collections.Generic;
 
 namespace network.Views.ViewModels
 {
-
-
     //for Messages/Show message
     public class MessagesViewModel
     {
@@ -22,7 +20,14 @@ namespace network.Views.ViewModels
         public List<ConversationViewModel> FriendsList { get; set; }
     }
 
-    
+
+    //for Messages/Index
+    public class IndexConversationViewModel
+    {
+        public int Conversation_id { get; set; }
+        public ConversationViewModel Conversation { get; set; }
+    }
+
     public class ConversationViewModel
     {
         public int Id { get; set; }
@@ -32,12 +37,7 @@ namespace network.Views.ViewModels
     }
 
 
-    //for Messages/Index
-    public class IndexConversationViewModel
-    {
-        public int Conversation_id {get;set;}
-        public ConversationViewModel Conversation { get; set;}
-    }
+   
 
 
     public class MessageBlocks

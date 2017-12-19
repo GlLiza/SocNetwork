@@ -376,19 +376,10 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
-    <Compile Include="Views\ViewModels\AddPhotoViewModel.cs" />
-    <Compile Include="Views\ViewModels\ChangePhotoViewModel.cs" />
-    <Compile Include="Views\ViewModels\CreateUserViewModel.cs" />
-    <Compile Include="Views\ViewModels\FriendShow.cs" />
-    <Compile Include="Views\ViewModels\ImgViewModel.cs" />
+    <Compile Include="Views\ViewModels\FriendshipViewModel.cs" />
     <Compile Include="Views\ViewModels\MessagesViewModel.cs" />
-    <Compile Include="Views\ViewModels\NewRequestsViewModel.cs" />
-    <Compile Include="Views\ViewModels\NotFriendShow.cs" />
-    <Compile Include="Views\ViewModels\OpenAlbumViewModel.cs" />
-    <Compile Include="Views\ViewModels\PageViewModel.cs" />
-    <Compile Include="Views\ViewModels\SendRequestViewModel.cs" />
-    <Compile Include="Views\ViewModels\ShowUserViewModel.cs" />
-    <Compile Include="Views\ViewModels\UsersDetailsViewModel.cs" />
+    <Compile Include="Views\ViewModels\PhotoViewModel.cs" />
+    <Compile Include="Views\ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="BLL\EF\EF.Context.tt">

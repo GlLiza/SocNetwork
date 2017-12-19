@@ -31,30 +31,33 @@ namespace network.Controllers
         {
             List<IndexConversationViewModel> model = new List<IndexConversationViewModel>();
 
-            var conversationdata = _msgService.GetConversationByStringId(User.Identity.GetUserId());
+            var conversationdata = _msgService.GetConvData(User.Identity.GetUserId());
 
-            //???????????????????
-           // var conversatoin = _msgService.GetConvByUserId(id);
-            // var conversation=_msgService
-            //????????????????????
+          
 
-            //вернуть conversation по id создателя
-
-            //foreach (var user in conversationdata.Item1)
+            //foreach (var data in conversationdata)
             //{
-            //    var image = this._imgService.SearchImg(user.ImagesId);
-
-            //    var conversView = new IndexConversationViewModel
+            //    foreach (var user in conversationdata.Item1)
             //    {
-            //        Conversation = new ConversationViewModel
+            //        var image = this._imgService.SearchImg(user.ImagesId);
+
+            //        var conversView = new IndexConversationViewModel
             //        {
-            //            Id = user.Id,
-            //            FirstName = user.Name,
-            //            LastName = user.Firstname,
-            //            Image = Convert.ToBase64String(image.Data)
-            //        },
-            //      //  Conversation_id = conversatoin.Id
-            //    };
+            //            Conversation = new ConversationViewModel
+            //            {
+            //                Id = user.Id,
+            //                FirstName = user.Name,
+            //                LastName = user.Firstname,
+            //                Image = Convert.ToBase64String(image.Data)
+            //            },                                             
+            //        };
+
+            //        foreach (var id in conversationdata.Item2)
+            //        {
+            //            conversView.Conversation_id = id;
+            //        }
+            //    }
+              
             //    model.Add(conversView);
             //}
 

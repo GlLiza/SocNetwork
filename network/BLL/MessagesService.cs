@@ -120,14 +120,14 @@ namespace network.BLL
         //позволяет получить список id друзей, с которыми существует Conversation
         public List<int> GetFriendsIdListFromConversation(int id)
         {
-            List<int> friendsIds = new List<int>();
-
+            List<int> friendIds = new List<int>();
             var conversationsIds = _conversationRepository.GetConversationsIdsByUserId(id).ToList();
+
             if (conversationsIds != null)
             {
-                friendsIds = _conversationRepository.GetFriendsIdsList(conversationsIds, id);
+                friendIds = _conversationRepository.GetFriendsIdsList(conversationsIds, id);
             }
-            return friendsIds;
+            return friendIds;
         }
 
         //return Conversation by creator's id
@@ -141,17 +141,31 @@ namespace network.BLL
 
 
         //get conversationsdata for user
-        public Tuple<List<EF.UserDetails>, List<int>> GetConversationByStringId(string stringId)
+        public List<IndexConversationViewModel> GetConvData(string stringId)
         {
             int id = _userService.ConvertId(stringId);
             var listFriendConvers = GetFriendsIdListFromConversation(id);
             var conversationdata = _userService.GetUserDetailsByListId(listFriendConvers);
 
-            var conversation = _conversationRepository.GetConversationsIdsByUserId(id).ToList();
+            var conversIds = _conversationRepository.GetConversationsIdsByUserId(id).ToList();
 
-            return Tuple.Create<List<EF.UserDetails>, List<int>>(conversationdata, conversation);
+            List<IndexConversationViewModel> model = new List<IndexConversationViewModel>();
+            //foreach (var convId in conversIds)
+            //{
+            //    foreach (var item in model)
+            //    {
+            //        item.Conversation_id = convId;
+            //        item.Conversation = _userService.GetUser();
+            //    }
+                
+            //}
+            return model;
+
+
+
+        //    return Tuple.Create<List<EF.UserDetails>, List<int>>(conversationdata, conversation);
+        //}
         }
-
 
 
 

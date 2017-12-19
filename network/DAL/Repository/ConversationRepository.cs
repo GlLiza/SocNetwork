@@ -45,12 +45,17 @@ namespace network.DAL.Repository
         {
             //var db = _context;
 
-            var conversations = from s in _context.Conversation
-                                join sa in _context.Participants on s.Id equals sa.Conversation_id
-                                where s.Id == sa.Conversation_id
-                                select sa.Conversation_id;
+            var listIds = _context.Participants.Where(s => s.Users_id == id)
+                .Select(s => s.Conversation_id);
+            return listIds;
 
-            return conversations;
+
+            //var conversations = from s in _context.Conversation
+            //                    join sa in _context.Participants on s.Id equals sa.Conversation_id
+            //                    where s.Id == sa.Conversation_id
+            //                    select sa.Conversation_id;
+
+            //return conversations;
 
         }
 
