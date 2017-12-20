@@ -413,6 +413,12 @@ footer {
     padding-right:15px;
     padding-left:15px;
 }
+
+p {
+    word-wrap:break-word;
+}
+
+
  
 
 

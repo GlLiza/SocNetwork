@@ -106,12 +106,12 @@ namespace network.BLL
             };
             _conversationRepository.AddConversations(conversation);
 
-            Participants partForCurUser = new Participants
-            {
-                Conversation_id = conversation.Id,
-                Users_id = conversation.Creator_id
-            };
-            CreateParticipants(partForCurUser);
+            //Participants partForCurUser = new Participants
+            //{
+            //    Conversation_id = conversation.Id,
+            //    Users_id = conversation.Creator_id
+            //};
+            //CreateParticipants(partForCurUser);
 
             return conversation;            
         }
@@ -156,18 +156,30 @@ namespace network.BLL
                 IndexConversationViewModel item = new IndexConversationViewModel();
                 item.Conversation_id = conId;
 
+                var con = _conversationRepository.GetConversationById(conId);
+
                 foreach (var convData in friendsData)
                 {
-                    ConversationViewModel data = new ConversationViewModel()
+                    var part = _participantsRepository.GetParticipantsByConversId(con.Id);
+                    foreach (var p in part)
                     {
-                        Id=convData.Id,
-                        FirstName=convData.Firstname,
-                        LastName=convData.Name,
-                        Image=Convert.ToBase64String(convData.Images.Data)
-                    };
-                    item.Conversation = data;
+                        if (p.Users_id == convData.Id)
+                        {
+                            ConversationViewModel data = new ConversationViewModel()
+                            {
+                                Id = convData.Id,
+                                FirstName = convData.Firstname,
+                                LastName = convData.Name,
+                                Image = Convert.ToBase64String(convData.Images.Data)
+                            };
+                            item.Conversation = data;
+                            model.Add(item);
+                        }
+
+                        //var us = _userRepository.GetUserById(p.Users_id);
+                        //if (us==convData.Id)
+                    }                                 
                 }
-                model.Add(item);
             }
             return model;
         }

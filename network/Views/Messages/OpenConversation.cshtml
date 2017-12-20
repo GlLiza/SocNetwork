@@ -46,8 +46,8 @@
     <div class="chat scr">
         @foreach (var item in Model.Messages)
         {
-            if (item.SenderId == Model.CurrentUserId)
-            {
+            //if (item.SenderId == Model.CurrentUserId)
+            //{
                 <div class="containerr darker">
                     @{
                         var member = Model.Members.FirstOrDefault(i => i.Id == item.SenderId);
@@ -59,14 +59,14 @@
                         {
                             if (member.Image != null)
                             {
-                                <div class="col-md-2 avatar">
+                                <div class="col-md-3 avatar">
                                 <img src="@String.Format("data:image/jpg;base64,{0}", member.Image)" />
                                     </div>
                             }
 
                             else
                             {
-                                <div class="col-md-2 avatar">
+                                <div class="col-md-3 avatar">
                                     <img src="@Url.Content("~/Content/Pictures/no.jpg")" />
                                 </div>
                             }
@@ -75,14 +75,14 @@
                                 <p> @item.Message</p>
                              </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="time-right">@item.Time</div>
                             </div>
 
                         }
                         else
                         {
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="time-right">@item.Time</div>
                             </div>
 
@@ -92,13 +92,13 @@
 
                             if (member.Image != null)
                             {
-                                <div class="col-md-2">
+                                <div class="col-md-3 avatar">
                                     <img src="@String.Format("data:image/jpg;base64,{0}", member.Image)" />
                                 </div>
                             }
                             else
                             {
-                                <div class="col-md-2">
+                                <div class="col-md-3 avatar">
                                     <img src="@Url.Content("~/Content/Pictures/no.jpg")" />
                                 </div>
                             }
@@ -106,7 +106,8 @@
                         }
                     }
                 </div>
-                            }
+
+                            //}
                         }
       </div>
     <br />
