@@ -30,11 +30,9 @@
 
         <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li id="selectRec"><a href=#>Search <span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-search"></span></a></li>
-                
+                <li id="selectRec" onclick="select(this)" data-url='@Url.Action("SelectReceiver","Messages")'><a href="#">Select receiver</a></li>
             </ul>
         </div>
-
 
     </div>
 </nav>
@@ -53,23 +51,23 @@
         <div class="row chatId">           
                 <div class="row">
 
-                        <div class="col-md-4">
-                            @if (item != null)
-                                {
-                                    <img class="avatar" src="@String.Format("data:image/jpg;base64,{0}", item.Conversation.Image)"  />
-                                }
-                            else
-                                {
-                                    <img class="avatar" style="border:solid;" src="@Url.Content("~/Content/Pictures/no.jpg")" />
-                                }
-                          </div>
+                <div class="col-md-4">
+                    @if (item != null)
+                        {
+                            <img class="avatar" src="@String.Format("data:image/jpg;base64,{0}", item.Conversation.Image)"  />
+                        }
+                    else
+                        {
+                            <img class="avatar" style="border:solid;" src="@Url.Content("~/Content/Pictures/no.jpg")" />
+                        }
+                  </div>
 
-                            <div class="col-md-2 nameFirstname">
-                                <a href="@Url.Action("OpenConversation","Messages",new {Conversation_id = item.Conversation_id})">
-                                    @Html.DisplayFor(modelItem => item.Conversation.FirstName)
-                                    @Html.DisplayFor(modelItem => item.Conversation.LastName)
-                                </a>
-                            </div>
+                    <div class="col-md-2 nameFirstname">
+                        <a href="@Url.Action("OpenConversation","Messages",new {Conversation_id = item.Conversation_id})">
+                            @Html.DisplayFor(modelItem => item.Conversation.FirstName)
+                            @Html.DisplayFor(modelItem => item.Conversation.LastName)
+                        </a>
+                    </div>
 
                     <div class="col-md-2 btn-group">                                        
                         <button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
@@ -79,7 +77,7 @@
                     </div>
 
                     <div class="col-md-2">
-                        New messages
+                        @*New messages*@
                     </div>
                 </div>
           </div>
@@ -90,7 +88,7 @@
 
 
 
-<div id="selectMod" class="modal fade" data-url='@Url.Action("SelectReceiver","Messages",null)'>
+<div id="selectMod" class="modal fade" >
     <div id="selectContainer">
     </div>
 </div>
@@ -99,47 +97,22 @@
 
 @section Scripts{
     <script type="text/javascript">
-        $(function() {
-            $('#selectRec').click(function() {
-                var url = $('#selectMod').data('url');
 
-
-                $.get(url,
-                    function(data) {
-                        $('#selectContainer').html(data);
-
-                        $('#selectMod').modal('show');
-
-                        $('.beginChat').click(function() {
-                            var receiverId = $(this).data('id');
-
-                            $.ajax({
-                                url: '@Url.Action("SelectReceiver", "Messages")',
-                                type: 'POST',
-                                data: {
-                                    'receiverId': receiverId
-                                },
-
-                                dataType: "json",
-                                success: function(response) {
-                                    $('#selectMod').modal('hide');
-                                    debugger;
-
-                                },
-                                error: function(xhr, ajaxOptions, thrownError) {
-                                    debugger;
-                                    $('#selectMod').modal('hide');
-                                }
-                            });
-                        });
-                    });
-            });
-
+        document.ready = (function () {
             $(".chatId").bind({
                 'mouseover': function () { $(this).css("background-color", "#cccccc"); },
                 'mouseout': function () { $(this).css("background-color", "transparent"); },
             });
+        })
+        
+        function select(element) {
+            var url = $(element).data('url');
+            $.get(url,
+                function(data) {
+                    $('#selectContainer').html(data);
 
-        });
+                    $('#selectMod').modal('show');
+                });
+    };
     </script>
 }

@@ -124,9 +124,9 @@ namespace network.Controllers
                 item.Image = u.Images.Data;
                 item.User = u.AspNetUsers;
                 item.User = u.AspNetUsers;
-
-                model.Add(item);
+                   model.Add(item);
             }
+
             }
             ViewData["Error"] = TempData["message"];
 

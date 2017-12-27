@@ -1,10 +1,6 @@
 ﻿@using network.Controllers
 @model IEnumerable<network.Views.ViewModels.ShowUserViewModel>
 
-@*@{
-    FriendshipController f=new FriendshipController();
-    }*@
-
 
 
 <nav class="navbar navbar-inverse" role="navigation">
@@ -30,7 +26,7 @@
 
 <div class="jumbotron container-fluid">
     <div class="row page" align="center">
-        Another users 
+        Another users
         <hr />
     </div>
 
@@ -53,34 +49,34 @@
                         </a>
                     </div>
 
-                   <div class="col-md-1 btn-group">
+                    <div class="col-md-1 btn-group">
                         <button class="btn">...</button>
                         <button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
-                       <ul class="dropdown-menu">
-                           <li>@Html.ActionLink("Add to friends", "SendRequest", "Friendship", new { requestsId = item.User.Id }, null)</li>
-                           @*<li><a href="@Url.Action("SendRequest", "Friendship", new {id = item.User.Id})">Add to friends</a></li>*@
-                            </ul>
-                           @*@{
-                if (f.CheckRequest(item.User.Id) == false)
+                        <ul class="dropdown-menu">
+                            @*<li>@Html.ActionLink("Add to friends", "SendRequest", "Friendship", new { id = item.User.Id })</li>*@
+                            <li><a href="@Url.Action("SendRequest", "Friendship", new {id = item.User.Id})">Add to friends</a></li>
+                        </ul>
+                        @*@{
+                                if (f.CheckRequest(item.User.Id) == false)
 
-                {
-                    <a href="@Url.Action("SendRequest", "Friendship", new {id = item.User.Id})">Add to friends</a>
-                }
-            }*@
-                           @*<ul class="dropdown-menu">
-                    <li>@Html.ActionLink("Accept", "AcceptRequest", "Friendship", new { requestsId = item.Requests.Id }, null)</li>
-                    <li>@Html.ActionLink("Ignore", "IgnoreRequest", "Friendship", new { id = item.Requests.Id }, null)</li>
-                    <li>@Html.ActionLink("Rejectr", "RejectrRequest", "Friendship", new { id = item.Requests.Id }, null)</li>
-                </ul>*@
-            </div>
-</div>
-                <hr />           
-        @*</div>*@
+                                {
+                                    <a href="@Url.Action("SendRequest", "Friendship", new {id = item.User.Id})">Add to friends</a>
+                                }
+                            }*@
+                        @*<ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Accept", "AcceptRequest", "Friendship", new { requestsId = item.Requests.Id }, null)</li>
+                                <li>@Html.ActionLink("Ignore", "IgnoreRequest", "Friendship", new { id = item.Requests.Id }, null)</li>
+                                <li>@Html.ActionLink("Rejectr", "RejectrRequest", "Friendship", new { id = item.Requests.Id }, null)</li>
+                            </ul>*@
+                    </div>
+                </div>
+                <hr />
+                @*</div>*@
             }
+        </div>
+
     </div>
-
 </div>
-
 
 @*<table class="table">
 

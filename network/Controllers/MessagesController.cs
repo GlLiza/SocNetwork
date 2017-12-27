@@ -48,20 +48,15 @@ namespace network.Controllers
 
             return PartialView("_SelectReceiver", receiver);
         }
-        
+
         //POST: create a chat
         [HttpPost]
-        public String SelectReceiver(int receiverId)
+        public HttpStatusCode SelectReceiver(ReceiverDto dto)
         {
             var conversation = _msgService.CreateConversation(User.Identity.GetUserId());
-            if (receiverId != 0)
-            {
-                _msgService.CreateParticipants(User.Identity.GetUserId(),receiverId, conversation.Id);
-            }            
+            _msgService.CreateParticipants(User.Identity.GetUserId(), dto.receiverId, conversation.Id);
 
-            JavaScriptSerializer js = new JavaScriptSerializer();
-            var res = new HttpStatusCodeResult(HttpStatusCode.OK);
-            return js.Serialize(res);
+            return HttpStatusCode.OK;
         }
 
         [HttpGet]
@@ -129,6 +124,11 @@ namespace network.Controllers
         //    };
         //}
 
+    }
+
+    public class ReceiverDto
+    {
+        public int receiverId { get; set; }
     }
 }
      
