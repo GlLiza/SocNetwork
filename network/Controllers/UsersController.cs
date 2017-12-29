@@ -84,7 +84,7 @@ namespace network.Controllers
             modell.CurrentLocation = curLoc;
 
 
-            return View("FriendsPage", modell);
+            return View("UsersPage",modell);
         }
         else
         {

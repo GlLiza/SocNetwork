@@ -556,7 +556,6 @@
     <Content Include="Views\Friendship\NewRequest.cshtml" />
     <Content Include="Views\Users\BrowseUsers.cshtml" />
     <Content Include="Views\Users\NotFriendsPage.cshtml" />
-    <Content Include="Views\Users\FriendsPage.cshtml" />
     <Content Include="Views\Friendship\_DeleteFriends.cshtml" />
     <Content Include="Views\Friendship\FriendsOfFriends.cshtml" />
     <Content Include="Views\ImgAlbum\Index.cshtml" />
@@ -573,6 +572,7 @@
     <Content Include="Views\Shared\_LayoutCreate.cshtml" />
     <None Include="Service References\GetCitiesByCountryServiceRef\globalweather.wsdl" />
     <Content Include="Views\Messages\OpenConversation.cshtml" />
+    <Content Include="Views\Users\UsersPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

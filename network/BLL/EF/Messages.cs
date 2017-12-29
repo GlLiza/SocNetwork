@@ -20,6 +20,7 @@ namespace network.BLL.EF
         public string Message { get; set; }
         public Nullable<System.DateTime> Created_at { get; set; }
         public Nullable<bool> Visibility { get; set; }
+        public Nullable<bool> IsNotReading { get; set; }
     
         public virtual UserDetails UserDetails { get; set; }
         public virtual Conversation Conversation { get; set; }

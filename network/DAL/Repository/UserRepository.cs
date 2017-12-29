@@ -60,7 +60,9 @@ namespace network.DAL.Repository
         {
             var user = _context.UserDetails
                 .First(s => s.UserId == id);
-            return user.Id;
+            if (user != null)
+                return user.Id;
+            else return 0;
         }
 
 

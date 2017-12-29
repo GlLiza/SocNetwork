@@ -15,6 +15,10 @@ body {
     border-color: #ccc;
     background-color: #ddd;
 }
+.darkerNotVisibil {
+    border-color: #ccc;
+    background-color: #bdb2b2;
+}
 
 .containerr::after {
     content: "";

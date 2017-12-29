@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Linq;
 using network.BLL.EF;
 using network.DAL.IRepository;
+using System.Collections.Generic;
 
 namespace network.DAL.Repository
 {
@@ -46,17 +47,28 @@ namespace network.DAL.Repository
             return listMesg;        
         }
 
-        //public IQueryable<Messages> GetNotVisibilityMessage(int conversationId)
-        //{
-        //    var allMessage = GetListMessagesByConversationId(conversationId);
-        //    var 
-          
+        public int GetMsg(int conId, int senderId, DateTime date)
+        {
+            var msg = _context.Messages.FirstOrDefault(x => x.Sender_id == senderId && x.Conversation_id == conId && x.Created_at == date);
+            return msg.Id;
+        }
 
-        //    var listMesg = _context.Messages
-        //       .Where(s => s.Conversation_id == conversationId);
-        //    return listMesg;
-        //}
-
-
+        public Messages FindMsg(int id)
+        {
+            var msgId = _context.Messages.Find(id);
+            return msgId;
+        }
+        
+        public List<int> GetNotReadingMsg(IQueryable<Messages> list)
+        {
+            List<int> result = new List<int>();
+            foreach (var item in list)
+            {
+                var msg = FindMsg(item.Id);
+                if (msg.IsNotReading == true)
+                    result.Add(msg.Id);
+            }
+            return result;
+        }             
     }
 }

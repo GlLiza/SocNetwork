@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
 using Microsoft.AspNet.Identity;
 using network.BLL;
 using network.BLL.EF;
@@ -16,7 +15,7 @@ namespace network.Controllers
         private readonly MessagesService _msgService;
         private readonly UserService _userService;
         private readonly ImageService _imgService;
-        
+
 
         public MessagesController(MessagesService msgService, UserService userService, ImageService imgService)
         {
@@ -32,7 +31,7 @@ namespace network.Controllers
             List<IndexConversationViewModel> model = new List<IndexConversationViewModel>();
             var conversationdata = _msgService.GetConvData(User.Identity.GetUserId());
             model = conversationdata;
-            return View(model);          
+            return View(model);
         }
 
 
@@ -42,7 +41,7 @@ namespace network.Controllers
         {
             SelectReceiver receiver = new SelectReceiver();
             List<UserDetails> receiverList = _msgService.GetReceiverForSelect(User.Identity.GetUserId());
- 
+
             if (receiverList != null)
                 receiver.FriendsList = this._msgService.GetUserDetails(receiverList);
 
@@ -66,12 +65,12 @@ namespace network.Controllers
 
             List<ConversationViewModel> listMembers = _msgService.GetMembersForParticipants(Conversation_id);
             model.Members = listMembers;
-                      
+
             List<MessageBlocks> blocksMsg = _msgService.GetMessagesForConversation(Conversation_id);
             model.Messages = blocksMsg;
             model.Conversation_id = Conversation_id;
-            model.CurrentUserId =_userService.GetIntUserId(User.Identity.GetUserId());
-            
+            model.CurrentUserId = _userService.GetIntUserId(User.Identity.GetUserId());
+
             return View(model);
         }
 
@@ -86,9 +85,10 @@ namespace network.Controllers
                     Sender_id = _userService.GetIntUserId(User.Identity.GetUserId()),
                     Message = msg.Message,
                     Created_at = DateTime.Now,
-                    Visibility = true                    
+                    Visibility = true,
+                    IsNotReading=true
                 };
-                            
+
                 _msgService.SendMsg(message);
 
                 return RedirectToAction("OpenConversation", "Messages", new { Conversation_id = message.Conversation_id });
@@ -96,6 +96,26 @@ namespace network.Controllers
             return RedirectToAction("Index", "Messages");
         }
 
+
+        public void ReadingMsg(int? conId)
+        {
+
+            List<int> result = new List<int>();
+            var list = _msgService.GetListIdOfMsg(conId);
+            foreach (var item in list)
+            {
+                result.Add(item);
+            }
+            _msgService.ReadingMsg(result);
+        }
+        //public ActionResult DeleteMessage(int converId,DateTime date)
+        //{
+        //    var userId = User.Identity.GetUserId();
+        //    var user = _userService.GetIntUserId(userId);
+        //    var msg=_msgService.
+       
+        //    return View();
+        //}
 
         public string GetPhotoForAvatar(int senderId)
         {
@@ -124,11 +144,28 @@ namespace network.Controllers
         //    };
         //}
 
+
+        //protected List<MessageBlocks> CheckMessages(List<MessageBlocks> listMsg)
+        //{
+        //    string stringId = User.Identity.GetUserId();
+        //    var intId = _userService.GetIntUserId(stringId);
+
+        //    foreach (var item in listMsg)
+        //    {
+        //        if (item.SenderId != intId && item.VisibForInterlocutor == false)
+        //        {
+
+        //        }
+        //    }
+        //}
     }
 
     public class ReceiverDto
     {
         public int receiverId { get; set; }
     }
+
+   
+    
 }
      

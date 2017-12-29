@@ -9,49 +9,25 @@
                 <button type="button" class="close"  data-dismiss="modal">&times;</button>
                 <h4 class="modal-title header">Select receiver</h4>
             </div>
-            
-            <div class="modal-body">
-                @*@using (Html.BeginForm("SelectReceiver", "Messages", FormMethod.Post))
-                {*@
-                @*<table class="table">*@
-                        @if (Model.FriendsList != null)
-                        {
-                            <div class="scrolSelRec">
-                                <hr />
-                                @foreach (var friend in Model.FriendsList)
-                                {
-                                    //using (Html.BeginForm("Selectreceiver", "Messages", FormMethod.Post, new { receiverId = friend.Id }))
-                                    //{
+                <div class="modal-body">
+                            @if (Model.FriendsList != null)
+                            {
+                                <div class="scrolSelRec">
+                                    <hr />
+                                    @foreach (var friend in Model.FriendsList)
+                                    {
                                         <a href="#">
-                                            <div id="beginChat" data-id="@friend.Id" onclick="selectRes(this)">
-                                                <div class="row  .content_for_friends">
-                                                    <div class="text">
-                                                        <img class="select_friend_img" src="data:image/jpg;base64,@friend.Image">
-                                                        @Html.DisplayFor(modelItem => friend.LastName)
-                                                        @Html.DisplayFor(modelItem => friend.FirstName)
-                                                    </div>
-                                                </div>
+                                            <div id="beginChat" data-id="@friend.Id" onclick="selectRes(this)" class="row  .content_for_friends text">
+                                                <img class="select_friend_img" src="data:image/jpg;base64,@friend.Image">
+                                                @Html.DisplayFor(modelItem => friend.LastName)
+                                                @Html.DisplayFor(modelItem => friend.FirstName)
                                             </div>
                                         </a>
-
-
-                                        @*<div class="row">
-                                            <div class="form-group">
-                                                <div class="col-md-offset-8 col-md-4 ">
-                                                    <button class="btn btn-info pull-right" type="submit">OK</button>
-                                                </div>
-                                            </div>
-                                        </div>*@
-                                    @*}*@
-
-                                     <hr />
-                                }
-                            </div>
+                                        <hr />
+                                    }
+                                </div>
                             }
-                        @*}*@
-                @*</table>*@
-            </div>
-
+                </div>
             </div>
         </div>
 </div>

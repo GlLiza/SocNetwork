@@ -37,20 +37,7 @@ namespace network.BLL
         public IQueryable<Friendship> GetFriendForSelect(string id)
         {           
             return _friendshipRepository.GetListFriends(id);
-        }
-
-        //get list of friend's Ids without existing conversations
-        //public List<int> GetFriendsIdsList(int id)
-        //{
-        //    List<int> friendsIds=new List<int>();
-
-        //    var conversationIdsList = _conversationRepository.GetConversationsIdsByUserId(id);
-        //    if(conversationIdsList!=null)
-        //        friendsIds = _conversationRepository.GetFriendsIdsList(conversationIdsList,id);
-        //    return friendsIds;
-        //}
-
-        
+        }        
         //get  information for friends
 
 
@@ -234,14 +221,15 @@ namespace network.BLL
             foreach (var msg in messages)
             {
                 MessageBlocks item = new MessageBlocks();
+                item.Id = msg.Id;
                 item.Message = msg.Message;
                 item.Time = msg.Created_at;
                 item.SenderId = msg.Sender_id;
+                item.IsNotReading = msg.IsNotReading;
 
                 var user = _userRepository.GetUserById(msg.Sender_id);
                 var img = _imgRepository.GetImageById(user.Id);
-
-                //item.Image =img.Data;
+                
                 blockMsg.Add(item);
             }
 
@@ -278,6 +266,41 @@ namespace network.BLL
         }
 
 
+        public void ReadingMsg(List<int> ids)
+        {
+            var listMsg = GetListMsgByListId(ids);
+            if (listMsg.Count>0)
+                Reading(listMsg);
+        }
+
+        public List<Messages> GetListMsgByListId(List<int> ids)
+        {
+            List<Messages> list = new List<Messages>();
+            foreach (var item in ids)
+            {
+                var msg = _msgRepository.FindMsg(item);
+                list.Add(msg);
+            }
+            return list;
+        }
+
+        public void Reading(List<Messages> list)
+        {
+            foreach (var item in list)
+            {
+                item.IsNotReading = false;
+                _msgRepository.UpdateMessage(item);
+            }
+        }
+
+
+        public List<int> GetListIdOfMsg (int? conversId)
+        {
+            var msgs = _msgRepository.GetListMessagesByConversationId(conversId);
+            var list = _msgRepository.GetNotReadingMsg(msgs);
+            return list;
+        }
+      
 
     }
 }

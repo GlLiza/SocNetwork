@@ -164,7 +164,7 @@ td {
 
 
 .page {
-    color:#000;
+    color:#363d54;
     font-size: 36px;
     font-weight: bold;
 }
@@ -246,8 +246,8 @@ hr {
     border-color: black;
 }
 .navbar-inverse {
-        background-color: black;
-    border-color: black;
+        background-color:#363d54 ;
+    border-color:#decbcc;
 }
 
 .img-circle {
@@ -388,8 +388,8 @@ footer {
     color:#9d9d9d;
 }
 .btn {
-    background-color:#000;
-    color:#9d9d9d;
+    background-color:#363d54;
+    color:#decbcc;
 }
 
 .pageHome {
@@ -418,8 +418,20 @@ p {
     word-wrap:break-word;
 }
 
+.btn:hover, .btn:focus, .btn.focus {
+    color:#060606;
+    text-decoration:none;
+}
 
- 
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+     background-color:#363d54;
+    color:#decbcc;
+}
+
+a {
+    color:#363d54;
+}
+
 
 
 

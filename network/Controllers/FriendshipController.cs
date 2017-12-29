@@ -148,11 +148,7 @@ namespace network.Controllers
                     TempData["message"] = "Request has been sent to user";
 
                     return RedirectToAction("BrowseUsers", "Users");
-                }           
-
-            //TempData["message"] = "Request has been sent to user";
-
-            //return RedirectToAction("BrowseUsers", "Users");
+                } 
         }
 
         TempData["message"] = "Request has't been sent to user";
@@ -167,7 +163,7 @@ namespace network.Controllers
     }  
 
 
-        public ActionResult AcceptRequest(int requestsId)
+    public ActionResult AcceptRequest(int requestsId)
     {
         _friendServ.StatusToAccepted(requestsId);
         Requests req = _friendServ.SearchRequest(requestsId);

@@ -40,87 +40,109 @@
 
  
 
-
 <div class="jumbotron container">
-
     <div class="chat scr">
         @foreach (var item in Model.Messages)
         {
-            //if (item.SenderId == Model.CurrentUserId)
-            //{
-                <div class="containerr darker">
-                    @{
-                        var member = Model.Members.FirstOrDefault(i => i.Id == item.SenderId);
-                    }
+            var member = Model.Members.FirstOrDefault(i => i.Id == item.SenderId);
 
-                    @if (member != null)
-                    {
-                        if (member.Id != Model.CurrentUserId)
+            if (member.Id != Model.CurrentUserId)
+            {
+                if (item.IsNotReading == true)
+                {
+                    <div class="containerr darkerNotVisibil">
+                        @if (member.Image != null)
                         {
-                            if (member.Image != null)
-                            {
-                                <div class="col-md-3 avatar">
+                            <div class="col-md-3 avatar">
                                 <img src="@String.Format("data:image/jpg;base64,{0}", member.Image)" />
-                                    </div>
-                            }
-
-                            else
-                            {
-                                <div class="col-md-3 avatar">
-                                    <img src="@Url.Content("~/Content/Pictures/no.jpg")" />
-                                </div>
-                            }
-
-                            <div class="col-md-7">
-                                <p> @item.Message</p>
-                             </div>
-
-                            <div class="col-md-2">
-                                <div class="time-right">@item.Time</div>
                             </div>
-
                         }
                         else
                         {
-                            <div class="col-md-2">
-                                <div class="time-right">@item.Time</div>
+                            <div class="col-md-3 avatar">
+                                <img src="@Url.Content("~/Content/Pictures/no.jpg")" />
                             </div>
-
-                            <div class="col-md-7">
-                                <p> @item.Message</p>
-                            </div>
-
-                            if (member.Image != null)
-                            {
-                                <div class="col-md-3 avatar">
-                                    <img src="@String.Format("data:image/jpg;base64,{0}", member.Image)" />
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="col-md-3 avatar">
-                                    <img src="@Url.Content("~/Content/Pictures/no.jpg")" />
-                                </div>
-                            }
-
                         }
+                        <div class="col-md-7">
+                            <p> @item.Message</p>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="time-right">@item.Time</div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="containerr darker">
+                        @if (member.Image != null)
+                        {
+                        <div class="col-md-3 avatar">
+                            <img src="@String.Format("data:image/jpg;base64,{0}", member.Image)" />
+                        </div>
+                        }
+                        else
+                        {
+                        <div class="col-md-3 avatar">
+                            <img src="@Url.Content("~/Content/Pictures/no.jpg")" />
+                        </div>
+                        }
+                        <div class="col-md-7">
+                            <p> @item.Message</p>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="time-right">@item.Time</div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="containerr darker">
+                    <div class="col-md-1">
+                        <div class="time-right">@item.Time</div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p> @item.Message</p>
+                    </div>
+
+                    @if (member.Image != null)
+                    {
+                        <div class="col-md-3 avatar">
+                            <img src="@String.Format("data:image/jpg;base64,{0}", member.Image)" />
+                        </div>
+
+                        <div class="col-md-2 avatar">
+                            <div id="delMsg" onclick="delMsg(this)" @*data-id="@item.Time"*@><span aria-hidden="true">×</span></div>
+                        </div>
                     }
-                </div>
+                    else
+                    {
+                        <div class="col-md-3 avatar">
+                            <img src="@Url.Content("~/Content/Pictures/no.jpg")" />
+                        </div>
+                    }
 
-                            //}
-                        }
-      </div>
-    <br />
-    <div class="form" id="Send">
-        @using (Html.BeginForm("SendMessage", "Messages", FormMethod.Post))
-        {
-            @Html.HiddenFor(msg => msg.Conversation_id)
-            <input type="text" id="addMesg" name="Message" placeholder="Type message and press enter...">
+                </div>
+            }
         }
     </div>
+    <br />
 
 </div>
 
+    <div class="form" id="Send">
+        @using (Html.BeginForm("SendMessage", "Messages", FormMethod.Post))
+        {
+            @Html.Hidden("conversId",Model.Conversation_id)
+            @Html.HiddenFor(msg => msg.Conversation_id)
+
+             <input type="text" id="addMesg" name="Message" placeholder="Type message and press enter...">
+        }
+    </div>
+   
 
 @section Scripts {
     <script type="text/javascript">
@@ -137,5 +159,25 @@
 
         var d = $('.scr');
         d.scrollTop(d.prop("scrollHeight"));
+
+
+        $('#Send').hover(function (element)
+        {
+            var conversId = $("#conversId").val();
+            $.ajax({
+                url: '@Url.Action("ReadingMsg", "Messages")',
+                type: 'POST',
+                data: JSON.stringify({ 'conId': conversId }),
+                contentType: 'application/json; charset=utf-8',
+
+
+                success: function (response) {                 
+                    $('.container').reload('.container');
+                },
+
+
+             });
+          }
+        );
     </script>
 }                   

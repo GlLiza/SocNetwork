@@ -1,4 +1,4 @@
-﻿@model network.Views.ViewModels.NotFriendShow
+﻿@model network.Views.ViewModels.FriendShow
 
 @using (Html.BeginForm("UsersPage", "Users"))
 {
@@ -17,5 +17,13 @@
             @Html.DisplayFor(model => model.Name)
             @Html.DisplayFor(model => model.Firstname)
         </div>
+        <br />
+            @Html.DisplayNameFor(model => model.DateOfBirthday)
+            @Html.DisplayFor(model => model.DateOfBirthday)
+        <br />
+            @Html.DisplayNameFor(model => model.CurrentLocation.Country)
+            @Html.DisplayFor(model => model.CurrentLocation.Country)
     </div>
 }
+
+

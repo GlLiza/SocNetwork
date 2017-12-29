@@ -136,6 +136,7 @@
           <Property Name="Message" Type="varchar" MaxLength="255" />
           <Property Name="Created_at" Type="datetime" />
           <Property Name="Visibility" Type="bit" />
+          <Property Name="IsNotReading" Type="bit" />
         </EntityType>
         <EntityType Name="Participants">
           <Key>
@@ -1179,6 +1180,7 @@
           <NavigationProperty Name="UserDetails" Relationship="NetworkModel.FK_Messages_UserDetails" FromRole="Messages" ToRole="UserDetails" />
           <Property Name="Visibility" Type="Boolean" />
           <NavigationProperty Name="Conversation" Relationship="NetworkModel.FK_Messages_Conversation" FromRole="Messages" ToRole="Conversation" />
+          <Property Name="IsNotReading" Type="Boolean" />
         </EntityType>
         <Association Name="FK_Messages_UserDetails">
           <End Type="NetworkModel.UserDetails" Role="UserDetails" Multiplicity="1" />
@@ -1464,6 +1466,7 @@
           <EntitySetMapping Name="Messages">
             <EntityTypeMapping TypeName="NetworkModel.Messages">
               <MappingFragment StoreEntitySet="Messages">
+                <ScalarProperty Name="IsNotReading" ColumnName="IsNotReading" />
                 <ScalarProperty Name="Visibility" ColumnName="Visibility" />
                 <ScalarProperty Name="Created_at" ColumnName="Created_at" />
                 <ScalarProperty Name="Message" ColumnName="Message" />
