@@ -87,7 +87,7 @@
                             <img src="@Url.Content("~/Content/Pictures/no.jpg")" />
                         </div>
                         }
-                        <div class="col-md-7">
+                        <div class="col-md-5">
                             <p> @item.Message</p>
                         </div>
 
@@ -100,11 +100,11 @@
             else
             {
                 <div class="containerr darker">
-                    <div class="col-md-1">
+                    <div class="col-md-2">
                         <div class="time-right">@item.Time</div>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <p> @item.Message</p>
                     </div>
 
@@ -113,10 +113,6 @@
                         <div class="col-md-3 avatar">
                             <img src="@String.Format("data:image/jpg;base64,{0}", member.Image)" />
                         </div>
-
-                        <div class="col-md-2 avatar">
-                            <div id="delMsg" onclick="delMsg(this)" @*data-id="@item.Time"*@><span aria-hidden="true">×</span></div>
-                        </div>
                     }
                     else
                     {
@@ -124,6 +120,10 @@
                             <img src="@Url.Content("~/Content/Pictures/no.jpg")" />
                         </div>
                     }
+
+                    <div class="col-md-2 deleteMsg">
+                        <div><a href="@Url.Action("DeleteMessage","Messages", new { msgId=item.MsgId,convId=Model.Conversation_id})"><span aria-hidden="true" class="msg glyphicon glyphicon-trash"></span></a></div>
+                    </div>
 
                 </div>
             }
@@ -154,7 +154,6 @@
                 {
                     $('#Send').submit();
                 }
-
             }));
 
         var d = $('.scr');
@@ -174,10 +173,8 @@
                 success: function (response) {                 
                     $('.container').reload('.container');
                 },
-
-
              });
-          }
-        );
+        });
+
     </script>
 }                   

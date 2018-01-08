@@ -1,4 +1,4 @@
-﻿body {
+﻿/*body {
     margin: 0 auto;
     max-width: 800px;
     padding: 0 20px;
@@ -46,3 +46,7 @@
     float: left;
     color: #999;
 }
+
+.deleteMsg {
+    margin-top:40px;
+}*/

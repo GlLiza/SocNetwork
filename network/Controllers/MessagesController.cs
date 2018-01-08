@@ -108,14 +108,12 @@ namespace network.Controllers
             }
             _msgService.ReadingMsg(result);
         }
-        //public ActionResult DeleteMessage(int converId,DateTime date)
-        //{
-        //    var userId = User.Identity.GetUserId();
-        //    var user = _userService.GetIntUserId(userId);
-        //    var msg=_msgService.
-       
-        //    return View();
-        //}
+
+        public ActionResult DeleteMessage(int msgId,int convId)
+         {
+            _msgService.DeleteMessage(msgId);
+            return RedirectToAction("OpenConversation","Messages",new { Conversation_id= convId});
+        }
 
         public string GetPhotoForAvatar(int senderId)
         {

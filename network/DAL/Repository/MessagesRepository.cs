@@ -28,6 +28,7 @@ namespace network.DAL.Repository
             Messages msg = _context.Messages.Find(id);
             if (msg != null)
                 _context.Messages.Remove(msg);
+            Save();
         }
 
         public void UpdateMessage(Messages message)

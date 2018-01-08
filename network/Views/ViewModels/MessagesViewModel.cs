@@ -38,7 +38,7 @@ namespace network.Views.ViewModels
 
     public class MessageBlocks
     {
-        public int Id { get; set; }
+        public int MsgId { get; set; }
         public int SenderId { get; set; }
         public string Message { get; set; }
         public DateTime ? Time { get; set; }

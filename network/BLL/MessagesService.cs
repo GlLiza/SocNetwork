@@ -221,7 +221,7 @@ namespace network.BLL
             foreach (var msg in messages)
             {
                 MessageBlocks item = new MessageBlocks();
-                item.Id = msg.Id;
+                item.MsgId = msg.Id;
                 item.Message = msg.Message;
                 item.Time = msg.Created_at;
                 item.SenderId = msg.Sender_id;
@@ -237,6 +237,8 @@ namespace network.BLL
         }
 
 
+
+        //MESSAGES
         public void SendMsg(Messages msg)
         {
             if (msg != null)
@@ -299,6 +301,11 @@ namespace network.BLL
             var msgs = _msgRepository.GetListMessagesByConversationId(conversId);
             var list = _msgRepository.GetNotReadingMsg(msgs);
             return list;
+        }
+
+        public void DeleteMessage(int id)
+        {
+            _msgRepository.DeleteMessage(id);
         }
       
 
