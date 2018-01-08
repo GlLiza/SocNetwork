@@ -99,14 +99,11 @@ namespace network.Controllers
 
         public void ReadingMsg(int? conId)
         {
-
             List<int> result = new List<int>();
-            var list = _msgService.GetListIdOfMsg(conId);
-            foreach (var item in list)
-            {
-                result.Add(item);
-            }
-            _msgService.ReadingMsg(result);
+            var listFull = _msgService.GetListIdOfMsg(conId);
+            var curUserId = _userService.ConvertId(User.Identity.GetUserId());
+            var listSorted =_msgService.SorteListMsg(curUserId, listFull);
+            _msgService.ReadingMsg(listSorted);
         }
 
         public ActionResult DeleteMessage(int msgId,int convId)

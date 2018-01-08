@@ -309,7 +309,19 @@ namespace network.BLL
             msg.Visibility =false;
             _msgRepository.UpdateMessage(msg);
         }
-      
 
+        public List<int> SorteListMsg(int userId,List<int>list)
+        {
+            List<int> result = new List<int>();
+            foreach (var item in list)
+            {
+                var msg = _msgRepository.FindMsg(item);
+                if (msg.Sender_id != userId)
+                    result.Add(msg.Id);
+            }
+
+            return result;
+        }
+        
     }
 }
