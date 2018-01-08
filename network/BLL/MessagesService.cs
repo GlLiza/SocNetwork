@@ -61,13 +61,6 @@ namespace network.BLL
         }
         
 
-        //translate Id-string -> Id-int
-        public int GetIntId(string id)
-        {
-            return _userRepository.ReturnIntId(id);
-        }
-
-
         // data for select receiver 
         public List<UserDetails> GetReceiverForSelect(string id)
         {
@@ -88,17 +81,10 @@ namespace network.BLL
         {
             Conversation conversation = new Conversation()
             {
-                Creator_id = GetIntId(id),
+                Creator_id = _userRepository.ReturnIntId(id),
                 Created_at = DateTime.Now.Date
             };
             _conversationRepository.AddConversations(conversation);
-
-            //Participants partForCurUser = new Participants
-            //{
-            //    Conversation_id = conversation.Id,
-            //    Users_id = conversation.Creator_id
-            //};
-            //CreateParticipants(partForCurUser);
 
             return conversation;            
         }
