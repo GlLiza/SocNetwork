@@ -305,7 +305,9 @@ namespace network.BLL
 
         public void DeleteMessage(int id)
         {
-            _msgRepository.DeleteMessage(id);
+            var msg = _msgRepository.FindMsg(id);
+            msg.Visibility =false;
+            _msgRepository.UpdateMessage(msg);
         }
       
 

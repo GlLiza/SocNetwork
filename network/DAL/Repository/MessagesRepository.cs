@@ -34,6 +34,7 @@ namespace network.DAL.Repository
         public void UpdateMessage(Messages message)
         {
             _context.Entry(message).State = EntityState.Modified;
+            Save();
         }
 
         public IQueryable<Messages> GetListMessages()
