@@ -82,7 +82,8 @@ namespace network.BLL
             Conversation conversation = new Conversation()
             {
                 Creator_id = _userRepository.ReturnIntId(id),
-                Created_at = DateTime.Now.Date
+                Created_at = DateTime.Now.Date,
+                Visibility = true
             };
             _conversationRepository.AddConversations(conversation);
 
@@ -157,7 +158,47 @@ namespace network.BLL
             return model;
         }
 
+        public bool CheckUnansweredMsgInConvers(int? conversId)
+        {
+            List<int> listNotReading = new List<int>();
+            var listAllMsg = _msgRepository.GetListMessagesByConversationId(conversId);
+            foreach (var item in listAllMsg)
+            {
+                if (item.IsNotReading == true)
+                    listNotReading.Add(item.Id);
+            }
 
+            if (listNotReading.Count > 0)
+                return true;
+             return false;
+        }
+
+        public List<int> GetIdsUnansweredConvers(IQueryable<int> converslis)
+        {
+            List<int> result = new List<int>();
+
+            foreach (var item in converslis)
+            {
+                var check = CheckUnansweredMsgInConvers(item);
+                if (check)
+                    result.Add(item);
+            }
+            return result;
+                
+        }
+
+
+        public List<int> CountUnansweredConvers(string stringId)
+        {
+            List<int> listConvId = new List<int>();
+            var intId = _userRepository.ReturnIntId(stringId);
+            IQueryable<int> converslis = _conversationRepository.GetConversationsIdsByUserId(intId);
+            if (converslis != null)
+            {
+                listConvId = GetIdsUnansweredConvers(converslis);
+            }
+            return listConvId;
+        }
 
 
         //PARTICIPANTS

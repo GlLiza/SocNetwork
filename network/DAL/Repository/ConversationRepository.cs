@@ -81,7 +81,7 @@ namespace network.DAL.Repository
 
         public Conversation GetConversationById(int conversationId)
         {
-            var conversation = _context.Conversation.FirstOrDefault(s => s.Id== conversationId);
+            var conversation = _context.Conversation.FirstOrDefault(s => s.Id== conversationId && s.Visibility==true);
             return conversation;
         }
 

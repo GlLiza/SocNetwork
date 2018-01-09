@@ -121,7 +121,13 @@ namespace network.Controllers
             return Convert.ToBase64String(senderImage);
         }
 
-
+        public ActionResult CountUnansweredConvers()
+        {
+            var countConvers = _msgService.CountUnansweredConvers(User.Identity.GetUserId());
+            if (countConvers != null)
+                return PartialView("_CountUnansweredConvers",countConvers.Count);
+            return HttpNotFound();
+        }
 
 
         //protected override void OnException(ExceptionContext filterContext)

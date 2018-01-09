@@ -13,7 +13,9 @@
             <p></p>
                
             <li>@Html.ActionLink("My photos", "Index", "ImgAlbum")</li>
-            <li>@Html.ActionLink("My messages", "Index", "Messages")</li>
+            <li>
+                @Html.ActionLink("My messages", "Index", "Messages")@{ Html.RenderAction("CountUnansweredConvers", "Messages"); }
+            </li>
             <li>@Html.ActionLink("My settings", "ShowUsers", "Users")</li>
             <li>@Html.ActionLink("Another's users", "BrowseUsers", "Users")</li>
 

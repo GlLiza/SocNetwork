@@ -25,6 +25,7 @@ namespace network.BLL.EF
         public int Creator_id { get; set; }
         public Nullable<System.DateTime> Created_at { get; set; }
         public Nullable<System.DateTime> Update_at { get; set; }
+        public Nullable<bool> Visibility { get; set; }
     
         public virtual UserDetails UserDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

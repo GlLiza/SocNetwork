@@ -22,7 +22,7 @@ namespace network.BLL.EF
         public Nullable<bool> Visibility { get; set; }
         public Nullable<bool> IsNotReading { get; set; }
     
-        public virtual UserDetails UserDetails { get; set; }
         public virtual Conversation Conversation { get; set; }
+        public virtual UserDetails UserDetails { get; set; }
     }
 }

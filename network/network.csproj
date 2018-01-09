@@ -398,7 +398,6 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Chat.css" />
-    <Content Include="Content\Conversation.css" />
     <Content Include="Content\createUs.css" />
     <Content Include="Content\ImgCarousel.css" />
     <Content Include="Content\IncreaseImg.css" />
@@ -573,6 +572,7 @@
     <None Include="Service References\GetCitiesByCountryServiceRef\globalweather.wsdl" />
     <Content Include="Views\Messages\OpenConversation.cshtml" />
     <Content Include="Views\Users\UsersPage.cshtml" />
+    <Content Include="Views\Messages\_CountUnansweredConvers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
