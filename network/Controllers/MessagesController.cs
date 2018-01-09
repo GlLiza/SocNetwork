@@ -129,6 +129,14 @@ namespace network.Controllers
             return HttpNotFound();
         }
 
+        public ActionResult CountUnansweredMsg(int conversId)
+        {
+            var intId = _userService.ConvertId(User.Identity.GetUserId());
+            var countMsg =_msgService.CountUnansweredMessages(conversId, intId);
+            if (countMsg != null)
+                return PartialView("_CountUnansweredMsg", countMsg.Count);
+            return HttpNotFound();
+        }
 
         //protected override void OnException(ExceptionContext filterContext)
         //{

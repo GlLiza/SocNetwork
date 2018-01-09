@@ -573,6 +573,7 @@
     <Content Include="Views\Messages\OpenConversation.cshtml" />
     <Content Include="Views\Users\UsersPage.cshtml" />
     <Content Include="Views\Messages\_CountUnansweredConvers.cshtml" />
+    <Content Include="Views\Messages\_CountUnansweredMsg.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

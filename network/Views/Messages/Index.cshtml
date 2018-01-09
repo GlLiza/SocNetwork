@@ -77,7 +77,7 @@
                     </div>
 
                     <div class="col-md-2">
-                        @*New messages*@
+                        @{ Html.RenderAction("CountUnansweredMsg", "Messages",new { conversId =item.Conversation_id});}
                     </div>
                 </div>
           </div>

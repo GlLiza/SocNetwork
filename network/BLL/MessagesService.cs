@@ -349,6 +349,20 @@ namespace network.BLL
 
             return result;
         }
-        
+
+        public List<int> CountUnansweredMessages(int conversId, int userId)
+        {
+            List<int> result = new List<int>(); 
+            var listMsg = _msgRepository.GetListMessagesByConversationId(conversId);
+            foreach (var item in listMsg)
+            {
+                if (item.IsNotReading == true && item.Sender_id!= userId)
+                    result.Add(item.Id);
+            }
+            return result; 
+        }
+
+
+
     }
 }
