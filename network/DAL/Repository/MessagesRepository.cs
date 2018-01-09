@@ -45,7 +45,7 @@ namespace network.DAL.Repository
         public IQueryable<Messages> GetListMessagesByConversationId(int? conversationId)
         {
             var listMesg = _context.Messages
-                .Where(s => s.Conversation_id == conversationId);
+                .Where(s => s.Conversation_id == conversationId && s.Visibility==true);
             return listMesg;        
         }
 

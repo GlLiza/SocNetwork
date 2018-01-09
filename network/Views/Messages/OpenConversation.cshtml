@@ -48,9 +48,7 @@
 
             if (member.Id != Model.CurrentUserId)
             {
-                if (item.IsNotReading == true)
-                {
-                    <div class="containerr darkerNotVisibil">
+                    <div class="containerr @(@item.IsNotReading == true ? "darkerNotVisibil" : "darker")">
                         @if (member.Image != null)
                         {
                             <div class="col-md-3 avatar">
@@ -71,31 +69,6 @@
                             <div class="time-right">@item.Time</div>
                         </div>
                     </div>
-                }
-                else
-                {
-                    <div class="containerr darker">
-                        @if (member.Image != null)
-                        {
-                        <div class="col-md-3 avatar">
-                            <img src="@String.Format("data:image/jpg;base64,{0}", member.Image)" />
-                        </div>
-                        }
-                        else
-                        {
-                        <div class="col-md-3 avatar">
-                            <img src="@Url.Content("~/Content/Pictures/no.jpg")" />
-                        </div>
-                        }
-                        <div class="col-md-5">
-                            <p> @item.Message</p>
-                        </div>
-
-                        <div class="col-md-2">
-                            <div class="time-right">@item.Time</div>
-                        </div>
-                    </div>
-                }
             }
             else
             {
@@ -160,7 +133,7 @@
         d.scrollTop(d.prop("scrollHeight"));
 
 
-        $('#Send').hover(function (element)
+        $('#Send').click(function (element)
         {
             var conversId = $("#conversId").val();
             $.ajax({
@@ -169,9 +142,9 @@
                 data: JSON.stringify({ 'conId': conversId }),
                 contentType: 'application/json; charset=utf-8',
 
-
-                success: function (response) {                 
-                    $('.container').reload('.container');
+                success: function (response) {
+                    var item = $('.containerr.darkerNotVisibil');
+                    item.removeClass("darkerNotVisibil").addClass("darker");
                 },
              });
         });

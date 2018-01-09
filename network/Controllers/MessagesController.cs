@@ -97,13 +97,15 @@ namespace network.Controllers
         }
 
 
-        public void ReadingMsg(int? conId)
+        [HttpPost]
+        public HttpStatusCode ReadingMsg(int? conId)
         {
             List<int> result = new List<int>();
             var listFull = _msgService.GetListIdOfMsg(conId);
             var curUserId = _userService.ConvertId(User.Identity.GetUserId());
             var listSorted =_msgService.SorteListMsg(curUserId, listFull);
             _msgService.ReadingMsg(listSorted);
+            return HttpStatusCode.OK;
         }
 
         public ActionResult DeleteMessage(int msgId,int convId)
