@@ -17,9 +17,9 @@ namespace network.BLL
         private readonly IImagesRepository _imgRepository;
         private readonly IMessageRepository _msgRepository;
 
-        private readonly UserService _userService;       
+        private readonly UserService _userService;
 
-        public MessagesService(ParticipantsRepository participantsRepository, ConversationRepository conversationRepository, 
+        public MessagesService(ParticipantsRepository participantsRepository, ConversationRepository conversationRepository,
             FriendshipRepository friendshipRepository, UserRepository userRepository, ImagesRepository imgRepository, MessagesRepository msgRepository,
             UserService userService)
         {
@@ -27,7 +27,7 @@ namespace network.BLL
             _conversationRepository = conversationRepository;
             _friendshipRepository = friendshipRepository;
             _userRepository = userRepository;
-            _imgRepository = imgRepository ;
+            _imgRepository = imgRepository;
             _msgRepository = msgRepository;
             _userService = userService;
         }
@@ -35,38 +35,38 @@ namespace network.BLL
 
         //get all friends
         public IQueryable<Friendship> GetFriendForSelect(string id)
-        {           
+        {
             return _friendshipRepository.GetListFriends(id);
-        }        
+        }
         //get  information for friends
 
 
         public List<ConversationViewModel> GetUserDetails(List<UserDetails> userList)
         {
-            List<ConversationViewModel> detailsList= new List<ConversationViewModel>();
+            List<ConversationViewModel> detailsList = new List<ConversationViewModel>();
 
             foreach (var item in userList)
             {
-                ConversationViewModel user =new ConversationViewModel();
-                var userDetails= _userRepository.GetUserById(item.Id);
+                ConversationViewModel user = new ConversationViewModel();
+                var userDetails = _userRepository.GetUserById(item.Id);
                 var image = _imgRepository.GetImageById(userDetails.ImagesId);
-                
-                    user.Id = userDetails.Id;
-                    user.FirstName = userDetails.Name;
-                    user.LastName = userDetails.Firstname;
-                    user.Image = Convert.ToBase64String(image.Data);
-                    detailsList.Add(user);
+
+                user.Id = userDetails.Id;
+                user.FirstName = userDetails.Name;
+                user.LastName = userDetails.Firstname;
+                user.Image = Convert.ToBase64String(image.Data);
+                detailsList.Add(user);
             }
             return detailsList.ToList();
         }
-        
+
 
         // data for select receiver 
         public List<UserDetails> GetReceiverForSelect(string id)
         {
             var listIdStr = _friendshipRepository.GetListFriendsId(id);
             var intIds = _userService.ConvertListIds(id, listIdStr);
-            var listFrConversation =GetFriendsIdListFromConversation(intIds.Item1);
+            var listFrConversation = GetFriendsIdListFromConversation(intIds.Item1);
             var dataOfReceiver = _userService.GetDataForSearch(intIds.Item2, listFrConversation);
 
             return dataOfReceiver;
@@ -87,7 +87,7 @@ namespace network.BLL
             };
             _conversationRepository.AddConversations(conversation);
 
-            return conversation;            
+            return conversation;
         }
 
 
@@ -134,43 +134,44 @@ namespace network.BLL
 
                 foreach (var convData in friendsData)
                 {
-                    var part = _participantsRepository.GetParticipantsByConversId(con.Id);
-                    foreach (var p in part)
+                    if (con.Visibility !=false)
                     {
-                        if (p.Users_id == convData.Id)
+                        var part = _participantsRepository.GetParticipantsByConversId(con.Id);
+                        foreach (var p in part)
                         {
-                            ConversationViewModel data = new ConversationViewModel()
+                            if (p.Users_id == convData.Id)
                             {
-                                Id = convData.Id,
-                                FirstName = convData.Firstname,
-                                LastName = convData.Name,
-                                Image = Convert.ToBase64String(convData.Images.Data)
-                            };
-                            item.Conversation = data;
-                            model.Add(item);
+                                ConversationViewModel data = new ConversationViewModel()
+                                {
+                                    Id = convData.Id,
+                                    FirstName = convData.Firstname,
+                                    LastName = convData.Name,
+                                    Image = Convert.ToBase64String(convData.Images.Data)
+                                };
+                                item.Conversation = data;
+                                model.Add(item);
+                            }
                         }
-
-                        //var us = _userRepository.GetUserById(p.Users_id);
-                        //if (us==convData.Id)
-                    }                                 
+                    }
+                    
                 }
             }
             return model;
         }
 
-        public bool CheckUnansweredMsgInConvers(int? conversId,int userId)
+        public bool CheckUnansweredMsgInConvers(int? conversId, int userId)
         {
             List<int> listNotReading = new List<int>();
             var listAllMsg = _msgRepository.GetListMessagesByConversationId(conversId);
             foreach (var item in listAllMsg)
             {
-                if (item.IsNotReading == true && item.Sender_id!=userId)
+                if (item.IsNotReading == true && item.Sender_id != userId)
                     listNotReading.Add(item.Id);
             }
 
             if (listNotReading.Count > 0)
                 return true;
-             return false;
+            return false;
         }
 
         public List<int> GetIdsUnansweredConvers(IQueryable<int> converslis, int id)
@@ -179,12 +180,12 @@ namespace network.BLL
 
             foreach (var item in converslis)
             {
-                var check = CheckUnansweredMsgInConvers(item,id);
+                var check = CheckUnansweredMsgInConvers(item, id);
                 if (check)
                     result.Add(item);
             }
             return result;
-                
+
         }
 
 
@@ -195,9 +196,23 @@ namespace network.BLL
             IQueryable<int> converslis = _conversationRepository.GetConversationsIdsByUserId(intId);
             if (converslis != null)
             {
-                listConvId = GetIdsUnansweredConvers(converslis,intId);
+                listConvId = GetIdsUnansweredConvers(converslis, intId);
             }
             return listConvId;
+        }
+
+        public Conversation GetConversById(int conversId)
+        {
+            var conv = _conversationRepository.GetConversationById(conversId);
+            return conv;
+        }
+
+        public void DeleteConvers(Conversation conv)
+        {
+            var convers = _conversationRepository.GetConversationById(conv.Id);
+            convers.Visibility=false;
+            convers.Update_at = DateTime.Now;
+            _conversationRepository.UpdateConversations(convers);
         }
 
 
@@ -361,8 +376,6 @@ namespace network.BLL
             }
             return result; 
         }
-
-
 
     }
 }

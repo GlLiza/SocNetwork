@@ -385,9 +385,17 @@ footer {
 
 
 .dropdown-toggle {
-    background-color:#000;
+    background-color:#363d54;
     color:#9d9d9d;
 }
+
+a #drop1 {
+    background-color:#363d54;
+}
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+    background-color:#4f5979;
+}
+
 .btn {
     background-color:#363d54;
     color:#decbcc;
