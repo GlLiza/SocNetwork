@@ -44,45 +44,53 @@
         Conversations
     </div>
 
-    @if (Model.Count>0)
+    @if (Model.Count > 0)
     {
         foreach (var item in Model)
         {
-        <div class="row chatId">           
-                <div class="row">
+            @*<div class="row">*@
+                <div class="row chatId">
+                    <div class="row">
 
-                <div class="col-md-4">
-                    @if (item != null)
-                        {
-                            <img class="avatar" src="@String.Format("data:image/jpg;base64,{0}", item.Conversation.Image)"  />
-                        }
-                    else
-                        {
-                            <img class="avatar" style="border:solid;" src="@Url.Content("~/Content/Pictures/no.jpg")" />
-                        }
-                  </div>
+                        <div class="col-md-4">
+                            @if (item != null)
+                            {
+                                <img class="avatar" src="@String.Format("data:image/jpg;base64,{0}", item.Conversation.Image)" />
+                            }
+                            else
+                            {
+                                <img class="avatar" style="border:solid;" src="@Url.Content("~/Content/Pictures/no.jpg")" />
+                            }
+                        </div>
 
-                    <div class="col-md-2 nameFirstname">
-                        <a href="@Url.Action("OpenConversation","Messages",new {Conversation_id = item.Conversation_id})">
-                            @Html.DisplayFor(modelItem => item.Conversation.FirstName)
-                            @Html.DisplayFor(modelItem => item.Conversation.LastName)
-                        </a>
+                        <div class="col-md-2 nameFirstname">
+                            <a href="@Url.Action("OpenConversation","Messages",new {Conversation_id = item.Conversation_id})">
+                                @Html.DisplayFor(modelItem => item.Conversation.FirstName)
+                                @Html.DisplayFor(modelItem => item.Conversation.LastName)
+                            </a>
+                        </div>
+
+                        <div class="col-md-2 btn-group">
+                            <button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li onclick="deleteConvers(this)" data-url='@Url.Action("DeleteConversation","Messages",new { conversId=item.Conversation_id})'><a href="#">Delete</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="col-md-2">
+                            @{ Html.RenderAction("CountUnansweredMsg", "Messages", new { conversId = item.Conversation_id });}
+                        </div>
                     </div>
 
-                    <div class="col-md-2 btn-group">                                        
-                        <button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
-                        <ul class="dropdown-menu">    
-                            <li>Remove conversation</li>                     
-                        </ul>
-                    </div>
-
-                    <div class="col-md-2">
-                        @{ Html.RenderAction("CountUnansweredMsg", "Messages",new { conversId =item.Conversation_id});}
+                    <div id="delConv" class="modal fade">
+                        <div id="delContainer">
+                        </div>
                     </div>
                 </div>
-          </div>
-        }
-    }       
+
+
+         }
+     }
 </div>
 
 
@@ -113,6 +121,17 @@
 
                     $('#selectMod').modal('show');
                 });
-    };
+        };
+
+        function deleteConvers(element)
+        {
+            var url = $(element).data('url');
+            $.get(url,
+                function (data) {
+                    $('#delContainer').html(data);
+
+                    $('#delConv').modal('show');
+                });
+        }
     </script>
 }

@@ -138,6 +138,24 @@ namespace network.Controllers
             return HttpNotFound();
         }
 
+
+        [HttpGet]
+        public ActionResult DeleteConversation(int conversId)
+        {
+            var convers = _msgService.GetConversById(conversId);
+            return PartialView("_DeleteConversation",convers);
+        }
+
+
+        [HttpPost]
+        public ActionResult DeleteConversation(Conversation conv)
+        {
+            _msgService.DeleteConvers(conv);
+            return RedirectToAction("Index");
+        }
+
+
+
         //protected override void OnException(ExceptionContext filterContext)
         //{
         //    filterContext.ExceptionHandled = true;
@@ -155,20 +173,6 @@ namespace network.Controllers
         //    };
         //}
 
-
-        //protected List<MessageBlocks> CheckMessages(List<MessageBlocks> listMsg)
-        //{
-        //    string stringId = User.Identity.GetUserId();
-        //    var intId = _userService.GetIntUserId(stringId);
-
-        //    foreach (var item in listMsg)
-        //    {
-        //        if (item.SenderId != intId && item.VisibForInterlocutor == false)
-        //        {
-
-        //        }
-        //    }
-        //}
     }
 
     public class ReceiverDto

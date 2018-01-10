@@ -158,13 +158,13 @@ namespace network.BLL
             return model;
         }
 
-        public bool CheckUnansweredMsgInConvers(int? conversId)
+        public bool CheckUnansweredMsgInConvers(int? conversId,int userId)
         {
             List<int> listNotReading = new List<int>();
             var listAllMsg = _msgRepository.GetListMessagesByConversationId(conversId);
             foreach (var item in listAllMsg)
             {
-                if (item.IsNotReading == true)
+                if (item.IsNotReading == true && item.Sender_id!=userId)
                     listNotReading.Add(item.Id);
             }
 
@@ -173,13 +173,13 @@ namespace network.BLL
              return false;
         }
 
-        public List<int> GetIdsUnansweredConvers(IQueryable<int> converslis)
+        public List<int> GetIdsUnansweredConvers(IQueryable<int> converslis, int id)
         {
             List<int> result = new List<int>();
 
             foreach (var item in converslis)
             {
-                var check = CheckUnansweredMsgInConvers(item);
+                var check = CheckUnansweredMsgInConvers(item,id);
                 if (check)
                     result.Add(item);
             }
@@ -195,7 +195,7 @@ namespace network.BLL
             IQueryable<int> converslis = _conversationRepository.GetConversationsIdsByUserId(intId);
             if (converslis != null)
             {
-                listConvId = GetIdsUnansweredConvers(converslis);
+                listConvId = GetIdsUnansweredConvers(converslis,intId);
             }
             return listConvId;
         }

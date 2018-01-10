@@ -18,7 +18,7 @@ namespace network.DAL.Repository
         public void AddConversations(Conversation conver)
         {
             _context.Conversation.Add(conver);
-            base.Save();
+            Save();
         }
 
         public void DeleteConversations(int id)
@@ -36,6 +36,7 @@ namespace network.DAL.Repository
         public void UpdateConversations(Conversation convert)
         {
            _context.Entry(convert).State=EntityState.Modified;
+            Save();
         }
 
 
@@ -43,16 +44,9 @@ namespace network.DAL.Repository
         //get conversation's ids list, where curent user is member
         public IQueryable<int> GetConversationsIdsByUserId(int id)
         {
-            var listId = _context.Participants.Where(s => s.Users_id == id)
+            var listId = _context.Participants.Where(s => s.Users_id == id )
                 .Select(s => s.Conversation_id);
             return listId;
-
-            //var conversations = from s in _context.Conversation
-            //                    join sa in _context.Participants on s.Id equals sa.Conversation_id
-            //                    where s.Id == sa.Conversation_id
-            //                    select sa.Conversation_id;
-
-            //return conversations;
         }
 
         //get companions id list from conversation's  for current user
@@ -81,7 +75,7 @@ namespace network.DAL.Repository
 
         public Conversation GetConversationById(int conversationId)
         {
-            var conversation = _context.Conversation.FirstOrDefault(s => s.Id== conversationId && s.Visibility==true);
+            var conversation = _context.Conversation.FirstOrDefault(s => s.Id== conversationId );
             return conversation;
         }
 
