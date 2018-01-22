@@ -328,6 +328,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="DAL\Enums\Enums.cs" />
     <Compile Include="DAL\IRepository\IAlbAndPhotoRepository.cs" />
@@ -574,6 +575,9 @@
     <Content Include="Views\Users\UsersPage.cshtml" />
     <Content Include="Views\Messages\_CountUnansweredConvers.cshtml" />
     <Content Include="Views\Messages\_CountUnansweredMsg.cshtml" />
+    <Content Include="Views\Messages\_DeleteConversation.cshtml" />
+    <Content Include="Views\Settings\Index.cshtml" />
+    <Content Include="Views\Settings\_GetPersonalInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

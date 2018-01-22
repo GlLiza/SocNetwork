@@ -123,4 +123,23 @@ namespace network.Views.ViewModels
         public IEnumerable<Location> ListHomLoc { get; set; }
 
     }
+
+    public class PersonalInfoViewModel
+    {
+        public int Id { get; set; }
+        public int? ImageId { get; set; }
+        public string Gender { get; set; }
+        public string Name { get; set; }
+        public string Firstname { get; set; }
+        [Display(Name = "Date of birth")]
+        [DataType(DataType.Date)]
+        public DateTime? DateOfBirthday { get; set; }
+
+        [Display(Name = "Family status")]
+        public int? SelectedStatus { get; set; }
+        public virtual IQueryable<FamilyStatus> FamilyStatus { get; set; }
+
+
+
+    }
 }
