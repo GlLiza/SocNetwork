@@ -1,5 +1,5 @@
-﻿@using network.DAL.Enums
-@model network.Views.ViewModels.CreateUserViewModel
+﻿@using DAL.Enums
+@model BLL.ViewModels.CreateUserViewModel
 
 @{
     ViewBag.Title = "CreateProfile";
@@ -184,21 +184,21 @@
                 </div>
 
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.WorkPeriod.StartMonth)
+                @*<div class="form-group">
+                    @Html.LabelFor(model => model.WorkPeriod.StartYear)
 
 
                     <div class="col-md-8">
-                        @Html.DropDownListFor(model=>model.WorkPeriod.StartMonth, new SelectList(Model.MonthList), "--Choose month--")
+                        @Html.DropDownListFor(model=>model.WorkPeriod., new SelectList(Model.MonthList), "--Choose month--")
                     </div>
 
                     @Html.LabelFor(model => model.WorkPeriod.StartYear)
                     <div class="col-md-8">
                         @Html.DropDownListFor(model => model.WorkPeriod.StartYear, Enumerable.Range(1970, DateTime.Now.Year - 1970 + 1).Reverse().Select(x => new SelectListItem() { Value = x.ToString(), Text = x.ToString() }), "--Choose year--")
                     </div>
-                </div>
+                </div>*@
 
-                <div class="form-group">
+                @*<div class="form-group">
                     @Html.LabelFor(model => model.WorkPeriod.EndMonth)
                     <div class="col-md-8">
                         @Html.DropDownListFor(model=>model.WorkPeriod.EndMonth,new SelectList(Model.MonthList), "--Choose month--")
@@ -207,7 +207,7 @@
                     <div class="col-md-8">
                         @Html.DropDownListFor(model => model.WorkPeriod.EndYear, Enumerable.Range(1970, DateTime.Now.Year - 1970 + 1).Reverse().Select(x => new SelectListItem() { Value = x.ToString(), Text = x.ToString() }), "--Choose year--")
                     </div>
-                </div>
+                </div>*@
 
                             @*<div class="form-group">
 

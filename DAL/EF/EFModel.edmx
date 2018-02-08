@@ -1,0 +1,1451 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="NetworkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AlbAndPhot">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PhotoalbumId" Type="int" Nullable="false" />
+          <Property Name="ImageId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Conversation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Creator_id" Type="int" Nullable="false" />
+          <Property Name="Created_at" Type="datetime" />
+          <Property Name="Update_at" Type="datetime" />
+          <Property Name="Visibility" Type="bit" />
+        </EntityType>
+        <EntityType Name="FamilyStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Friendship">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User_id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Friend_id" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FriendStatuses">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Images">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Data" Type="varbinary(max)" />
+          <Property Name="ContentType" Type="nvarchar" MaxLength="50" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="Visibility" Type="bit" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="City" Type="nvarchar" MaxLength="100" />
+          <Property Name="Country" Type="nvarchar" MaxLength="100" />
+          <Property Name="Street" Type="nvarchar" MaxLength="150" />
+          <Property Name="State" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="Messages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Conversation_id" Type="int" Nullable="false" />
+          <Property Name="Sender_id" Type="int" Nullable="false" />
+          <Property Name="Message" Type="varchar" MaxLength="255" />
+          <Property Name="Created_at" Type="datetime" />
+          <Property Name="Visibility" Type="bit" />
+          <Property Name="IsNotReading" Type="bit" />
+        </EntityType>
+        <EntityType Name="Participants">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Conversation_id" Type="int" Nullable="false" />
+          <Property Name="Users_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Photoalbum">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Requests">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Requesting_user_id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Requested_user_id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Date_requsted" Type="datetime" />
+          <Property Name="Status_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="School">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="GraduationYear" Type="int" />
+          <Property Name="StartYear" Type="int" />
+        </EntityType>
+        <EntityType Name="UserDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" />
+          <Property Name="Firstname" Type="nvarchar" MaxLength="200" />
+          <Property Name="DateOfBirthday" Type="date" />
+          <Property Name="FamilyStatusId" Type="int" />
+          <Property Name="ImagesId" Type="int" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="HomeTownLocationId" Type="int" />
+          <Property Name="CurrentLocationId" Type="int" />
+        </EntityType>
+        <EntityType Name="WorkPlace">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="500" />
+          <Property Name="Position" Type="nvarchar" MaxLength="500" />
+          <Property Name="StartDate" Type="date" />
+          <Property Name="EndDate" Type="date" />
+        </EntityType>
+        <Association Name="FK_AlbAndPhot_Images">
+          <End Role="Images" Type="Self.Images" Multiplicity="1" />
+          <End Role="AlbAndPhot" Type="Self.AlbAndPhot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Images">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AlbAndPhot">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlbAndPhot_Photoalbum">
+          <End Role="Photoalbum" Type="Self.Photoalbum" Multiplicity="1" />
+          <End Role="AlbAndPhot" Type="Self.AlbAndPhot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Photoalbum">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AlbAndPhot">
+              <PropertyRef Name="PhotoalbumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Conversation_UserDetails">
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
+          <End Role="Conversation" Type="Self.Conversation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Conversation">
+              <PropertyRef Name="Creator_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Frienship_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Friendship" Type="Self.Friendship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Friendship">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Frienship_AspNetUsers1">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Friendship" Type="Self.Friendship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Friendship">
+              <PropertyRef Name="Friend_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_Conversation">
+          <End Role="Conversation" Type="Self.Conversation" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conversation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="Conversation_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_UserDetails">
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="Sender_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Participants_Conversation">
+          <End Role="Conversation" Type="Self.Conversation" Multiplicity="1" />
+          <End Role="Participants" Type="Self.Participants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conversation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Participants">
+              <PropertyRef Name="Conversation_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Participants_UserDetails">
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
+          <End Role="Participants" Type="Self.Participants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Participants">
+              <PropertyRef Name="Users_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Photoalbum_UserDetails">
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
+          <End Role="Photoalbum" Type="Self.Photoalbum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Photoalbum">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Requests_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Requests">
+              <PropertyRef Name="Requested_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Requests_AspNetUsers1">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Requests">
+              <PropertyRef Name="Requesting_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Requests_FriendStatuses">
+          <End Role="FriendStatuses" Type="Self.FriendStatuses" Multiplicity="1" />
+          <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FriendStatuses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Requests">
+              <PropertyRef Name="Status_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_School_UserDetails">
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
+          <End Role="School" Type="Self.School" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="School">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDetails_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDetails">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDetails_FamilyStatus">
+          <End Role="FamilyStatus" Type="Self.FamilyStatus" Multiplicity="0..1" />
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FamilyStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDetails">
+              <PropertyRef Name="FamilyStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDetails_Images">
+          <End Role="Images" Type="Self.Images" Multiplicity="0..1" />
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Images">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDetails">
+              <PropertyRef Name="ImagesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDetails_Location">
+          <End Role="Location" Type="Self.Location" Multiplicity="0..1" />
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDetails">
+              <PropertyRef Name="CurrentLocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDetails_Location1">
+          <End Role="Location" Type="Self.Location" Multiplicity="0..1" />
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDetails">
+              <PropertyRef Name="HomeTownLocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkPlace_UserDetails">
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
+          <End Role="WorkPlace" Type="Self.WorkPlace" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkPlace">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NetworkModelStoreContainer">
+          <EntitySet Name="AlbAndPhot" EntityType="Self.AlbAndPhot" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Conversation" EntityType="Self.Conversation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FamilyStatus" EntityType="Self.FamilyStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Friendship" EntityType="Self.Friendship" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FriendStatuses" EntityType="Self.FriendStatuses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Images" EntityType="Self.Images" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Participants" EntityType="Self.Participants" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Photoalbum" EntityType="Self.Photoalbum" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Requests" EntityType="Self.Requests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="School" EntityType="Self.School" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkPlace" EntityType="Self.WorkPlace" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AlbAndPhot_Images" Association="Self.FK_AlbAndPhot_Images">
+            <End Role="Images" EntitySet="Images" />
+            <End Role="AlbAndPhot" EntitySet="AlbAndPhot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlbAndPhot_Photoalbum" Association="Self.FK_AlbAndPhot_Photoalbum">
+            <End Role="Photoalbum" EntitySet="Photoalbum" />
+            <End Role="AlbAndPhot" EntitySet="AlbAndPhot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Conversation_UserDetails" Association="Self.FK_Conversation_UserDetails">
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="Conversation" EntitySet="Conversation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Frienship_AspNetUsers" Association="Self.FK_Frienship_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Friendship" EntitySet="Friendship" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Frienship_AspNetUsers1" Association="Self.FK_Frienship_AspNetUsers1">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Friendship" EntitySet="Friendship" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_Conversation" Association="Self.FK_Messages_Conversation">
+            <End Role="Conversation" EntitySet="Conversation" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_UserDetails" Association="Self.FK_Messages_UserDetails">
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Participants_Conversation" Association="Self.FK_Participants_Conversation">
+            <End Role="Conversation" EntitySet="Conversation" />
+            <End Role="Participants" EntitySet="Participants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Participants_UserDetails" Association="Self.FK_Participants_UserDetails">
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="Participants" EntitySet="Participants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Photoalbum_UserDetails" Association="Self.FK_Photoalbum_UserDetails">
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="Photoalbum" EntitySet="Photoalbum" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Requests_AspNetUsers" Association="Self.FK_Requests_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Requests" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Requests_AspNetUsers1" Association="Self.FK_Requests_AspNetUsers1">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Requests" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Requests_FriendStatuses" Association="Self.FK_Requests_FriendStatuses">
+            <End Role="FriendStatuses" EntitySet="FriendStatuses" />
+            <End Role="Requests" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_School_UserDetails" Association="Self.FK_School_UserDetails">
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="School" EntitySet="School" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDetails_AspNetUsers" Association="Self.FK_UserDetails_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDetails_FamilyStatus" Association="Self.FK_UserDetails_FamilyStatus">
+            <End Role="FamilyStatus" EntitySet="FamilyStatus" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDetails_Images" Association="Self.FK_UserDetails_Images">
+            <End Role="Images" EntitySet="Images" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDetails_Location" Association="Self.FK_UserDetails_Location">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDetails_Location1" Association="Self.FK_UserDetails_Location1">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkPlace_UserDetails" Association="Self.FK_WorkPlace_UserDetails">
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="WorkPlace" EntitySet="WorkPlace" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NetworkModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AlbAndPhot">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PhotoalbumId" Type="Int32" Nullable="false" />
+          <Property Name="ImageId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Images" Relationship="Self.FK_AlbAndPhot_Images" FromRole="AlbAndPhot" ToRole="Images" />
+          <NavigationProperty Name="Photoalbum" Relationship="Self.FK_AlbAndPhot_Photoalbum" FromRole="AlbAndPhot" ToRole="Photoalbum" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="Friendship" Relationship="Self.FK_Frienship_AspNetUsers" FromRole="AspNetUsers" ToRole="Friendship" />
+          <NavigationProperty Name="Friendship1" Relationship="Self.FK_Frienship_AspNetUsers1" FromRole="AspNetUsers" ToRole="Friendship" />
+          <NavigationProperty Name="Requests" Relationship="Self.FK_Requests_AspNetUsers" FromRole="AspNetUsers" ToRole="Requests" />
+          <NavigationProperty Name="Requests1" Relationship="Self.FK_Requests_AspNetUsers1" FromRole="AspNetUsers" ToRole="Requests" />
+          <NavigationProperty Name="UserDetails" Relationship="Self.FK_UserDetails_AspNetUsers" FromRole="AspNetUsers" ToRole="UserDetails" />
+          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+        </EntityType>
+        <EntityType Name="Conversation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Creator_id" Type="Int32" Nullable="false" />
+          <Property Name="Created_at" Type="DateTime" Precision="3" />
+          <Property Name="Update_at" Type="DateTime" Precision="3" />
+          <Property Name="Visibility" Type="Boolean" />
+          <NavigationProperty Name="UserDetails" Relationship="Self.FK_Conversation_UserDetails" FromRole="Conversation" ToRole="UserDetails" />
+          <NavigationProperty Name="Messages" Relationship="Self.FK_Messages_Conversation" FromRole="Conversation" ToRole="Messages" />
+          <NavigationProperty Name="Participants" Relationship="Self.FK_Participants_Conversation" FromRole="Conversation" ToRole="Participants" />
+        </EntityType>
+        <EntityType Name="FamilyStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserDetails" Relationship="Self.FK_UserDetails_FamilyStatus" FromRole="FamilyStatus" ToRole="UserDetails" />
+        </EntityType>
+        <EntityType Name="Friendship">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Friend_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_Frienship_AspNetUsers" FromRole="Friendship" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUsers1" Relationship="Self.FK_Frienship_AspNetUsers1" FromRole="Friendship" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="FriendStatuses">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Requests" Relationship="Self.FK_Requests_FriendStatuses" FromRole="FriendStatuses" ToRole="Requests" />
+        </EntityType>
+        <EntityType Name="Images">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Data" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ContentType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="Visibility" Type="Boolean" />
+          <NavigationProperty Name="AlbAndPhot" Relationship="Self.FK_AlbAndPhot_Images" FromRole="Images" ToRole="AlbAndPhot" />
+          <NavigationProperty Name="UserDetails" Relationship="Self.FK_UserDetails_Images" FromRole="Images" ToRole="UserDetails" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Street" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserDetails" Relationship="Self.FK_UserDetails_Location" FromRole="Location" ToRole="UserDetails" />
+          <NavigationProperty Name="UserDetails1" Relationship="Self.FK_UserDetails_Location1" FromRole="Location" ToRole="UserDetails" />
+        </EntityType>
+        <EntityType Name="Messages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Conversation_id" Type="Int32" Nullable="false" />
+          <Property Name="Sender_id" Type="Int32" Nullable="false" />
+          <Property Name="Message" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Created_at" Type="DateTime" Precision="3" />
+          <Property Name="Visibility" Type="Boolean" />
+          <Property Name="IsNotReading" Type="Boolean" />
+          <NavigationProperty Name="Conversation" Relationship="Self.FK_Messages_Conversation" FromRole="Messages" ToRole="Conversation" />
+          <NavigationProperty Name="UserDetails" Relationship="Self.FK_Messages_UserDetails" FromRole="Messages" ToRole="UserDetails" />
+        </EntityType>
+        <EntityType Name="Participants">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Conversation_id" Type="Int32" Nullable="false" />
+          <Property Name="Users_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Conversation" Relationship="Self.FK_Participants_Conversation" FromRole="Participants" ToRole="Conversation" />
+          <NavigationProperty Name="UserDetails" Relationship="Self.FK_Participants_UserDetails" FromRole="Participants" ToRole="UserDetails" />
+        </EntityType>
+        <EntityType Name="Photoalbum">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AlbAndPhot" Relationship="Self.FK_AlbAndPhot_Photoalbum" FromRole="Photoalbum" ToRole="AlbAndPhot" />
+          <NavigationProperty Name="UserDetails" Relationship="Self.FK_Photoalbum_UserDetails" FromRole="Photoalbum" ToRole="UserDetails" />
+        </EntityType>
+        <EntityType Name="Requests">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Requesting_user_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Requested_user_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date_requsted" Type="DateTime" Precision="3" />
+          <Property Name="Status_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_Requests_AspNetUsers" FromRole="Requests" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUsers1" Relationship="Self.FK_Requests_AspNetUsers1" FromRole="Requests" ToRole="AspNetUsers" />
+          <NavigationProperty Name="FriendStatuses" Relationship="Self.FK_Requests_FriendStatuses" FromRole="Requests" ToRole="FriendStatuses" />
+        </EntityType>
+        <EntityType Name="School">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GraduationYear" Type="Int32" />
+          <Property Name="StartYear" Type="Int32" />
+          <NavigationProperty Name="UserDetails" Relationship="Self.FK_School_UserDetails" FromRole="School" ToRole="UserDetails" />
+        </EntityType>
+        <EntityType Name="UserDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Firstname" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirthday" Type="DateTime" Precision="0" />
+          <Property Name="FamilyStatusId" Type="Int32" />
+          <Property Name="ImagesId" Type="Int32" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HomeTownLocationId" Type="Int32" />
+          <Property Name="CurrentLocationId" Type="Int32" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_UserDetails_AspNetUsers" FromRole="UserDetails" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Conversation" Relationship="Self.FK_Conversation_UserDetails" FromRole="UserDetails" ToRole="Conversation" />
+          <NavigationProperty Name="FamilyStatus" Relationship="Self.FK_UserDetails_FamilyStatus" FromRole="UserDetails" ToRole="FamilyStatus" />
+          <NavigationProperty Name="Images" Relationship="Self.FK_UserDetails_Images" FromRole="UserDetails" ToRole="Images" />
+          <NavigationProperty Name="Location" Relationship="Self.FK_UserDetails_Location" FromRole="UserDetails" ToRole="Location" />
+          <NavigationProperty Name="Location1" Relationship="Self.FK_UserDetails_Location1" FromRole="UserDetails" ToRole="Location" />
+          <NavigationProperty Name="Messages" Relationship="Self.FK_Messages_UserDetails" FromRole="UserDetails" ToRole="Messages" />
+          <NavigationProperty Name="Participants" Relationship="Self.FK_Participants_UserDetails" FromRole="UserDetails" ToRole="Participants" />
+          <NavigationProperty Name="Photoalbum" Relationship="Self.FK_Photoalbum_UserDetails" FromRole="UserDetails" ToRole="Photoalbum" />
+          <NavigationProperty Name="School" Relationship="Self.FK_School_UserDetails" FromRole="UserDetails" ToRole="School" />
+          <NavigationProperty Name="WorkPlace" Relationship="Self.FK_WorkPlace_UserDetails" FromRole="UserDetails" ToRole="WorkPlace" />
+        </EntityType>
+        <EntityType Name="WorkPlace">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="CompanyName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Position" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="UserDetails" Relationship="Self.FK_WorkPlace_UserDetails" FromRole="WorkPlace" ToRole="UserDetails" />
+        </EntityType>
+        <Association Name="FK_AlbAndPhot_Images">
+          <End Role="Images" Type="Self.Images" Multiplicity="1" />
+          <End Role="AlbAndPhot" Type="Self.AlbAndPhot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Images">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AlbAndPhot">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlbAndPhot_Photoalbum">
+          <End Role="Photoalbum" Type="Self.Photoalbum" Multiplicity="1" />
+          <End Role="AlbAndPhot" Type="Self.AlbAndPhot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Photoalbum">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AlbAndPhot">
+              <PropertyRef Name="PhotoalbumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Frienship_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Friendship" Type="Self.Friendship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Friendship">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Frienship_AspNetUsers1">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Friendship" Type="Self.Friendship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Friendship">
+              <PropertyRef Name="Friend_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Requests_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Requests">
+              <PropertyRef Name="Requested_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Requests_AspNetUsers1">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Requests">
+              <PropertyRef Name="Requesting_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDetails_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDetails">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Conversation_UserDetails">
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
+          <End Role="Conversation" Type="Self.Conversation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Conversation">
+              <PropertyRef Name="Creator_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_Conversation">
+          <End Role="Conversation" Type="Self.Conversation" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conversation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="Conversation_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Participants_Conversation">
+          <End Role="Conversation" Type="Self.Conversation" Multiplicity="1" />
+          <End Role="Participants" Type="Self.Participants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conversation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Participants">
+              <PropertyRef Name="Conversation_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDetails_FamilyStatus">
+          <End Role="FamilyStatus" Type="Self.FamilyStatus" Multiplicity="0..1" />
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FamilyStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDetails">
+              <PropertyRef Name="FamilyStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Requests_FriendStatuses">
+          <End Role="FriendStatuses" Type="Self.FriendStatuses" Multiplicity="1" />
+          <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FriendStatuses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Requests">
+              <PropertyRef Name="Status_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDetails_Images">
+          <End Role="Images" Type="Self.Images" Multiplicity="0..1" />
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Images">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDetails">
+              <PropertyRef Name="ImagesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDetails_Location">
+          <End Role="Location" Type="Self.Location" Multiplicity="0..1" />
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDetails">
+              <PropertyRef Name="CurrentLocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDetails_Location1">
+          <End Role="Location" Type="Self.Location" Multiplicity="0..1" />
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDetails">
+              <PropertyRef Name="HomeTownLocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_UserDetails">
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="Sender_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Participants_UserDetails">
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
+          <End Role="Participants" Type="Self.Participants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Participants">
+              <PropertyRef Name="Users_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Photoalbum_UserDetails">
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
+          <End Role="Photoalbum" Type="Self.Photoalbum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Photoalbum">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_School_UserDetails">
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
+          <End Role="School" Type="Self.School" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="School">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkPlace_UserDetails">
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
+          <End Role="WorkPlace" Type="Self.WorkPlace" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkPlace">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="NetworkContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AlbAndPhot" EntityType="Self.AlbAndPhot" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
+          <EntitySet Name="Conversation" EntityType="Self.Conversation" />
+          <EntitySet Name="FamilyStatus" EntityType="Self.FamilyStatus" />
+          <EntitySet Name="Friendship" EntityType="Self.Friendship" />
+          <EntitySet Name="FriendStatuses" EntityType="Self.FriendStatuses" />
+          <EntitySet Name="Images" EntityType="Self.Images" />
+          <EntitySet Name="Location" EntityType="Self.Location" />
+          <EntitySet Name="Messages" EntityType="Self.Messages" />
+          <EntitySet Name="Participants" EntityType="Self.Participants" />
+          <EntitySet Name="Photoalbum" EntityType="Self.Photoalbum" />
+          <EntitySet Name="Requests" EntityType="Self.Requests" />
+          <EntitySet Name="School" EntityType="Self.School" />
+          <EntitySet Name="UserDetails" EntityType="Self.UserDetails" />
+          <EntitySet Name="WorkPlace" EntityType="Self.WorkPlace" />
+          <AssociationSet Name="FK_AlbAndPhot_Images" Association="Self.FK_AlbAndPhot_Images">
+            <End Role="Images" EntitySet="Images" />
+            <End Role="AlbAndPhot" EntitySet="AlbAndPhot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlbAndPhot_Photoalbum" Association="Self.FK_AlbAndPhot_Photoalbum">
+            <End Role="Photoalbum" EntitySet="Photoalbum" />
+            <End Role="AlbAndPhot" EntitySet="AlbAndPhot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Frienship_AspNetUsers" Association="Self.FK_Frienship_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Friendship" EntitySet="Friendship" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Frienship_AspNetUsers1" Association="Self.FK_Frienship_AspNetUsers1">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Friendship" EntitySet="Friendship" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Requests_AspNetUsers" Association="Self.FK_Requests_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Requests" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Requests_AspNetUsers1" Association="Self.FK_Requests_AspNetUsers1">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Requests" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDetails_AspNetUsers" Association="Self.FK_UserDetails_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Conversation_UserDetails" Association="Self.FK_Conversation_UserDetails">
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="Conversation" EntitySet="Conversation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_Conversation" Association="Self.FK_Messages_Conversation">
+            <End Role="Conversation" EntitySet="Conversation" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Participants_Conversation" Association="Self.FK_Participants_Conversation">
+            <End Role="Conversation" EntitySet="Conversation" />
+            <End Role="Participants" EntitySet="Participants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDetails_FamilyStatus" Association="Self.FK_UserDetails_FamilyStatus">
+            <End Role="FamilyStatus" EntitySet="FamilyStatus" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Requests_FriendStatuses" Association="Self.FK_Requests_FriendStatuses">
+            <End Role="FriendStatuses" EntitySet="FriendStatuses" />
+            <End Role="Requests" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDetails_Images" Association="Self.FK_UserDetails_Images">
+            <End Role="Images" EntitySet="Images" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDetails_Location" Association="Self.FK_UserDetails_Location">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDetails_Location1" Association="Self.FK_UserDetails_Location1">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_UserDetails" Association="Self.FK_Messages_UserDetails">
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Participants_UserDetails" Association="Self.FK_Participants_UserDetails">
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="Participants" EntitySet="Participants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Photoalbum_UserDetails" Association="Self.FK_Photoalbum_UserDetails">
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="Photoalbum" EntitySet="Photoalbum" />
+          </AssociationSet>
+          <AssociationSet Name="FK_School_UserDetails" Association="Self.FK_School_UserDetails">
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="School" EntitySet="School" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkPlace_UserDetails" Association="Self.FK_WorkPlace_UserDetails">
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="WorkPlace" EntitySet="WorkPlace" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="NetworkModelStoreContainer" CdmEntityContainer="NetworkContext">
+          <EntitySetMapping Name="AlbAndPhot">
+            <EntityTypeMapping TypeName="NetworkModel.AlbAndPhot">
+              <MappingFragment StoreEntitySet="AlbAndPhot">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PhotoalbumId" ColumnName="PhotoalbumId" />
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="NetworkModel.AspNetRoles">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="NetworkModel.AspNetUserClaims">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="NetworkModel.AspNetUserLogins">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="NetworkModel.AspNetUsers">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Conversation">
+            <EntityTypeMapping TypeName="NetworkModel.Conversation">
+              <MappingFragment StoreEntitySet="Conversation">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Creator_id" ColumnName="Creator_id" />
+                <ScalarProperty Name="Created_at" ColumnName="Created_at" />
+                <ScalarProperty Name="Update_at" ColumnName="Update_at" />
+                <ScalarProperty Name="Visibility" ColumnName="Visibility" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FamilyStatus">
+            <EntityTypeMapping TypeName="NetworkModel.FamilyStatus">
+              <MappingFragment StoreEntitySet="FamilyStatus">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Friendship">
+            <EntityTypeMapping TypeName="NetworkModel.Friendship">
+              <MappingFragment StoreEntitySet="Friendship">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="User_id" ColumnName="User_id" />
+                <ScalarProperty Name="Friend_id" ColumnName="Friend_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FriendStatuses">
+            <EntityTypeMapping TypeName="NetworkModel.FriendStatuses">
+              <MappingFragment StoreEntitySet="FriendStatuses">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="NetworkModel.Images">
+              <MappingFragment StoreEntitySet="Images">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Visibility" ColumnName="Visibility" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Location">
+            <EntityTypeMapping TypeName="NetworkModel.Location">
+              <MappingFragment StoreEntitySet="Location">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="State" ColumnName="State" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="NetworkModel.Messages">
+              <MappingFragment StoreEntitySet="Messages">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Conversation_id" ColumnName="Conversation_id" />
+                <ScalarProperty Name="Sender_id" ColumnName="Sender_id" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Created_at" ColumnName="Created_at" />
+                <ScalarProperty Name="Visibility" ColumnName="Visibility" />
+                <ScalarProperty Name="IsNotReading" ColumnName="IsNotReading" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Participants">
+            <EntityTypeMapping TypeName="NetworkModel.Participants">
+              <MappingFragment StoreEntitySet="Participants">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Conversation_id" ColumnName="Conversation_id" />
+                <ScalarProperty Name="Users_id" ColumnName="Users_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Photoalbum">
+            <EntityTypeMapping TypeName="NetworkModel.Photoalbum">
+              <MappingFragment StoreEntitySet="Photoalbum">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Requests">
+            <EntityTypeMapping TypeName="NetworkModel.Requests">
+              <MappingFragment StoreEntitySet="Requests">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Requesting_user_id" ColumnName="Requesting_user_id" />
+                <ScalarProperty Name="Requested_user_id" ColumnName="Requested_user_id" />
+                <ScalarProperty Name="Date_requsted" ColumnName="Date_requsted" />
+                <ScalarProperty Name="Status_id" ColumnName="Status_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="School">
+            <EntityTypeMapping TypeName="NetworkModel.School">
+              <MappingFragment StoreEntitySet="School">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="GraduationYear" ColumnName="GraduationYear" />
+                <ScalarProperty Name="StartYear" ColumnName="StartYear" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserDetails">
+            <EntityTypeMapping TypeName="NetworkModel.UserDetails">
+              <MappingFragment StoreEntitySet="UserDetails">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="DateOfBirthday" ColumnName="DateOfBirthday" />
+                <ScalarProperty Name="FamilyStatusId" ColumnName="FamilyStatusId" />
+                <ScalarProperty Name="ImagesId" ColumnName="ImagesId" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="HomeTownLocationId" ColumnName="HomeTownLocationId" />
+                <ScalarProperty Name="CurrentLocationId" ColumnName="CurrentLocationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkPlace">
+            <EntityTypeMapping TypeName="NetworkModel.WorkPlace">
+              <MappingFragment StoreEntitySet="WorkPlace">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="NetworkModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

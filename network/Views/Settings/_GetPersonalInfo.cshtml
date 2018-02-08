@@ -1,4 +1,4 @@
-﻿@model network.Views.ViewModels.PersonalInfoViewModel
+﻿@model BLL.ViewModels.PersonalInfoViewModel
 
 <div class="container">
     <div class="page">Edit Profile</div>
@@ -6,7 +6,6 @@
 
     <div class="row">
               
-
             <form class="form-horizontal" role="form" action="@Url.Action("EditPersInfo","Settings")">
                 @Html.HiddenFor(x => x.Id)
                 @Html.HiddenFor(x => x.ImageId)
@@ -15,7 +14,6 @@
                         <label class="col-lg-3 control-label">Gender:</label>
                         <div class="col-lg-5 gender">
                             <p> @Html.RadioButtonFor(x => x.Gender, "Male") male   @Html.RadioButtonFor(x => x.Gender, "Female") female  </p>
-                            @*<input class="form-control" type="text" required="required" value="Gender">*@
                         </div>
                     </div>
 

@@ -10,10 +10,10 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using network.BLL;
-using network.BLL.EF;
+using DAL.EF;
+using BLL;
 using network.Models;
-using network.Views.ViewModels;
+using BLL.ViewModels;
 
 namespace network.Controllers
 {
@@ -167,7 +167,7 @@ namespace network.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var user = new ApplicationUser {UserName = model.Email, Email = model.Email};
+                    var user = (ApplicationUser)(new ApplicationUser { UserName = model.Email, Email = model.Email });
                     
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)

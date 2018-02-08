@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Net;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
-using network.BLL;
-using network.BLL.EF;
-using network.Views.ViewModels;
-
+using DAL.EF;
+using BLL;
+using BLL.ViewModels;
 
 namespace network.Controllers
 {

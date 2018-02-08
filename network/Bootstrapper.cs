@@ -1,12 +1,11 @@
 using System.Web.Mvc;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Mvc;
-using network.BLL.EF;
-using network.DAL.Repository;
-using network.BLL;
-using network.DAL.IRepository;
-using System.Data.Entity.Core.EntityClient;
+using DAL.Repository;
+using DAL.IRepository;
 using network.Controllers;
+using DAL.EF;
+using BLL;
 
 namespace network
 {

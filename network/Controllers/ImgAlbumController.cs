@@ -1,6 +1,4 @@
-﻿using network.BLL;
-using network.BLL.EF;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,13 +6,14 @@ using System.Net;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using Microsoft.AspNet.Identity;
-using network.Views.ViewModels;
+using DAL.EF;
+using BLL;
+using BLL.ViewModels;
 
 namespace network.Controllers
 {
     public class ImgAlbumController : Controller
     {
-
         private readonly PhAlbumService _albumServ;
         private readonly UserService _userServ;
         private readonly ImageService _imgServ;
@@ -41,16 +40,9 @@ namespace network.Controllers
             {
                 AlbumViewModel modelAlb = new AlbumViewModel();
 
-
                 modelAlb.AlbumId = album.Id;
                 modelAlb.Name = album.Name;
                 modelAlb.TitleImage = _albumServ.GetLastImgAlbum(album.Id);
-
-
-                //if (modelAlb.TitleImage == null)
-                //    modelAlb.TitleImage = _imgServ.SearchImg(1058);
-
-
                 albumViewModel.Add(modelAlb);
             }
 
@@ -231,7 +223,7 @@ namespace network.Controllers
         }
         
 
-        //позволяет открыть альбом
+        //can open album
         public ActionResult OpenAlbum(int id)
         {
             OpenAlbumViewModel model = new OpenAlbumViewModel();

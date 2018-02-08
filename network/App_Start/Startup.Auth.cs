@@ -23,14 +23,6 @@ namespace network
                 ExpireTimeSpan = TimeSpan.FromMinutes(5.0)
             });
 
-
-
-
-
-
-
-
-
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);

@@ -42,15 +42,12 @@
 
                 <li class="dropdown">
                     <a id="drop1" href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        Aducation
+                        School
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Add new </a></li>
-                        <li><a href="#">Edit </a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Add school </a></li>
-                        <li><a href="#">Edit school </a></li>
+                        <li onclick="wind('@Url.Action("AddSchool","Settings")')"><a href="#">Add school </a></li>
+                        <li onclick="wind('@Url.Action("EditSchool","Settings")')"><a href="#">Edit school's info </a></li>
                     </ul>
                 </li>
 
@@ -60,12 +57,12 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Add new </a></li>
-                        <li><a href="#">Edit </a></li>
+                        <li onclick="wind('@Url.Action("AddPlaceWork","Settings")')"><a href="#">Add workplace </a></li>
+                        <li onclick="wind('@Url.Action("EditWorksPlace", "Settings")')"><a href="#">Edit </a></li>
                     </ul>
                 </li>
 
-                <li class="dropdown">
+                @*<li class="dropdown">
                     <a id="drop2" href="#" class="dropdown-toggle" data-toggle="dropdown">
                         Home
                         <span class="caret"></span>
@@ -77,7 +74,7 @@
                         <li><a href="#">Add home </a></li>
                         <li><a href="#">Edit home </a></li>
                     </ul>
-                </li>
+                </li>*@
                 
 
 

@@ -1,4 +1,4 @@
-﻿@model network.Views.ViewModels.ALbumsViewModel
+﻿@model BLL.ViewModels.ALbumsViewModel
 
 <div class="navbar-header">
     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -30,7 +30,7 @@
     <div class="row page" align="center">
         Photos
     </div>
-    @if (Model.Images.AllImages.Capacity > 0)
+    @if (Model.Images.AllImages.Count > 0)
     {
         <div class="scrolAlb ">
             <div class="row" style="display:inline-flex">

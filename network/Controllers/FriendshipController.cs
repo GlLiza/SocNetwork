@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
-using network.BLL;
-using network.BLL.EF;
-using network.Views.ViewModels;
 using System.Linq;
+using DAL.EF;
+using BLL;
+using BLL.ViewModels;
 
 namespace network.Controllers
 {
@@ -90,7 +90,7 @@ namespace network.Controllers
          
         var user = _userService.SearchByUserId(model.Id);
 
-        IQueryable<Requests> listfriends = _friendServ.CurrentRequestses(model.Id);
+        IQueryable<DAL.EF.Requests> listfriends = _friendServ.CurrentRequestses(model.Id);
         model.Requests = listfriends;
 
         model.UserDetails = user;
@@ -115,7 +115,7 @@ namespace network.Controllers
             {
                 NewRequestsViewModel user = new NewRequestsViewModel();
                 var requestedUser = _userService.SearchByUserId(b.Requested_user_id);
-                var request = _friendServ.SearchUsers(b.Requesting_user_id, b.Requested_user_id);
+                var request = _friendServ.SearchByUser(b.Requesting_user_id, b.Requested_user_id);
 
                 user.Id = requestedUser.UserId;
                 user.Name = requestedUser.Name;
@@ -166,7 +166,7 @@ namespace network.Controllers
     public ActionResult AcceptRequest(int requestsId)
     {
         _friendServ.StatusToAccepted(requestsId);
-        Requests req = _friendServ.SearchRequest(requestsId);
+        Requests req = _friendServ.SearchById(requestsId);
                      
 
         Friendship friendship1 = new Friendship();

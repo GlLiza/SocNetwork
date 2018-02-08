@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNet.Identity;
-using network.BLL;
-using network.BLL.EF;
-using network.Views.ViewModels;
+using DAL.EF;
+using System.Linq;
 using System.Web.Mvc;
+using BLL.ViewModels;
+using BLL;
 
 namespace network.Controllers
 {
@@ -65,20 +66,86 @@ namespace network.Controllers
                 Firstname=model.Firstname,
                 ImagesId=model.ImageId,
                 DateOfBirthday=model.DateOfBirthday,
-                WorkPlaceId=us.WorkPlaceId,
-                SchoolId=us.SchoolId,
                 HomeTownLocationId=us.HomeTownLocationId,
                 CurrentLocationId=us.CurrentLocationId
             };
             _userService.EditUser(user);
             
-
             return RedirectToAction("Index");
         }
 
+        public ActionResult AddSchool()
+        {
+            School sch = new School();
+            return PartialView("_AddSchool",sch);
+        }
 
+        public ActionResult AddNewSchool(School school)
+        {
+            var userId = _userService.GetIntUserId(User.Identity.GetUserId());
+            school.UserId = userId;
+            _schoolService.AddSchool(school);
+           
+            return RedirectToAction("Index","Settings");
+        }
 
+        public ActionResult EditSchool()
+        {
+            var userId = _userService.GetIntUserId(User.Identity.GetUserId());
+            var schoolsList = _schoolService.GetListSchoolsForUser(userId).ToList();
+            EditSchoolInfo model = new EditSchoolInfo()
+            {
+                Schools = schoolsList
+            };
 
+            return PartialView("_EditSchool", model);
+        }
+
+        public ActionResult EditSchoolInfo(EditSchoolInfo model)
+        {
+            foreach (var item in model.Schools)
+            {
+                _schoolService.UpdateSchool(item);
+            }
+            return RedirectToAction("Index", "Settings");
+        }
+
+        [HttpGet]
+        public ActionResult AddPlaceWork()
+        {
+            return PartialView("_AddPlaceWork");
+        }
+
+        [HttpPost]
+        public ActionResult AddPlaceWork(WorkPlace work)
+        {
+            var userId = _userService.GetIntUserId(User.Identity.GetUserId());
+            work.UserId = userId;
+            _workPlaceService.AddWorkPlace(work);
+            return RedirectToAction("Index");
+        }
+
+       
+        public ActionResult EditWorksPlace()
+        {
+            var userId = _userService.GetIntUserId(User.Identity.GetUserId());
+            var workPlList = _workPlaceService.GetListWorks(userId).ToList();
+            //EditWorksPlace model = new EditWorksPlace()
+            //{
+            //    WorkPlaces = workPlList
+            //};
+            return PartialView("_EditWorksPlace", workPlList);
+        }
+
+        public ActionResult EditWorksPlaceInfo(WorkPlace model)
+        {
+            //foreach (var item in model)
+            //{
+                _workPlaceService.Update(model);
+            //}
+
+            return RedirectToAction("Index");
+        }
 
     }
 }

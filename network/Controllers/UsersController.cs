@@ -5,9 +5,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
-using network.BLL;
-using network.BLL.EF;
-using network.Views.ViewModels;
+using DAL.EF;
+using BLL.ViewModels;
+using BLL;
 
 namespace network.Controllers
 {
@@ -156,55 +156,41 @@ namespace network.Controllers
             Location homeLocation = new Location();
             WorkPlace work = new WorkPlace();
             School school = new School();
-            Images headerImage = new Images();
             UserDetails user = _userService.SearchUser(model.Id);
 
             if (model.Image != null)
             {
-                byte[] imageData = null;
-                using (var binaryReader = new BinaryReader(model.Image.InputStream))
-                {
-                    imageData = binaryReader.ReadBytes(model.Image.ContentLength);
-                }
-                headerImage.Name = model.Image.FileName;
-                headerImage.Data = imageData;
-                headerImage.ContentType = model.Image.ContentType;
-                    headerImage.Date = DateTime.Now;
-
-                _imgService.InsertImage(headerImage);
-
-                user.ImagesId = headerImage.Id;
+                var img = _imgService.ConvertImage(model.Image);           
+                _imgService.InsertImage(img);
+                user.ImagesId = img.Id;
                 _userService.EditUser(user);
             }
 
             currentLoc.Country = model.Country;
 
-            _locService.AddLocation(currentLoc);
-            user.CurrentLocationId = currentLoc.Id;
+            //_locService.AddLocation(currentLoc);
+            //user.CurrentLocationId = currentLoc.Id;
 
             homeLocation.Country = model.HomeCountry;
 
-            _locService.AddLocation(homeLocation);
-            user.HomeTownLocationId = homeLocation.Id;
+            //_locService.AddLocation(homeLocation);
+            //user.HomeTownLocationId = homeLocation.Id;
 
 
             school.Name = model.SchoolName;
             school.GraduationYear = model.GraduationYear;
 
             _schoolService.AddSchool(school);
-            user.SchoolId = school.Id;
+            //user.SchoolId = school.Id;
 
             work.CompanyName = model.CompanyName;
             work.Position = model.Position;
-            work.Description = model.Description;
-            work.StartMonth = model.WorkPeriod.StartMonth;
-            work.StartYear = model.WorkPeriod.StartYear;
-            work.EndMonth = model.WorkPeriod.EndMonth;
-            work.EndYear = model.WorkPeriod.EndYear;   
-                                 
+            
+            //work.StartDate = model.WorkPeriod.StartDate;
+            //work.EndDate = model.WorkPeriod.EndDate;
+            
                 
             _workPlaceService.AddWorkPlace(work);
-            user.WorkPlaceId = work.Id;
 
 
             user.Name = model.Name;
@@ -240,22 +226,11 @@ namespace network.Controllers
         var imageFile = viewModel.Image;
         if (imageFile != null)
         {
-            Images headerImage = new Images();
+              var img = _imgService.ConvertImage(imageFile);
+
+            _imgService.InsertImage(img);
             var user = _userService.SearchUser(GetId());
-
-
-            byte[] imageData = null;
-            using (var binaryReader = new BinaryReader(imageFile.InputStream))
-            {
-                imageData = binaryReader.ReadBytes(imageFile.ContentLength);
-            }
-            headerImage.Name = imageFile.FileName;
-            headerImage.Data = imageData;
-            headerImage.ContentType = imageFile.ContentType;
-
-            _imgService.InsertImage(headerImage);
-
-            user.ImagesId = headerImage.Id;
+            user.ImagesId = img.Id;
             _userService.EditUser(user);
 
             return RedirectToAction("Index", "Users");
@@ -265,11 +240,11 @@ namespace network.Controllers
 
     }
 
-    public string GetCities(string CountryName)
-    {
-        GetCitiesByCountryServiceRef.GlobalWeatherSoapClient obj =new GetCitiesByCountryServiceRef.GlobalWeatherSoapClient {};
-        return obj.GetCitiesByCountry(CountryName);
-    }   
+    //public string GetCities(string CountryName)
+    //{
+    //    //ServiceReference.GetCitiesByCountryServiceref obj =new BLL.GetCitiesByCountryServiceref.GlobalWeatherSoapClient {};
+    //    return obj.GetCitiesByCountry(CountryName);
+    //}   
 
     public UserDetails GetUser()
     {

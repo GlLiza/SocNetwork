@@ -1,0 +1,67 @@
+﻿@model List<DAL.EF.WorkPlace>
+
+<div class="container">
+    <div class="page">Edit work's information</div>
+    <hr>
+
+    <div class="row form-horizontal">
+        @using (Html.BeginForm("EditWorksPlaceInfo", "Settings",new { model=Model}))
+        {
+            foreach (var item in Model)
+            {
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Name of company:</label>
+                    <div class="col-lg-5">
+                        @Html.EditorFor(modelItem => item.CompanyName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(modelItem => item.CompanyName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Name of position:</label>
+                    <div class="col-lg-5">
+                        @Html.EditorFor(modelItem => item.Position, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(modelItem => item.Position, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Date of start:</label>
+                    <div class="col-lg-5">
+                        <input id="datepickerBirth" class="form-control" name="StartDate" type="date" value="@string.Format("{0:yyyy-MM-dd}", item.StartDate)">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Date of end:</label>
+                    <div class="col-lg-5">
+                        <input id="datepickerBirth" class="form-control" name="EndDate" type="date" value="@string.Format("{0:yyyy-MM-dd}", item.EndDate)">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label"></label>
+                    <div class="col-md-8">
+                        <input type="submit" class="btn" value="Save changes">
+                        <span></span>
+                        <input type="reset" class="btn btn-default" value="Cancel">
+                    </div>
+                </div>
+                <hr/>
+
+            }
+
+
+            @*<div class="form-group">
+                <label class="col-md-3 control-label"></label>
+                <div class="col-md-8">
+                    <input type="submit" class="btn" value="Save changes">
+                    <span></span>
+                    <input type="reset" class="btn btn-default" value="Cancel">
+                </div>
+            </div>*@
+        }
+     </div>
+</div>
+
